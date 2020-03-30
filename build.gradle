@@ -1,0 +1,4 @@
+allprojects {
+    group = 'COMP90082.team18'
+    version = '0.0.1-SNAPSHOT'
+}
