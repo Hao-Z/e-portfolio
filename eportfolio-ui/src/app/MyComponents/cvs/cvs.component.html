@@ -1,0 +1,38 @@
+<style type="text/css">
+  .top{
+    position: fixed;
+    top: 20px;
+    right: 100px;
+  }
+</style>
+
+<nz-layout>
+  <div align="right" style="background-color: white" class="top">
+    <button>
+      +New
+    </button>
+  </div>
+</nz-layout>
+
+
+<nz-content class="inner-content">
+  <div *ngFor="let item of test">
+  <nz-card style="margin-right: 150px">
+    {{item}}
+    <div align="right">
+      <button>
+        Edit
+      </button>
+    </div>
+  </nz-card>
+  <br/>
+</div>
+  <nz-card style="margin-right: 150px">
+    <div align="center">
+      <button>
+        Create new CV
+      </button>
+    </div>
+  </nz-card>
+</nz-content>
+
