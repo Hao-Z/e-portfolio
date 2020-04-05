@@ -9,7 +9,7 @@ export class CVsComponent implements OnInit {
 
   constructor() { }
 
-  test = ['test1','test2','test3','test2','test3','test2','test3','test2','test3','test2','test3']
+  test = ['Name1','Name2','Name3','Name4','Name5','Name6','Name7','Name8','Name9','Name10']
 
   ngOnInit(): void {
   }

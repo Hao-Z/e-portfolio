@@ -17,16 +17,37 @@
 
 <nz-content class="inner-content">
   <div *ngFor="let item of test">
-  <nz-card style="margin-right: 150px">
-    {{item}}
-    <div align="right">
-      <button>
-        Edit
-      </button>
-    </div>
-  </nz-card>
-  <br/>
-</div>
+    <nz-card style="margin-right: 150px">
+      <table>
+        <td width="110">
+          <img src="../../../assets/untitled.png" alt="demo" width="100" height="100">
+        </td>
+        <td>
+          <tr>
+            <td width="100">
+              {{item}}
+            </td>
+            <td width="100">
+              Age
+            </td>
+            <td width="100">
+              Major
+            </td>
+          </tr>
+          <tr>
+            Introduction
+          </tr>
+        </td>
+      </table>
+
+      <div align="right">
+        <button>
+          Edit
+        </button>
+      </div>
+    </nz-card>
+    <br/>
+  </div>
   <nz-card style="margin-right: 150px">
     <div align="center">
       <button>
