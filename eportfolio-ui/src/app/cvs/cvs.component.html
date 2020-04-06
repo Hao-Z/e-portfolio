@@ -32,9 +32,21 @@
       <nz-content>
         <div *ngFor="let item of CVs">
           <nz-card style="margin-right: 80px">
-            <
-            <img src="./src/assets/untitled.png"/>
-            {{item}}
+            <nz-row>
+              <nz-col nzSpan="4">
+                <img src="./src/assets/untitled.png"/>
+              </nz-col>
+              <nz-col nzSpan="17">
+              {{item}}
+              </nz-col>
+              <nz-col nzSpan="3">
+                <div align="right">
+                  <button class="btn btn-light">
+                    Edit
+                  </button>
+                </div>
+              </nz-col>
+            </nz-row>
           </nz-card>
           <br/>
         </div>
