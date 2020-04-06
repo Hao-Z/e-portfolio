@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class CVsComponent implements OnInit {
 
   constructor() { }
-
+  isCollapsed = false;
   ngOnInit(): void {
   }
 
