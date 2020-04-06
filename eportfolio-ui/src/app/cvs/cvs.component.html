@@ -8,33 +8,16 @@
             nzBreakpoint="md"
             [(nzCollapsed)]="isCollapsed"
             [nzTrigger]="null">
-    <div class="sidebar-logo">
-      <a href="https://ng.ant.design/" target="_blank">
-        <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
-        <h1>Ant Design Of Angular</h1>
-      </a>
-    </div>
     <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-      <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="dashboard">
-        <ul>
           <li nz-menu-item nzMatchRouter>
             <a routerLink="/cvs">My CVs</a>
           </li>
           <li nz-menu-item nzMatchRouter>
-            <a>Monitor</a>
+            <a routerLink="/ma">My Account</a>
           </li>
           <li nz-menu-item nzMatchRouter>
-            <a>Workplace</a>
+            <a routerLink="/settings">Settings</a>
           </li>
-        </ul>
-      </li>
-      <li nz-submenu nzOpen nzTitle="Form" nzIcon="form">
-        <ul>
-          <li nz-menu-item nzMatchRouter>
-            <a>Basic Form</a>
-          </li>
-        </ul>
-      </li>
     </ul>
   </nz-sider>
   <nz-layout>
@@ -48,10 +31,17 @@
         </span>
       </div>
     </nz-header>
+    <button class="btn btn-light">
+      +New
+    </button>
     <nz-content>
-      <div class="inner-content">
+        <div *ngFor="let item of CVs">
+          <nz-card>
+            {{item}}
+          </nz-card>
+          <br/>
+        </div>
         <router-outlet></router-outlet>
-      </div>
     </nz-content>
   </nz-layout>
 </nz-layout>
