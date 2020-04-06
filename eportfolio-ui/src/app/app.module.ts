@@ -9,6 +9,8 @@ import { HomeComponent } from './home/home.component';
 import { ReactiveFormsModule } from "@angular/forms";
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from '@angular/common/http';
+import {NgZorroAntdModule} from "ng-zorro-antd";
+
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgZorroAntdModule
   ],
   providers: [],
   bootstrap: [AppComponent]
