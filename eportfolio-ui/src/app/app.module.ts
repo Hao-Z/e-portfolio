@@ -10,6 +10,14 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from '@angular/common/http';
 import {NgZorroAntdModule} from "ng-zorro-antd";
+import { CVsComponent } from './cvs/cvs.component';
+import { IconsProviderModule } from './icons-provider.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { registerLocaleData } from '@angular/common';
+import zh from '@angular/common/locales/zh';
+
+registerLocaleData(zh);
+
 
 
 @NgModule({
@@ -17,7 +25,8 @@ import {NgZorroAntdModule} from "ng-zorro-antd";
     AppComponent,
     TopBarComponent,
     SignInUpComponent,
-    HomeComponent
+    HomeComponent,
+    CVsComponent
   ],
   imports: [
     BrowserModule,
@@ -25,9 +34,12 @@ import {NgZorroAntdModule} from "ng-zorro-antd";
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    NgZorroAntdModule
+    NgZorroAntdModule,
+    IconsProviderModule,
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [{ provide: NZ_I18N, useValue: zh_CN }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
