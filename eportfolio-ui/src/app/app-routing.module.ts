@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { SignInUpComponent } from './sign-in-up/sign-in-up.component';
 import {CVsComponent} from "./cvs/cvs.component";
+import {MyAccountComponent} from "./my-account/my-account.component";
+
 
 const routes: Routes = [
   {
@@ -15,6 +17,7 @@ const routes: Routes = [
     ]
   },
   { path: 'cvs', component: CVsComponent },
+  { path: 'ma', component: MyAccountComponent },
 ];
 
 @NgModule({
