@@ -16,6 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import {MyAccountComponent} from "./my-account/my-account.component";
+import {SettingsComponent} from "./settings/settings.component";
 
 registerLocaleData(zh);
 
@@ -28,7 +29,8 @@ registerLocaleData(zh);
     SignInUpComponent,
     HomeComponent,
     CVsComponent,
-    MyAccountComponent
+    MyAccountComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

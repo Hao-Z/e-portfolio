@@ -1,0 +1,56 @@
+<nz-layout>
+  <app-top-bar>
+  </app-top-bar>
+
+  <nz-layout class="app-layout">
+    <nz-sider class="menu-sidebar"
+              nzCollapsible
+              nzWidth="256px"
+              nzBreakpoint="md"
+              [(nzCollapsed)]="isCollapsed"
+              [nzTrigger]="null">
+      <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+        <li nz-menu-item nzMatchRouter>
+          <a routerLink="/cvs">My CVs</a>
+        </li>
+        <li nz-menu-item nzMatchRouter>
+          <a routerLink="/ma">My Account</a>
+        </li>
+        <li nz-menu-item nzMatchRouter>
+          <a routerLink="/settings">Settings</a>
+        </li>
+      </ul>
+    </nz-sider>
+    <nz-layout>
+      <div class="row" style="margin-top: 50px">
+        <div class="col-md-6 offset-md-3 col-xs-12">
+          <form>
+            <div class="form-group">
+              <label for="userName">UserName</label>
+              <input type="text" class="form-control" id="userName" required value="Someone">
+            </div>
+
+            <div class="form-group">
+              <label for="password">Age</label>
+              <input type="text" class="form-control" id="password" required value="20">
+            </div>
+            <div class="form-group">
+              <label for="email" >Email</label>
+              <input type="text" class="form-control" id="email" required value="demo@demo.com">
+            </div>
+            <div class="form-group" >
+              <label for="PhoneNumber">Phone Number</label>
+              <input type="text" class="form-control" id="PhoneNumber" required value="XX-XXX-XXX-XXX">
+            </div>
+            <nz-col nzSpan="12">
+              <button type="submit" class="btn btn-primary">Save changes</button>
+            </nz-col>
+            <nz-col nzSpan="12">
+              <button class="btn btn-primary">Change password</button>
+            </nz-col>
+          </form>
+        </div>
+      </div>
+    </nz-layout>
+  </nz-layout>
+</nz-layout>
