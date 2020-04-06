@@ -24,6 +24,7 @@
               "src/assets"
             ],
             "styles": [
+              "src/theme.less",
               "src/styles.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
@@ -124,6 +125,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "eportfolio-ui"
 }
