@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class MyAccountComponent implements OnInit {
 
   constructor() { }
-
+  isCollapsed = true;
   ngOnInit(): void {
   }
 
