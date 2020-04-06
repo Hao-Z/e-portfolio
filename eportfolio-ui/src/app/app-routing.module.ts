@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { SignInUpComponent } from './sign-in-up/sign-in-up.component';
+import {CVsComponent} from "./cvs/cvs.component";
 
 const routes: Routes = [
   {
@@ -12,7 +13,8 @@ const routes: Routes = [
       { path: 'register', component: SignInUpComponent },
       { path: '', redirectTo: 'welcome', pathMatch: 'full' }
     ]
-  }
+  },
+  { path: 'cvs', component: CVsComponent },
 ];
 
 @NgModule({
