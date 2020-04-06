@@ -1,48 +1,51 @@
 <nz-layout>
-<app-top-bar>
-</app-top-bar>
-<nz-layout class="app-layout">
-  <nz-sider class="menu-sidebar"
-            nzCollapsible
-            nzWidth="256px"
-            nzBreakpoint="md"
-            [(nzCollapsed)]="isCollapsed"
-            [nzTrigger]="null">
-    <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-          <li nz-menu-item nzMatchRouter>
-            <a routerLink="/cvs">My CVs</a>
-          </li>
-          <li nz-menu-item nzMatchRouter>
-            <a routerLink="/ma">My Account</a>
-          </li>
-          <li nz-menu-item nzMatchRouter>
-            <a routerLink="/settings">Settings</a>
-          </li>
-    </ul>
-  </nz-sider>
-  <nz-layout>
-    <nz-header>
-      <div class="app-header">
-        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
-            <i class="trigger"
-               nz-icon
-               [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
-            ></i>
-        </span>
-      </div>
-    </nz-header>
-    <button class="btn btn-light">
-      +New
-    </button>
-    <nz-content>
+    <app-top-bar>
+    </app-top-bar>
+
+  <nz-layout class="app-layout">
+    <nz-sider class="menu-sidebar"
+              nzCollapsible
+              nzWidth="256px"
+              nzBreakpoint="md"
+              [(nzCollapsed)]="isCollapsed"
+              [nzTrigger]="null">
+      <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+        <li nz-menu-item nzMatchRouter>
+          <a routerLink="/cvs">My CVs</a>
+        </li>
+        <li nz-menu-item nzMatchRouter>
+          <a routerLink="/ma">My Account</a>
+        </li>
+        <li nz-menu-item nzMatchRouter>
+          <a routerLink="/settings">Settings</a>
+        </li>
+      </ul>
+    </nz-sider>
+    <nz-layout>
+
+        <div style="position: absolute; right: 100px; top: 80px">
+          <button class="btn btn-dark" style="position: fixed">
+            +New
+          </button>
+        </div>
+
+      <nz-content>
         <div *ngFor="let item of CVs">
-          <nz-card>
+          <nz-card style="margin-right: 80px">
+            <img src=""
             {{item}}
           </nz-card>
           <br/>
         </div>
+        <nz-card  style="margin-right: 80px">
+          <div align="center">
+            <button class="btn btn-light">
+              Create New CV
+            </button>
+          </div>
+        </nz-card>
         <router-outlet></router-outlet>
-    </nz-content>
+      </nz-content>
+    </nz-layout>
   </nz-layout>
-</nz-layout>
 </nz-layout>
