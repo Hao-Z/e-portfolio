@@ -9,18 +9,18 @@
       <p><a [routerLink]="['/login']" *ngIf="signType == 'register'">Have an account?</a>
         <a [routerLink]="['/register']" *ngIf="signType == 'login'">Need an account?</a>
       </p>
-    <form>
+    <form [formGroup]="signForm" (ngSubmit)="onSubmit(signForm.value)">
       <div class="form-group">
-        <label for="userName">UserName</label>
-        <input type="text" class="form-control" id="userName" required>
+        <label for="userName">Username</label>
+        <input type="text" class="form-control" id="userName" formControlName="userName" required>
       </div>
       <div class="form-group" *ngIf="signType == 'register'">
         <label for="email" >Email</label>
-        <input type="text" class="form-control" id="email" required>
+        <input type="text" class="form-control" id="email" formControlName="email" required>
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="text" class="form-control" id="password" required>
+        <input type="text" class="form-control" id="password" formControlName="password" required>
       </div>
       <div class="form-group" *ngIf="signType == 'register'">
         <label for="rePassword">Repeat Password</label>
