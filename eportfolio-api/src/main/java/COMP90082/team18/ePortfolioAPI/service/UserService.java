@@ -15,7 +15,6 @@ public class UserService {
     public Result signUp(User user) {
         Result res = new Result();
         userRepository.save(user);
-
         return res;
     }
 }
