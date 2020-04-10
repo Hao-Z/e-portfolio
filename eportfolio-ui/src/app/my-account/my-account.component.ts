@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-my-account',
@@ -8,17 +7,9 @@ import { HttpClient } from '@angular/common/http';
 })
 export class MyAccountComponent implements OnInit {
 
-  constructor(private http: HttpClient) { }
+  constructor() { }
   isCollapsed = true;
   ngOnInit(): void {
-
   }
 
-  profile:any;
-
-  getProfile(){
-    this.http.get("http://localhost:8080/getProfile").subscribe((result:any)=>{
-      this.profile = result;
-    });
-  }
 }

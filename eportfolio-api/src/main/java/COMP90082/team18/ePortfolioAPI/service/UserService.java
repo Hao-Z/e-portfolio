@@ -6,7 +6,6 @@ import COMP90082.team18.ePortfolioAPI.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class UserService {
 
@@ -17,9 +16,5 @@ public class UserService {
         Result res = new Result();
         userRepository.save(user);
         return res;
-    }
-
-    public User getProfile() {
-        return (User) userRepository.findAll();
     }
 }
