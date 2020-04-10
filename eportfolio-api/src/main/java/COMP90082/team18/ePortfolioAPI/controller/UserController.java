@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
@@ -23,12 +22,6 @@ public class UserController {
     public Result signUp(@RequestBody User user){
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userService.signUp(user);
-    }
-
-    @PostMapping("/sign-up")
-    public void signUp(@RequestBody User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
     }
 
 }
