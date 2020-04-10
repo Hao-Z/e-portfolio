@@ -16,7 +16,7 @@ export class SignInUpComponent implements OnInit {
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private formBuilder: FormBuilder) {
     this.signForm = this.formBuilder.group({
-      'userName': ['', Validators.required],
+      'username': ['', Validators.required],
       'password': ['', Validators.required]
     });
   }
