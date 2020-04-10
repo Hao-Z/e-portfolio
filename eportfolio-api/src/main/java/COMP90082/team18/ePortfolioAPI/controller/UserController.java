@@ -22,4 +22,9 @@ public class UserController {
         return userService.signUp(user);
     }
 
+    @GetMapping(value = "/getProfile")
+    public Result getProfile(){
+        return userService.getProfile();
+    }
+
 }
