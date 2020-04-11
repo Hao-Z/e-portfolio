@@ -13,7 +13,7 @@ import {ActivatedRoute} from "@angular/router";
 export class MyAccountComponent implements OnInit {
   isCollapsed = true;
   updateForm: FormGroup;
-  profile = new Map<string,any>();
+  profiles_value = new Map<string,any>();
   editable = new Map<string,boolean>();
   controlsConfig : {[key:string]:any} = {};
   profiles = ['userName', 'email', 'Birthday', 'phoneNumber'];
@@ -26,11 +26,10 @@ export class MyAccountComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let ind = 0;
-    for(let p of this.profiles){
-      this.profile.set(p,p);
-    }
     // this.getProfile()
+    for(let p of this.profiles){
+      this.profiles_value.set(p,p+"_value");
+    }
     for(let p of this.profiles){
       this.editable.set(p,false);
     }
@@ -38,7 +37,7 @@ export class MyAccountComponent implements OnInit {
 
   getProfile(){
     this.http.get("http://localhost:8080/getprofile").subscribe((result:any)=>{
-      this.profile = result;
+      this.profiles_value = result;
     });
   }
 
