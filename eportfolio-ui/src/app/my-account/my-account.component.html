@@ -27,11 +27,11 @@
           <form [formGroup]="updateForm" *ngFor="let item of profiles">
             <div class="form-group">
               <label [for]=item>{{item}}</label>
-              <nz-input-group nzSearch [nzAddOnAfter]=item1>
+              <nz-input-group nzSearch [nzAddOnAfter]=items>
                 <input *ngIf="editable[item]" type="text" class="form-control" [id]=item [formControlName]=item nz-input [ngModel]="profiles_value.get(item)">
                 <input *ngIf="!editable[item]" class="form-control" [placeholder]="profiles_value.get(item)" [disabled]="true" />
               </nz-input-group>
-              <ng-template #item1>
+              <ng-template #items>
                 <button *ngIf="!editable[item]" type="button" class="btn btn-primary" (click)="editable[item]=!editable[item]" >Edit</button>
                 <button *ngIf="editable[item]" type="button" class="btn btn-primary" (click)="editable[item]=!editable[item];onSubmit(updateForm.value)">Save</button>
               </ng-template>
