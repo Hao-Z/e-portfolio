@@ -22,5 +22,4 @@ public class UserController {
         return userService.signUp(user);
     }
 
-
 }
