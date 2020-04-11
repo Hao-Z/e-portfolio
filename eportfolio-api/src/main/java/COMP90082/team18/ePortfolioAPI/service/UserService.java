@@ -12,10 +12,24 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public Result signUp(User user) {
-        Result res = new Result();
-        userRepository.save(user);
-
+    public Result<Object> signUp(User user, Result<Object> res) {
+        if(checkUsername(user.getUsername())){
+            userRepository.save(user);
+            res.setMsg("200 ok");
+            res.setSuccess(true);
+        }
+        else{
+            res.setMsg("400 bad request; duplicated username");
+            res.setSuccess(false);
+            System.out.println("duplicated username");
+        }
         return res;
+    }
+
+    public boolean checkUsername(String username){
+        if(userRepository.findByUsername(username) == null)
+            return true;
+        else
+            return false;
     }
 }
