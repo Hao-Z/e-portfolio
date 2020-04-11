@@ -18,7 +18,4 @@ public class UserService {
         return res;
     }
 
-    public User getProfile(){
-        return (User) userRepository.findAll();
-    }
 }
