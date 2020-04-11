@@ -26,22 +26,14 @@ class UserRepositoryTest {
     @BeforeEach
     void setUp() {
         User newUser = new User();
-        newUser.setAccountName("existingUser");
+        newUser.setUsername("existingUser");
         userRepository.save(newUser);
     }
 
     @Test
-    void findByAccountName() {
-        Iterable<User> returnedUsers = userRepository.findByAccountName("existingUser");
-        List<String> returnedAccountNames = new ArrayList<>();
-        for (User user:returnedUsers) {
-            returnedAccountNames.add(user.getAccountName());
-        }
-
-        List<String> rightAnswer = new ArrayList<>();
-        rightAnswer.add("existingUser");
-
-        assertIterableEquals(rightAnswer, returnedAccountNames);
+    void findByUsername() {
+        User returnedUser = userRepository.findByUsername("existingUser");
+        assertEquals("existingUser", returnedUser.getUsername());
     }
 
 }

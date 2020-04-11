@@ -11,8 +11,8 @@
       </p>
     <form [formGroup]="signForm" (ngSubmit)="onSubmit(signForm.value)">
       <div class="form-group">
-        <label for="userName">Username</label>
-        <input type="text" class="form-control" id="userName" formControlName="userName" required>
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" formControlName="username" required>
       </div>
       <div class="form-group" *ngIf="signType == 'register'">
         <label for="email" >Email</label>
