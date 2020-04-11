@@ -47,4 +47,8 @@ export class MyAccountComponent implements OnInit {
     'Birthday': false,
     'phoneNumber': false
   };
+
+  profiles = ['userName', 'email', 'Birthday', 'phoneNumber']
+
+
 }

@@ -24,49 +24,16 @@
     <nz-layout>
       <div class="row" style="margin-top: 50px">
         <div class="col-md-6 offset-md-3 col-xs-12">
-          <form [formGroup]="updateForm">
+          <form [formGroup]="updateForm" *ngFor="let item of profiles">
             <div class="form-group">
-              <label for="userName">UserName</label>
-              <nz-input-group nzSearch [nzAddOnAfter]="userName_save">
-                <input *ngIf="editable['userName']" type="text" class="form-control" id="userName" formControlName="userName" nz-input [ngModel]="profile['userName']">
-                <input *ngIf="!editable['userName']" class="form-control" [placeholder]="profile['userName']" [disabled]="true" />
+              <label [for]=item>UserName</label>
+              <nz-input-group nzSearch [nzAddOnAfter]=item1>
+                <input *ngIf="editable[item]" type="text" class="form-control" [id]=item [formControlName]=item nz-input [ngModel]="profile[item]">
+                <input *ngIf="!editable[item]" class="form-control" [placeholder]="profile[item]" [disabled]="true" />
               </nz-input-group>
-              <ng-template #userName_save>
-                <button *ngIf="!editable['userName']" type="button" class="btn btn-primary" (click)="editable['userName']=!editable['userName']" >Edit</button>
-                <button *ngIf="editable['userName']" type="button" class="btn btn-primary" (click)="editable['userName']=!editable['userName'];onSubmit(updateForm.value)">Save</button>
-              </ng-template>
-            </div>
-            <div class="form-group">
-              <label for="email" >Email</label>
-              <nz-input-group nzSearch [nzAddOnAfter]="email_save">
-                <input *ngIf="editable['email']" type="text" class="form-control" id="email" formControlName="email" nz-input [ngModel]="profile['email']">
-                <input *ngIf="!editable['email']" class="form-control" [placeholder]="profile['email']" [disabled]="true" />
-              </nz-input-group>
-              <ng-template #email_save>
-                <button *ngIf="!editable['email']" type="button" class="btn btn-primary" (click)="editable['email']=!editable['email']" >Edit</button>
-                <button *ngIf="editable['email']" type="button" class="btn btn-primary" (click)="editable['email']=!editable['email'];onSubmit(updateForm.value)">Save</button>
-              </ng-template>
-            </div>
-            <div class="form-group">
-              <label for="Age">Birthday</label>
-              <nz-input-group nzSearch [nzAddOnAfter]="Birthday_save">
-                <input *ngIf="editable['Birthday']" type="text" class="form-control" id="Birthday" formControlName="Birthday" nz-input [ngModel]="profile['Birthday']">
-                <input *ngIf="!editable['Birthday']" class="form-control" [placeholder]="profile['Birthday']" [disabled]="true" />
-              </nz-input-group>
-              <ng-template #Birthday_save>
-                <button *ngIf="!editable['Birthday']" type="button" class="btn btn-primary" (click)="editable['Birthday']=!editable['Birthday']" >Edit</button>
-                <button *ngIf="editable['Birthday']" type="button" class="btn btn-primary" (click)="editable['Birthday']=!editable['Birthday'];onSubmit(updateForm.value)">Save</button>
-              </ng-template>
-            </div>
-            <div class="form-group" >
-              <label for="phoneNumber">Phone Number</label>
-              <nz-input-group nzSearch [nzAddOnAfter]="phoneNumber_save">
-                <input *ngIf="editable['phoneNumber']" type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber" nz-input [ngModel]="profile['phoneNumber']">
-                <input *ngIf="!editable['phoneNumber']" class="form-control" [placeholder]="profile['phoneNumber']" [disabled]="true" />
-              </nz-input-group>
-              <ng-template #phoneNumber_save>
-                <button *ngIf="!editable['phoneNumber']" type="button" class="btn btn-primary" (click)="editable['phoneNumber']=!editable['phoneNumber']" >Edit</button>
-                <button *ngIf="editable['phoneNumber']" type="button" class="btn btn-primary" (click)="editable['phoneNumber']=!editable['phoneNumber'];onSubmit(updateForm.value)">Save</button>
+              <ng-template #item1>
+                <button *ngIf="!editable[item]" type="button" class="btn btn-primary" (click)="editable[item]=!editable[item]" >Edit</button>
+                <button *ngIf="editable[item]" type="button" class="btn btn-primary" (click)="editable[item]=!editable[item];onSubmit(updateForm.value)">Save</button>
               </ng-template>
             </div>
           </form>
