@@ -17,8 +17,5 @@ public class UserService {
         userRepository.save(user);
         return res;
     }
-
-    public User getProfile(){
-        return (User) userRepository.findAll();
-    }
+    
 }
