@@ -48,14 +48,14 @@
               </ng-template>
             </div>
             <div class="form-group">
-              <label for="Age">Age</label>
-              <nz-input-group nzSearch [nzAddOnAfter]="Age_save">
-                <input *ngIf="editable['Age']" type="text" class="form-control" id="Age" formControlName="Age" nz-input [ngModel]="profile['Age']">
-                <input *ngIf="!editable['Age']" class="form-control" [placeholder]="profile['Age']" [disabled]="true" />
+              <label for="Age">Birthday</label>
+              <nz-input-group nzSearch [nzAddOnAfter]="Birthday_save">
+                <input *ngIf="editable['Birthday']" type="text" class="form-control" id="Birthday" formControlName="Birthday" nz-input [ngModel]="profile['Birthday']">
+                <input *ngIf="!editable['Birthday']" class="form-control" [placeholder]="profile['Birthday']" [disabled]="true" />
               </nz-input-group>
-              <ng-template #Age_save>
-                <button *ngIf="!editable['Age']" type="button" class="btn btn-primary" (click)="editable['Age']=!editable['Age']" >Edit</button>
-                <button *ngIf="editable['Age']" type="button" class="btn btn-primary" (click)="editable['Age']=!editable['Age'];onSubmit(updateForm.value)">Save</button>
+              <ng-template #Birthday_save>
+                <button *ngIf="!editable['Birthday']" type="button" class="btn btn-primary" (click)="editable['Birthday']=!editable['Birthday']" >Edit</button>
+                <button *ngIf="editable['Birthday']" type="button" class="btn btn-primary" (click)="editable['Birthday']=!editable['Birthday'];onSubmit(updateForm.value)">Save</button>
               </ng-template>
             </div>
             <div class="form-group" >

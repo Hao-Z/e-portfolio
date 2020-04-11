@@ -18,13 +18,13 @@ export class MyAccountComponent implements OnInit {
     this.updateForm = this.formBuilder.group({
       'userName': [''],
       'email': [''],
-      'Age': [''],
+      'Birthday': [''],
       'phoneNumber': ['']
     });
   }
 
   ngOnInit(): void {
-    this.profile = {'userName':'Someone', 'Age':20, 'email':'demo@demo.com', 'phoneNumber':'X-XXX-XXX-XXX'};
+    this.profile = {'userName':'Someone', 'Birthday':'1990/01/01', 'email':'demo@demo.com', 'phoneNumber':'X-XXX-XXX-XXX'};
     // this.getProfile()
   }
 
@@ -44,7 +44,7 @@ export class MyAccountComponent implements OnInit {
   editable: {[key:string]:boolean} = {
     'userName': false,
     'email': false,
-    'Age': false,
+    'Birthday': false,
     'phoneNumber': false
   };
 }
