@@ -2,6 +2,7 @@ package COMP90082.team18.ePortfolioAPI.controller;
 
 import COMP90082.team18.ePortfolioAPI.entity.Result;
 import COMP90082.team18.ePortfolioAPI.entity.User;
+import COMP90082.team18.ePortfolioAPI.security.JWTMethod;
 import COMP90082.team18.ePortfolioAPI.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.servlet.http.HttpServletResponse;
+
+import static COMP90082.team18.ePortfolioAPI.security.SecurityConstants.*;
 
 @CrossOrigin
 @RestController
@@ -18,10 +22,12 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostMapping(value = "/signup")
-    public Result<Object> signUp(@RequestBody @Valid User user, BindingResult bindingResult){
+    public Result<Object> signUp(@RequestBody @Valid User user, BindingResult bindingResult, HttpServletResponse response){
         Result<Object> res = new Result<>();
         if(bindingResult.hasErrors()){
             System.out.println("400 bad request; maybe invalid fields for user information");
@@ -31,7 +37,7 @@ public class UserController {
         }
         else{
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-            res = userService.signUp(user, res);
+            res = userService.signUp(user, res, response);
         }
         return res;
     }

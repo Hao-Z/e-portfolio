@@ -1,6 +1,5 @@
 package COMP90082.team18.ePortfolioAPI.security;
 
-import com.auth0.jwt.JWT;
 import COMP90082.team18.ePortfolioAPI.entity.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,12 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 
-import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
-import static COMP90082.team18.ePortfolioAPI.security.SecurityConstants.EXPIRATION_TIME;
-import static COMP90082.team18.ePortfolioAPI.security.SecurityConstants.HEADER_STRING;
-import static COMP90082.team18.ePortfolioAPI.security.SecurityConstants.SECRET;
+import static COMP90082.team18.ePortfolioAPI.security.SecurityConstants.*;
 import static COMP90082.team18.ePortfolioAPI.security.SecurityConstants.TOKEN_PREFIX;
 
 //source:
@@ -55,12 +50,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             HttpServletResponse res,
                                             FilterChain chain,
                                             Authentication auth) throws IOException, ServletException {
-        String token = JWT.create()
-                .withSubject(
-                        ((org.springframework.security.core.userdetails.User) auth.getPrincipal())
-                                .getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .sign(HMAC512(SECRET.getBytes()));
+        String token = JWTMethod.create(auth);
         res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
     }
 }
