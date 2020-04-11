@@ -26,10 +26,10 @@
         <div class="col-md-6 offset-md-3 col-xs-12">
           <form [formGroup]="updateForm" *ngFor="let item of profiles">
             <div class="form-group">
-              <label [for]=item>UserName</label>
+              <label [for]=item>{{item}}</label>
               <nz-input-group nzSearch [nzAddOnAfter]=item1>
-                <input *ngIf="editable[item]" type="text" class="form-control" [id]=item [formControlName]=item nz-input [ngModel]="profile[item]">
-                <input *ngIf="!editable[item]" class="form-control" [placeholder]="profile[item]" [disabled]="true" />
+                <input *ngIf="editable[item]" type="text" class="form-control" [id]=item [formControlName]=item nz-input [ngModel]="profile.get(item)">
+                <input *ngIf="!editable[item]" class="form-control" [placeholder]="profile.get(item)" [disabled]="true" />
               </nz-input-group>
               <ng-template #item1>
                 <button *ngIf="!editable[item]" type="button" class="btn btn-primary" (click)="editable[item]=!editable[item]" >Edit</button>

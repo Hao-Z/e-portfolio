@@ -13,19 +13,27 @@ import {ActivatedRoute} from "@angular/router";
 export class MyAccountComponent implements OnInit {
   isCollapsed = true;
   updateForm: FormGroup;
-  profile: {[key:string]:any;} ;
+  profile = new Map<string,any>();
+  editable = new Map<string,boolean>();
+  controlsConfig : {[key:string]:any} = {};
+  profiles = ['userName', 'email', 'Birthday', 'phoneNumber'];
+
   constructor(private http: HttpClient, private route: ActivatedRoute, private formBuilder: FormBuilder) {
-    this.updateForm = this.formBuilder.group({
-      'userName': [''],
-      'email': [''],
-      'Birthday': [''],
-      'phoneNumber': ['']
-    });
+    for(let p of this.profiles){
+      this.controlsConfig[p] = [''];
+    }
+    this.updateForm = this.formBuilder.group(this.controlsConfig);
   }
 
   ngOnInit(): void {
-    this.profile = {'userName':'Someone', 'Birthday':'1990/01/01', 'email':'demo@demo.com', 'phoneNumber':'X-XXX-XXX-XXX'};
+    let ind = 0;
+    for(let p of this.profiles){
+      this.profile.set(p,p);
+    }
     // this.getProfile()
+    for(let p of this.profiles){
+      this.editable.set(p,false);
+    }
   }
 
   getProfile(){
@@ -40,15 +48,5 @@ export class MyAccountComponent implements OnInit {
     });
     alert('Changes succeed: ' + JSON.stringify(data));
   }
-
-  editable: {[key:string]:boolean} = {
-    'userName': false,
-    'email': false,
-    'Birthday': false,
-    'phoneNumber': false
-  };
-
-  profiles = ['userName', 'email', 'Birthday', 'phoneNumber']
-
 
 }
