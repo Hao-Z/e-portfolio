@@ -26,9 +26,4 @@ public class UserController {
         return userService.signUp(user, response);
     }
 
-    @GetMapping(value = "/getprofile")
-    public User getProfile(){
-        return  userService.getProfile();
-    }
-
 }
