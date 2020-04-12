@@ -18,18 +18,27 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public Result signUp(User user, HttpServletResponse response) {
-        Result res = new Result();
-
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
-
-        String token = JWTMethod.create(user.getUsername());
-        response.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
-
+    public Result<Object> signUp(User user, Result<Object> res, HttpServletResponse response) {
+        if(checkUsername(user.getUsername())){
+            userRepository.save(user);
+            res.setMsg("200 ok");
+            res.setSuccess(true);
+            String token = JWTMethod.create(user.getUsername());
+            response.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
+        }
+        else{
+            res.setMsg("400 bad request; duplicated username");
+            res.setSuccess(false);
+            System.out.println("duplicated username");
+        }
         return res;
+    }
+
+    public boolean checkUsername(String username){
+        if(userRepository.findByUsername(username) == null)
+            return true;
+        else
+            return false;
     }
 }
