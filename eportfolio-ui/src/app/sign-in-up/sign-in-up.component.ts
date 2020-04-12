@@ -35,6 +35,6 @@ export class SignInUpComponent implements OnInit {
       this.http.post("http://localhost:8080/signup", data).subscribe((result) => {
         // This code will be executed when the HTTP call returns successfully
       });
-      alert('Your has submitted' + JSON.stringify(data));
+      alert('You has submitted' + JSON.stringify(data));
   }
 }
