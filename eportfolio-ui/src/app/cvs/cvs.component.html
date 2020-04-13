@@ -1,0 +1,80 @@
+<nz-layout>
+  <app-top-bar>
+  </app-top-bar>
+
+  <nz-layout class="app-layout">
+    <nz-sider class="menu-sidebar"
+              nzCollapsible
+              nzWidth="256px"
+              nzBreakpoint="md"
+              [(nzCollapsed)]="isCollapsed"
+              [nzTrigger]="null">
+      <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+        <li nz-menu-item nzMatchRouter>
+          <a routerLink="/cvs">My CVs</a>
+        </li>
+        <li nz-menu-item nzMatchRouter>
+          <a routerLink="/ma">My Account</a>
+        </li>
+        <li nz-menu-item nzMatchRouter>
+          <a routerLink="/sts">Settings</a>
+        </li>
+      </ul>
+    </nz-sider>
+    <nz-layout>
+    <nz-content>
+
+    </nz-content>
+      <!--
+      <div style="position: absolute; right: 100px; top: 80px">
+        <button class="btn btn-dark" style="position: fixed">
+          +New
+        </button>
+      </div>
+      <nz-content>
+        <div *ngFor="let item of CVs">
+          <nz-card style="margin-right: 80px; height: auto">
+            <nz-row>
+              <nz-col nzSpan="4">
+                <img src="assets/untitled.png" style="width: 80px; height: 80px">
+              </nz-col>
+              <nz-col nzSpan="17">
+                <table>
+                  <td style="width: 100px">
+                    {{item}}
+                  </td>
+                  <td style="width: 100px">
+                    Age
+                  </td>
+                  <td style="width: 100px">
+                    Major
+                  </td>
+                </table>
+                <nz-row style="word-break: break-all; word-wrap: break-word">
+                  Introduction
+                </nz-row>
+              </nz-col>
+              <nz-col nzSpan="3">
+                <div align="right">
+                  <button class="btn btn-light">
+                    Edit
+                  </button>
+                </div>
+              </nz-col>
+            </nz-row>
+          </nz-card>
+          <br/>
+        </div>
+        <nz-card  style="margin-right: 80px">
+          <div align="center">
+            <button class="btn btn-light">
+              Create New CV
+            </button>
+          </div>
+        </nz-card>
+        <router-outlet></router-outlet>
+      </nz-content>
+      -->
+    </nz-layout>
+  </nz-layout>
+</nz-layout>

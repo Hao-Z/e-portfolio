@@ -1,0 +1,48 @@
+<nz-layout>
+  <app-top-bar>
+  </app-top-bar>
+
+  <nz-layout class="app-layout">
+    <nz-sider class="menu-sidebar"
+              nzCollapsible
+              nzWidth="256px"
+              nzBreakpoint="md"
+              [(nzCollapsed)]="isCollapsed"
+              [nzTrigger]="null">
+      <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+        <li nz-menu-item nzMatchRouter>
+          <a routerLink="/cvs">My CVs</a>
+        </li>
+        <li nz-menu-item nzMatchRouter>
+          <a routerLink="/ma">My Account</a>
+        </li>
+        <li nz-menu-item nzMatchRouter>
+          <a routerLink="/sts">Settings</a>
+        </li>
+      </ul>
+    </nz-sider>
+    <nz-layout>
+      <div class="row" style="margin-top: 50px">
+        <div class="col-md-6 offset-md-3 col-xs-12">
+          <form [formGroup]="updateForm" *ngFor="let item of profiles">
+            <div class="form-group">
+              <label [for]=item>{{item}}</label>
+              <nz-input-group nzSearch [nzAddOnAfter]=items>
+                <input *ngIf="editable[item]" type="text" class="form-control" [id]=item [formControlName]=item nz-input [ngModel]="profiles_value.get(item)">
+                <input *ngIf="!editable[item]" class="form-control" [placeholder]="profiles_value.get(item)" [disabled]="true" />
+              </nz-input-group>
+              <ng-template #items>
+                <button *ngIf="!editable[item]" type="button" class="btn btn-primary" (click)="editable[item]=!editable[item]" >Edit</button>
+                <button *ngIf="editable[item]" type="button" class="btn btn-primary" (click)="editable[item]=!editable[item];onSubmit(updateForm.value)">Save</button>
+              </ng-template>
+            </div>
+          </form>
+          <br/>
+          <nz-col>
+            <button class="btn btn-primary">Change password</button>
+          </nz-col>
+        </div>
+      </div>
+    </nz-layout>
+  </nz-layout>
+</nz-layout>
