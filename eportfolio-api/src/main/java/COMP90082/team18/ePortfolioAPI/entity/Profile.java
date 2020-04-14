@@ -32,5 +32,11 @@ public class Profile {
         body.put("phoneNumber", phoneNumber);
         return body;
     }
+
+    public Profile update(Profile newProfile) {
+        if(newProfile.getBirthday() != null) this.setBirthday(newProfile.getBirthday());
+        if(newProfile.getPhoneNumber() != null) this.setPhoneNumber(newProfile.getPhoneNumber());
+        return this;
+    }
 }
 

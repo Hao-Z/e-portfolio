@@ -46,4 +46,12 @@ class ProfileRepositoryTest {
         Profile returnedProfile = profileRepository.findByUser(testUser);
         assertEquals(testUser.getId(), returnedProfile.getId());
     }
+
+    @Test
+    void whenFindByUserAndNoRecordShouldReturnNull() {
+        User testUser = new User();
+        testUser.setId((long) -1);
+        Profile returnedProfile = profileRepository.findByUser(testUser);
+        assertNull(returnedProfile);
+    }
 }
