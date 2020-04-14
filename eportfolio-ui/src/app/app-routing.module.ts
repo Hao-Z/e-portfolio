@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { SignInUpComponent } from './sign-in-up/sign-in-up.component';
+import { AuthComponent } from './auth/auth.component';
 import {CVsComponent} from "./cvs/cvs.component";
 import {MyAccountComponent} from "./my-account/my-account.component";
 import {SettingsComponent} from "./settings/settings.component";
@@ -12,8 +12,8 @@ const routes: Routes = [
     path: '',
     children: [
       { path: 'welcome', component: HomeComponent },
-      { path: 'login', component: SignInUpComponent },
-      { path: 'register', component: SignInUpComponent },
+      { path: 'login', component: AuthComponent },
+      { path: 'register', component: AuthComponent },
       { path: '', redirectTo: 'welcome', pathMatch: 'full' }
     ]
   },

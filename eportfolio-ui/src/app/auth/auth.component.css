@@ -1,0 +1,12 @@
+.form-control.ng-valid{
+  border-color: green;
+}
+
+.form-control.ng-invalid.ng-touched{
+  border-color: red;
+}
+
+.errprompt{
+  font-size: small;
+  color: red;
+}

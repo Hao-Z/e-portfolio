@@ -1,0 +1,62 @@
+<app-top-bar></app-top-bar>
+
+<p></p>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 offset-md-3 col-xs-12">
+     <p style="font-size:36px">{{ title }}</p>
+      <p><a [routerLink]="['/login']" *ngIf="signType == 'register'">Already Have an account?</a>
+        <a [routerLink]="['/register']" *ngIf="signType == 'login'">Need an account?</a>
+      </p>
+    <form [formGroup]="signForm" (ngSubmit)="onSubmit(signForm.value)">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" formControlName="username">
+        <div *ngIf="signForm.get('username').invalid && (signForm.get('username').dirty || signForm.get('username').touched)">
+          <div class="errprompt" *ngIf="signForm.get('username').errors.required">
+            Username is required.
+          </div>
+          <div class="errprompt" *ngIf="signForm.get('username').errors.minlength">
+            Username must be at least 3 characters.
+          </div>
+        </div>
+      </div>
+      <div class="form-group" *ngIf="signType == 'register'">
+        <label for="email" >Email</label>
+        <input type="text" class="form-control" id="email" formControlName="email">
+        <div *ngIf="signForm.get('email').invalid && (signForm.get('email').dirty || signForm.get('email').touched)">
+          <div class="errprompt" *ngIf="signForm.get('email').errors">
+            Invaild email.
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="text" class="form-control" id="password" formControlName="password">
+        <div *ngIf="signForm.get('password').invalid && (signForm.get('password').dirty || signForm.get('password').touched)">
+          <div class="errprompt" *ngIf="signForm.get('password').errors.required">
+            Password is required.
+          </div>
+          <div class="errprompt" *ngIf="signForm.get('password').errors.minlength">
+            Password must be at least 6 characters.
+          </div>
+          <div class="errprompt" *ngIf="signForm.get('password').errors">
+            Password is not the same.
+          </div>
+        </div>
+      </div>
+      <div class="form-group" *ngIf="signType == 'register'">
+        <label for="rePassword">Repeat Password</label>
+        <input type="text" class="form-control" id="rePassword" formControlName="rePassword">
+        <div *ngIf="signForm.get('rePassword').invalid && (signForm.get('rePassword').dirty || signForm.get('rePassword').touched)">
+          <div class="errprompt" *ngIf="signForm.get('rePassword').errors">
+            Password is not the same.
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="signForm.invalid">{{title}}</button>
+    </form>
+    </div>
+  </div>
+</div>
