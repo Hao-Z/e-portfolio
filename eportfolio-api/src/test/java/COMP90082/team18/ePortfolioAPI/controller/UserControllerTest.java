@@ -19,7 +19,4 @@ class UserControllerTest {
     void setUp() {
     }
 
-    @Test
-    void getAllUsers() {
-    }
 }

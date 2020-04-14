@@ -2,10 +2,10 @@ package COMP90082.team18.ePortfolioAPI.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 @Data
@@ -23,5 +23,14 @@ public class Profile {
     @MapsId
     private User user;
 
+    public Map<String, Object> body(){
+        Map<String, Object> body = new HashMap<String, Object>();
+        body.put("id", id);
+        body.put("userId", user.getId());
+        body.put("username", user.getUsername());
+        body.put("birthday", birthday);
+        body.put("phoneNumber", phoneNumber);
+        return body;
+    }
 }
 
