@@ -30,7 +30,7 @@ export class SettingsComponent implements OnInit {
   }
 
   updateSetting(data) {
-    this.http.post("http://localhost:8080/updatesetting", data).subscribe((result) => {
+    this.http.put("http://localhost:8080/updatesetting", data).subscribe((result) => {
       // This code will be executed when the HTTP call returns successfully
     });
     alert('Changes succeed: ' + JSON.stringify(data));
