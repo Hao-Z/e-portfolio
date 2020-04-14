@@ -16,7 +16,7 @@ export class MyAccountComponent implements OnInit {
   profiles_value = new Map<string,any>();
   editable = new Map<string,boolean>();
   controlsConfig : {[key:string]:any} = {};
-  profiles = ['UserName', 'Email', 'Birthday', 'PhoneNumber'];
+  profiles = ['User Name', 'Email', 'Birthday', 'Phone Number'];
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private formBuilder: FormBuilder) {
     for(let p of this.profiles){
