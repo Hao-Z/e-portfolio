@@ -26,7 +26,7 @@ export class MyAccountComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.getProfile()
+    // this.getProfile();
     for(let p of this.profiles){
       this.profiles_value.set(p,p+"_value");
     }

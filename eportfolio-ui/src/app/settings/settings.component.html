@@ -25,9 +25,9 @@
       <div class="row" style="margin-top: 50px">
         <div class="col-md-6 offset-md-3 col-xs-12">
           <form>
-            <div class="form-group">
-              <input type="checkbox" id="Setting1" (click)="checkbox =! checkbox;onClickSetting(checkbox)">
-              <label style="margin-left: 20px">Make CV Private</label>
+            <div class="form-group" *ngFor="let item of settings">
+              <input type="checkbox" [id]=item (click)="checkbox[item] =! checkbox[item];updateSetting(checkbox)">
+              <label style="margin-left: 20px">{{item}}</label>
             </div>
             <button class="btn btn-primary">Change password</button>
           </form>

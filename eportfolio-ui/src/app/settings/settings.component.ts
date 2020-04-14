@@ -17,13 +17,19 @@ export class SettingsComponent implements OnInit {
   isCollapsed = true;
   ngOnInit(): void {
 
-
-
+    //getSetting();
+    for(let s of this.settings){
+      this.checkbox.set(s,false);
+    }
   }
 
-  checkbox = false;
+  getSetting(){
+    this.http.get("http://localhost:8080/getsetting").subscribe((result:any)=>{
+      this.checkbox = result;
+    });
+  }
 
-  onClickSetting(data) {
+  updateSetting(data) {
     this.http.post("http://localhost:8080/updatesetting", data).subscribe((result) => {
       // This code will be executed when the HTTP call returns successfully
     });
