@@ -32,7 +32,7 @@
                 <input *ngIf="!editable[item]" class="form-control" [placeholder]="profiles_value.get(item)" [disabled]="true" />
               </nz-input-group>
               <ng-template #items>
-                <button *ngIf="!editable[item] && item!='UserName'" type="button" class="btn btn-primary" (click)="editable[item]=!editable[item]" >Edit</button>
+                <button *ngIf="!editable[item] && item!='User Name'" type="button" class="btn btn-primary" (click)="editable[item]=!editable[item]" >Edit</button>
                 <button *ngIf="editable[item]" type="button" class="btn btn-primary" (click)="editable[item]=!editable[item];onSubmit(updateForm.value)">Save</button>
               </ng-template>
             </div>
