@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/profile")
+@RequestMapping("/profiles")
 public class ProfileController {
     @Autowired
     private ProfileService profileService;
@@ -20,9 +20,9 @@ public class ProfileController {
         return profileService.getProfile(id);
     }
 
-    @PutMapping("/{id}")
-    public Result<Object> putProfile(@PathVariable Long id, @RequestBody Profile profile){
-        return profileService.putProfile(id, profile);
+    @PatchMapping("/{id}")
+    public Result<Object> patchProfile(@PathVariable Long id, @RequestBody Profile profile){
+        return profileService.patchProfile(id, profile);
     }
 
 }

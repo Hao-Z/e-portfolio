@@ -26,7 +26,7 @@ public class ProfileService {
         }
     }
 
-    public Result<Object> putProfile(Long id, Profile profile) {
+    public Result<Object> patchProfile(Long id, Profile profile) {
         User targetUser = userRepository.findById(id).get();
         if (targetUser == null) {
             return new Result<>("404 not found", false, null);
