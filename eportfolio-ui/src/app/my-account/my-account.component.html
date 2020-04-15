@@ -24,9 +24,9 @@
     <nz-layout>
       <div class="row" style="margin-top: 50px">
         <div class="col-md-6 offset-md-3 col-xs-12">
-          <form [formGroup]="updateForm" *ngFor="let item of profiles">
-            <div class="form-group">
-              <label [for]=item>{{item}}</label>
+          <form [formGroup]="updateForm">
+            <div class="form-group" *ngFor="let item of profiles" >
+              <nz-form-label>{{item}}</nz-form-label>
               <nz-input-group nzSearch [nzAddOnAfter]=items>
                 <input *ngIf="editable[item]" type="text" class="form-control" [id]=item [formControlName]=item nz-input [ngModel]="profiles_value.get(item)">
                 <input *ngIf="!editable[item]" class="form-control" [placeholder]="profiles_value.get(item)" [disabled]="true" />
@@ -35,6 +35,15 @@
                 <button *ngIf="!editable[item] && item!=profiles[0]" type="button" class="btn btn-primary" (click)="editable[item]=!editable[item]" >Edit</button>
                 <button *ngIf="editable[item]" type="button" class="btn btn-primary" (click)="editable[item]=!editable[item];onSubmit(updateForm.value)">Save</button>
               </ng-template>
+
+              <!-- When input is required>
+              <div *ngIf="updateForm.get(item).invalid && (updateForm.get(item).dirty || updateForm.get(item).touched)">
+                <div style="color: red" class="errprompt" *ngIf="updateForm.get(item).errors">
+                  {{item}} must not be empty.
+                </div>
+              </div>
+              -->
+
             </div>
           </form>
         </div>
