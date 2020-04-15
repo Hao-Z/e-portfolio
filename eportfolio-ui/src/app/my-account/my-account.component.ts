@@ -11,7 +11,7 @@ import {ActivatedRoute} from "@angular/router";
 
 @Injectable()
 export class MyAccountComponent implements OnInit {
-  isCollapsed = true;
+  isCollapsed = false;
   updateForm: FormGroup;
   profiles_value = new Map<string,any>();
   editable = new Map<string,boolean>();

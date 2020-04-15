@@ -14,7 +14,7 @@ export class SettingsComponent implements OnInit {
   checkbox = new Map<string,boolean>();
 
   constructor(private http: HttpClient) { }
-  isCollapsed = true;
+  isCollapsed = false;
   ngOnInit(): void {
 
     //getSetting();
