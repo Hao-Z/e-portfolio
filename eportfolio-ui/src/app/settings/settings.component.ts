@@ -10,7 +10,7 @@ import { HttpClient } from "@angular/common/http";
 @Injectable()
 export class SettingsComponent implements OnInit {
 
-  settings = ["Make CV private",];
+  settings = ["Make the CV private",];
   checkbox = new Map<string,boolean>();
 
   constructor(private http: HttpClient) { }
