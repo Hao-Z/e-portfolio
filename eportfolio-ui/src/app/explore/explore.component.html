@@ -2,31 +2,7 @@
   <app-top-bar>
   </app-top-bar>
 
-  <nz-layout class="app-layout">
-    <nz-sider class="menu-sidebar"
-              nzCollapsible
-              nzWidth="256px"
-              nzBreakpoint="md"
-              [(nzCollapsed)]="isCollapsed"
-              [nzTrigger]="null">
-      <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-        <li nz-menu-item nzMatchRouter>
-          <a routerLink="/cvs">My CV</a>
-        </li>
-        <li nz-menu-item nzMatchRouter>
-          <a routerLink="/ma">My Account</a>
-        </li>
-        <li nz-menu-item nzMatchRouter>
-          <a routerLink="/sts">Settings</a>
-        </li>
-      </ul>
-    </nz-sider>
-    <nz-layout>
-    <nz-content>
-
-    </nz-content>
-      <!--
-      <div style="position: absolute; right: 100px; top: 80px">
+<div style="position: absolute; right: 100px; top: 80px">
         <button class="btn btn-dark" style="position: fixed">
           +New
         </button>
@@ -74,7 +50,4 @@
         </nz-card>
         <router-outlet></router-outlet>
       </nz-content>
-      -->
     </nz-layout>
-  </nz-layout>
-</nz-layout>

@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-cvs',
-  templateUrl: './cvs.component.html',
-  styleUrls: ['./cvs.component.css']
+  templateUrl: './explore.component.html',
+  styleUrls: ['./explore.component.css']
 })
-export class CVsComponent implements OnInit {
+export class ExploreComponent implements OnInit {
 
   constructor() { }
   isCollapsed = false;
