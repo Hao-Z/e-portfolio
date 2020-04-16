@@ -10,7 +10,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from '@angular/common/http';
 import {NgZorroAntdModule} from "ng-zorro-antd";
-import { CVsComponent } from './cvs/cvs.component';
+import { CVsComponent } from './explore/cvs.component';
 import { IconsProviderModule } from './icons-provider.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
