@@ -10,7 +10,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from '@angular/common/http';
 import {NgZorroAntdModule} from "ng-zorro-antd";
-import { CVsComponent } from './cvs/cvs.component';
+import { ExploreComponent } from './explore/explore.component';
 import { IconsProviderModule } from './icons-provider.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
@@ -30,7 +30,7 @@ registerLocaleData(zh);
     TopBarComponent,
     AuthComponent,
     HomeComponent,
-    CVsComponent,
+    ExploreComponent,
     MyAccountComponent,
     SettingsComponent,
     CvComponent,

@@ -1,62 +1,13 @@
-<nz-layout>
-  <app-top-bar>
-  </app-top-bar>
-
-  <nz-layout class="app-layout">
-    <nz-sider class="menu-sidebar"
-              nzCollapsible
-              nzWidth="256px"
-              nzBreakpoint="md"
-              [(nzCollapsed)]="isCollapsed"
-              [nzTrigger]="null">
-      <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-        <li nz-menu-item nzMatchRouter>
-          <a routerLink="/cv">My CV</a>
-        </li>
-        <li nz-menu-item nzMatchRouter>
-          <a routerLink="/ma">My Account</a>
-        </li>
-        <li nz-menu-item nzMatchRouter>
-          <a routerLink="/sts">Settings</a>
-        </li>
-      </ul>
-    </nz-sider>
-    <nz-layout>
+<nz-layout style="background-color: white">
       <div class="row" style="margin-top: 50px">
         <div class="col-md-6 offset-md-3 col-xs-12">
           <form>
-            <div class="form-group">
-              <input type="checkbox" id="Setting1">
-              <label style="margin-left: 20px">Setting 1</label>
+            <div class="form-group" *ngFor="let item of settings">
+              <input type="checkbox" [id]=item (click)="checkbox[item] =! checkbox[item];updateSetting(checkbox)">
+              <label style="margin-left: 20px">{{item}}</label>
             </div>
-            <div class="form-group">
-              <input type="checkbox" id="Setting2">
-              <label style="margin-left: 20px">Setting 2</label>
-            </div>
-            <div class="form-group">
-              <input type="checkbox" id="Setting3">
-              <label style="margin-left: 20px">Setting 3</label>
-            </div>
-            <div class="form-group">
-              <input type="checkbox" id="Setting4">
-              <label style="margin-left: 20px">Setting 4</label>
-            </div>
-            <div class="form-group">
-              <input type="checkbox" id="Setting5">
-              <label style="margin-left: 20px">Setting 5</label>
-            </div>
-            <div class="form-group">
-              <input type="checkbox" id="Setting6">
-              <label style="margin-left: 20px">Setting 6</label>
-            </div>
-            <div class="form-group">
-              <input type="checkbox" id="Setting7">
-              <label style="margin-left: 20px">Setting 7</label>
-            </div>
-            <button class="btn btn-primary">Save settings</button>
+            <button class="btn btn-primary">Change password</button>
           </form>
         </div>
       </div>
-    </nz-layout>
-  </nz-layout>
 </nz-layout>
