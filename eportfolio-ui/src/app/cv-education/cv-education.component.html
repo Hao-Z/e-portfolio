@@ -8,8 +8,10 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form [formGroup]="educationForm" (ngSubmit)="onSubmit(educationForm.value)">
+            <!-- <div class="modal-body"> -->
+
+
+                <!-- <form [formGroup]="educationForm" (ngSubmit)="onSubmit(educationForm.value)">
                     <div class="form-group">
                         <label for="schoolname">School</label>
                         <input type="text" class="form-control" id="schoolname" formControlName="schoolname">
@@ -18,11 +20,25 @@
                         <label for="degree">Degree</label>
                         <input type="text" class="form-control" id="degree" formControlName="degree">
                     </div>
-                </form>
-            </div>
+                </form> -->
+                <!-- <div formGroupName="educationForm">
+                    <label>
+                        School:
+                        <input type="text" formControlName="schoolname">
+                    </label>
+                    <label>
+                        Degree:
+                        <input type="text" formControlName="degree">
+                    </label>
+                    <label>
+                        Field:
+                        <input type="text" formControlName="field">
+                    </label> -->
+                <!-- </div> -->
+            <!-- </div> -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save changes</button>
+                <button type="submit" [disabled]="!educationForm.valid" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
