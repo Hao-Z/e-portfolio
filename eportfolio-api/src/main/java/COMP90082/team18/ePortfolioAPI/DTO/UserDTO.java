@@ -2,8 +2,10 @@ package COMP90082.team18.ePortfolioAPI.DTO;
 
 import COMP90082.team18.ePortfolioAPI.entity.User;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 @Data
+@RequiredArgsConstructor
 public class UserDTO {
     private Long id;
     private String email;

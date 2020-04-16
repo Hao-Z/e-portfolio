@@ -14,7 +14,6 @@ public class Profile {
     @Id
     private Long id;
 
-    @JsonFormat(pattern="dd-MM-yyyy")
     private Date birthday;
 
     private String phoneNumber;
