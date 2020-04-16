@@ -11,12 +11,12 @@ import {ActivatedRoute} from "@angular/router";
 
 @Injectable()
 export class MyAccountComponent implements OnInit {
-  isCollapsed = true;
+  isCollapsed = false;
   updateForm: FormGroup;
   profiles_value = new Map<string,any>();
   editable = new Map<string,boolean>();
   controlsConfig : {[key:string]:any} = {};
-  profiles = ['userName', 'email', 'Birthday', 'phoneNumber'];
+  profiles = ['User Name', 'Email', 'Birthday', 'Phone Number'];
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private formBuilder: FormBuilder) {
     for(let p of this.profiles){
@@ -26,7 +26,7 @@ export class MyAccountComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.getProfile()
+    // this.getProfile();
     for(let p of this.profiles){
       this.profiles_value.set(p,p+"_value");
     }
@@ -42,7 +42,7 @@ export class MyAccountComponent implements OnInit {
   }
 
   onSubmit(data) {
-    this.http.post("http://localhost:8080/updateprofile", data).subscribe((result) => {
+    this.http.put("http://localhost:8080/updateprofile", data).subscribe((result) => {
       // This code will be executed when the HTTP call returns successfully
     });
     alert('Changes succeed: ' + JSON.stringify(data));
