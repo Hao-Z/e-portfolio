@@ -17,10 +17,12 @@ import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import {MyAccountComponent} from "./my-account/my-account.component";
 import {SettingsComponent} from "./settings/settings.component";
+import { CvComponent } from './cv/cv.component';
+import { LayoutComponent } from './layout/layout.component';
+import { CvEducationComponent } from './cv-education/cv-education.component';
+import { CvIntroComponent } from './cv-intro/cv-intro.component';
 
 registerLocaleData(zh);
-
-
 
 @NgModule({
   declarations: [
@@ -30,7 +32,11 @@ registerLocaleData(zh);
     HomeComponent,
     CVsComponent,
     MyAccountComponent,
-    SettingsComponent
+    SettingsComponent,
+    CvComponent,
+    LayoutComponent,
+    CvEducationComponent,
+    CvIntroComponent,
   ],
   imports: [
     BrowserModule,
