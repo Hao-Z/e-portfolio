@@ -16,30 +16,30 @@
     </nz-sider>
     <nz-layout>
       <nz-content>
-    <div *ngFor="let item of CVs">
-      <div class="card-body">
-        <div class="row align-items-center">
-          <div class="col-md-6">
-            <img src="assets/untitled.png" class="center-block rounded-circle" alt="anonymous-user"  width="80px" height="80px">
+        <div *ngFor="let item of CVs">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <img src="assets/untitled.png" class="center-block rounded-circle" alt="anonymous-user"  width="80px" height="80px">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="row">{{ userDatas.firstName }} {{ userDatas.lastName }}</div>
+                <div class="row">Title: {{ userDatas.headline }}</div>
+                <div class="row">Education: {{userDatas.education}}</div>
+                <div class="row">Industry: {{userDatas.industry}}</div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">Region: {{userDatas.region}}</div>
+                <div class="row">Email: {{userDatas.email}}</div>
+                <div class="row">Phone: {{userDatas.phone}}</div>
+                <div class="row">ProfileUrl: {{userDatas.profileUrl}}</div>
+              </div>
+            </div>
           </div>
+          <hr/>
         </div>
-        <div class="row">
-          <div class="col-md-6">
-            <div class="row">{{ userDatas.firstName }} {{ userDatas.lastName }}</div>
-            <div class="row">Title: {{ userDatas.headline }}</div>
-            <div class="row">Education: {{userDatas.education}}</div>
-            <div class="row">Industry: {{userDatas.industry}}</div>
-          </div>
-          <div class="col-md-6">
-            <div class="row">Region: {{userDatas.region}}</div>
-            <div class="row">Email: {{userDatas.email}}</div>
-            <div class="row">Phone: {{userDatas.phone}}</div>
-            <div class="row">ProfileUrl: {{userDatas.profileUrl}}</div>
-          </div>
-        </div>
-      </div>
-      <hr/>
-    </div>
       </nz-content>
     </nz-layout>
   </nz-layout>
