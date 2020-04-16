@@ -21,6 +21,10 @@ const routes: Routes = [
     ]
   },
   {
+    path: 'exp',
+    component: ExploreComponent
+  },
+  {
     path: 'cv',
     component: LayoutComponent,
     children: [{ path: '', component: CvComponent }]
