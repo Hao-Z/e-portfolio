@@ -33,17 +33,17 @@ public class ProfileService {
             return new Result<>("404 not found", false, null);
         }
         profile.setUser(targetUser);
-        Profile original = profileRepository.findByUser(targetUser);
-        if (original == null) {
+        Profile originalProfile = profileRepository.findByUser(targetUser);
+        if (originalProfile == null) {
             profileRepository.save(profile);
         } else {
-            profileRepository.save(update(original, profile));
+            profileRepository.save(updateProfile(originalProfile, profile));
         }
         Profile returnedProfile = profileRepository.findByUser(targetUser);
         return new Result<>("200 ok", true, new ProfileDTO(returnedProfile));
     }
 
-    public Profile update(Profile oldProfile, Profile newProfile) {
+    private Profile updateProfile(Profile oldProfile, Profile newProfile) {
         if(newProfile.getBirthday() != null) oldProfile.setBirthday(newProfile.getBirthday());
         if(newProfile.getPhoneNumber() != null) oldProfile.setPhoneNumber(newProfile.getPhoneNumber());
         return oldProfile;
