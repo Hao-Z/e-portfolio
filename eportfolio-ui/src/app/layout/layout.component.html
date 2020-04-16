@@ -11,17 +11,23 @@
                 [nzTrigger]="null">
         <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
           <li nz-menu-item nzMatchRouter>
-            <a routerLink="/cv">My CV</a>
+            <i nz-icon nzType="idcard" nzTheme="outline"></i>
+            <span>My CV</span>
+            <a routerLink="/cv"></a>
           </li>
           <li nz-menu-item nzMatchRouter>
-            <a routerLink="/ma">My Account</a>
+            <i nz-icon nzType="user" nzTheme="outline"></i>
+            <span>My Account</span>
+            <a routerLink="/ma"></a>
           </li>
           <li nz-menu-item nzMatchRouter>
-            <a routerLink="/sts">Security</a>
+            <i nz-icon nzType="safety-certificate" nzTheme="outline"></i>
+            <span>Security</span>
+            <a routerLink="/sts"></a>
           </li>
         </ul>
       </nz-sider>
-        <nz-layout>
+        <nz-layout style="background-color: white">
         <nz-content>
             <router-outlet></router-outlet>
         </nz-content>
