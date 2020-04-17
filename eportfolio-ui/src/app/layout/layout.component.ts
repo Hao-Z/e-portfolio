@@ -7,11 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LayoutComponent implements OnInit {
 
-  isCollapsed : boolean;
+  isCollapsed = window.innerWidth < Number(770);
   constructor() { }
 
   ngOnInit(): void {
-    this.isCollapsed = window.innerWidth < Number(770);
+
   }
 
 }
