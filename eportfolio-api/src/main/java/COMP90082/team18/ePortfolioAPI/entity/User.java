@@ -23,4 +23,6 @@ public class User {
     @NotNull(message = "password cannot be null")
     @Size(min = 6, message = "wrong password size")
     private String password;
+
+    private boolean admin;
 }

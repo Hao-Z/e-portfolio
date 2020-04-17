@@ -10,18 +10,21 @@ public class UserDTO {
     private Long id;
     private String email;
     private String username;
+    private boolean admin;
 
-    public UserDTO(User user){
-        id =user.getId();
+    public UserDTO(User user) {
+        id = user.getId();
         email = user.getEmail();
         username = user.getUsername();
+        admin = user.isAdmin();
     }
 
-    public User toUser(){
+    public User toUser() {
         User user = new User();
         user.setId(id);
         user.setEmail(email);
         user.setUsername(username);
+        user.setAdmin(admin);
         return user;
     }
 }
