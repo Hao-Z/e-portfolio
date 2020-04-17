@@ -17,9 +17,7 @@ public class ProfileService {
     private ProfileRepository profileRepository;
 
     public Result<Object> getProfile(Long id) {
-        User targetUser = new User();
-        targetUser.setId(id);
-        Profile returnedProfile = profileRepository.findByUser(targetUser);
+        Profile returnedProfile = profileRepository.findById(id).orElse(null);
         if (returnedProfile == null) {
             return new Result<>("404 not found", false, null);
         } else {
@@ -28,13 +26,14 @@ public class ProfileService {
     }
 
     public Result<Object> patchProfile(Long id, Profile profile) {
-        User targetUser = userRepository.findById(id).get();
+        User targetUser = userRepository.findById(id).orElse(null);
         if (targetUser == null) {
             return new Result<>("404 not found", false, null);
         }
-        profile.setUser(targetUser);
-        Profile originalProfile = profileRepository.findByUser(targetUser);
+
+        Profile originalProfile = profileRepository.findById(id).orElse(null);
         if (originalProfile == null) {
+            profile.setUser(targetUser);
             profileRepository.save(profile);
         } else {
             profileRepository.save(updateProfile(originalProfile, profile));
