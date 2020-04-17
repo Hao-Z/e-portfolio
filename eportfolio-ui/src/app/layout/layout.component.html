@@ -4,11 +4,11 @@
 
     <nz-layout class="app-layout">
       <nz-sider class="menu-sidebar"
-                nzCollapsible
                 nzWidth="256px"
                 nzBreakpoint="md"
                 [(nzCollapsed)]="isCollapsed"
-                [nzTrigger]="null">
+                [nzTrigger]="null"
+                nzCollapsible>
         <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
           <li nz-menu-item nzMatchRouter>
             <i nz-icon nzType="idcard" nzTheme="outline"></i>
