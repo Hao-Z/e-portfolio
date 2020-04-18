@@ -17,7 +17,7 @@ export class MyAccountComponent implements OnInit {
   profiles_value = new Map<string,any>();
   editable = new Map<string,boolean>();
   controlsConfig : {[key:string]:any} = {};
-  profiles = ['User Name', 'Email', 'Birthday', 'Phone Number'];
+  profiles = ['username', 'email', 'birthday', 'phoneNumber'];
   userid : string ;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private formBuilder: FormBuilder) {
@@ -46,14 +46,20 @@ export class MyAccountComponent implements OnInit {
     });
   }
 
+  Message : any;
   onSubmit(key, value) {
     //TODO:use PATCH to update profiles partially.
+    if(key == 'email'){
+      this.Message = JSON.parse("{\"user\":{\""+key+"\":\""+value+"\"}}")
+    }else{
+      this.Message = JSON.parse("{\""+key+"\":\""+value+"\"}")
+    }
 
-    this.http.patch(globals.backend_path + this.userid + "/profile", value).subscribe((result) => {
+    this.http.patch(globals.backend_path + this.userid + "/profile", this.Message).subscribe((result) => {
       // This code will be executed when the HTTP call returns successfully
     });
 
-    alert('Changes succeed: ' +  key + ":" + value);
+    alert('Changes succeed: ' + JSON.stringify(this.Message));
   }
 
 }
