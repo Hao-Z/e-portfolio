@@ -1,5 +1,5 @@
 import {Component, Injectable, OnInit} from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
 import * as globals from "../../global";
@@ -12,12 +12,13 @@ import * as globals from "../../global";
 
 @Injectable()
 export class MyAccountComponent implements OnInit {
-  isCollapsed = false;
+
   updateForm: FormGroup;
   profiles_value = new Map<string,any>();
   editable = new Map<string,boolean>();
   controlsConfig : {[key:string]:any} = {};
   profiles = ['User Name', 'Email', 'Birthday', 'Phone Number'];
+  userid : string ;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private formBuilder: FormBuilder) {
 
@@ -29,6 +30,7 @@ export class MyAccountComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     // this.getProfile();
     for(let p of this.profiles){
       this.profiles_value.set(p,p+"_value");
@@ -39,16 +41,19 @@ export class MyAccountComponent implements OnInit {
   }
 
   getProfile(){
-    this.http.get(globals.backend_path + "getprofile").subscribe((result:any)=>{
+    this.http.get(globals.backend_path + this.userid + "/profile").subscribe((result:any)=>{
       this.profiles_value = result;
     });
   }
 
   onSubmit(data) {
-    this.http.put(globals.backend_path + "updateprofile", data).subscribe((result) => {
+    //TODO:use PATCH to update profiles partially.
+
+    this.http.patch(globals.backend_path + this.userid + "/profile", data).subscribe((result) => {
       // This code will be executed when the HTTP call returns successfully
     });
-    alert('Changes succeed: ' + JSON.stringify(data));
+
+    alert('Changes succeed: ' +  data);
   }
 
 }

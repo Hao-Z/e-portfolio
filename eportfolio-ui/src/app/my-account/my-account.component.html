@@ -10,7 +10,7 @@
               </nz-input-group>
               <ng-template #items>
                 <button *ngIf="!editable[item] && item!=profiles[0]" type="button" class="btn btn-primary" (click)="editable[item]=!editable[item]" >Edit</button>
-                <button *ngIf="editable[item]" type="button" class="btn btn-primary" (click)="editable[item]=!editable[item];onSubmit(updateForm.value)">Save</button>
+                <button *ngIf="editable[item]" type="button" class="btn btn-primary" (click)="editable[item]=!editable[item];onSubmit(updateForm.value[item])">Save</button>
               </ng-template>
 
               <!-- When input is required>
