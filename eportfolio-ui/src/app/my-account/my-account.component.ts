@@ -2,6 +2,7 @@ import {Component, Injectable, OnInit} from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
+import * as globals from "../../global";
 
 @Component({
   selector: 'app-my-account',
@@ -36,13 +37,13 @@ export class MyAccountComponent implements OnInit {
   }
 
   getProfile(){
-    this.http.get("http://localhost:8080/getprofile").subscribe((result:any)=>{
+    this.http.get(globals.backend_path + "getprofile").subscribe((result:any)=>{
       this.profiles_value = result;
     });
   }
 
   onSubmit(data) {
-    this.http.put("http://localhost:8080/updateprofile", data).subscribe((result) => {
+    this.http.put(globals.backend_path + "updateprofile", data).subscribe((result) => {
       // This code will be executed when the HTTP call returns successfully
     });
     alert('Changes succeed: ' + JSON.stringify(data));

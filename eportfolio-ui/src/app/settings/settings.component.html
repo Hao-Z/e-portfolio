@@ -1,13 +1,50 @@
 <nz-layout style="background-color: white">
-      <div class="row" style="margin-top: 50px">
-        <div class="col-md-6 offset-md-3 col-xs-12">
-          <form>
-            <div class="form-group" *ngFor="let item of settings">
-              <input type="checkbox" [id]=item (click)="checkbox[item] =! checkbox[item];updateSetting(checkbox)">
-              <label style="margin-left: 20px">{{item}}</label>
-            </div>
-            <button class="btn btn-primary">Change password</button>
-          </form>
+  <div class="row" style="margin-top: 50px">
+    <div class="col-md-6 offset-md-3 col-xs-12">
+      <form>
+        <div class="form-group" *ngFor="let item of settings">
+          <input type="checkbox" [id]=item (click)="checkbox[item] =! checkbox[item];updateSetting(checkbox)">
+          <label style="margin-left: 20px">{{item}}</label>
         </div>
-      </div>
+      </form>
+      <form [formGroup]="updatePassword">
+        <div class="form-group" *ngIf="update">
+          <nz-form-label>Current password</nz-form-label>
+          <input type="text" class="form-control" id="Current password" formControlName="Current password" nz-input>
+          <div
+            *ngIf="updatePassword.get('Current password').invalid && (updatePassword.get('Current password').dirty || updatePassword.get('Current password').touched)">
+            <div class="errprompt" *ngIf="updatePassword.get('Current password').errors.required" style="color: red">
+              Password is required.
+            </div>
+          </div>
+
+          <nz-form-label>New password</nz-form-label>
+          <input type="text" class="form-control" id="New password" formControlName="New password" nz-input>
+          <div
+            *ngIf="updatePassword.get('New password').invalid && (updatePassword.get('New password').dirty || updatePassword.get('New password').touched)">
+            <div class="errprompt" *ngIf="updatePassword.get('New password').errors.required" style="color: red">
+              Password is required.
+            </div>
+            <div class="errprompt" *ngIf="updatePassword.get('New password').errors.minlength" style="color: red">
+              Password must be at least 6 characters.
+            </div>
+          </div>
+
+          <nz-form-label>Confirm password</nz-form-label>
+          <input type="text" class="form-control" id="Confirm password" formControlName="Confirm password" nz-input>
+          <div
+            *ngIf="updatePassword.get('Confirm password').invalid && (updatePassword.get('Confirm password').dirty || updatePassword.get('Confirm password').touched)">
+            <div class="errprompt" *ngIf="updatePassword.get('Confirm password').errors.required" style="color: red">
+              Please confirm new password.
+            </div>
+            <div class="errprompt" *ngIf="updatePassword.get('Confirm password').errors" style="color: red">
+              Two passwords didn't match.
+            </div>
+          </div>
+        </div>
+        <button type="button" class="btn btn-primary" *ngIf="update" [disabled]="updatePassword.invalid" (click)="update = !update; onSubmit(updatePassword.value)">Save new password</button>
+        <button type="button" class="btn btn-primary" *ngIf="!update" (click)="update = !update">Change password</button>
+      </form>
+    </div>
+  </div>
 </nz-layout>
