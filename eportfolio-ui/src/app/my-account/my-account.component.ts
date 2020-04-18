@@ -46,14 +46,14 @@ export class MyAccountComponent implements OnInit {
     });
   }
 
-  onSubmit(data) {
+  onSubmit(key, value) {
     //TODO:use PATCH to update profiles partially.
 
-    this.http.patch(globals.backend_path + this.userid + "/profile", data).subscribe((result) => {
+    this.http.patch(globals.backend_path + this.userid + "/profile", value).subscribe((result) => {
       // This code will be executed when the HTTP call returns successfully
     });
 
-    alert('Changes succeed: ' +  data);
+    alert('Changes succeed: ' +  key + ":" + value);
   }
 
 }
