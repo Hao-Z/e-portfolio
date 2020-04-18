@@ -62,6 +62,7 @@ export class SettingsComponent implements OnInit {
   onSubmit(data) {
     this.http.post(globals.backend_path + "signup", data).subscribe((result) => {
       // do sth when HTTP post returns sucessfully
+      this.update = !this.update;
     });
     alert('You ve submitted' + JSON.stringify(data));
   }
