@@ -20,6 +20,8 @@ export class MyAccountComponent implements OnInit {
   profiles = ['User Name', 'Email', 'Birthday', 'Phone Number'];
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private formBuilder: FormBuilder) {
+
+    //TODO: Specify each input field.
     for(let p of this.profiles){
       this.controlsConfig[p] = [''];
     }
