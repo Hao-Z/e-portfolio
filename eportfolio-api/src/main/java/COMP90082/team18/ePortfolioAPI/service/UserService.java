@@ -5,7 +5,6 @@ import COMP90082.team18.ePortfolioAPI.entity.User;
 import COMP90082.team18.ePortfolioAPI.repository.UserRepository;
 import COMP90082.team18.ePortfolioAPI.security.JWTMethod;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +23,7 @@ public class UserService {
             userRepository.save(user);
             res.setMsg("200 ok");
             res.setSuccess(true);
-            String token = JWTMethod.create(user.getUsername());
+            String token = JWTMethod.create(user);
             response.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
         }
         else{
