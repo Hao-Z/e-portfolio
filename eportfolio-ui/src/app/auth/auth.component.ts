@@ -1,8 +1,8 @@
 import {Component, Injectable, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {AbstractControl, FormControl, FormGroup, ValidatorFn, Validators} from "@angular/forms";
-import {HttpClient} from '@angular/common/http';
-import {Subscription} from "rxjs";
+import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
+import {Observable, Subscription} from "rxjs";
 import * as globals from '../../global';
 
 @Component({
@@ -52,10 +52,33 @@ export class AuthComponent implements OnInit {
     };
   }
 
+  login(username: string, password: string) {
+    let body = JSON.stringify({ username: username, password: password});
+    this.http.post(globals.backend_path + "login", body)
+      .subscribe(
+        (response: Response) => {
+          localStorage.setItem('id_token', response.headers.get("Authorization"));
+          alert(response.headers.get("Authorization"));
+        },
+        error => {
+          alert(error);
+        }
+      );
+  }
+
+
   onSubmit(data) {
-    this.http.post(globals.backend_path + "signup", data).subscribe((result) => {
-      // do sth when HTTP post returns sucessfully
-    });
+    if(this.reqType == 'login'){
+      this.login(data.username, data.password)
+    }
+    else{
+      this.http.post<Response>(globals.backend_path + "signup", data, {
+        observe: 'response'
+      }).subscribe(response => {
+        alert(response.headers.get("Authorization"));
+      });
+    }
+
     alert('You ve submitted' + JSON.stringify(data));
   }
 }
