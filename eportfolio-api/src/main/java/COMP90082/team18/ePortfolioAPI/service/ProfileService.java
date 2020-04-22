@@ -7,6 +7,7 @@ import COMP90082.team18.ePortfolioAPI.entity.User;
 import COMP90082.team18.ePortfolioAPI.repository.ProfileRepository;
 import COMP90082.team18.ePortfolioAPI.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,6 +26,7 @@ public class ProfileService {
         }
     }
 
+    @PreAuthorize("hasPermission(#id, 'write')")
     public Result<Object> patchProfile(Long id, Profile profile) {
         User targetUser = userRepository.findById(id).orElse(null);
         if (targetUser == null) {
