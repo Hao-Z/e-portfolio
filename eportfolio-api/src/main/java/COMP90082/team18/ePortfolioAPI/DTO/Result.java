@@ -1,4 +1,4 @@
-package COMP90082.team18.ePortfolioAPI.entity;
+package COMP90082.team18.ePortfolioAPI.DTO;
 
 import lombok.Data;
 
