@@ -1,6 +1,6 @@
-package COMP90082.team18.ePortfolioAPI.service;
+package COMP90082.team18.ePortfolioAPI.service.serviceImplement;
 
-import COMP90082.team18.ePortfolioAPI.entity.Result;
+import COMP90082.team18.ePortfolioAPI.DTO.Result;
 import COMP90082.team18.ePortfolioAPI.entity.User;
 import COMP90082.team18.ePortfolioAPI.repository.UserRepository;
 import COMP90082.team18.ePortfolioAPI.security.JWTMethod;
