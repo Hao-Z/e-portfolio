@@ -1,8 +1,9 @@
 package COMP90082.team18.ePortfolioAPI.security;
 
+import COMP90082.team18.ePortfolioAPI.entity.User;
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.interfaces.Claim;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
 
 import java.io.UnsupportedEncodingException;
 import java.security.KeyFactory;
@@ -14,6 +15,7 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 import java.util.Date;
+import java.util.Map;
 
 import static COMP90082.team18.ePortfolioAPI.security.SecurityConstants.*;
 import static com.auth0.jwt.algorithms.Algorithm.RSA256;
@@ -24,24 +26,33 @@ public class JWTMethod {
     private static RSAPrivateKey privateKey;
 
     public static String create(Authentication auth) {
+        UserPrincipal user = (UserPrincipal) auth.getPrincipal();
         return JWT.create()
-                .withSubject(((User) auth.getPrincipal()).getUsername())
+                .withClaim("id", user.getId())
+                .withClaim("username", user.getUsername())
+                .withClaim("admin", user.isAdmin())
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .sign(RSA256(publicKey(), privateKey()));
     }
 
-    public static String create(String username) {
+    public static String create(User user) {
         return JWT.create()
-                .withSubject(username)
+                .withClaim("id", user.getId())
+                .withClaim("username", user.getUsername())
+                .withClaim("admin", user.isAdmin())
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .sign(RSA256(publicKey(), privateKey()));
     }
 
-    public static String parse(String token) {
-        return JWT.require(RSA256(publicKey(), privateKey()))
+    public static User parse(String token) {
+        Map<String, Claim> claimMap = JWT.require(RSA256(publicKey(), privateKey()))
                 .build()
-                .verify(token.replace(TOKEN_PREFIX, ""))
-                .getSubject();
+                .verify(token.replace(TOKEN_PREFIX, "")).getClaims();
+        User user = new User();
+        user.setId(claimMap.get("id").asLong());
+        user.setUsername(claimMap.get("username").asString());
+        user.setAdmin(claimMap.get("admin").asBoolean());
+        return user;
     }
 
     private static RSAPublicKey publicKey() {
