@@ -1,7 +1,7 @@
 package COMP90082.team18.ePortfolioAPI.controller;
 
 import COMP90082.team18.ePortfolioAPI.DTO.ProfileDTO;
-import COMP90082.team18.ePortfolioAPI.entity.Result;
+import COMP90082.team18.ePortfolioAPI.DTO.Result;
 import COMP90082.team18.ePortfolioAPI.service.ProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
