@@ -1,9 +1,10 @@
 import {Component, Injectable, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {AbstractControl, FormControl, FormGroup, ValidatorFn, Validators} from "@angular/forms";
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {Observable, Subscription} from "rxjs";
 import * as globals from '../../global';
+import {refreshJwt} from "../../global";
 
 @Component({
   templateUrl: './auth.component.html',
@@ -16,24 +17,34 @@ export class AuthComponent implements OnInit {
   mainForm: FormGroup;
   title: String = '';
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient) {
   }
 
   ngOnInit() {
+    refreshJwt()
     this.mainForm = new FormGroup({
       'username': new FormControl('', [Validators.required, Validators.minLength(3)]),
       'password': new FormControl('', [Validators.required, Validators.minLength(6)]),
     });
 
     this.route.url.subscribe(data => {
-      this.reqType = data[data.length - 1].path; // get a string that is either 'login' or 'register' from the current URL
-      this.title = (this.reqType === 'login') ? 'Sign in' : 'Sign up';
+      this.reqType = data[data.length - 1].path; // get a string that is either 'login', 'logoff' or 'register' from the current URL
+      this.title = (this.reqType === 'register') ? 'Sign up' : 'Sign in';
       if (this.reqType === 'register') {
         this.mainForm.addControl('email', new FormControl('',
           [Validators.required, Validators.email]));
         this.mainForm.addControl('confirmPass', new FormControl('',
           [Validators.required, this.matchPassword('password')]
         ));
+      }
+      else if (this.reqType == 'logoff'){
+          localStorage.clear()
+          refreshJwt()
+          this.router.navigateByUrl("/login")
+      }
+      else{
+        if(globals.username != null)
+          this.router.navigateByUrl("/cv")
       }
     });
   }
@@ -53,17 +64,27 @@ export class AuthComponent implements OnInit {
   }
 
   login(username: string, password: string) {
-    let body = JSON.stringify({ username: username, password: password});
-    this.http.post(globals.backend_path + "login", body)
-      .subscribe(
-        (response: Response) => {
-          localStorage.setItem('id_token', response.headers.get("Authorization"));
-          alert(response.headers.get("Authorization"));
+    let body = JSON.stringify({ username: username, password: password });
+
+    this.http.post<any>(globals.backend_path + "login", body, {
+      observe: 'response',
+    }).subscribe(
+        (resp) => {
+          if(resp.body.success == true) {
+            localStorage.setItem('jwt_token', resp.headers.get("Authorization"));
+            alert("Login successful, this is your jwt \n" + resp.headers.get("Authorization"));
+            this.router.navigateByUrl("/cv")
+            refreshJwt()
+          }
+          else{
+            this.mainForm.reset()
+            alert("Login failed \n" + resp.body.msg)
+          }
         },
-        error => {
-          alert(error);
-        }
-      );
+        () =>{
+          this.mainForm.reset()
+          alert("unexpected error, login failed")
+        })
   }
 
 
@@ -72,10 +93,10 @@ export class AuthComponent implements OnInit {
       this.login(data.username, data.password)
     }
     else{
-      this.http.post<Response>(globals.backend_path + "signup", data, {
-        observe: 'response'
-      }).subscribe(response => {
-        alert(response.headers.get("Authorization"));
+      this.http.post<any>(globals.backend_path + "signup", data, {
+        observe: 'response',
+      }).subscribe(resp => {
+        alert(resp.headers.get("Authorization"))
       });
     }
 

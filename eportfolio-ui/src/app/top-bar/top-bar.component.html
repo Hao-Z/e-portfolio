@@ -10,8 +10,14 @@
       <li class="nav-item active" style="font-size:14px">
         <a [routerLink]="['/exp']" class="nav-link" href="#">Explore</a>
       </li>
+
     </ul>
-    <a [routerLink]="['/login']" class="btn btn-light" style="font-size:14px">Sign in/Sign up</a>
-    <a [routerLink]="['/cv']" class="btn btn-light" style="margin-left: 20px; font-size:14px">My Profile</a>
+    <ul class="navbar-nav">
+      <a [routerLink]="['/login']" *ngIf="!isLoggedIn" class="nav-item active nav-link" style="font-size:14px">Sign in/Sign up</a>
+      <span *ngIf="isLoggedIn" class="nav-item active nav-link" style="font-size:14px">Welcome {{username}} </span>
+      <a [routerLink]="['/cv']" *ngIf="isLoggedIn" class="nav-item active nav-link" style="font-size:14px">My Profile</a>
+      <a [routerLink]="['/logoff']" *ngIf="isLoggedIn" class="nav-item active nav-link" style="font-size:14px">Sign Out</a>
+    </ul>
+
   </div>
 </nav>

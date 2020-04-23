@@ -18,13 +18,14 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public Result<Object> signUp(User user, Result<Object> res, HttpServletResponse response) {
+    public Result<Object> signUp(User user, Result<Object> res, HttpServletResponse resp) {
         if(checkUsername(user.getUsername())){
             userRepository.save(user);
             res.setMsg("200 ok");
             res.setSuccess(true);
             String token = JWTMethod.create(user);
-            response.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
+            resp.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
+            resp.addHeader("Access-Control-Expose-Headers", "Authorization");
         }
         else{
             res.setMsg("400 bad request; duplicated username");
