@@ -29,3 +29,5 @@ out/
 
 ### VS Code ###
 .vscode/
+eportfolio-api/bin/
+eportfolio-ui/node_modules/
