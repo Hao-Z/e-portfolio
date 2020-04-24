@@ -9,6 +9,7 @@ public class SecurityConstants {
     public static final String TOKEN_PREFIX = "Bearer ";
     public static final String HEADER_STRING = "Authorization";
     public static final String SIGN_UP_URL = "/signup";
+    public static final String SIGN_IN_URL = "/login";
 
     public static final String PRIVATE_KEY =
             "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAJ5zd3/EG9EnrMwv" +

@@ -17,6 +17,7 @@ const routes: Routes = [
       { path: 'welcome', component: HomeComponent },
       { path: 'login', component: AuthComponent },
       { path: 'register', component: AuthComponent },
+      { path: 'logoff', component: AuthComponent },
       { path: '', redirectTo: 'welcome', pathMatch: 'full' }
     ]
   },
