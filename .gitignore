@@ -25,7 +25,8 @@ out/
 /nbbuild/
 /dist/
 /nbdist/
-/.nb-gradle/
+/.nb-gradle/netstat -ano+
+
 
 ### VS Code ###
 .vscode/
