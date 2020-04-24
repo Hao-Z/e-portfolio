@@ -132,5 +132,8 @@
       }
     }
   },
-  "defaultProject": "eportfolio-ui"
+  "defaultProject": "eportfolio-ui",
+  "cli": {
+    "analytics": "f6669bbd-af64-4410-a478-c21290c80703"
+  }
 }
