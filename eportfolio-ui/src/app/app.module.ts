@@ -21,7 +21,7 @@ import { CvComponent } from './cv/cv.component';
 import { LayoutComponent } from './layout/layout.component';
 import { CvEducationComponent } from './cv-education/cv-education.component';
 import { CvIntroComponent } from './cv-intro/cv-intro.component';
-
+import { AngularFullpageModule } from '@fullpage/angular-fullpage';
 registerLocaleData(zh);
 
 @NgModule({
@@ -47,7 +47,8 @@ registerLocaleData(zh);
     NgZorroAntdModule,
     IconsProviderModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AngularFullpageModule
   ],
   providers: [],
   bootstrap: [AppComponent]
