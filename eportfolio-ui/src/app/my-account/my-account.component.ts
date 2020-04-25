@@ -3,6 +3,9 @@ import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
 import * as globals from "../../global";
+import {jwt} from "../../global";
+import {username} from "../../global";
+import {userID} from "../../global";
 
 @Component({
   selector: 'app-my-account',
@@ -18,7 +21,6 @@ export class MyAccountComponent implements OnInit {
   editable = new Map<string,boolean>();
   controlsConfig : {[key:string]:any} = {};
   profiles = ['username', 'email', 'birthday', 'phoneNumber'];
-  userid : string ;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private formBuilder: FormBuilder) {
 
@@ -41,25 +43,30 @@ export class MyAccountComponent implements OnInit {
   }
 
   getProfile(){
-    this.http.get(globals.backend_path + this.userid + "/profile").subscribe((result:any)=>{
-      this.profiles_value = result;
+    this.http.get<any>(globals.backend_path + userID + "/profile",{
+      observe: 'response',
+    }).subscribe((result:any)=>{
+      this.profiles_value = result.body;
     });
   }
 
-  Message : any;
+  data:any;
   onSubmit(key, value) {
     //TODO:use PATCH to update profiles partially.
     if(key == 'email'){
-      this.Message = JSON.parse("{\"user\":{\""+key+"\":\""+value+"\"}}")
+      this.data = {"user":{key:value}};
     }else{
-      this.Message = JSON.parse("{\""+key+"\":\""+value+"\"}")
+      this.data = {key:value};
     }
 
-    this.http.patch(globals.backend_path + this.userid + "/profile", this.Message).subscribe((result) => {
+    this.http.patch<any>(globals.backend_path + userID + "/profile", this.data, {
+      observe: 'response',
+    }).subscribe((result) => {
       // This code will be executed when the HTTP call returns successfully
+      alert(result.headers.get("Authorization"))
     });
 
-    alert('Changes succeed: ' + JSON.stringify(this.Message));
+    alert('Changes succeed: ' + JSON.stringify(this.data));
   }
 
 }
