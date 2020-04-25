@@ -27,8 +27,6 @@ public class IntroductionDTO {
     private String address;
     private File profilePhoto;
     private String phoneNumber;
-    @JsonProperty("user")
-    private UserDTO userDTO;
 
     public IntroductionDTO(Profile profile) {
         firstName = profile.getFirstName();
@@ -44,7 +42,6 @@ public class IntroductionDTO {
         address = profile.getAddress();
         profilePhoto = profile.getProfilePhoto();
         phoneNumber = profile.getPhoneNumber();
-        userDTO = new UserDTO(profile.getUser());
     }
 
     public Profile toProfile() {
@@ -62,7 +59,6 @@ public class IntroductionDTO {
         profile.setAddress(address);
         profile.setProfilePhoto(profilePhoto);
         profile.setPhoneNumber(phoneNumber);
-        profile.setUser(userDTO == null ? null : userDTO.toUser());
         return profile;
     }
 }

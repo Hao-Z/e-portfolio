@@ -9,6 +9,7 @@ import COMP90082.team18.ePortfolioAPI.entity.User;
 import COMP90082.team18.ePortfolioAPI.repository.ProfileRepository;
 import COMP90082.team18.ePortfolioAPI.repository.UserRepository;
 import COMP90082.team18.ePortfolioAPI.service.ProfileService;
+import COMP90082.team18.ePortfolioAPI.util.ObjectMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -42,7 +43,7 @@ public class ProfileServiceImp implements ProfileService {
             profile.setUser(targetUser);
             profileRepository.save(profile);
         } else {
-            profileRepository.save(originalProfile.update(profile));
+            profileRepository.save(ObjectMethod.update(originalProfile, profile));
         }
         Profile returnedProfile = profileRepository.findByUser(targetUser);
         return new Result<>("200 ok", true, new ProfileDTO(returnedProfile));
@@ -70,7 +71,7 @@ public class ProfileServiceImp implements ProfileService {
             profile.setUser(targetUser);
             profileRepository.save(profile);
         } else {
-            profileRepository.save(originalProfile.update(profile));
+            profileRepository.save(ObjectMethod.update(originalProfile, profile));
         }
         Profile returnedProfile = profileRepository.findByUser(targetUser);
         return new Result<>("200 ok", true, new IntroductionDTO(returnedProfile));
@@ -98,7 +99,7 @@ public class ProfileServiceImp implements ProfileService {
             profile.setUser(targetUser);
             profileRepository.save(profile);
         } else {
-            profileRepository.save(originalProfile.update(profile));
+            profileRepository.save(ObjectMethod.update(originalProfile, profile));
         }
         Profile returnedProfile = profileRepository.findByUser(targetUser);
         return new Result<>("200 ok", true, new AboutDTO(returnedProfile));
