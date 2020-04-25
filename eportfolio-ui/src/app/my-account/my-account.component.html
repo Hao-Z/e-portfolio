@@ -1,28 +1,72 @@
- <nz-layout style="background-color: white">
-      <div class="row" style="margin-top: 50px">
-        <div class="col-md-6 offset-md-3 col-xs-12">
-          <form [formGroup]="updateForm">
-            <div class="form-group" *ngFor="let item of profiles" >
-              <nz-form-label>{{item}}</nz-form-label>
-              <nz-input-group nzSearch [nzAddOnAfter]=items>
-                <input *ngIf="editable[item]" type="text" class="form-control" [id]=item [formControlName]=item nz-input [ngModel]="profiles_value.get(item)">
-                <input *ngIf="!editable[item]" class="form-control" [placeholder]="profiles_value.get(item)" [disabled]="true" />
-              </nz-input-group>
-              <ng-template #items>
-                <button *ngIf="!editable[item] && item!=profiles[0]" type="button" class="btn btn-primary" (click)="editable[item]=!editable[item]" >Edit</button>
-                <button *ngIf="editable[item]" type="button" class="btn btn-primary" (click)="editable[item]=!editable[item];onSubmit(item, updateForm.value[item])">Save</button>
-              </ng-template>
-
-              <!-- When input is required>
-              <div *ngIf="updateForm.get(item).invalid && (updateForm.get(item).dirty || updateForm.get(item).touched)">
-                <div style="color: red" class="errprompt" *ngIf="updateForm.get(item).errors">
-                  {{item}} must not be empty.
-                </div>
-              </div>
-              -->
-
-            </div>
-          </form>
+<nz-layout style="background-color: white">
+  <div class="row" style="margin-top: 50px">
+    <div class="col-md-6 offset-md-3 col-xs-12">
+      <form [formGroup]="updateForm">
+        <div class="form-group">
+          <nz-form-label>User Name</nz-form-label>
+          <nz-input-group nzSearch>
+            <input *ngIf="editable['username']" type="text" class="form-control" id='username' formControlName='username' nz-input [ngModel]="profiles_value['username']">
+            <input *ngIf="!editable['username']" class="form-control" [placeholder]="profiles_value['username']" [disabled]="true" />
+          </nz-input-group>
         </div>
-      </div>
-    </nz-layout>
+
+        <div class="form-group">
+          <nz-form-label>Email</nz-form-label>
+          <nz-input-group nzSearch [nzAddOnAfter]=Email>
+            <input *ngIf="editable['email']" type="text" class="form-control" id='email' formControlName='email' nz-input [ngModel]="profiles_value['email']">
+            <input *ngIf="!editable['email']" class="form-control" [placeholder]="profiles_value['email']" [disabled]="true" />
+          </nz-input-group>
+          <ng-template #Email>
+            <button *ngIf="!editable['email']" type="button" class="btn btn-primary" (click)="editable['email']=!editable['email']" >Edit</button>
+            <button *ngIf="editable['email']" type="button" class="btn btn-primary" (click)="editable['email']=!editable['email'];onSubmit('email', updateForm.value['email'])">Save</button>
+          </ng-template>
+        </div>
+
+        <div class="form-group">
+          <nz-form-label>Birthday</nz-form-label>
+          <nz-input-group nzSearch [nzAddOnAfter]=Birthday>
+            <input *ngIf="editable['birthday']" type="text" class="form-control" id='birthday' formControlName='birthday' nz-input [ngModel]="profiles_value['birthday']">
+            <input *ngIf="!editable['birthday']" class="form-control" [placeholder]="profiles_value['birthday']" [disabled]="true" />
+          </nz-input-group>
+          <ng-template #Birthday>
+            <button *ngIf="!editable['birthday']" type="button" class="btn btn-primary" (click)="editable['birthday']=!editable['birthday']" >Edit</button>
+            <button *ngIf="editable['birthday']" type="button" class="btn btn-primary" (click)="editable['birthday']=!editable['birthday'];onSubmit('birthday', updateForm.value['birthday'])">Save</button>
+          </ng-template>
+        </div>
+
+        <div class="form-group">
+          <nz-form-label>Phone Number</nz-form-label>
+          <nz-input-group nzSearch [nzAddOnAfter]=PhoneNumber>
+            <input *ngIf="editable['phoneNumber']" type="text" class="form-control" id='phoneNumber' formControlName='phoneNumber' nz-input [ngModel]="profiles_value['phoneNumber']">
+            <input *ngIf="!editable['phoneNumber']" class="form-control" [placeholder]="profiles_value['phoneNumber']" [disabled]="true" />
+          </nz-input-group>
+          <ng-template #PhoneNumber>
+            <button *ngIf="!editable['phoneNumber']" type="button" class="btn btn-primary" (click)="editable['phoneNumber']=!editable['phoneNumber']" >Edit</button>
+            <button *ngIf="editable['phoneNumber']" type="button" class="btn btn-primary" (click)="editable['phoneNumber']=!editable['phoneNumber'];onSubmit('phoneNumber', updateForm.value['phoneNumber'])">Save</button>
+          </ng-template>
+        </div>
+        <!--
+        <div class="form-group" *ngFor="let item of profiles" >
+          <nz-form-label>{{item}}</nz-form-label>
+          <nz-input-group nzSearch [nzAddOnAfter]=items>
+            <input *ngIf="editable[item]" type="text" class="form-control" [id]=item [formControlName]=item nz-input [ngModel]="profiles_value.get(item)">
+            <input *ngIf="!editable[item]" class="form-control" [placeholder]="profiles_value.get(item)" [disabled]="true" />
+          </nz-input-group>
+          <ng-template #items>
+            <button *ngIf="!editable[item] && item!=profiles[0]" type="button" class="btn btn-primary" (click)="editable[item]=!editable[item]" >Edit</button>
+            <button *ngIf="editable[item]" type="button" class="btn btn-primary" (click)="editable[item]=!editable[item];onSubmit(item, updateForm.value[item])">Save</button>
+          </ng-template>
+
+          When input is required:
+          <div *ngIf="updateForm.get(item).invalid && (updateForm.get(item).dirty || updateForm.get(item).touched)">
+            <div style="color: red" class="errprompt" *ngIf="updateForm.get(item).errors">
+              {{item}} must not be empty.
+            </div>
+          </div>
+
+        </div>
+        -->
+      </form>
+    </div>
+  </div>
+</nz-layout>
