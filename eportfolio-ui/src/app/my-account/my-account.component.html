@@ -9,7 +9,6 @@
             <input *ngIf="!editable['username']" class="form-control" [placeholder]="profiles_value['username']" [disabled]="true" />
           </nz-input-group>
         </div>
-
         <div class="form-group">
           <nz-form-label>Email</nz-form-label>
           <nz-input-group nzSearch [nzAddOnAfter]=Email>
@@ -20,12 +19,19 @@
             <button *ngIf="!editable['email']" type="button" class="btn btn-primary" (click)="editable['email']=!editable['email']" >Edit</button>
             <button *ngIf="editable['email']" type="button" class="btn btn-primary" (click)="editable['email']=!editable['email'];onSubmit('email', updateForm.value['email'])">Save</button>
           </ng-template>
+          <div
+            *ngIf="editable['email']">
+            <div class="errprompt" *ngIf="updateForm.get('email').invalid && (updateForm.get('email').dirty || updateForm.get('email').touched)" style="color: red">
+              Email form is invalid.
+            </div>
+          </div>
         </div>
 
         <div class="form-group">
           <nz-form-label>Birthday</nz-form-label>
+
           <nz-input-group nzSearch [nzAddOnAfter]=Birthday>
-            <input *ngIf="editable['birthday']" type="text" class="form-control" id='birthday' formControlName='birthday' nz-input [ngModel]="profiles_value['birthday']">
+            <input *ngIf="editable['birthday']" type="date" class="form-control" id='birthday' formControlName='birthday' nz-input [ngModel]="profiles_value['birthday']">
             <input *ngIf="!editable['birthday']" class="form-control" [placeholder]="profiles_value['birthday']" [disabled]="true" />
           </nz-input-group>
           <ng-template #Birthday>
