@@ -10,6 +10,7 @@ import COMP90082.team18.ePortfolioAPI.repository.ProfileRepository;
 import COMP90082.team18.ePortfolioAPI.repository.UserRepository;
 import COMP90082.team18.ePortfolioAPI.service.ProfileService;
 import COMP90082.team18.ePortfolioAPI.util.ObjectMethod;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,8 @@ public class ProfileServiceImp implements ProfileService {
     private UserRepository userRepository;
     @Autowired
     private ProfileRepository profileRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @PreAuthorize("hasPermission(#id, 'read')")
     public Result<ProfileDTO> getProfile(Long id) {
@@ -27,7 +30,7 @@ public class ProfileServiceImp implements ProfileService {
         if (returnedProfile == null) {
             return new Result<>("404 not found", false, null);
         } else {
-            return new Result<>("200 ok", true, new ProfileDTO(returnedProfile));
+            return new Result<>("200 ok", true, modelMapper.map(returnedProfile, ProfileDTO.class));
         }
     }
 
@@ -46,7 +49,7 @@ public class ProfileServiceImp implements ProfileService {
             profileRepository.save(ObjectMethod.update(originalProfile, profile));
         }
         Profile returnedProfile = profileRepository.findByUser(targetUser);
-        return new Result<>("200 ok", true, new ProfileDTO(returnedProfile));
+        return new Result<>("200 ok", true, modelMapper.map(returnedProfile, ProfileDTO.class));
     }
 
     @PreAuthorize("hasPermission(#id, 'read')")
@@ -55,7 +58,7 @@ public class ProfileServiceImp implements ProfileService {
         if (returnedProfile == null) {
             return new Result<>("404 not found", false, null);
         } else {
-            return new Result<>("200 ok", true, new IntroductionDTO(returnedProfile));
+            return new Result<>("200 ok", true, modelMapper.map(returnedProfile, IntroductionDTO.class));
         }
     }
 
@@ -74,7 +77,7 @@ public class ProfileServiceImp implements ProfileService {
             profileRepository.save(ObjectMethod.update(originalProfile, profile));
         }
         Profile returnedProfile = profileRepository.findByUser(targetUser);
-        return new Result<>("200 ok", true, new IntroductionDTO(returnedProfile));
+        return new Result<>("200 ok", true, modelMapper.map(returnedProfile, IntroductionDTO.class));
     }
 
     @PreAuthorize("hasPermission(#id, 'read')")
@@ -83,7 +86,7 @@ public class ProfileServiceImp implements ProfileService {
         if (returnedProfile == null) {
             return new Result<>("404 not found", false, null);
         } else {
-            return new Result<>("200 ok", true, new AboutDTO(returnedProfile));
+            return new Result<>("200 ok", true, modelMapper.map(returnedProfile, AboutDTO.class));
         }
     }
 
@@ -102,7 +105,7 @@ public class ProfileServiceImp implements ProfileService {
             profileRepository.save(ObjectMethod.update(originalProfile, profile));
         }
         Profile returnedProfile = profileRepository.findByUser(targetUser);
-        return new Result<>("200 ok", true, new AboutDTO(returnedProfile));
+        return new Result<>("200 ok", true, modelMapper.map(returnedProfile, AboutDTO.class));
     }
 
 }
