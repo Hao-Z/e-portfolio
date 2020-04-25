@@ -38,7 +38,7 @@ export class MyAccountComponent implements OnInit {
     this.profiles_value = {
       'username': 'un',
       'email': 'e',
-      'birthday': 'bd',
+      'birthday': '1999-12-30',
       'phoneNumber': 'pn',
     };
     for(let p of this.profiles){
@@ -72,7 +72,7 @@ export class MyAccountComponent implements OnInit {
       this.profiles_value[key] = value;
       alert(result.headers.get("Authorization"))
     });
-    //this.profiles_value[key] = value;
+    this.profiles_value[key] = value;
     alert('Changes succeed: ' + JSON.stringify(this.data));
   }
 
