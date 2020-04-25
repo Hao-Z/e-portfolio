@@ -36,10 +36,10 @@ export class MyAccountComponent implements OnInit {
     refreshJwt();
     // this.getProfile();
     this.profiles_value = {
-      'username': 'un',
-      'email': 'e',
+      'username': 'Demo',
+      'email': 'demo@demo.com',
       'birthday': '1999-12-30',
-      'phoneNumber': 'pn',
+      'phoneNumber': '0455555555',
     };
     for(let p of this.profiles){
       this.editable.set(p,false);
