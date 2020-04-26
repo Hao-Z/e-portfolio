@@ -10,7 +10,7 @@ const userDatas = {
   email: 'chuqiao.chen@gmail.com',
   phone: '(61)0400000000',
   profileUrl: 'www.xxxx.xxxxxxxxxxxx.xxx'
-  }
+  };
 
 @Component({
   selector: 'app-cv',
