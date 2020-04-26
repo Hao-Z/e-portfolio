@@ -88,4 +88,12 @@ export class SettingsComponent implements OnInit {
     this.update = !this.update; //delete
     alert('You ve submitted' + JSON.stringify(this.message));
   }
+
+  cancel(){
+    this.updatePassword = this.formBuilder.group({
+      "Current password" : ['',Validators.required],
+      "New password" : ['',[Validators.required, Validators.minLength(6)]],
+      "Confirm password" : ['',[Validators.required, this.matchPassword('New password')]],
+    });
+  }
 }
