@@ -48,7 +48,7 @@ export class MyAccountComponent implements OnInit {
 
   getProfile(){
     refreshJwt();
-    this.http.get<any>(globals.backend_path + userID + "/profile",{
+    this.http.get<any>(globals.backend_path + "/users/" + userID + "/profile",{
       observe: 'response',
     }).subscribe((result:any)=>{
       this.profiles_value = result.body;
@@ -65,7 +65,7 @@ export class MyAccountComponent implements OnInit {
       this.data = {[key]:value};
     }
 
-    this.http.patch<any>(globals.backend_path + userID + "/profile", this.data, {
+    this.http.patch<any>(globals.backend_path + "/users/" + userID + "/profile", this.data, {
       observe: 'response',
     }).subscribe((result) => {
       // This code will be executed when the HTTP call returns successfully

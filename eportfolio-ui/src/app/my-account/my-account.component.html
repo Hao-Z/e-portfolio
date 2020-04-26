@@ -22,7 +22,7 @@
           </ng-template>
           <div
             *ngIf="editable['email']">
-            <div class="errprompt" *ngIf="updateForm.get('email').invalid && (updateForm.get('email').dirty || updateForm.get('email').touched)" style="color: red">
+            <div class="errprompt" *ngIf="updateForm.get('email').invalid && (updateForm.get('email').dirty || updateForm.get('email').touched)">
               Email form is invalid.
             </div>
           </div>
@@ -54,7 +54,7 @@
           </ng-template>
           <div
             *ngIf="editable['phoneNumber']">
-            <div class="errprompt" *ngIf="updateForm.get('phoneNumber').invalid && (updateForm.get('phoneNumber').dirty || updateForm.get('phoneNumber').touched)" style="color: red">
+            <div class="errprompt" *ngIf="updateForm.get('phoneNumber').invalid && (updateForm.get('phoneNumber').dirty || updateForm.get('phoneNumber').touched)">
               Phone number is invalid.
             </div>
           </div>

@@ -4,6 +4,7 @@ import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from "
 import validate = WebAssembly.validate;
 import {Subscription} from "rxjs";
 import * as globals from "../../global";
+import {userID} from "../../global";
 
 @Component({
   selector: 'app-settings',
@@ -34,7 +35,7 @@ export class SettingsComponent implements OnInit {
   }
 
   getSetting(){
-    this.http.get(globals.backend_path + "getsecurity",{
+    this.http.get(globals.backend_path + "/users/" + userID + "/security",{
       observe: 'response',
     }).subscribe((result:any)=>{
       this.checkbox['private'] = result.body['private'];
@@ -42,7 +43,7 @@ export class SettingsComponent implements OnInit {
   }
 
   updateSecurity(data) {
-    this.http.put(globals.backend_path + "updatesecurity", data, {
+    this.http.patch(globals.backend_path + "/users/" + userID + "/security", data, {
       observe: 'response',
     }).subscribe((result) => {
       // This code will be executed when the HTTP call returns successfully
@@ -64,8 +65,13 @@ export class SettingsComponent implements OnInit {
     };
   }
 
+  message : any;
   updatePW(data) {
-    this.http.post(globals.backend_path + "signup", data).subscribe((result) => {
+    this.message = {
+      'currentPassword':data['Current password'],
+      'newPassword':data['New password']
+    };
+    this.http.post(globals.backend_path + "/users/" + userID + "/update-password", this.message).subscribe((result) => {
       // do sth when HTTP post returns sucessfully
       this.updatePassword = this.formBuilder.group({
         "Current password" : ['',Validators.required],
@@ -80,6 +86,6 @@ export class SettingsComponent implements OnInit {
       "Confirm password" : ['',[Validators.required, this.matchPassword('New password')]],
     });
     this.update = !this.update; //delete
-    alert('You ve submitted' + JSON.stringify(data));
+    alert('You ve submitted' + JSON.stringify(this.message));
   }
 }
