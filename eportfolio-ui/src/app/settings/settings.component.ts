@@ -15,7 +15,7 @@ import {userID} from "../../global";
 @Injectable()
 export class SettingsComponent implements OnInit {
 
-  security = ["private"];
+  security = ["privacy"];
   checkbox : any;
   updatePassword: FormGroup;
   update = false;
@@ -24,7 +24,7 @@ export class SettingsComponent implements OnInit {
 
     //getSetting();
     this.checkbox = {
-      'private' : false
+      'privacy' : false
     };
 
     this.updatePassword = this.formBuilder.group({
@@ -38,17 +38,17 @@ export class SettingsComponent implements OnInit {
     this.http.get(globals.backend_path + "/users/" + userID + "/security",{
       observe: 'response',
     }).subscribe((result:any)=>{
-      this.checkbox['private'] = result.body['private'];
+      this.checkbox['privacy'] = result.body['privacy'];
     });
   }
 
-  updateSecurity(data) {
-    this.http.patch(globals.backend_path + "/users/" + userID + "/security", data, {
+  updateSecurity() {
+    this.http.patch(globals.backend_path + "/users/" + userID + "/security", this.checkbox, {
       observe: 'response',
     }).subscribe((result) => {
       // This code will be executed when the HTTP call returns successfully
     });
-    alert('Changes succeed: ' + JSON.stringify(data));
+    alert('Changes succeed: ' + JSON.stringify(this.checkbox));
   }
 
   matchPassword(comparedName: string): ValidatorFn {
