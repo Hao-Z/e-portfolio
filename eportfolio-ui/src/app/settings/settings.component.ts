@@ -14,17 +14,18 @@ import * as globals from "../../global";
 @Injectable()
 export class SettingsComponent implements OnInit {
 
-  settings = ["Make the CV private",];
-  checkbox = new Map<string,boolean>();
+  security = ["private"];
+  checkbox : any;
   updatePassword: FormGroup;
   update = false;
   constructor(private http: HttpClient, private formBuilder: FormBuilder) { }
   ngOnInit(): void {
 
     //getSetting();
-    for(let s of this.settings){
-      this.checkbox.set(s,false);
-    }
+    this.checkbox = {
+      'private' : false
+    };
+
     this.updatePassword = this.formBuilder.group({
       "Current password" : ['',Validators.required],
       "New password" : ['',[Validators.required, Validators.minLength(6)]],
@@ -33,13 +34,17 @@ export class SettingsComponent implements OnInit {
   }
 
   getSetting(){
-    this.http.get(globals.backend_path + "getsetting").subscribe((result:any)=>{
-      this.checkbox = result;
+    this.http.get(globals.backend_path + "getsecurity",{
+      observe: 'response',
+    }).subscribe((result:any)=>{
+      this.checkbox['private'] = result.body['private'];
     });
   }
 
-  updateSetting(data) {
-    this.http.put(globals.backend_path + "updatesetting", data).subscribe((result) => {
+  updateSecurity(data) {
+    this.http.put(globals.backend_path + "updatesecurity", data, {
+      observe: 'response',
+    }).subscribe((result) => {
       // This code will be executed when the HTTP call returns successfully
     });
     alert('Changes succeed: ' + JSON.stringify(data));
@@ -59,11 +64,22 @@ export class SettingsComponent implements OnInit {
     };
   }
 
-  onSubmit(data) {
+  updatePW(data) {
     this.http.post(globals.backend_path + "signup", data).subscribe((result) => {
       // do sth when HTTP post returns sucessfully
-      this.update = !this.update;
+      this.updatePassword = this.formBuilder.group({
+        "Current password" : ['',Validators.required],
+        "New password" : ['',[Validators.required, Validators.minLength(6)]],
+        "Confirm password" : ['',[Validators.required, this.matchPassword('New password')]],
+      });
+      this.update = !this.update
     });
+    this.updatePassword = this.formBuilder.group({
+      "Current password" : ['',Validators.required],
+      "New password" : ['',[Validators.required, Validators.minLength(6)]],
+      "Confirm password" : ['',[Validators.required, this.matchPassword('New password')]],
+    });
+    this.update = !this.update; //delete
     alert('You ve submitted' + JSON.stringify(data));
   }
 }

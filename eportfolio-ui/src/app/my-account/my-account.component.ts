@@ -72,7 +72,7 @@ export class MyAccountComponent implements OnInit {
       this.profiles_value[key] = value;
       alert(result.headers.get("Authorization"))
     });
-    this.profiles_value[key] = value;
+    this.profiles_value[key] = value; //delete
     alert('Changes succeed: ' + JSON.stringify(this.data));
   }
 

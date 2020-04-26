@@ -2,9 +2,9 @@
   <div class="row" style="margin-top: 50px">
     <div class="col-md-6 offset-md-3 col-xs-12">
       <form>
-        <div class="form-group" *ngFor="let item of settings">
-          <input type="checkbox" [id]=item (click)="checkbox[item] =! checkbox[item];updateSetting(checkbox)">
-          <label style="margin-left: 20px">{{item}}</label>
+        <div class="form-group">
+          <input type="checkbox" id="private" (click)="checkbox['private'] =! checkbox['private'];updateSecurity(checkbox)">
+          <label style="margin-left: 20px">Make the CV private</label>
         </div>
       </form>
       <form [formGroup]="updatePassword">
@@ -42,7 +42,7 @@
             </div>
           </div>
         </div>
-        <button type="button" class="btn btn-primary" *ngIf="update" [disabled]="updatePassword.invalid" (click)="onSubmit(updatePassword.value)">Save new password</button>
+        <button type="button" class="btn btn-primary" *ngIf="update" [disabled]="updatePassword.invalid" (click)="updatePW(updatePassword.value)">Save new password</button>
         <button type="button" class="btn btn-primary" *ngIf="!update" (click)="update = !update">Change password</button>
       </form>
     </div>
