@@ -17,7 +17,8 @@
           </nz-input-group>
           <ng-template #Email>
             <button *ngIf="!editable['email']" type="button" class="btn btn-primary" (click)="editable['email']=!editable['email']" >Edit</button>
-            <button *ngIf="editable['email']" type="button" class="btn btn-primary" (click)="editable['email']=!editable['email'];onSubmit('email', updateForm.value['email'])">Save</button>
+            <button *ngIf="editable['email']" type="button" class="btn btn-primary" (click)="editable['email']=!editable['email'];onSubmit('email', updateForm.value['email'])"
+                    [disabled]="updateForm.get('email').invalid">Save</button>
           </ng-template>
           <div
             *ngIf="editable['email']">
@@ -48,8 +49,15 @@
           </nz-input-group>
           <ng-template #PhoneNumber>
             <button *ngIf="!editable['phoneNumber']" type="button" class="btn btn-primary" (click)="editable['phoneNumber']=!editable['phoneNumber']" >Edit</button>
-            <button *ngIf="editable['phoneNumber']" type="button" class="btn btn-primary" (click)="editable['phoneNumber']=!editable['phoneNumber'];onSubmit('phoneNumber', updateForm.value['phoneNumber'])">Save</button>
+            <button *ngIf="editable['phoneNumber']" type="button" class="btn btn-primary" (click)="editable['phoneNumber']=!editable['phoneNumber'];onSubmit('phoneNumber', updateForm.value['phoneNumber'])"
+                    [disabled]="updateForm.get('phoneNumber').invalid">Save</button>
           </ng-template>
+          <div
+            *ngIf="editable['phoneNumber']">
+            <div class="errprompt" *ngIf="updateForm.get('phoneNumber').invalid && (updateForm.get('phoneNumber').dirty || updateForm.get('phoneNumber').touched)" style="color: red">
+              Phone number is invalid.
+            </div>
+          </div>
         </div>
         <!--
         <div class="form-group" *ngFor="let item of profiles" >

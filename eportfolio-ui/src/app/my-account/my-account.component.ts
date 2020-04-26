@@ -28,7 +28,7 @@ export class MyAccountComponent implements OnInit {
       'username': new FormControl(''),
       'email': new FormControl('', [Validators.email]),
       'birthday': new FormControl(''),
-      'phoneNumber': new FormControl(''),
+      'phoneNumber': new FormControl('', [Validators.pattern(/^\d*$/)]),
     });
   }
 
