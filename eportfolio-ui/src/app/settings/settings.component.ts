@@ -71,7 +71,7 @@ export class SettingsComponent implements OnInit {
       'currentPassword':data['Current password'],
       'newPassword':data['New password']
     };
-    this.http.post(globals.backend_path + "/users/" + userID + "/update-password", this.message).subscribe((result) => {
+    this.http.patch(globals.backend_path + "/users/" + userID + "/update-password", this.message).subscribe((result) => {
       // do sth when HTTP post returns sucessfully
       this.updatePassword = this.formBuilder.group({
         "Current password" : ['',Validators.required],
