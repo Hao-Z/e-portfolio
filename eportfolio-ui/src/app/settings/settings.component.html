@@ -3,8 +3,8 @@
     <div class="col-md-6 offset-md-3 col-xs-12">
       <form>
         <div class="form-group">
-          <input type="checkbox" id="private" (click)="checkbox['privacy'] =! checkbox['privacy'];updateSecurity()">
-          <label style="margin-left: 20px">Make the CV private</label>
+          <input type="checkbox" [checked]="checkbox['privacy']" id="private" (click)="checkbox['privacy'] =! checkbox['privacy'];updateSecurity()">
+          <a style="margin-left: 20px" (click)="checkbox['privacy'] =! checkbox['privacy'];updateSecurity()">Make the CV private</a>
         </div>
       </form>
       <form [formGroup]="updatePassword">
