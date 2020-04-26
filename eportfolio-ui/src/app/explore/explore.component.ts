@@ -44,10 +44,6 @@ export class ExploreComponent implements OnInit {
     alert('searched')
   }
 
-  nzClick($event: NzFormatEmitEvent) {
-
-  }
-
   nzCheck($event: NzFormatEmitEvent) {
 
   }
