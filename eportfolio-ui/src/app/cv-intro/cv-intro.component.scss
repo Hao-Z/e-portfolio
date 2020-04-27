@@ -1,0 +1,73 @@
+.modal-dialog {
+    min-width: 700px; 
+    max-width: 700px; 
+}
+
+::ng-deep {
+
+    .display-flex { display: flex; }
+  
+    .flex-1 { flex: 1; }
+  
+    .flex-2 { flex: 2; }
+  
+    .flex-3 { flex: 3; }
+  
+    .flex-4 { flex: 4; }
+  
+    .flex-5 { flex: 5; }
+  
+    .flex-6 { flex: 6; }
+  
+    [class*="flex-"] {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  
+    [class*="flex-"]:first-child {
+      padding-left: 0;
+    }
+  
+    [class*="flex-"]:nth-last-child(2) {
+      padding-right: 0;
+    }
+
+    [class*="form-control"] {
+      margin-bottom: 10px;
+    }
+
+    .input-group {
+      margin-bottom: 10px;
+    }
+
+    .input-group button{
+      border-color: rgb(214, 211, 211);
+      border: hidden;
+    }
+
+    input {
+      display:inline-block;
+      *display: inline;     /* for IE7*/
+      zoom:1;              /* for IE7*/
+      vertical-align:middle;
+    }
+  
+    label {
+      display:inline-block;
+      *display: inline;     /* for IE7*/
+      zoom:1;              /* for IE7*/
+      padding-top: 5px;
+      text-align: right;
+      width: 20%;
+      margin-right: 1em;
+    }
+
+    formly-field-radio {
+      display: inline;
+    }
+    .radio-group-settings {
+      display: inline-block;
+    }
+
+  }
+
