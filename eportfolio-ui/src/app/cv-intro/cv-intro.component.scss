@@ -3,7 +3,7 @@
     max-width: 700px; 
 }
 
-::ng-deep {
+::ng-deep app-cv-intro{
 
     .display-flex { display: flex; }
   
@@ -56,17 +56,52 @@
       display:inline-block;
       *display: inline;     /* for IE7*/
       zoom:1;              /* for IE7*/
-      padding-top: 5px;
-      text-align: right;
+      padding-bottom: 12px;
+      text-align: left;
       width: 20%;
       margin-right: 1em;
     }
 
-    formly-field-radio {
-      display: inline;
+    hr.hr1 {
+      text-align:center;
+      line-height:0px;
     }
-    .radio-group-settings {
-      display: inline-block;
+    
+    hr.hr1:after{
+      content:"Persona";
+      font-weight:bold;
+      color: rgb(84, 109, 190);
+      background:white;
+      padding-bottom: 15px;
+      z-index:auto;
+    }
+
+    hr.hr2 {
+      text-align:center;
+      line-height:0px;
+    }
+
+    hr.hr2:after{
+      content:"Basic Information";
+      font-weight:bold;
+      color: rgb(84, 109, 190);
+      background:white;
+      padding-bottom: 15px;
+      z-index:auto;
+    }
+
+    hr.hr3 {
+      text-align:center;
+      line-height:0px;
+    }
+    
+    hr.hr3:after{
+      content:"Contact Information";
+      font-weight:bold;
+      color: rgb(84, 109, 190);
+      background:white;
+      padding-bottom: 15px;
+      z-index:auto;
     }
 
   }

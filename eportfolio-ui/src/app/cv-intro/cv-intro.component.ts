@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core'
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders} from '@angular/common/http'
 import { DataService } from '../core/data.service';
+import { ActivatedRoute } from '@angular/router';
+import * as globals from "../../global";
+import { jwt } from "../../global";
+import { username } from "../../global";
+import { userID } from "../../global";
+import { refreshJwt } from "../../global";
 
 @Component({
   selector: 'app-cv-intro',
@@ -15,10 +21,10 @@ export class CvIntroComponent implements OnInit {
   options: FormlyFormOptions = {};
 
   model = {
-    firstName: 'Chuqiao',
-    lastName: 'Chen',
+    firstName: '',
+    lastName: '',
     headline: "",
-    industry : "",
+    industry : null,
     currentPosition: "",
     currentEducation: "",
     gender: 3,
@@ -32,6 +38,9 @@ export class CvIntroComponent implements OnInit {
   }
 
   fields: FormlyFieldConfig[] = [
+    {
+      template: '<hr class="hr1" />',
+    },
     {
       key: 'firstName',
       type: 'input',
@@ -67,7 +76,7 @@ export class CvIntroComponent implements OnInit {
       }
     },
     {
-      key: 'industry ',
+      key: 'industry',
       type: 'select',
       templateOptions: {
         label: 'Industry',
@@ -91,7 +100,7 @@ export class CvIntroComponent implements OnInit {
       },
     },
     {
-      template: '<hr />',
+      template: '<hr class="hr2" />',
     },
     {
       key: 'gender',
@@ -107,6 +116,7 @@ export class CvIntroComponent implements OnInit {
       templateOptions: {
         label: 'Date of Birth',
         placeholder: 'yyyy-mm-dd',
+        required: false
       },
     },
     {
@@ -126,6 +136,9 @@ export class CvIntroComponent implements OnInit {
         label: 'Postal Code',
         pattern: "^[0-9]{4}$"
       }
+    },
+    {
+      template: '<hr class="hr3" />',
     },
     {
       key: 'email',
@@ -157,20 +170,43 @@ export class CvIntroComponent implements OnInit {
   ]
 
   constructor(private http: HttpClient, 
+    private route: ActivatedRoute, 
     private dataService: DataService) { }
 
   ngOnInit(): void {
+    refreshJwt();
+    this.getIntroduction();
+  }
+
+  getIntroduction() {
+    var headers = new HttpHeaders().set('Authorization', localStorage.getItem('jwt_token'));
+    // headers.append('Authorization', localStorage.getItem('jwt_token'));
+    console.log("1" + headers)
+    this.http.get<any>(globals.backend_path + userID +"/introduction", {
+      observe: 'response', headers: headers
+    }).subscribe((result:any)=>{
+      console.log("3" + headers)
+      this.model = result.body;
+    })
   }
 
   onSubmit() {
     alert(JSON.stringify(this.model));
+    console.log(this.model);
     
-		// if (this.form.valid) {
-    //   this.http.post('url', this.model, null).subscribe((response) => {
-    //     console.log('response:', response)
-    //   }, (error) => {
-    //     console.error('error:', error)
-    //   })
-    // }
+    var headers = new HttpHeaders().set('Authorization', localStorage.getItem('jwt_token'));
+    console.log("11" + headers)
+    // headers.append('Authorization', localStorage.getItem('jwt_token'));
+    // observe: 'response',
+		if (this.form.valid) {
+      this.http.patch<any>(globals.backend_path + userID +"/introduction", this.model, { 
+         headers: headers} 
+      ).subscribe((response) => {
+        console.log("2" + headers)
+        console.log('response:', response)
+      }, (error) => {
+        console.error('error:', error)
+      })
+    }
   }
 }
