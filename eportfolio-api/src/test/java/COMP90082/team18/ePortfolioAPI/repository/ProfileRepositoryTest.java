@@ -19,7 +19,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @Transactional
 class ProfileRepositoryTest {
-
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -31,7 +30,7 @@ class ProfileRepositoryTest {
         newUser.setUsername("existingUser");
         newUser.setEmail("newUser@newUser.com");
         newUser.setPassword("******");
-        userRepository.save(newUser);
+        newUser = userRepository.save(newUser);
 
         Profile newProfile = new Profile();
         newProfile.setUser(newUser);

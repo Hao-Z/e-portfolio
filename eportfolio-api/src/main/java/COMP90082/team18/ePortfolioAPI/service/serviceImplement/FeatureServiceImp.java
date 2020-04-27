@@ -14,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Type;
+import java.util.List;
 
 @Service
 public class FeatureServiceImp implements FeatureService {
@@ -26,14 +27,15 @@ public class FeatureServiceImp implements FeatureService {
 
     @Override
     @PreAuthorize("hasPermission(#id, 'read')")
-    public Result<Iterable<FeatureDTO>> getAllFeatures(Long id) {
+    public Result<List<FeatureDTO>> getAllFeatures(Long id) {
         User targetUser = userRepository.findById(id).orElse(null);
         if (targetUser == null) {
             return new Result<>("404 not found", false, null);
         } else {
-            Iterable<Feature> features = featureRepository.findByUser(targetUser);
-            Type listType = new TypeToken<Iterable<Feature>>(){}.getType();
-            return new Result<Iterable<FeatureDTO>>("200 ok", true, modelMapper.map(features, listType));
+//            List<Feature> features = featureRepository.findByUser(targetUser);
+            List<Feature> features = targetUser.getFeatures();
+            Type listType = new TypeToken<List<FeatureDTO>>(){}.getType();
+            return new Result<List<FeatureDTO>>("200 ok", true, modelMapper.map(features, listType));
         }
     }
 
@@ -70,8 +72,9 @@ public class FeatureServiceImp implements FeatureService {
             return new Result<>("404 not found", false, null);
         } else {
             feature.setId(featureId);
+            feature.setUser(targetFeature.getUser());
             Feature returnedFeature =  featureRepository.save(feature);
-            return new Result<FeatureDTO>("200 ok", true, modelMapper.map(targetFeature, FeatureDTO.class));
+            return new Result<FeatureDTO>("200 ok", true, modelMapper.map(returnedFeature, FeatureDTO.class));
         }
     }
 }

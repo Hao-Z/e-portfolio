@@ -9,6 +9,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("users/{id}/features")
@@ -19,7 +21,7 @@ public class FeatureController {
     private ModelMapper modelMapper;
 
     @GetMapping
-    public Result<Iterable<FeatureDTO>> getAllFeatures(@PathVariable Long id){
+    public Result<List<FeatureDTO>> getAllFeatures(@PathVariable Long id){
         return featureService.getAllFeatures(id);
     }
 
@@ -33,6 +35,7 @@ public class FeatureController {
         return featureService.postFeature(id, modelMapper.map(featureDTO, Feature.class));
     }
 
+    @PutMapping("/{featureId}")
     public Result<FeatureDTO> putFeature(@PathVariable Long id, @PathVariable Long featureId, @RequestBody FeatureDTO featureDTO){
         return featureService.putFeature(id, featureId, modelMapper.map(featureDTO, Feature.class));
     }
