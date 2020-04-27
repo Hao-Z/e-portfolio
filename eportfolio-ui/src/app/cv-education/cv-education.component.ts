@@ -24,16 +24,16 @@ export class CvEducationComponent implements OnInit {
       'schoolName': [this.school.name, Validators.required],
       'degree': [],
       'field': [],
-      'startYear': [],
-      'endYear': [],
-      'grade': [],
-      'activitiesAndSocieties': [],
-      'Media': []
+      // 'startYear': [],
+      // 'endYear': [],
+      // 'grade': [],
+      // 'activitiesAndSocieties': [],
+      // 'Media': []
     });
   }
 
-  onSubmit(data) {
-    console.log(data);
+  onSubmit() {
+    console.log(this.educationForm.value);
   }
 
 }
