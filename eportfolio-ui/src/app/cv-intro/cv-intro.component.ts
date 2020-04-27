@@ -180,13 +180,16 @@ export class CvIntroComponent implements OnInit {
 
   getIntroduction() {
     var headers = new HttpHeaders().set('Authorization', localStorage.getItem('jwt_token'));
-    // headers.append('Authorization', localStorage.getItem('jwt_token'));
     console.log("1" + headers)
-    this.http.get<any>(globals.backend_path + userID +"/introduction", {
-      observe: 'response', headers: headers
+    this.http.get<any>(globals.backend_path + "users/" + userID +"/introduction", {
+      headers: headers, observe: 'response'
     }).subscribe((result:any)=>{
-      console.log("3" + headers)
-      this.model = result.body;
+      console.log("2" + JSON.stringify(headers))
+      console.log("2" + JSON.stringify(result.body))
+      if (result.body.detail) {
+        console.log("success to show intro data!")
+        this.model = result.body;
+      }
     })
   }
 
@@ -196,14 +199,12 @@ export class CvIntroComponent implements OnInit {
     
     var headers = new HttpHeaders().set('Authorization', localStorage.getItem('jwt_token'));
     console.log("11" + headers)
-    // headers.append('Authorization', localStorage.getItem('jwt_token'));
-    // observe: 'response',
 		if (this.form.valid) {
-      this.http.patch<any>(globals.backend_path + userID +"/introduction", this.model, { 
-         headers: headers} 
+      this.http.patch<any>(globals.backend_path + "users/" + userID +"/introduction", this.model, { 
+         headers: headers, observe: 'response',} 
       ).subscribe((response) => {
-        console.log("2" + headers)
-        console.log('response:', response)
+        console.log("22" + headers)
+        console.log("22" + 'response:', response)
       }, (error) => {
         console.error('error:', error)
       })
