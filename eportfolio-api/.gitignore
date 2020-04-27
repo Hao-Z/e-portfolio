@@ -1,6 +1,6 @@
 .gradle
-build/
 bin/
+build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**
 !**/src/test/**

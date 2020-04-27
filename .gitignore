@@ -3,6 +3,8 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**
 !**/src/test/**
+eportfolio-api/bin/
+eportfolio-ui/node_modules/
 
 ### STS ###
 .apt_generated
@@ -27,7 +29,6 @@ out/
 /nbdist/
 /.nb-gradle/
 
+
 ### VS Code ###
 .vscode/
-eportfolio-api/bin/
-eportfolio-ui/node_modules/

@@ -22,7 +22,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'exp',
+    path: 'explore',
     component: ExploreComponent
   },
   {
@@ -31,12 +31,12 @@ const routes: Routes = [
     children: [{ path: '', component: CvComponent }]
   },
   {
-    path: 'ma',
+    path: 'my_account',
     component: LayoutComponent,
     children: [{ path: '', component: MyAccountComponent}]
   },
   {
-    path: 'sts',
+    path: 'security',
     component: LayoutComponent,
     children: [{ path: '', component: SettingsComponent }]
   },

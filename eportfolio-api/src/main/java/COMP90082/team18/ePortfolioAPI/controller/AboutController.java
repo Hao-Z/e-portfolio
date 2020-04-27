@@ -1,5 +1,7 @@
 package COMP90082.team18.ePortfolioAPI.controller;
 
+import COMP90082.team18.ePortfolioAPI.DTO.AboutDTO;
+import COMP90082.team18.ePortfolioAPI.DTO.IntroductionDTO;
 import COMP90082.team18.ePortfolioAPI.DTO.ProfileDTO;
 import COMP90082.team18.ePortfolioAPI.DTO.Result;
 import COMP90082.team18.ePortfolioAPI.entity.Profile;
@@ -11,21 +13,20 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("users/{id}/profile")
-public class ProfileController {
+@RequestMapping("users/{id}/about")
+public class AboutController {
     @Autowired
     private ProfileService profileService;
     @Autowired
     private ModelMapper modelMapper;
 
     @GetMapping
-    public Result<ProfileDTO> getProfile(@PathVariable Long id){
-        return profileService.getProfile(id);
+    public Result<AboutDTO> getAbout(@PathVariable Long id){
+        return profileService.getAbout(id);
     }
 
     @PatchMapping
-    public Result<ProfileDTO> patchProfile(@PathVariable Long id, @RequestBody ProfileDTO profileDTO){
-        return profileService.patchProfile(id, modelMapper.map(profileDTO, Profile.class));
+    public Result<AboutDTO> patchAbout(@PathVariable Long id, @RequestBody AboutDTO aboutDTO){
+        return profileService.patchAbout(id, modelMapper.map(aboutDTO, Profile.class));
     }
-
 }
