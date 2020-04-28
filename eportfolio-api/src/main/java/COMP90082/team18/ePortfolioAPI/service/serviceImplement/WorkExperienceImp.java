@@ -21,9 +21,9 @@ public class WorkExperienceImp implements WorkExperienceService {
     @Override
     @PreAuthorize("hasPermission(#id, 'read')")
     public List<WorkExperience> getAllWorkExperiences(Long id) {
-        User targetUser = userRepository.findById(id).orElse(null);
+        User targetUser = new User();
+        targetUser.setId(id);
         return workExperienceRepository.findByUser(targetUser);
-        //TODO: Using userService and return targetUser.getWorkExperiences;
     }
 
     @Override
@@ -45,7 +45,8 @@ public class WorkExperienceImp implements WorkExperienceService {
     @PreAuthorize("hasPermission(#id, 'write')")
     public WorkExperience putWorkExperience(Long id, Long workExperiencesId, WorkExperience workExperience) {
         WorkExperience targetWorkExperience = workExperienceRepository.findById(workExperiencesId).orElseThrow();
-        //TODO
-        return null;
+        workExperience.setId(targetWorkExperience.getId());
+        workExperience.setUser(targetWorkExperience.getUser());
+        return workExperienceRepository.save(workExperience);
     }
 }

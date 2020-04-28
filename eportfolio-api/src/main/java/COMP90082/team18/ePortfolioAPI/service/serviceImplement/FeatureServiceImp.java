@@ -32,8 +32,7 @@ public class FeatureServiceImp implements FeatureService {
         if (targetUser == null) {
             return new Result<>("404 not found", false, null);
         } else {
-//            List<Feature> features = featureRepository.findByUser(targetUser);
-            List<Feature> features = targetUser.getFeatures();
+            List<Feature> features = featureRepository.findByUser(targetUser);
             Type listType = new TypeToken<List<FeatureDTO>>(){}.getType();
             return new Result<List<FeatureDTO>>("200 ok", true, modelMapper.map(features, listType));
         }
