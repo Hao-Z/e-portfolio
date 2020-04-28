@@ -24,6 +24,7 @@ public class ProfileServiceImp implements ProfileService {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Override
     @PreAuthorize("hasPermission(#id, 'read')")
     public Result<ProfileDTO> getProfile(Long id) {
         Profile returnedProfile = profileRepository.findById(id).orElse(null);
@@ -34,6 +35,7 @@ public class ProfileServiceImp implements ProfileService {
         }
     }
 
+    @Override
     @PreAuthorize("hasPermission(#id, 'write')")
     public Result<ProfileDTO> patchProfile(Long id, Profile profile) {
         User targetUser = userRepository.findById(id).orElse(null);
@@ -52,6 +54,7 @@ public class ProfileServiceImp implements ProfileService {
         return new Result<>("200 ok", true, modelMapper.map(returnedProfile, ProfileDTO.class));
     }
 
+    @Override
     @PreAuthorize("hasPermission(#id, 'read')")
     public Result<IntroductionDTO> getIntroduction(Long id) {
         Profile returnedProfile = profileRepository.findById(id).orElse(null);
@@ -62,6 +65,7 @@ public class ProfileServiceImp implements ProfileService {
         }
     }
 
+    @Override
     @PreAuthorize("hasPermission(#id, 'write')")
     public Result<IntroductionDTO> patchIntroduction(Long id, Profile profile) {
         User targetUser = userRepository.findById(id).orElse(null);
@@ -80,6 +84,7 @@ public class ProfileServiceImp implements ProfileService {
         return new Result<>("200 ok", true, modelMapper.map(returnedProfile, IntroductionDTO.class));
     }
 
+    @Override
     @PreAuthorize("hasPermission(#id, 'read')")
     public Result<AboutDTO> getAbout(Long id) {
         Profile returnedProfile = profileRepository.findById(id).orElse(null);
@@ -90,6 +95,7 @@ public class ProfileServiceImp implements ProfileService {
         }
     }
 
+    @Override
     @PreAuthorize("hasPermission(#id, 'write')")
     public Result<AboutDTO> patchAbout(Long id, Profile profile) {
         User targetUser = userRepository.findById(id).orElse(null);
