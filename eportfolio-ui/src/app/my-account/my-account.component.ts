@@ -48,9 +48,11 @@ export class MyAccountComponent implements OnInit {
 
   getProfile(){
     refreshJwt();
-    this.http.get<any>(globals.backend_path + "/users/" + userID + "/profile",{
-      observe: 'response',
-    }).subscribe((result:any)=>{
+    const HttpOptions = {
+      headers : new HttpHeaders({'content-Type': 'application/json',
+        'Authorization': jwt})
+    };
+    this.http.get<any>(globals.backend_path + "users/" + userID + "/profile",HttpOptions).subscribe((result:any)=>{
       this.profiles_value = result.body;
     });
   }
@@ -58,19 +60,21 @@ export class MyAccountComponent implements OnInit {
   data:any;
   onSubmit(key, value) {
     refreshJwt();
-    //TODO:use PATCH to update profiles partially.
     if(key == 'email'){
       this.data = {"user":{[key]:value}};
     }else{
       this.data = {[key]:value};
     }
 
-    this.http.patch<any>(globals.backend_path + "/users/" + userID + "/profile", this.data, {
-      observe: 'response',
-    }).subscribe((result) => {
+    const HttpOptions = {
+      headers : new HttpHeaders({'content-Type': 'application/json',
+        'Authorization': jwt,}
+      )
+    };
+    this.http.patch<any>(globals.backend_path + "users/" + userID + "/profile", this.data, HttpOptions).subscribe((result) => {
       // This code will be executed when the HTTP call returns successfully
       this.profiles_value[key] = value;
-      alert(result.headers.get("Authorization"))
+      alert(result.body)
     });
     this.profiles_value[key] = value; //delete
     alert('Changes succeed: ' + JSON.stringify(this.data));

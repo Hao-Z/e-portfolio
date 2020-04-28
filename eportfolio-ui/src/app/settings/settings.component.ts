@@ -1,10 +1,12 @@
 import {Component, Injectable, OnInit} from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from "@angular/forms";
 import validate = WebAssembly.validate;
 import {Subscription} from "rxjs";
 import * as globals from "../../global";
 import {userID} from "../../global";
+import {refreshJwt} from "../../global";
+import {jwt} from "../../global";
 
 @Component({
   selector: 'app-settings',
@@ -21,8 +23,8 @@ export class SettingsComponent implements OnInit {
   update = false;
   constructor(private http: HttpClient, private formBuilder: FormBuilder) { }
   ngOnInit(): void {
-
-    //getSetting();
+    refreshJwt();
+    //getSecurity();
     this.checkbox = {
       'privacy' : false
     };
@@ -34,18 +36,24 @@ export class SettingsComponent implements OnInit {
     });
   }
 
-  getSetting(){
-    this.http.get(globals.backend_path + "/users/" + userID + "/security",{
-      observe: 'response',
-    }).subscribe((result:any)=>{
+  getSecurity(){
+    refreshJwt();
+    const HttpOptions = {
+      headers : new HttpHeaders({'content-Type': 'application/json',
+        'Authorization': jwt})
+    };
+    this.http.get<any>(globals.backend_path + "users/" + userID + "/security",HttpOptions).subscribe((result:any)=>{
       this.checkbox['privacy'] = result.body['privacy'];
     });
   }
 
   updateSecurity() {
-    this.http.patch(globals.backend_path + "/users/" + userID + "/security", this.checkbox, {
-      observe: 'response',
-    }).subscribe((result) => {
+    refreshJwt();
+    const HttpOptions = {
+      headers : new HttpHeaders({'content-Type': 'application/json',
+        'Authorization': jwt})
+    };
+    this.http.patch<any>(globals.backend_path + "users/" + userID + "/security", this.checkbox, HttpOptions).subscribe((result) => {
       // This code will be executed when the HTTP call returns successfully
     });
     alert('Changes succeed: ' + JSON.stringify(this.checkbox));
@@ -67,11 +75,16 @@ export class SettingsComponent implements OnInit {
 
   message : any;
   updatePW(data) {
+    refreshJwt();
+    const HttpOptions = {
+      headers : new HttpHeaders({'content-Type': 'application/json',
+        'Authorization': jwt})
+    };
     this.message = {
       'currentPassword':data['Current password'],
       'newPassword':data['New password']
     };
-    this.http.patch(globals.backend_path + "/users/" + userID + "/update-password", this.message).subscribe((result) => {
+    this.http.patch<any>(globals.backend_path + "users/" + userID + "/update-password", this.message, HttpOptions).subscribe((result) => {
       // do sth when HTTP post returns sucessfully
       this.updatePassword = this.formBuilder.group({
         "Current password" : ['',Validators.required],
