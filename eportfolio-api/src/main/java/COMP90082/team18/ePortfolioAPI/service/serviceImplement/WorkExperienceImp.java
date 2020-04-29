@@ -14,8 +14,6 @@ import java.util.List;
 @Service
 public class WorkExperienceImp implements WorkExperienceService {
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private WorkExperienceRepository workExperienceRepository;
 
     @Override
