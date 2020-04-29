@@ -1,7 +1,5 @@
 package COMP90082.team18.ePortfolioAPI.service;
 
-import COMP90082.team18.ePortfolioAPI.DTO.FeatureDTO;
-import COMP90082.team18.ePortfolioAPI.DTO.Result;
 import COMP90082.team18.ePortfolioAPI.entity.Feature;
 
 import java.util.List;

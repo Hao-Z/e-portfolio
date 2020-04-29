@@ -3,7 +3,6 @@ package COMP90082.team18.ePortfolioAPI.service.serviceImplement;
 import COMP90082.team18.ePortfolioAPI.entity.Feature;
 import COMP90082.team18.ePortfolioAPI.entity.User;
 import COMP90082.team18.ePortfolioAPI.repository.FeatureRepository;
-import COMP90082.team18.ePortfolioAPI.repository.UserRepository;
 import COMP90082.team18.ePortfolioAPI.service.FeatureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,8 +12,6 @@ import java.util.List;
 
 @Service
 public class FeatureServiceImp implements FeatureService {
-    @Autowired
-    private UserRepository userRepository;
     @Autowired
     private FeatureRepository featureRepository;
 

@@ -27,12 +27,12 @@ public class User {
 
     private boolean admin;
 
-    @OneToOne(mappedBy = "user")
-    private Profile profile;
-
-    @OneToMany(mappedBy = "user")
-    private List<WorkExperience> workExperiences;
-
-    @OneToMany(mappedBy = "user")
-    private List<Feature> features;
+//    @OneToOne(mappedBy = "user")
+//    private Profile profile;
+//
+//    @OneToMany(mappedBy = "user")
+//    private List<WorkExperience> workExperiences;
+//
+//    @OneToMany(mappedBy = "user")
+//    private List<Feature> features;
 }
