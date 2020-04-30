@@ -26,7 +26,8 @@ public class WorkExperienceImp implements WorkExperienceService {
     @Override
     @PreAuthorize("hasPermission(#id, 'read')")
     public WorkExperience getWorkExperience(Long id, Long workExperiencesId) {
-        return workExperienceRepository.findById(workExperiencesId).orElseThrow();
+        return workExperienceRepository.findById(workExperiencesId)
+                .orElseThrow(() -> new NullPointerException("Work experience not found."));
     }
 
     @Override
@@ -41,7 +42,8 @@ public class WorkExperienceImp implements WorkExperienceService {
     @Override
     @PreAuthorize("hasPermission(#id, 'write')")
     public WorkExperience putWorkExperience(Long id, Long workExperiencesId, WorkExperience workExperience) {
-        WorkExperience targetWorkExperience = workExperienceRepository.findById(workExperiencesId).orElseThrow();
+        WorkExperience targetWorkExperience = workExperienceRepository.findById(workExperiencesId)
+                .orElseThrow(() -> new NullPointerException("Work experience not found."));
         workExperience.setId(targetWorkExperience.getId());
         workExperience.setUser(targetWorkExperience.getUser());
         return workExperienceRepository.save(workExperience);

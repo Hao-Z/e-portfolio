@@ -26,7 +26,7 @@ public class FeatureServiceImp implements FeatureService {
     @Override
     @PreAuthorize("hasPermission(#id, 'read')")
     public Feature getFeature(Long id, Long featureId) {
-        return featureRepository.findById(featureId).orElseThrow();
+        return featureRepository.findById(featureId).orElseThrow(() -> new NullPointerException("Feature not found."));
     }
 
     @Override
@@ -41,7 +41,8 @@ public class FeatureServiceImp implements FeatureService {
     @Override
     @PreAuthorize("hasPermission(#id, 'write')")
     public Feature putFeature(Long id, Long featureId, Feature feature) {
-        Feature targetFeature = featureRepository.findById(featureId).orElseThrow();
+        Feature targetFeature = featureRepository.findById(featureId)
+                .orElseThrow(() -> new NullPointerException("Feature not found."));
         feature.setId(targetFeature.getId());
         feature.setUser(targetFeature.getUser());
         return featureRepository.save(feature);
