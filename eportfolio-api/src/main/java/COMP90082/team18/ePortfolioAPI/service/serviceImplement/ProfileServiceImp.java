@@ -16,7 +16,7 @@ public class ProfileServiceImp implements ProfileService {
     @Override
     @PreAuthorize("hasPermission(#id, 'read')")
     public Profile getProfile(Long id) {
-        return profileRepository.findById(id).orElseThrow();
+        return profileRepository.findById(id).orElseThrow(() -> new NullPointerException("Profile not found."));
     }
 
     @Override
