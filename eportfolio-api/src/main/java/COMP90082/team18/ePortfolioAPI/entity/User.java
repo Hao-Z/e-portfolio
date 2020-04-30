@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -25,4 +26,13 @@ public class User {
     private String password;
 
     private boolean admin;
+
+//    @OneToOne(mappedBy = "user")
+//    private Profile profile;
+//
+//    @OneToMany(mappedBy = "user")
+//    private List<WorkExperience> workExperiences;
+//
+//    @OneToMany(mappedBy = "user")
+//    private List<Feature> features;
 }
