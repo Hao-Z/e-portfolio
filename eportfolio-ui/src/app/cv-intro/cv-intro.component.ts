@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core'
-import { HttpClient, HttpHeaders} from '@angular/common/http'
+import { HttpClient } from '@angular/common/http'
 import { DataService } from '../core/data.service';
 import { ActivatedRoute } from '@angular/router';
-import * as globals from "../../global";
-import { jwt } from "../../global";
-import { username } from "../../global";
 import { userID } from "../../global";
 import { refreshJwt } from "../../global";
+import { IntroductionApiService } from "../core/introduction-api.service";
+import { Introduction } from "../dynamic-form/interfaces/introduction";
 
 @Component({
   selector: 'app-cv-intro',
@@ -20,22 +19,23 @@ export class CvIntroComponent implements OnInit {
   form = new FormGroup({});
   options: FormlyFormOptions = {};
 
-  model = {
-    firstName: '',
-    lastName: '',
-    headline: "",
-    industry : null,
-    currentPosition: "",
-    currentEducation: "",
-    gender: 3,
-    dateOfBirth: "",
-    country: "",
-    postalCode: "",
-    email: "",
-    phone: "",
-    address: "",
-    profilePhoto: "",
-  }
+  model:Introduction 
+  //   = {
+  //   firstName: 'Chuqiao',
+  //   lastName: 'Chen',
+  //   headline: "",
+  //   industry : null,
+  //   currentPosition: "",
+  //   currentEducation: "",
+  //   gender: 3,
+  //   birthday: "",
+  //   country: "",
+  //   postalCode: "",
+  //   email: "",
+  //   phone: "",
+  //   address: "",
+  //   profilePhoto: "",
+  // }
 
   fields: FormlyFieldConfig[] = [
     {
@@ -111,7 +111,7 @@ export class CvIntroComponent implements OnInit {
       },
     },
     {
-      key: 'dateOfBirth',
+      key: 'birthday',
       type: 'datepicker',
       templateOptions: {
         label: 'Date of Birth',
@@ -170,8 +170,8 @@ export class CvIntroComponent implements OnInit {
   ]
 
   constructor(private http: HttpClient, 
-    private route: ActivatedRoute, 
-    private dataService: DataService) { }
+    private dataService: DataService,
+    private introductionApiService: IntroductionApiService) { }
 
   ngOnInit(): void {
     refreshJwt();
@@ -179,35 +179,27 @@ export class CvIntroComponent implements OnInit {
   }
 
   getIntroduction() {
-    var headers = new HttpHeaders().set('Authorization', localStorage.getItem('jwt_token'));
-    console.log("1" + headers)
-    this.http.get<any>(globals.backend_path + "users/" + userID +"/introduction", {
-      headers: headers, observe: 'response'
-    }).subscribe((result:any)=>{
-      console.log("2" + JSON.stringify(headers))
-      console.log("2" + JSON.stringify(result.body))
-      if (result.body.detail) {
-        console.log("success to show intro data!")
-        this.model = result.body;
-      }
+
+    this.introductionApiService.getIntro(userID)
+      .subscribe((result: any) => {
+        console.log("get: " + 'response:', JSON.stringify(result.detail))
+        if (result.detail) {
+          console.log("success to show intro data!")
+          this.model =result.detail as Introduction;
+        }
     })
   }
 
   onSubmit() {
-    alert(JSON.stringify(this.model));
     console.log(this.model);
     
-    var headers = new HttpHeaders().set('Authorization', localStorage.getItem('jwt_token'));
-    console.log("11" + headers)
 		if (this.form.valid) {
-      this.http.patch<any>(globals.backend_path + "users/" + userID +"/introduction", this.model, { 
-         headers: headers, observe: 'response',} 
-      ).subscribe((response) => {
-        console.log("22" + headers)
-        console.log("22" + 'response:', response)
-      }, (error) => {
-        console.error('error:', error)
-      })
+      this.introductionApiService.updateIntro(userID, this.model)
+        .subscribe((result: any) => {
+          console.log("patch: " + 'response:', JSON.stringify(result.body))
+          if (result.body.detail) {
+          }
+        })
     }
   }
 }
