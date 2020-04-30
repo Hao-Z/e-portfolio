@@ -2,7 +2,6 @@ package COMP90082.team18.ePortfolioAPI.service.serviceImplement;
 
 import COMP90082.team18.ePortfolioAPI.entity.User;
 import COMP90082.team18.ePortfolioAPI.entity.WorkExperience;
-import COMP90082.team18.ePortfolioAPI.repository.UserRepository;
 import COMP90082.team18.ePortfolioAPI.repository.WorkExperienceRepository;
 import COMP90082.team18.ePortfolioAPI.service.WorkExperienceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +12,6 @@ import java.util.List;
 
 @Service
 public class WorkExperienceImp implements WorkExperienceService {
-    @Autowired
-    private UserRepository userRepository;
     @Autowired
     private WorkExperienceRepository workExperienceRepository;
 

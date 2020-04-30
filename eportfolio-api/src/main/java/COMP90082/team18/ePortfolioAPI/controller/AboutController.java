@@ -1,9 +1,6 @@
 package COMP90082.team18.ePortfolioAPI.controller;
 
 import COMP90082.team18.ePortfolioAPI.DTO.AboutDTO;
-import COMP90082.team18.ePortfolioAPI.DTO.IntroductionDTO;
-import COMP90082.team18.ePortfolioAPI.DTO.ProfileDTO;
-import COMP90082.team18.ePortfolioAPI.DTO.Result;
 import COMP90082.team18.ePortfolioAPI.entity.Profile;
 import COMP90082.team18.ePortfolioAPI.service.ProfileService;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +18,13 @@ public class AboutController {
     private ModelMapper modelMapper;
 
     @GetMapping
-    public Result<AboutDTO> getAbout(@PathVariable Long id){
-        return profileService.getAbout(id);
+    public AboutDTO getAbout(@PathVariable Long id){
+        return modelMapper.map(profileService.getProfile(id), AboutDTO.class);
     }
 
     @PatchMapping
-    public Result<AboutDTO> patchAbout(@PathVariable Long id, @RequestBody AboutDTO aboutDTO){
-        return profileService.patchAbout(id, modelMapper.map(aboutDTO, Profile.class));
+    public AboutDTO patchAbout(@PathVariable Long id, @RequestBody AboutDTO aboutDTO){
+        Profile result = profileService.patchProfile(id, modelMapper.map(aboutDTO, Profile.class));
+        return modelMapper.map(result, AboutDTO.class);
     }
 }

@@ -1,6 +1,5 @@
 package COMP90082.team18.ePortfolioAPI.controller;
 
-import COMP90082.team18.ePortfolioAPI.DTO.Result;
 import COMP90082.team18.ePortfolioAPI.DTO.WorkExperienceDTO;
 import COMP90082.team18.ePortfolioAPI.entity.WorkExperience;
 import COMP90082.team18.ePortfolioAPI.service.WorkExperienceService;
@@ -23,33 +22,32 @@ public class WorkExperienceController {
     private ModelMapper modelMapper;
 
     @GetMapping
-    public Result<List<WorkExperienceDTO>> getAllWorkExperiences(@PathVariable Long id){
+    public List<WorkExperienceDTO> getAllWorkExperiences(@PathVariable Long id){
         List<WorkExperience> result = workExperienceService.getAllWorkExperiences(id);
         Type listType = new TypeToken<List<WorkExperienceDTO>>(){}.getType();
-        return new Result<>("200 ok", true, modelMapper.map(result, listType));
+        return modelMapper.map(result, listType);
     }
 
     @GetMapping("/{workExperienceId}")
-    public Result<WorkExperienceDTO> getWorkExperience(@PathVariable Long id,
-                                                       @PathVariable Long workExperienceId){
+    public WorkExperienceDTO getWorkExperience(@PathVariable Long id, @PathVariable Long workExperienceId){
         WorkExperience result = workExperienceService.getWorkExperience(id, workExperienceId);
-        return new Result<>("200 ok", true, modelMapper.map(result, WorkExperienceDTO.class));
+        return modelMapper.map(result, WorkExperienceDTO.class);
     }
 
     @PostMapping
-    public Result<WorkExperienceDTO> postWorkExperience(@PathVariable Long id,
-                                                        @RequestBody WorkExperienceDTO workExperienceDTO){
+    public WorkExperienceDTO postWorkExperience(@PathVariable Long id,
+                                                @RequestBody WorkExperienceDTO workExperienceDTO){
         WorkExperience result = workExperienceService.postWorkExperience(
                 id, modelMapper.map(workExperienceDTO, WorkExperience.class));
-        return new Result<>("200 ok", true, modelMapper.map(result, WorkExperienceDTO.class));
+        return modelMapper.map(result, WorkExperienceDTO.class);
     }
 
     @PutMapping("/{workExperienceId}")
-    public Result<WorkExperienceDTO> putWorkExperience(@PathVariable Long id,
-                                                       @PathVariable Long workExperienceId,
-                                                       @RequestBody WorkExperienceDTO workExperienceDTO){
+    public WorkExperienceDTO putWorkExperience(@PathVariable Long id,
+                                               @PathVariable Long workExperienceId,
+                                               @RequestBody WorkExperienceDTO workExperienceDTO){
         WorkExperience result = workExperienceService.putWorkExperience(
                 id, workExperienceId, modelMapper.map(workExperienceDTO, WorkExperience.class));
-        return new Result<>("200 ok", true, modelMapper.map(result, WorkExperienceDTO.class));
+        return modelMapper.map(result, WorkExperienceDTO.class);
     }
 }
