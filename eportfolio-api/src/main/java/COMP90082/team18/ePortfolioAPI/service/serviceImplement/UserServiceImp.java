@@ -4,6 +4,7 @@ import COMP90082.team18.ePortfolioAPI.DTO.Result;
 import COMP90082.team18.ePortfolioAPI.entity.User;
 import COMP90082.team18.ePortfolioAPI.repository.UserRepository;
 import COMP90082.team18.ePortfolioAPI.security.JWTMethod;
+import COMP90082.team18.ePortfolioAPI.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ import static COMP90082.team18.ePortfolioAPI.security.SecurityConstants.HEADER_S
 import static COMP90082.team18.ePortfolioAPI.security.SecurityConstants.TOKEN_PREFIX;
 
 @Service
-public class UserService {
+public class UserServiceImp implements UserService {
 
     @Autowired
     private UserRepository userRepository;
