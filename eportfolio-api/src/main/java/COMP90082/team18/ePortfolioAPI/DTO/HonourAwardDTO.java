@@ -8,8 +8,12 @@ import java.util.Date;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class ProfileDTO extends DTO {
+public class HonourAwardDTO extends DTO {
+    private Long id;
+    private String title;
+    private String associatedWith;
+    private String issuer;
     @JsonFormat(pattern = "dd-MM-yyyy")
-    private Date birthday;
-    private String phoneNumber;
+    private Date issueDate;
+    private String description;
 }
