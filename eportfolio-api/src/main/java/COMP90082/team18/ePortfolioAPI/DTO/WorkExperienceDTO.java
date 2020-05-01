@@ -7,7 +7,7 @@ import java.io.File;
 import java.util.Date;
 
 @Data
-public class WorkExperienceDTO {
+public class WorkExperienceDTO extends DTO {
     private Long id;
     private String title;
     private String employmentType;

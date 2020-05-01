@@ -8,7 +8,7 @@ import java.io.File;
 import java.util.Date;
 
 @Data
-public class IntroductionDTO {
+public class IntroductionDTO extends DTO {
     private String firstName;
     private String lastName;
     private String headline;

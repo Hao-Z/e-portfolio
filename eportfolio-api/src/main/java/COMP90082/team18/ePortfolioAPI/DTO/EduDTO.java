@@ -1,15 +1,13 @@
 package COMP90082.team18.ePortfolioAPI.DTO;
 
-import COMP90082.team18.ePortfolioAPI.entity.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
-import javax.persistence.ManyToOne;
 import java.io.File;
 import java.util.Date;
 
 @Data
-public class EduDTO {
+public class EduDTO extends DTO {
     private Long id;
     private String schoolName;
     private String degree;

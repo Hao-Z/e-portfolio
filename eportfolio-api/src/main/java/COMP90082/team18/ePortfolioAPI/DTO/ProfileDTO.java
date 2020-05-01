@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class ProfileDTO {
+public class ProfileDTO extends DTO {
     @JsonFormat(pattern = "dd-MM-yyyy")
     private Date birthday;
     private String phoneNumber;
