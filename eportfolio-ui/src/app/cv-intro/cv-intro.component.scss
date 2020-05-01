@@ -1,0 +1,116 @@
+.modal-dialog {
+    min-width: 700px; 
+    max-width: 700px; 
+}
+
+::ng-deep app-cv-intro{
+
+    .display-flex { display: flex; }
+  
+    .flex-1 { flex: 1; }
+  
+    .flex-2 { flex: 2; }
+  
+    .flex-3 { flex: 3; }
+  
+    .flex-4 { flex: 4; }
+  
+    .flex-5 { flex: 5; }
+  
+    .flex-6 { flex: 6; }
+  
+    [class*="flex-"] {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  
+    [class*="flex-"]:first-child {
+      padding-left: 0;
+    }
+  
+    [class*="flex-"]:nth-last-child(2) {
+      padding-right: 0;
+    }
+
+    [class*="form-control"] {
+      margin-bottom: 10px;
+    }
+
+    .input-group {
+      margin-bottom: 10px;
+    }
+
+    .input-group button{
+      border-color: rgb(214, 211, 211);
+      border: hidden;
+    }
+
+    input {
+      display:inline-block;
+      *display: inline;     /* for IE7*/
+      zoom:1;              /* for IE7*/
+      vertical-align:middle;
+    }
+  
+    label {
+      display:inline-block;
+      *display: inline;     /* for IE7*/
+      zoom:1;              /* for IE7*/
+      padding-bottom: 12px;
+      text-align: left;
+      width: 20%;
+      margin-right: 1em;
+    }
+
+    hr.hr1 {
+      text-align:center;
+      line-height:0px;
+    }
+    
+    hr.hr1:after{
+      content:"Persona";
+      font-weight:bold;
+      color: rgb(84, 109, 190);
+      background:white;
+      padding-bottom: 15px;
+      z-index:auto;
+    }
+
+    hr.hr2 {
+      text-align:center;
+      line-height:0px;
+    }
+
+    hr.hr2:after{
+      content:"Basic Information";
+      font-weight:bold;
+      color: rgb(84, 109, 190);
+      background:white;
+      padding-bottom: 15px;
+      z-index:auto;
+    }
+
+    hr.hr3 {
+      text-align:center;
+      line-height:0px;
+    }
+    
+    hr.hr3:after{
+      content:"Contact Information";
+      font-weight:bold;
+      color: rgb(84, 109, 190);
+      background:white;
+      padding-bottom: 15px;
+      z-index:auto;
+    }
+
+    formly-validation-message {
+      display:inline-block;
+      *display: inline;     /* for IE7*/
+      zoom:1;              /* for IE7*/
+      margin-left: 23%;
+      padding-bottom: 20px;
+    }
+
+  }
+

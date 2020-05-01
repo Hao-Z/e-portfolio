@@ -11,18 +11,12 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="AddSectionButton">
                         <!-- Button trigger modal -->
-                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#cvIntroModal">Introduction</a>
-                        <a class="dropdown-item" href="#" >About</a>
-                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#cvEducationModal">Education</a>
-                        <a class="dropdown-item" href="#" >Background</a>
-                        <a class="dropdown-item" href="#">Skills</a>
-                        <a class="dropdown-item" href="#">Languages</a>
-                        <a class="dropdown-item" href="#">Additional Info</a>
-
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#cvIntroModal" data-backdrop="static">Introduction</a>
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#cvEducationModal" data-backdrop="static">Education</a>
                     </div>
                     <!-- Modal -->
                     <app-cv-intro></app-cv-intro>
-                    <!-- <app-cv-education></app-cv-education> -->
+                    <app-cv-education></app-cv-education>
                 </div>
 
                 <div class="dropdown">
