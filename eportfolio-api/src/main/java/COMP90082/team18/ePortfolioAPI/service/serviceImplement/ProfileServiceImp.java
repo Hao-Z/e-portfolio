@@ -1,6 +1,7 @@
 package COMP90082.team18.ePortfolioAPI.service.serviceImplement;
 
 import COMP90082.team18.ePortfolioAPI.entity.Profile;
+import COMP90082.team18.ePortfolioAPI.entity.User;
 import COMP90082.team18.ePortfolioAPI.repository.ProfileRepository;
 import COMP90082.team18.ePortfolioAPI.service.ProfileService;
 import COMP90082.team18.ePortfolioAPI.util.ObjectMethod;
@@ -23,6 +24,10 @@ public class ProfileServiceImp implements ProfileService {
     @PreAuthorize("hasPermission(#id, 'write')")
     public Profile patchProfile(Long id, Profile profile) {
         profile.setId(id);
+        User targetUser = new User();
+        targetUser.setId(id);
+        profile.setUser(targetUser);
+
         Profile originalProfile = profileRepository.findById(id).orElse(null);
         if (originalProfile == null) {
             return profileRepository.save(profile);
