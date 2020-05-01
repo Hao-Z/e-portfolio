@@ -2,11 +2,13 @@ package COMP90082.team18.ePortfolioAPI.DTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.File;
 import java.util.Date;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class EduDTO extends DTO {
     private Long id;
     private String schoolName;

@@ -3,11 +3,13 @@ package COMP90082.team18.ePortfolioAPI.DTO;
 import COMP90082.team18.ePortfolioAPI.entity.Gender;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.File;
 import java.util.Date;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class IntroductionDTO extends DTO {
     private String firstName;
     private String lastName;
