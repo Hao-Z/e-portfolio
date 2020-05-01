@@ -103,7 +103,7 @@ h1 {
     padding: 6% 0 0 0;
 }
 #section2 h1{
-    /* top: -20%; */
+    top: -20%;
     transform: translateY(-50%);
     position: relative;
 }
@@ -111,3 +111,56 @@ h1 {
     background-image: url("../../assets/4.jpg");
     padding: 6% 0 0 0;
 }
+
+@keyframes sheen {
+  0% {
+    transform: skewY(-45deg) translateX(0);
+  }
+  100% {
+    transform: skewY(-45deg) translateX(12.5em);
+  }
+}
+
+.wrapper {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.button {
+  padding: 0.75em 2em;
+  text-align: center;
+  text-decoration: none;
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+  font-size: 16px;
+  display: inline-block;
+  border-radius: 0.3em;
+  transition: all 0.2s ease-in-out;
+  position: relative;
+  overflow: hidden;
+}
+.button:before {
+    content: "";
+    background-color: rgba(255,255,255,0.5);
+    height: 100%;
+    width: 3em;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: -4.5em;
+    transform: skewX(-45deg) translateX(0);
+    transition: none;
+}
+.button:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+    border-bottom: 4px solid darken(var(--primary-color), 10%);
+
+}
+.button:hover::before {
+    transform: skewX(-45deg) translateX(18.5em);
+    transition: all 0.5s ease-in-out;
+}
+
