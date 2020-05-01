@@ -70,23 +70,16 @@ export class AuthComponent implements OnInit {
       observe: 'response',
     }).subscribe(
         (resp) => {
-          if(resp.body.success == true) {
             localStorage.setItem('jwt_token', resp.headers.get("Authorization"));
             alert("Login successful, this is your jwt \n" + resp.headers.get("Authorization"));
             this.router.navigateByUrl("/cv")
             refreshJwt()
-          }
-          else{
-            this.mainForm.reset()
-            alert("Login failed \n" + resp.body.msg)
-          }
         },
         () =>{
           this.mainForm.reset()
-          alert("unexpected error, login failed")
+          alert("Login failed")
         })
   }
-
 
   onSubmit(data) {
     if(this.reqType == 'login'){
@@ -96,7 +89,10 @@ export class AuthComponent implements OnInit {
       this.http.post<any>(globals.backend_path + "signup", data, {
         observe: 'response',
       }).subscribe(resp => {
-        alert(resp.headers.get("Authorization"))
+        localStorage.setItem('jwt_token', resp.headers.get("Authorization"));
+        alert("register successful, this is ur jwt" + resp.headers.get("Authorization"))
+        this.router.navigateByUrl("/cv")
+        refreshJwt()
       });
     }
 

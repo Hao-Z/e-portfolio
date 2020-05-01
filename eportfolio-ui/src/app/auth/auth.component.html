@@ -33,7 +33,7 @@
         </div>
         <div class="form-group">
           <label for="password">Password</label>
-          <input type="text" class="form-control" id="password" formControlName="password">
+          <input type="password" class="form-control" id="password" formControlName="password">
           <div
             *ngIf="mainForm.get('password').invalid && (mainForm.get('password').dirty || mainForm.get('password').touched)">
             <div class="errprompt" *ngIf="mainForm.get('password').errors.required">
@@ -46,7 +46,7 @@
         </div>
         <div class="form-group" *ngIf="reqType == 'register'">
           <label for="confirmPass">Confirm Password</label>
-          <input type="text" class="form-control" id="confirmPass" formControlName="confirmPass">
+          <input type="password" class="form-control" id="confirmPass" formControlName="confirmPass">
           <div
             *ngIf="mainForm.get('confirmPass').invalid && (mainForm.get('confirmPass').dirty || mainForm.get('confirmPass').touched)">
             <div class="errprompt" *ngIf="mainForm.get('confirmPass').errors">
