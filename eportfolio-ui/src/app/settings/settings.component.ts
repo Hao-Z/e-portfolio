@@ -53,7 +53,7 @@ export class SettingsComponent implements OnInit {
       headers : new HttpHeaders({'content-Type': 'application/json',
         'Authorization': jwt})
     };
-    this.http.patch<any>(globals.backend_path + "users/" + userID + "/security", this.checkbox, HttpOptions).subscribe((result) => {
+    this.http.post<any>(globals.backend_path + "users/" + userID + "/security?_method=patch", this.checkbox, HttpOptions).subscribe((result) => {
       // This code will be executed when the HTTP call returns successfully
     });
     alert('Changes succeed: ' + JSON.stringify(this.checkbox));
@@ -84,7 +84,7 @@ export class SettingsComponent implements OnInit {
       'currentPassword':data['Current password'],
       'newPassword':data['New password']
     };
-    this.http.patch<any>(globals.backend_path + "users/" + userID + "/update-password", this.message, HttpOptions).subscribe((result) => {
+    this.http.post<any>(globals.backend_path + "users/" + userID + "/update-password", this.message, HttpOptions).subscribe((result) => {
       // do sth when HTTP post returns sucessfully
       this.updatePassword = this.formBuilder.group({
         "Current password" : ['',Validators.required],

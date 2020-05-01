@@ -38,7 +38,7 @@ export class MyAccountComponent implements OnInit {
     this.profiles_value = {
       'username': 'Demo',
       'email': 'demo@demo.com',
-      'birthday': '1999-12-30',
+      'birthday': '30-12-1999',
       'phoneNumber': '0455555555',
     };
     for(let p of this.profiles){
@@ -50,7 +50,7 @@ export class MyAccountComponent implements OnInit {
     refreshJwt();
     const HttpOptions = {
       headers : new HttpHeaders({'content-Type': 'application/json',
-        'Authorization': jwt})
+        'Authorization': localStorage.getItem("jwt_token")})
     };
     this.http.get<any>(globals.backend_path + "users/" + userID + "/profile",HttpOptions).subscribe((result:any)=>{
       this.profiles_value = result.body;
@@ -68,10 +68,10 @@ export class MyAccountComponent implements OnInit {
 
     const HttpOptions = {
       headers : new HttpHeaders({'content-Type': 'application/json',
-        'Authorization': jwt,}
+        'Authorization': localStorage.getItem("jwt_token")}
       )
     };
-    this.http.patch<any>(globals.backend_path + "users/" + userID + "/profile", this.data, HttpOptions).subscribe((result) => {
+    this.http.post<any>(globals.backend_path + "users/" + userID + "/profile?_method=patch", this.data, HttpOptions).subscribe((result) => {
       // This code will be executed when the HTTP call returns successfully
       this.profiles_value[key] = value;
       alert(result.body)
