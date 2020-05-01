@@ -8,3 +8,7 @@ button.calendar, button.calendar:active {
     background-size: 23px;
     background-position: center;
 }
+
+:root{
+    --primary-color: #0068A7;
+}

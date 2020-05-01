@@ -35,11 +35,12 @@ export class HomeComponent {
   constructor() {
     // this is just an example => for more details on config please visit fullPage.js docs
     this.config = {
-      sectionsColor: ['#FF543C', '#098DE9', '#FC6171', '#FEBC04'],
+      licenseKey: null,
+      sectionsColor: ['#EFC142', '#098DE9', '#FC6171', '#FEBC04'],
       navigation: false,
       slidesNavigation: true,
       slidesNavPosition: 'bottom',
-      scrollOverflow: true,
+      scrollOverflow: false,
       paddingTop: '3em',
       cards: true,
       controlArrows: true,
