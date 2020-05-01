@@ -7,7 +7,7 @@ import java.io.File;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class RecommendationDTO {
+public class RecommendationDTO extends DTO {
     private Long id;
     private String referrerName;
     private String referrerTitle;

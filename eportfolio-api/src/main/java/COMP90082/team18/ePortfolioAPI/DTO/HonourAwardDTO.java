@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class HonourAwardDTO {
+public class HonourAwardDTO extends DTO {
     private Long id;
     private String title;
     private String associatedWith;

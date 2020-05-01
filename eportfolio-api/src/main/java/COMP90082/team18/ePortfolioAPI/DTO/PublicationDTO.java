@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class PublicationDTO {
+public class PublicationDTO extends DTO {
     private Long id;
     private String title;
     private String publicationPublisher;

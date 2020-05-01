@@ -2,10 +2,9 @@ package COMP90082.team18.ePortfolioAPI.repository;
 
 import COMP90082.team18.ePortfolioAPI.entity.Language;
 import COMP90082.team18.ePortfolioAPI.entity.User;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface LanguageRepository extends JpaRepository<Language, Long> {
+public interface LanguageRepository extends UserDataRepository<Language> {
     List<Language> findByUser(User user);
 }

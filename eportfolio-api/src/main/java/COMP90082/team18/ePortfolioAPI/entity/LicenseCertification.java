@@ -1,6 +1,7 @@
 package COMP90082.team18.ePortfolioAPI.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.File;
@@ -8,11 +9,8 @@ import java.util.Date;
 
 @Data
 @Entity
-public class LicenseCertification {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+@EqualsAndHashCode(callSuper = true)
+public class LicenseCertification extends GenericUserData {
     private String name;
     private String issuingOrganization;
     private Date issueDate;
@@ -21,6 +19,4 @@ public class LicenseCertification {
     private String credentialURL;
     private File media;
 
-    @ManyToOne
-    private User user;
 }

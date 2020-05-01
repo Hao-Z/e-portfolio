@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class ProjectDTO {
+public class ProjectDTO extends DTO {
     private Long id;
     private String projectName;
     @JsonFormat(pattern = "dd-MM-yyyy")

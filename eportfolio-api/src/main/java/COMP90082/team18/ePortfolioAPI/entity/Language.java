@@ -1,19 +1,14 @@
 package COMP90082.team18.ePortfolioAPI.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
 @Data
 @Entity
-public class Language {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+@EqualsAndHashCode(callSuper = true)
+public class Language extends GenericUserData{
     private String language;
     private String proficiency;
-
-    @ManyToOne
-    private User user;
 }

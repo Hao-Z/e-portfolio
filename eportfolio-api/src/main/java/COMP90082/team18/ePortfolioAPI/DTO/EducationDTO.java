@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class EduDTO extends DTO {
+public class EducationDTO extends DTO {
     private Long id;
     private String schoolName;
     private String degree;

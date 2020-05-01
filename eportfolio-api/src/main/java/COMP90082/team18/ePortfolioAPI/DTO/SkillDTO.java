@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class SkillDTO {
+public class SkillDTO extends DTO {
     private Long id;
     private String skillName;
 }

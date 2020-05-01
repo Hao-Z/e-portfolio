@@ -1,13 +1,16 @@
 package COMP90082.team18.ePortfolioAPI.service;
 
+import COMP90082.team18.ePortfolioAPI.entity.GenericUserData;
+
+import java.lang.reflect.Type;
 import java.util.List;
 
 public interface GenericUserDataService {
-    List<Object> getAllObjects(Long id);
+    <T extends GenericUserData> List<T> getAllObjects(Long id, Type T);
 
-    Object getObject(Long id, Long objectId);
+    <T extends GenericUserData> T getObject(Long id, Long objectId, Type T);
 
-    Object postObject(Long id, Object object);
+    <T extends GenericUserData> T postObject(Long id, T object);
 
-    Object putObject(Long id, Long objectId, Object object);
+    <T extends GenericUserData> T putObject(Long id, Long objectId, T object);
 }

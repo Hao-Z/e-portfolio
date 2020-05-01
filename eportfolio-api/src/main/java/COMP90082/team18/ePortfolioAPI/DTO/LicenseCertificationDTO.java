@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class LicenseCertificationDTO {
+public class LicenseCertificationDTO extends DTO {
     private Long id;
     private String name;
     private String issuingOrganization;
