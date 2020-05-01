@@ -63,6 +63,10 @@ export class MyAccountComponent implements OnInit {
     if(key == 'email'){
       this.data = {"user":{[key]:value}};
     }else{
+      if(key == 'birthday'){
+        // yyyy-MM-dd to dd-MM-yyyy
+        value = value[8]+value[9]+'-'+value[5]+value[6]+'-'+value[0]+value[1]+value[2]+value[3];
+      }
       this.data = {[key]:value};
     }
 

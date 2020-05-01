@@ -32,7 +32,7 @@
           <nz-form-label>Birthday</nz-form-label>
 
           <nz-input-group nzSearch [nzAddOnAfter]=Birthday>
-            <input *ngIf="editable['birthday']" type="date" value="<fmt:formatDate pattern=dd-MM-yyyy/>" class="form-control" id='birthday' formControlName='birthday' nz-input [ngModel]="profiles_value['birthday']">
+            <input *ngIf="editable['birthday']" type="date" class="form-control" id='birthday' formControlName='birthday' nz-input [ngModel]="profiles_value['birthday']">
             <input *ngIf="!editable['birthday']" class="form-control" [placeholder]="profiles_value['birthday']" [disabled]="true" />
 
           </nz-input-group>
