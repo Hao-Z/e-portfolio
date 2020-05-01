@@ -71,3 +71,8 @@ nz-content {
   background: #fff;
   height: 100%;
 }
+nz-card {
+  margin-right: 80px; 
+  height: auto; 
+  box-shadow: 10px 5px 5px grey;
+}

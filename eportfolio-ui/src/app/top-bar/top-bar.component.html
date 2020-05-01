@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #0068A7">
-  <a class="navbar-brand" style="font-size:18px" href="#">e-portfolio</a>
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <a class="navbar-brand" style="font-size:18px" href="">e-portfolio</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -7,16 +7,20 @@
 
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active" style="font-size:14px">
+      <li class="nav-item active">
         <a [routerLink]="['/explore']" class="nav-link" href="#">Explore</a>
       </li>
 
     </ul>
     <ul class="navbar-nav">
-      <a [routerLink]="['/login']" *ngIf="!isLoggedIn" class="nav-item active nav-link" style="font-size:14px">Sign in/Sign up</a>
-      <span *ngIf="isLoggedIn" class="nav-item active nav-link" style="font-size:14px">Welcome {{username}} </span>
-      <a [routerLink]="['/cv']" *ngIf="isLoggedIn" class="nav-item active nav-link" style="font-size:14px">My Profile</a>
-      <a [routerLink]="['/logoff']" *ngIf="isLoggedIn" class="nav-item active nav-link" style="font-size:14px">Sign Out</a>
+      <a [routerLink]="['/login']" *ngIf="!isLoggedIn" class="nav-item active nav-link">Sign in/Sign up</a>
+      <li class="nav-item dropdown">
+        <span *ngIf="isLoggedIn" class="nav-item active dropdown nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Welcome {{username}} </span>
+        <div class="dropdown-menu">
+          <a [routerLink]="['/cv']" *ngIf="isLoggedIn" class="dropdown-item">My Profile</a>
+          <a [routerLink]="['/logoff']" *ngIf="isLoggedIn" class="dropdown-item">Sign Out</a>
+        </div>
+      </li>
     </ul>
 
   </div>
