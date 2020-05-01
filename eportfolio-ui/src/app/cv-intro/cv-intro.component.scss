@@ -104,5 +104,13 @@
       z-index:auto;
     }
 
+    formly-validation-message {
+      display:inline-block;
+      *display: inline;     /* for IE7*/
+      zoom:1;              /* for IE7*/
+      margin-left: 23%;
+      padding-bottom: 20px;
+    }
+
   }
 

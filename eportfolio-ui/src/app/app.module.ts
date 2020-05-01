@@ -22,12 +22,20 @@ import { LayoutComponent } from './layout/layout.component';
 import { CvEducationComponent } from './cv-education/cv-education.component';
 import { CvIntroComponent } from './cv-intro/cv-intro.component';
 import { AngularFullpageModule } from '@fullpage/angular-fullpage';
-import { FormlyModule } from '@ngx-formly/core';
+import { FormlyModule, FormlyFieldConfig } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { FormlyDatepickerFieldType } from './dynamic-form/datepicker.type';
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 
 registerLocaleData(zh);
+
+export function patternValidationMessage(err, field: FormlyFieldConfig) {
+  if (field.key ==='phoneNumber') {
+    return 'Please provide a phone number with correct format! '
+  } else if (field.key ==='email') {
+    return 'Please provide a email address with correct format! '
+  }
+}
 
 @NgModule({
   declarations: [
@@ -58,6 +66,10 @@ registerLocaleData(zh);
     FormlyModule.forRoot({
       types: [
         { name: 'datepicker', component: FormlyDatepickerFieldType, wrappers: ['form-field'] }
+      ],
+      validationMessages: [
+        { name: 'required', message:'This field is required!'},
+        { name: 'pattern', message: patternValidationMessage }
       ]
     }),
     FormlyBootstrapModule,

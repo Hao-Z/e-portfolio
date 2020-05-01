@@ -1,38 +1,27 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import * as globals from "../../global";
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { Introduction } from "../dynamic-form/interfaces/introduction";
 import { catchError, map, retry } from 'rxjs/operators';
+import * as globals from "../../global";
+import { Introduction } from "../dynamic-form/interfaces/introduction";
+import { PATCH } from '../core/api.const';
+import { CustomOptionsService } from "../core/custom-options.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class IntroductionApiService {
 
-  // private introductionsUrl = globals.backend_path + "users";
-  private introductionsUrl = '/users/'
+  private introductionsUrl = globals.backend_path + "users/";
 
-  private httpOptions = {
-    headers: new HttpHeaders({ 
-      // 'Access-Control-Allow-Origin': 'http://localhost:8080',
-      // 'Access-Control-Request-Method': 'PATCH, OPTIONS', 
-      // 'Access-Control-Allow-Headers': 'Authorization, content-type',
-      'Content-Type':  'application/json',
-      'Authorization': localStorage.getItem('jwt_token'),
-    })
-  };
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private options: CustomOptionsService) { }
 
   public getIntro(id: number): Observable<Introduction> {
     const url = `${this.introductionsUrl}${id}/introduction`;
-    return this.http.get<Introduction>(url, this.httpOptions)
+    return this.http.get<Introduction>(url, this.options.httpOptions)
       .pipe(
         map(response => {
-          console.log('headers get', JSON.stringify(this.httpOptions))
-          console.log('get service!')
-          return response as Introduction
+          return response.body as Introduction
         }),
         retry(1),
         catchError(this.errorHandler)
@@ -40,13 +29,12 @@ export class IntroductionApiService {
   }
 
   public updateIntro(id: number, introduction: Introduction): Observable<Introduction> {
-    const url = `${this.introductionsUrl}${id}/introduction`;
-    return this.http.patch(url, introduction, this.httpOptions)
+    const url = `${this.introductionsUrl}${id}/introduction`; 
+    this.options.httpOptions.params = PATCH;
+    return this.http.post(url, introduction, this.options.httpOptions)
       .pipe(
         map(response => {
-          console.log('headers patch', JSON.stringify(this.httpOptions))
-          console.log('patch service!')
-          return response as Introduction
+          return response.body as Introduction
         }),
         retry(1),
         catchError(this.errorHandler)

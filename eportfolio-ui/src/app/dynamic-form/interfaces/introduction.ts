@@ -10,7 +10,7 @@ export interface Introduction {
     country: string;
     postalCode: string;
     email: string;
-    phone: string;
+    phoneNumber: string;
     address: string;
     profilePhoto: string;
 }

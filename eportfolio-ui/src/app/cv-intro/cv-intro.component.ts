@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core'
-import { HttpClient } from '@angular/common/http'
 import { DataService } from '../core/data.service';
-import { ActivatedRoute } from '@angular/router';
 import { userID } from "../../global";
 import { refreshJwt } from "../../global";
 import { IntroductionApiService } from "../core/introduction-api.service";
@@ -18,25 +16,7 @@ export class CvIntroComponent implements OnInit {
 
   form = new FormGroup({});
   options: FormlyFormOptions = {};
-
   model:Introduction 
-  //   = {
-  //   firstName: 'Chuqiao',
-  //   lastName: 'Chen',
-  //   headline: "",
-  //   industry : null,
-  //   currentPosition: "",
-  //   currentEducation: "",
-  //   gender: 3,
-  //   birthday: "",
-  //   country: "",
-  //   postalCode: "",
-  //   email: "",
-  //   phone: "",
-  //   address: "",
-  //   profilePhoto: "",
-  // }
-
   fields: FormlyFieldConfig[] = [
     {
       template: '<hr class="hr1" />',
@@ -54,10 +34,9 @@ export class CvIntroComponent implements OnInit {
       type: 'input',
       templateOptions: {
         label: 'Last Name',
-        required: true,
       },
       expressionProperties: {
-        'templateOptions.disabled': '!model.firstName',
+        // 'templateOptions.disabled': '!model.firstName',
       }
     },
     {
@@ -151,10 +130,9 @@ export class CvIntroComponent implements OnInit {
       },
     },
     {
-      key: 'phone',
+      key: 'phoneNumber',
       type: 'input',
       templateOptions: {
-        type: 'number',
         label: 'Phone',
         pattern: "^[0-9]{10,11}$"
       }
@@ -167,9 +145,9 @@ export class CvIntroComponent implements OnInit {
         maxLength: 200
       },
     },  
-  ]
+  ];
 
-  constructor(private http: HttpClient, 
+  constructor(
     private dataService: DataService,
     private introductionApiService: IntroductionApiService) { }
 
@@ -179,25 +157,22 @@ export class CvIntroComponent implements OnInit {
   }
 
   getIntroduction() {
-
     this.introductionApiService.getIntro(userID)
-      .subscribe((result: any) => {
-        console.log("get: " + 'response:', JSON.stringify(result.detail))
-        if (result.detail) {
-          console.log("success to show intro data!")
-          this.model =result.detail as Introduction;
+      .subscribe((result: Introduction) => {
+        console.log("CV Intro get response: ", JSON.stringify(result))
+        if (result) {
+          this.model =result;
         }
     })
   }
 
   onSubmit() {
-    console.log(this.model);
-    
+    console.log("CV Intro submit form:", this.model);
 		if (this.form.valid) {
       this.introductionApiService.updateIntro(userID, this.model)
-        .subscribe((result: any) => {
-          console.log("patch: " + 'response:', JSON.stringify(result.body))
-          if (result.body.detail) {
+        .subscribe((result: Introduction) => {
+          console.log("CV Intro patch response:", JSON.stringify(result))
+          if (result) {
           }
         })
     }
