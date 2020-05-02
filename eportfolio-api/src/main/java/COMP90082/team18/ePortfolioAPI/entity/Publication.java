@@ -10,14 +10,11 @@ import java.util.Date;
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = true)
-public class WorkExperience extends GenericUserData {
+public class Publication extends GenericUserData {
     private String title;
-    private String employmentType;
-    private String companyName;
-    private String location;
-    private String industry;
-    private Date startDate;
-    private Date endDate;
+    private String publicationPublisher;
+    private Date publicationDate;
+    private String publicationURL;
     private String description;
     private File media;
 }

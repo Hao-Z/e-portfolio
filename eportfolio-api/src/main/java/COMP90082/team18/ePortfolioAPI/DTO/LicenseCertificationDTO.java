@@ -9,17 +9,15 @@ import java.util.Date;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class WorkExperienceDTO extends DTO {
+public class LicenseCertificationDTO extends DTO {
     private Long id;
-    private String title;
-    private String employmentType;
-    private String companyName;
-    private String location;
-    private String industry;
+    private String name;
+    private String issuingOrganization;
     @JsonFormat(pattern = "dd-MM-yyyy")
-    private Date startDate;
+    private Date issueDate;
     @JsonFormat(pattern = "dd-MM-yyyy")
-    private Date endDate;
-    private String description;
+    private Date expirationDate;
+    private String credentialID;
+    private String credentialURL;
     private File media;
 }

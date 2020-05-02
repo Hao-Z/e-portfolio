@@ -7,8 +7,10 @@ import java.io.File;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class FeatureDTO extends DTO {
+public class RecommendationDTO extends DTO {
     private Long id;
-    private String link;
+    private String referrerName;
+    private String referrerTitle;
+    private String description;
     private File media;
 }

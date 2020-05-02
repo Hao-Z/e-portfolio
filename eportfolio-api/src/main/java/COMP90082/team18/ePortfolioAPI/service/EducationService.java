@@ -4,7 +4,7 @@ import COMP90082.team18.ePortfolioAPI.entity.Education;
 
 import java.util.List;
 
-public interface EduService {
+public interface EducationService {
 
     List<Education> getAllEducation(Long id);
 

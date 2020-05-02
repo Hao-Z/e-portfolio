@@ -9,7 +9,9 @@ import java.io.File;
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = true)
-public class Feature extends GenericUserData{
-    private String link;
+public class Recommendation extends GenericUserData {
+    private String referrerName;
+    private String referrerTitle;
+    private String description;
     private File media;
 }
