@@ -1,9 +1,12 @@
 import {Component, Injectable, OnInit} from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from "@angular/forms";
 import validate = WebAssembly.validate;
 import {Subscription} from "rxjs";
 import * as globals from "../../global";
+import {userID} from "../../global";
+import {refreshJwt} from "../../global";
+import {jwt} from "../../global";
 
 @Component({
   selector: 'app-settings',
@@ -14,17 +17,18 @@ import * as globals from "../../global";
 @Injectable()
 export class SettingsComponent implements OnInit {
 
-  settings = ["Make the CV private",];
-  checkbox = new Map<string,boolean>();
+  security = ["privacy"];
+  checkbox : any;
   updatePassword: FormGroup;
   update = false;
   constructor(private http: HttpClient, private formBuilder: FormBuilder) { }
   ngOnInit(): void {
+    refreshJwt();
+    //getSecurity();
+    this.checkbox = {
+      'privacy' : false
+    };
 
-    //getSetting();
-    for(let s of this.settings){
-      this.checkbox.set(s,false);
-    }
     this.updatePassword = this.formBuilder.group({
       "Current password" : ['',Validators.required],
       "New password" : ['',[Validators.required, Validators.minLength(6)]],
@@ -32,17 +36,27 @@ export class SettingsComponent implements OnInit {
     });
   }
 
-  getSetting(){
-    this.http.get(globals.backend_path + "getsetting").subscribe((result:any)=>{
-      this.checkbox = result;
+  getSecurity(){
+    refreshJwt();
+    const HttpOptions = {
+      headers : new HttpHeaders({'content-Type': 'application/json',
+        'Authorization': jwt})
+    };
+    this.http.get<any>(globals.backend_path + "users/" + userID + "/security",HttpOptions).subscribe((result:any)=>{
+      this.checkbox['privacy'] = result.body['privacy'];
     });
   }
 
-  updateSetting(data) {
-    this.http.put(globals.backend_path + "updatesetting", data).subscribe((result) => {
+  updateSecurity() {
+    refreshJwt();
+    const HttpOptions = {
+      headers : new HttpHeaders({'content-Type': 'application/json',
+        'Authorization': jwt})
+    };
+    this.http.post<any>(globals.backend_path + "users/" + userID + "/security?_method=patch", this.checkbox, HttpOptions).subscribe((result) => {
       // This code will be executed when the HTTP call returns successfully
     });
-    alert('Changes succeed: ' + JSON.stringify(data));
+    alert('Changes succeed: ' + JSON.stringify(this.checkbox));
   }
 
   matchPassword(comparedName: string): ValidatorFn {
@@ -59,11 +73,40 @@ export class SettingsComponent implements OnInit {
     };
   }
 
-  onSubmit(data) {
-    this.http.post(globals.backend_path + "signup", data).subscribe((result) => {
+  message : any;
+  updatePW(data) {
+    refreshJwt();
+    const HttpOptions = {
+      headers : new HttpHeaders({'content-Type': 'application/json',
+        'Authorization': jwt})
+    };
+    this.message = {
+      'currentPassword':data['Current password'],
+      'newPassword':data['New password']
+    };
+    this.http.post<any>(globals.backend_path + "users/" + userID + "/update-password", this.message, HttpOptions).subscribe((result) => {
       // do sth when HTTP post returns sucessfully
-      this.update = !this.update;
+      this.updatePassword = this.formBuilder.group({
+        "Current password" : ['',Validators.required],
+        "New password" : ['',[Validators.required, Validators.minLength(6)]],
+        "Confirm password" : ['',[Validators.required, this.matchPassword('New password')]],
+      });
+      this.update = !this.update
     });
-    alert('You ve submitted' + JSON.stringify(data));
+    this.updatePassword = this.formBuilder.group({
+      "Current password" : ['',Validators.required],
+      "New password" : ['',[Validators.required, Validators.minLength(6)]],
+      "Confirm password" : ['',[Validators.required, this.matchPassword('New password')]],
+    });
+    this.update = !this.update; //delete
+    alert('You ve submitted' + JSON.stringify(this.message));
+  }
+
+  cancel(){
+    this.updatePassword = this.formBuilder.group({
+      "Current password" : ['',Validators.required],
+      "New password" : ['',[Validators.required, Validators.minLength(6)]],
+      "Confirm password" : ['',[Validators.required, this.matchPassword('New password')]],
+    });
   }
 }

@@ -9,12 +9,40 @@
               [(nzCollapsed)]="isCollapsed"
               [nzTrigger]="null">
       <ul nz-menu nzTheme="light" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-        <li nz-menu-item nzMatchRouter>
-
+        <li nz-menu-item nzMatchRouter style="font-size: 15px">
+          Filter:
+        </li>
+        <li>
+          <nz-tree
+            [nzData]="nodes"
+            nzCheckable
+            nzShowExpand = true
+            [nzCheckedKeys]="defaultCheckedKeys"
+            (nzCheckBoxChange)="nzCheck($event)"
+            (nzExpandChange)="nzCheck($event)"
+          >
+          </nz-tree>
         </li>
       </ul>
     </nz-sider>
     <nz-layout>
+      <nz-content>
+        <div align="right">
+        <table>
+          <td>
+            <label>
+              Sort by:
+            </label>
+          </td>
+          <td>
+            <nz-select [ngModel]="defalutValue" (ngModelChange)="getSearch()" nzAllowClear nzPlaceHolder="Choose" style="width: 200px">
+              <nz-option *ngFor="let sortValue of sortValues" [nzValue]="sortValue" [nzLabel]="sortValue"></nz-option>
+            </nz-select>
+          </td>
+        </table>
+        </div>
+      </nz-content>
+
       <nz-content>
         <div *ngFor="let item of CVs">
           <nz-card>
