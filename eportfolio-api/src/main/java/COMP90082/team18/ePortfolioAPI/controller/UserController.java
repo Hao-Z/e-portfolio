@@ -1,8 +1,10 @@
 package COMP90082.team18.ePortfolioAPI.controller;
 
 import COMP90082.team18.ePortfolioAPI.DTO.UserDTO;
+import COMP90082.team18.ePortfolioAPI.entity.Profile;
 import COMP90082.team18.ePortfolioAPI.entity.User;
 import COMP90082.team18.ePortfolioAPI.security.JWTMethod;
+import COMP90082.team18.ePortfolioAPI.service.ProfileService;
 import COMP90082.team18.ePortfolioAPI.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -25,6 +27,9 @@ public class UserController {
     private UserService userService;
 
     @Autowired
+    private ProfileService profileService;
+
+    @Autowired
     private ModelMapper modelMapper;
 
     @Autowired
@@ -37,6 +42,8 @@ public class UserController {
         }
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         User result = userService.signUp(user);
+
+        profileService.createProfile(user.getId());
 
         String token = JWTMethod.create(result);
         response.addHeader(HEADER_STRING, TOKEN_PREFIX + token);

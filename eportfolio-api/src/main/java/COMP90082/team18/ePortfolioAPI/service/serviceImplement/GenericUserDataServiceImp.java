@@ -4,7 +4,6 @@ import COMP90082.team18.ePortfolioAPI.entity.*;
 import COMP90082.team18.ePortfolioAPI.repository.*;
 import COMP90082.team18.ePortfolioAPI.service.GenericUserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
@@ -52,8 +51,8 @@ public class GenericUserDataServiceImp implements GenericUserDataService {
     @Override
     @PreAuthorize("hasPermission(#id, 'read')")
     public <T extends GenericUserData> T getObject(Long id, Long objectId, Type T) {
-        JpaRepository repository = getRepository(T);
-        return (T) repository.findById(objectId).orElseThrow();
+        UserDataRepository repository = getRepository(T);
+        return (T) repository.findById(objectId).orElse(null);
     }
 
     @Override
