@@ -43,9 +43,7 @@ public class UserController {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         User result = userService.signUp(user);
 
-        Profile profile = new Profile();
-        profile.setUser(user);
-        profileService.patchProfile(user.getId(), profile);
+        profileService.createProfile(user.getId());
 
         String token = JWTMethod.create(result);
         response.addHeader(HEADER_STRING, TOKEN_PREFIX + token);

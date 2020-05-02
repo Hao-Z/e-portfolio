@@ -21,6 +21,16 @@ public class ProfileServiceImp implements ProfileService {
     }
 
     @Override
+    public Profile createProfile(Long id) {
+        Profile profile = new Profile();
+        profile.setId(id);
+        User targetUser = new User();
+        targetUser.setId(id);
+        profile.setUser(targetUser);
+        return profileRepository.save(profile);
+    }
+
+    @Override
     @PreAuthorize("hasPermission(#id, 'write')")
     public Profile patchProfile(Long id, Profile profile) {
         profile.setId(id);
