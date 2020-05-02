@@ -29,7 +29,7 @@ export class IntroductionApiService {
   }
 
   public updateIntro(id: number, introduction: Introduction): Observable<Introduction> {
-    const url = `${this.introductionsUrl}${id}/introduction`; 
+    const url = `${this.introductionsUrl}${id}/introduction?_method=patch`;
     this.options.httpOptions.params = PATCH;
     return this.http.post(url, introduction, this.options.httpOptions)
       .pipe(

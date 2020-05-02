@@ -5,7 +5,7 @@ export interface Introduction {
     industry : number;
     currentPosition: string;
     currentEducation: string;
-    gender: String;
+    gender: string;
     birthday: string;
     country: string;
     postalCode: string;
