@@ -33,10 +33,6 @@ export class MyAccountComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(localStorage.getItem('jwt_token') == null){
-      this.router.navigate(['/login'])
-    }
-
     refreshJwt();
     // this.getProfile();
     this.profiles_value = {

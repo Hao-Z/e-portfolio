@@ -24,10 +24,6 @@ export class SettingsComponent implements OnInit {
   update = false;
   constructor(private http: HttpClient, private router: Router,private formBuilder: FormBuilder) { }
   ngOnInit(): void {
-    if(localStorage.getItem('jwt_token') == null){
-      this.router.navigate(['/login'])
-    }
-
     refreshJwt();
     //getSecurity();
     this.checkbox = {
