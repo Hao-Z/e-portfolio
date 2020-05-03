@@ -1,7 +1,7 @@
 import {Component, Injectable, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router, RouterModule} from "@angular/router";
 import * as globals from "../../global";
 import {jwt} from "../../global";
 import {username} from "../../global";
@@ -22,7 +22,7 @@ export class MyAccountComponent implements OnInit {
   editable = new Map<string,boolean>();
   profiles = ['username', 'email', 'birthday', 'phoneNumber'];
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private formBuilder: FormBuilder) {
+  constructor(private http: HttpClient, private router: Router,private route: ActivatedRoute, private formBuilder: FormBuilder) {
 
     this.updateForm = new FormGroup({
       'username': new FormControl(''),
@@ -33,6 +33,10 @@ export class MyAccountComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if(localStorage.getItem('jwt_token') == null){
+      this.router.navigate(['/login'])
+    }
+
     refreshJwt();
     // this.getProfile();
     this.profiles_value = {

@@ -7,6 +7,7 @@ import * as globals from "../../global";
 import {userID} from "../../global";
 import {refreshJwt} from "../../global";
 import {jwt} from "../../global";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-settings',
@@ -21,8 +22,12 @@ export class SettingsComponent implements OnInit {
   checkbox : any;
   updatePassword: FormGroup;
   update = false;
-  constructor(private http: HttpClient, private formBuilder: FormBuilder) { }
+  constructor(private http: HttpClient, private router: Router,private formBuilder: FormBuilder) { }
   ngOnInit(): void {
+    if(localStorage.getItem('jwt_token') == null){
+      this.router.navigate(['/login'])
+    }
+
     refreshJwt();
     //getSecurity();
     this.checkbox = {
