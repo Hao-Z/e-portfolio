@@ -16,8 +16,8 @@ public class IntroductionDTO extends DTO {
     private String lastName;
     private String headline;
     private String industry;
-    private String currentPosition;
-    private String currentEducation;
+    private WorkExperienceDTO currentPosition;
+    private EducationDTO currentEducation;
     private Gender gender;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private Date birthday;
@@ -26,6 +26,5 @@ public class IntroductionDTO extends DTO {
     private String address;
     private File profilePhoto;
     private String phoneNumber;
-    @JsonProperty("email")
-    private String userEmail;
+    private String email;
 }
