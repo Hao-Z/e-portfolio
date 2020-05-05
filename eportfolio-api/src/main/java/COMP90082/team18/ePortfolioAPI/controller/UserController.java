@@ -1,7 +1,6 @@
 package COMP90082.team18.ePortfolioAPI.controller;
 
 import COMP90082.team18.ePortfolioAPI.DTO.UserDTO;
-import COMP90082.team18.ePortfolioAPI.entity.Profile;
 import COMP90082.team18.ePortfolioAPI.entity.User;
 import COMP90082.team18.ePortfolioAPI.security.JWTMethod;
 import COMP90082.team18.ePortfolioAPI.service.ProfileService;
