@@ -2,6 +2,7 @@ package COMP90082.team18.ePortfolioAPI.DTO;
 
 import COMP90082.team18.ePortfolioAPI.entity.Gender;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -25,4 +26,6 @@ public class IntroductionDTO extends DTO {
     private String address;
     private File profilePhoto;
     private String phoneNumber;
+    @JsonProperty("email")
+    private String userEmail;
 }

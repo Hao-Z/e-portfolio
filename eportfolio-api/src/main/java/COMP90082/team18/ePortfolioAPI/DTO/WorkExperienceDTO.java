@@ -16,6 +16,7 @@ public class WorkExperienceDTO extends DTO {
     private String companyName;
     private String location;
     private String industry;
+    private boolean isDefault;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private Date startDate;
     @JsonFormat(pattern = "dd-MM-yyyy")
