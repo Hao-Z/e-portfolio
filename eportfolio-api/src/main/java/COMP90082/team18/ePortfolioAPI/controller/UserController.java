@@ -1,9 +1,6 @@
 package COMP90082.team18.ePortfolioAPI.controller;
 
-import COMP90082.team18.ePortfolioAPI.DTO.AboutDTO;
-import COMP90082.team18.ePortfolioAPI.DTO.IntroductionDTO;
-import COMP90082.team18.ePortfolioAPI.DTO.ProfileDTO;
-import COMP90082.team18.ePortfolioAPI.DTO.UserDTO;
+import COMP90082.team18.ePortfolioAPI.DTO.*;
 import COMP90082.team18.ePortfolioAPI.entity.User;
 import COMP90082.team18.ePortfolioAPI.security.JWTMethod;
 import COMP90082.team18.ePortfolioAPI.service.UserService;
@@ -46,6 +43,12 @@ public class UserController {
         response.addHeader("Access-Control-Expose-Headers", "Authorization");
 
         return modelMapper.map(result, UserDTO.class);
+    }
+
+    @PatchMapping(value = "users/{id}/password")
+    public void changePassword(@PathVariable Long id, @RequestBody PasswordDTO passwordDTO){
+        passwordDTO.setNewPassword(bCryptPasswordEncoder.encode(passwordDTO.getNewPassword()));
+        userService.changePassword(id, passwordDTO);
     }
 
     @PostMapping(value = "/signup/checkuser")
