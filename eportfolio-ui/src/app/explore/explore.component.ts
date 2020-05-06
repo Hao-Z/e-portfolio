@@ -65,4 +65,8 @@ industryColor: any = {
   nzCheck($event: NzFormatEmitEvent) {
 
   }
+
+  toCV(profileUrl: string) {
+    alert("to CV!")
+  }
 }
