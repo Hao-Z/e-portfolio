@@ -48,21 +48,22 @@
       <nz-content>
         <div *ngFor="let item of CVs">
           <div class="card-body" [style]="industryColor[item.industry]">
-            <div nz-row *ngIf="!isCollapsed">
-              <div nz-col [nzSpan]="18" [nzPush]="6">
-                <nz-descriptions [nzTitle]=userDatas.firstName+userDatas.lastName>
-                  <nz-descriptions-item nzTitle="Title">{{ userDatas.headline }}</nz-descriptions-item>
-                  <nz-descriptions-item nzTitle="Education">{{userDatas.education}}</nz-descriptions-item>
-                  <nz-descriptions-item nzTitle="Industry">{{item.industry}}</nz-descriptions-item>
-                  <nz-descriptions-item nzTitle="Region">{{userDatas.region}}</nz-descriptions-item>
-                  <nz-descriptions-item nzTitle="Email">{{userDatas.email}}</nz-descriptions-item>
-                  <nz-descriptions-item nzTitle="Phone">{{userDatas.phone}}</nz-descriptions-item>
-                  <nz-descriptions-item nzTitle="ProfileUrl">{{userDatas.profileUrl}}</nz-descriptions-item>
-                </nz-descriptions>
+            <div *ngIf="!isCollapsed">
+              <div class="col-md-6">
+                <img src="assets/untitled.png" class="center-block rounded-circle" alt="anonymous-user"  width="80px" height="80px">
               </div>
-              <div nz-col [nzSpan]="6" [nzPull]="18">
-                <div align=center>
-                  <img src="assets/untitled.png" class="center-block rounded-circle" alt="anonymous-user"  width="80px" height="80px">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="row">{{ userDatas.firstName }} {{ userDatas.lastName }}</div>
+                  <div class="row">Title: {{ userDatas.headline }}</div>
+                  <div class="row">Education: {{userDatas.education}}</div>
+                  <div class="row">Industry: {{item.industry}}</div>
+                </div>
+                <div class="col-md-6">
+                  <div class="row">Region: {{userDatas.region}}</div>
+                  <div class="row">Email: {{userDatas.email}}</div>
+                  <div class="row">Phone: {{userDatas.phone}}</div>
+                  <div class="row">ProfileUrl: {{userDatas.profileUrl}}</div>
                 </div>
               </div>
             </div>
