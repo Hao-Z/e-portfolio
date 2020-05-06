@@ -75,6 +75,7 @@ export class SettingsComponent implements OnInit {
   }
 
   message : any;
+  errorBG: any = "background-color: rgba(255,255,255,0.4)";
   updatePW(data) {
     refreshJwt();
     const HttpOptions = {
