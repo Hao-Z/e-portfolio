@@ -1,33 +1,32 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core'
-import { DataService } from '../core/data.service';
-import { userID } from "../../global";
-import { refreshJwt } from "../../global";
-import { IntroductionApiService } from "../core/introduction-api.service";
-import { Introduction } from "../dynamic-form/interfaces/introduction";
+import { DataService } from '../../core/services/data.service';
+import { userID, refreshJwt } from "../../../global";
+import { IntroductionApiService } from "../../core/services/introduction-api.service";
+import { Introduction } from "../../core/models/introduction.model";
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-cv-intro',
-  templateUrl: './cv-intro.component.html',
-  styleUrls: ['./cv-intro.component.scss']
+  selector: 'app-modal-introduction',
+  templateUrl: './modal-introduction.component.html',
+  styleUrls: ['./modal-introduction.component.css']
 })
-export class CvIntroComponent implements OnInit {
+export class ModalIntroductionComponent implements OnInit {
+
+  title: string = `Introduction`;
 
   form = new FormGroup({});
   options: FormlyFormOptions = {};
   model:Introduction 
   fields: FormlyFieldConfig[] = [
     {
-      template: '<hr class="hr1" />',
-    },
-    {
       key: 'firstName',
       type: 'input',
       templateOptions: {
         label: 'First Name',
         required: true,
-      },
+      }
     },
     {
       key: 'lastName',
@@ -49,7 +48,6 @@ export class CvIntroComponent implements OnInit {
       },
       hooks: {
         onInit: (field: FormlyFieldConfig) => {
-          field.templateOptions.cols = 60,
           field.templateOptions.rows = 3
         }
       }
@@ -62,24 +60,21 @@ export class CvIntroComponent implements OnInit {
         required: true,
         placeholder: "Choose an industry...",
         options: this.dataService.getIndustry()
-      },
+      }
     },
     {
       key: 'currentPosition',
       type: 'input',
       templateOptions: {
         label: 'Current Position'
-      },
+      }
     },
     {
       key: 'currentEducation',
       type: 'input',
       templateOptions: {
         label: 'Current Education'
-      },
-    },
-    {
-      template: '<hr class="hr2" />',
+      }
     },
     {
       key: 'gender',
@@ -87,16 +82,16 @@ export class CvIntroComponent implements OnInit {
       templateOptions: {
         label: 'Gender',
         options: this.dataService.getGender(),
-      },
+      }
     },
     {
       key: 'birthday',
       type: 'datepicker',
       templateOptions: {
+        placeholder: 'DD/MM/YYYY',
         label: 'Date of Birth',
-        placeholder: 'yyyy-mm-dd',
-        required: false
-      },
+        // pattern: '^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$'
+      }
     },
     {
       key: 'country',
@@ -105,7 +100,7 @@ export class CvIntroComponent implements OnInit {
         label: 'Country',
         required: true,
         maxLength: 20
-      },
+      }
     },
     {
       key: 'postalCode',
@@ -117,9 +112,6 @@ export class CvIntroComponent implements OnInit {
       }
     },
     {
-      template: '<hr class="hr3" />',
-    },
-    {
       key: 'email',
       type: 'input',
       templateOptions: {
@@ -127,7 +119,7 @@ export class CvIntroComponent implements OnInit {
         label: 'Email',
         minLength: 3,
         pattern: "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-      },
+      }
     },
     {
       key: 'phoneNumber',
@@ -143,13 +135,23 @@ export class CvIntroComponent implements OnInit {
       templateOptions: {
         label: 'Address',
         maxLength: 200
-      },
-    },  
+      }
+    }, 
+    {
+      key: 'profilePhoto',
+      type: 'input',
+      templateOptions: {
+        type: 'file',
+        label: 'Profile',
+      }
+    } 
   ];
 
   constructor(
+    public modal: NgbActiveModal,
     private dataService: DataService,
-    private introductionApiService: IntroductionApiService) { }
+    private introductionApiService: IntroductionApiService
+  ) { }
 
   ngOnInit(): void {
     refreshJwt();
@@ -177,4 +179,5 @@ export class CvIntroComponent implements OnInit {
         })
     }
   }
+
 }

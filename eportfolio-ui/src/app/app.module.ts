@@ -19,13 +19,13 @@ import { MyAccountComponent } from "./my-account/my-account.component";
 import { SettingsComponent } from "./settings/settings.component";
 import { CvComponent } from './cv/cv.component';
 import { LayoutComponent } from './layout/layout.component';
-import { CvEducationComponent } from './cv-education/cv-education.component';
-import { CvIntroComponent } from './cv-intro/cv-intro.component';
 import { AngularFullpageModule } from '@fullpage/angular-fullpage';
 import { FormlyModule, FormlyFieldConfig } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { FormlyDatepickerFieldType } from './dynamic-form/datepicker.type';
-import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerModule, NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalIntroductionComponent } from './cv-form/modal-introduction/modal-introduction.component';
+import { ModalEducationComponent } from './cv-form/modal-education/modal-education.component';
 
 registerLocaleData(zh);
 
@@ -48,9 +48,9 @@ export function patternValidationMessage(err, field: FormlyFieldConfig) {
     SettingsComponent,
     CvComponent,
     LayoutComponent,
-    CvEducationComponent,
-    CvIntroComponent,
-    FormlyDatepickerFieldType
+    FormlyDatepickerFieldType,
+    ModalIntroductionComponent,
+    ModalEducationComponent
   ],
   imports: [
     BrowserModule,
@@ -73,9 +73,17 @@ export function patternValidationMessage(err, field: FormlyFieldConfig) {
       ]
     }),
     FormlyBootstrapModule,
-    NgbDatepickerModule
+    NgbDatepickerModule,
+    NgbModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    NgbActiveModal
+  ],
+  bootstrap: [AppComponent],
+  entryComponents: [
+    ModalIntroductionComponent, 
+    ModalEducationComponent
+  ]
+  
 })
 export class AppModule { }

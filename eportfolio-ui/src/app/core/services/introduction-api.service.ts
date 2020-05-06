@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, retry } from 'rxjs/operators';
-import * as globals from "../../global";
-import { Introduction } from "../dynamic-form/interfaces/introduction";
-import { PATCH } from '../core/api.const';
-import { CustomOptionsService } from "../core/custom-options.service";
+import * as globals from "../../../global";
+import { Introduction } from "../models/introduction.model";
+import { PATCH } from '../../core/services/api.const';
+import { CustomOptionsService } from "../../core/services/custom-options.service";
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +29,8 @@ export class IntroductionApiService {
   }
 
   public updateIntro(id: number, introduction: Introduction): Observable<Introduction> {
-    const url = `${this.introductionsUrl}${id}/introduction?_method=patch`;
-    this.options.httpOptions.params = PATCH;
+    const url = `${this.introductionsUrl}${id}/introduction`;
+    this.options.httpOptions.params = PATCH
     return this.http.post(url, introduction, this.options.httpOptions)
       .pipe(
         map(response => {

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CvIntroComponent } from './cv-intro.component';
+import { ModalEducationComponent } from './modal-education.component';
 
-describe('CvIntroComponent', () => {
-  let component: CvIntroComponent;
-  let fixture: ComponentFixture<CvIntroComponent>;
+describe('ModalEducationComponent', () => {
+  let component: ModalEducationComponent;
+  let fixture: ComponentFixture<ModalEducationComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CvIntroComponent ]
+      declarations: [ ModalEducationComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CvIntroComponent);
+    fixture = TestBed.createComponent(ModalEducationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

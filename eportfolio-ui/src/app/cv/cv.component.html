@@ -10,15 +10,10 @@
                         Add section
                     </button>
                     <div class="dropdown-menu" aria-labelledby="AddSectionButton">
-                        <!-- Button trigger modal -->
-                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#cvIntroModal" data-backdrop="static">Introduction</a>
-                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#cvEducationModal" data-backdrop="static">Education</a>
+                        <a class="dropdown-item" href="#" (click)="openModal('introduction')">Introduction</a>
+                        <a class="dropdown-item" href="#" (click)="openModal('education')">Education</a>
                     </div>
-                    <!-- Modal -->
-                    <app-cv-intro></app-cv-intro>
-                    <app-cv-education></app-cv-education>
                 </div>
-
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="MoreButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:30px;">
                         More...

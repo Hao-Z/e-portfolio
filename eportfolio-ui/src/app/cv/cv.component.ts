@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalEducationComponent } from "../cv-form/modal-education/modal-education.component";
+import { ModalIntroductionComponent } from "../cv-form/modal-introduction/modal-introduction.component"
 
 const userDatas = {
   firstName: 'Chuqiao',
@@ -18,6 +21,8 @@ const userDatas = {
   styleUrls: ['./cv.component.css']
 })
 export class CvComponent implements OnInit {
+ 
+  title = 'app';
 
   public userDatas: {
     firstName: string,
@@ -31,9 +36,23 @@ export class CvComponent implements OnInit {
     profileUrl: String
   } = userDatas
 
-  constructor() { }
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit(): void {
   }
 
+  openModal(modalName: string) {
+    switch (modalName) {
+      case 'introduction':
+        const modalIntroRef = this.modalService.open(ModalIntroductionComponent, {backdrop: 'static', size: 'lg'});
+        break;
+      case 'education':
+        const modalEduRef = this.modalService.open(ModalEducationComponent, {backdrop: 'static', size: 'lg'});
+        break;
+      default:
+        console.log("No such modal exists!");
+        break;
+    }
+  }
+  
 }
