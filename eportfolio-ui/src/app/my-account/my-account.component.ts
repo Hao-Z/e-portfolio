@@ -58,6 +58,7 @@ export class MyAccountComponent implements OnInit {
   }
 
   data:any;
+  inputBG: any = "background-color : rgba(255, 255, 255, 0.6)";
   onSubmit(key, value) {
     refreshJwt();
     if(key == 'email'){
