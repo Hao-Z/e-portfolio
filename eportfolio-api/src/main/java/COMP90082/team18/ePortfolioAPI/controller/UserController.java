@@ -9,12 +9,17 @@ import COMP90082.team18.ePortfolioAPI.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.lang.Nullable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.server.PathParam;
+
+import java.util.List;
 
 import static COMP90082.team18.ePortfolioAPI.security.SecurityConstants.HEADER_STRING;
 import static COMP90082.team18.ePortfolioAPI.security.SecurityConstants.TOKEN_PREFIX;
@@ -55,5 +60,12 @@ public class UserController {
     @PostMapping(value = "/signup/checkuser")
     public boolean checkUser(@RequestBody User user){
         return userService.checkUsername(user);
+    }
+
+    @GetMapping(value = "/test")
+    public Page<User> test(@RequestParam Long id, @RequestParam String name,
+                           @RequestParam int page, @RequestParam int size){
+        Page<User> res = userService.customizedFind(id, name, page, size);
+        return res;
     }
 }

@@ -1,9 +1,15 @@
 package COMP90082.team18.ePortfolioAPI.service;
 
+import COMP90082.team18.ePortfolioAPI.DTO.UserDTO;
 import COMP90082.team18.ePortfolioAPI.entity.User;
+import org.springframework.data.domain.Page;
+
+import java.util.List;
 
 public interface UserService {
     User signUp(User user);
 
     boolean checkUsername(User user);
+
+    Page<User> customizedFind(Long id, String name, int page, int size);
 }
