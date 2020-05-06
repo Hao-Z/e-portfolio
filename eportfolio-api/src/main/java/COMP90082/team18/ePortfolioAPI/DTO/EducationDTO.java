@@ -1,6 +1,7 @@
 package COMP90082.team18.ePortfolioAPI.DTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -15,6 +16,7 @@ public class EducationDTO extends DTO {
     private String degree;
     private String fieldOfStudy;
     private String grade;
+    @JsonProperty("isDefault")
     private boolean isDefault;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private Date startYear;
