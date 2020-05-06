@@ -51,11 +51,11 @@ industryColor: any = {
     ];
     this.tempCVs = this.CVs;
     this.nodes = [
-      {title: 'Information technology', key: 'Information technology', isLeaf: true},
-      {title: 'Computer Software', key: 'Computer Software', isLeaf: true},
-      {title: 'Computer Games', key: 'Computer Games', isLeaf: true},
-      {title: 'Computer Hardware', key: 'Computer Hardware', isLeaf: true},
-      {title: 'Computer Networking', key: 'Computer Networking', isLeaf: true},
+      {title: 'Information technology', key: 'Information technology', isLeaf: true, checked: false},
+      {title: 'Computer Software', key: 'Computer Software', isLeaf: true, checked: false},
+      {title: 'Computer Games', key: 'Computer Games', isLeaf: true, checked: false},
+      {title: 'Computer Hardware', key: 'Computer Hardware', isLeaf: true, checked: false},
+      {title: 'Computer Networking', key: 'Computer Networking', isLeaf: true, checked: false},
     ];
     this.defalutValue = null;
     this.sortValues = ['demo1','demo2','demo3'];
@@ -87,5 +87,9 @@ industryColor: any = {
 
   toCV(profileUrl: string) {
     alert("to CV!")
+  }
+
+  clear() {
+    this.ngOnInit();
   }
 }
