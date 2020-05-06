@@ -7,7 +7,8 @@
               nzWidth="256px"
               nzBreakpoint="md"
               [(nzCollapsed)]="isCollapsed"
-              [nzTrigger]="null">
+              [nzTrigger]="null"
+              [nzCollapsedWidth]="0">
       <ul nz-menu nzTheme="light" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
         <li>
           <nz-content style="font-size: 20px">
@@ -18,12 +19,22 @@
           <nz-tree
             [nzData]="nodes"
             nzCheckable
-            nzShowExpand = true
             [nzCheckedKeys]="defaultCheckedKeys"
             (nzCheckBoxChange)="nzCheck($event)"
-            (nzExpandChange)="nzCheck($event)"
           >
           </nz-tree>
+        </li>
+        <li>
+          <nz-col nzOffset="3">
+            <button type="button" class="btn btn-link" >
+              Select all
+            </button>
+          </nz-col>
+          <nz-col>
+            <button type="button" class="btn btn-link" >
+              Clear
+            </button>
+          </nz-col>
         </li>
       </ul>
     </nz-sider>
@@ -46,7 +57,7 @@
       </nz-content>
 
       <nz-content>
-        <div *ngFor="let item of CVs">
+        <div *ngFor="let item of tempCVs">
           <div class="card-body" [style]="industryColor[item.industry]">
             <div *ngIf="!isCollapsed">
               <div class="col-md-6">
@@ -73,7 +84,6 @@
                 {{userDatas.firstName}} {{userDatas.lastName}}
               </div>
             </div>
-
           </div>
           <br/>
         </div>
