@@ -32,14 +32,21 @@ export class ExploreComponent implements OnInit {
   defalutValue: any;
   nodes: NzTreeNodeOptions[];
   defaultCheckedKeys: any;
-  industryColor: any = {
+ /** industryColor: any = {
     "Information technology":"background-color : #6a8dc3",
     "Computer Software":"background-color : #7c858a",
     "Computer Games":"background-color : #0f4c81",
     "Computer Hardware":"background-color : #f4b894",
     "Computer Networking":"background-color : #a38d80",
-  };
+  };**/
 
+industryColor: any = {
+  "Information technology":"background-color : rgba(106, 141, 195, 0.51)",
+  "Computer Software":"background-color : rgba(124, 133, 138, 0.50)",
+  "Computer Games":"background-color : rgba(15, 76, 129, 0.5)",
+  "Computer Hardware":"background-color : rgba(244, 184, 148, 0.5)",
+  "Computer Networking":"background-color : rgba(163, 141, 128, 0.50)",
+};
   ngOnInit(): void {
     this.nodes = [
       {title: 'demo1', key: 'demo1', isLeaf: true},
