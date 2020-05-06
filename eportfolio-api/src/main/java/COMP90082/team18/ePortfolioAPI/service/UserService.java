@@ -6,4 +6,8 @@ public interface UserService {
     User signUp(User user);
 
     boolean checkUsername(User user);
+
+    User getUser(Long id);
+
+    User patchUser(Long id, User user);
 }
