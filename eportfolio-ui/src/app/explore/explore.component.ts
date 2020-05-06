@@ -41,11 +41,11 @@ export class ExploreComponent implements OnInit {
   };**/
 
 industryColor: any = {
-  "Information technology":"background-color : rgba(106, 141, 195, 0.51)",
-  "Computer Software":"background-color : rgba(124, 133, 138, 0.50)",
-  "Computer Games":"background-color : rgba(15, 76, 129, 0.5)",
-  "Computer Hardware":"background-color : rgba(244, 184, 148, 0.5)",
-  "Computer Networking":"background-color : rgba(163, 141, 128, 0.50)",
+  "Information technology":"background-color : rgba(106, 141, 195, 0.7)",
+  "Computer Software":"background-color : rgba(124, 133, 138, 0.7)",
+  "Computer Games":"background-color : rgba(15, 76, 129, 0.7)",
+  "Computer Hardware":"background-color : rgba(244, 184, 148, 0.7)",
+  "Computer Networking":"background-color : rgba(163, 141, 128, 0.7)",
 };
   ngOnInit(): void {
     this.nodes = [
