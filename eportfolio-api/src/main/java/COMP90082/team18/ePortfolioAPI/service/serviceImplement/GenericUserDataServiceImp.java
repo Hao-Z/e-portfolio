@@ -40,6 +40,7 @@ public class GenericUserDataServiceImp implements GenericUserDataService {
     private Map<Type, UserDataRepository> allJpaRepositories;
 
     @Override
+    @SuppressWarnings("unchecked")
     @PreAuthorize("hasPermission(#id, 'read')")
     public <T extends GenericUserData> List<T> getAllObjects(Long id, Type T) {
         User targetUser = new User();
@@ -49,6 +50,7 @@ public class GenericUserDataServiceImp implements GenericUserDataService {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     @PreAuthorize("hasPermission(#id, 'read')")
     public <T extends GenericUserData> T getObject(Long id, Long objectId, Type T) {
         UserDataRepository repository = getRepository(T);
@@ -56,6 +58,7 @@ public class GenericUserDataServiceImp implements GenericUserDataService {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     @PreAuthorize("hasPermission(#id, 'write')")
     public <T extends GenericUserData> T postObject(Long id, T object) {
         UserDataRepository repository = getRepository(object.getClass());
@@ -66,6 +69,7 @@ public class GenericUserDataServiceImp implements GenericUserDataService {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     @PreAuthorize("hasPermission(#id, 'write')")
     public <T extends GenericUserData> T putObject(Long id, Long objectId, T object) {
         UserDataRepository repository = getRepository(object.getClass());
@@ -75,6 +79,7 @@ public class GenericUserDataServiceImp implements GenericUserDataService {
         return (T) repository.save(object);
     }
 
+    @SuppressWarnings("unchecked")
     private UserDataRepository getRepository(Type T) {
         if (allJpaRepositories == null) {
             allJpaRepositories = new HashMap();
