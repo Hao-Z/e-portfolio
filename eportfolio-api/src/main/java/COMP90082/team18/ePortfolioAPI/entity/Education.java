@@ -15,7 +15,6 @@ public class Education extends GenericUserData {
     private String degree;
     private String fieldOfStudy;
     private String grade;
-    private boolean isDefault;
     private Date startYear;
     private Date endYear;
     private String activityAndSociety;
