@@ -7,7 +7,7 @@ import {NzFormatEmitEvent, NzTreeNodeOptions} from "ng-zorro-antd";
   styleUrls: ['./explore.component.css']
 })
 export class ExploreComponent implements OnInit {
-
+  isCollapsed = window.innerWidth < Number(770);
   userDatas = {
     firstName: 'Chuqiao',
     lastName: 'Chen',
@@ -21,13 +21,24 @@ export class ExploreComponent implements OnInit {
   };
 
   constructor() { }
-  isCollapsed = false;
-  CVs = ["Name 1","Name 2","Name 3","Name 4","Name 5","Name 6","Name 7","Name 8","Name 9","Name 10"];
+  CVs = [
+    {'industry': 'Information technology'},
+    {'industry': 'Computer Software'},
+    {'industry': 'Computer Games'},
+    {'industry': 'Computer Hardware'},
+    {'industry': 'Computer Networking'},
+  ];
   sortValues: any;
   defalutValue: any;
   nodes: NzTreeNodeOptions[];
   defaultCheckedKeys: any;
-  defaultSelectedKeys: any;
+  industryColor: any = {
+    "Information technology":"background-color : #6a8dc3",
+    "Computer Software":"background-color : #7c858a",
+    "Computer Games":"background-color : #0f4c81",
+    "Computer Hardware":"background-color : #f4b894",
+    "Computer Networking":"background-color : #a38d80",
+  };
 
   ngOnInit(): void {
     this.nodes = [
