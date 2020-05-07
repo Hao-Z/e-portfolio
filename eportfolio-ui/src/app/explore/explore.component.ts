@@ -69,7 +69,7 @@ test_nodes = [
     // console.log(event);
   }
   filterSearch (node: NzTreeNodeOptions): boolean {
-    console.log(node)
+    // console.log(node)
     return false
   }
   nzCheck($event: NzFormatEmitEvent) {
