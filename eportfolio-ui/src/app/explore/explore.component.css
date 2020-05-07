@@ -86,3 +86,7 @@ nz-card {
   box-shadow: 10px 5px 5px grey;
   border-radius: 5px;
 }
+
+.col-md-6{
+  color: rgba(255, 255, 255, 0.76);
+}
