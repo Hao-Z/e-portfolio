@@ -1,3 +1,6 @@
+* {
+    font-family: Source Sans Pro,Calibri;
+}
 .dropdown-menu {
     background-color: var(--primary-color);
     border: 0ch;
@@ -6,11 +9,11 @@
     background-color: var(--primary-color);
 }
 .nav-item .nav-link {
-    font-size: 14px;
+    font-size: 16px;
 }
 .dropdown-item {
     color:white;
-    font-size:14px;
+    font-size:16px;
 }
 .dropdown-item:hover {
     color: var(--primary-color);

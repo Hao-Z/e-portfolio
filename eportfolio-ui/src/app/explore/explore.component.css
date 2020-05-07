@@ -78,11 +78,104 @@ nz-card {
 }
 
 .card-body {
-  margin-right: 80px;
-  height: auto;
+
   border: 1px;
   border-style: solid;
   border-color: #e6e6e6;
-  box-shadow: 10px 5px 5px grey;
+  box-shadow: 10px 5px 5px grey; 
   border-radius: 5px;
+  position: relative;
+  
+  width: auto;
+  max-width: 800px;
+  height: auto;
+  padding: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  background-color: white;
+  letter-spacing: 1px;
+  color: #666;
+  transition-duration: 1s;
+  border-radius: 15px;
+  overflow: hidden;
+ 
 }
+
+#div1, #div2 {
+  display: inline-block;
+}
+#div1 {
+  height: 300px;
+  width: 10px;
+  background-color: red;
+}
+#div2 {
+  /* max-width: 70%; */
+  
+}
+#div3 {
+  background-color: var(--primary-color);
+  height: 100%;
+  float: right;
+  width: 30px;
+}
+
+.card-body h2 {
+  font-size: 28px;
+  font-family: NotoSerif;
+}
+
+.card-body h2 span {
+  padding: 10px;
+  font-size: 16px;
+  color: var(--primary-color);
+  font-family: NotoSerif;
+}
+
+.card-body h5 {
+  font-size: 20px;
+  font-family: NotoSerif;
+}
+
+.card-body p {
+  font-size: 15px;
+  font-weight: 300;
+  color: grey;
+  font-family: Calibri;
+  line-height: 16px;
+}
+
+
+/* animation */
+
+.card-body:hover {
+  transform: translateY(0px) translateX(-40px);
+  box-shadow: 10px 10px 30px rgba(50, 50, 50, 0.3);
+  background-color: #fff;
+  color: red;
+
+}
+
+
+.card-body:hover .square {
+  transform-origin: 30% 30%;
+  transform: scale(1.8);
+  transition-duration: 1s;
+  overflow: hidden;
+  background-color: var(--primary-color);
+  visibility: visible;
+}
+
+.square{
+  width: 15px; 
+  height: 100%;
+  right: 0px;
+  bottom: 0px;
+  visibility: hidden;
+  border-radius:20%;
+  position:absolute;
+  transition-duration: 0.5s;
+  /* border: solid 4px var(--primary-color); */
+}
+
