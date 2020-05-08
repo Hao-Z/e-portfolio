@@ -10,11 +10,11 @@ export class DataService {
 
   getIndustry() { 
     return of([
-      { label: "Computer Games", value: "computerGames" },
-      { label: "Computer Hardware", value: "computerHardware" },
-      { label: "Computer Networking", value: "computerNetworking" },
-      { label: "Computer Software", value: "computerSoftware" },
-      { label: "Information Technology", value: "informationTechnology" }
+      { label: "Computer Games", value: "Computer Games" },
+      { label: "Computer Hardware", value: "Computer Hardware" },
+      { label: "Computer Networking", value: "Computer Networking" },
+      { label: "Computer Software", value: "Computer Software" },
+      { label: "Information Technology", value: "Information Technology" }
     ])
   }
 

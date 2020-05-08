@@ -5,13 +5,13 @@
     </button>
 </div>
 <div class="modal-body">
+    <p></p>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <formly-form [form]="form" [fields]="fields" [model]="model" [options]="options"></formly-form>
     </form>
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
-    <button type="submit" ngbAutofocus class="btn btn-primary submit-button" (click)="modal.close('Ok click')">Save</button>
-    <!-- <button type="submit" (click)="onSubmit()" class="btn btn-primary submit-button" [disabled]="!form.valid">Save changes</button> -->
+    <button type="submit" ngbAutofocus class="btn btn-primary submit-button" [disabled]="!form.valid" (click)="onSubmit(); modal.close('Ok click');">Save</button>
 </div>
 

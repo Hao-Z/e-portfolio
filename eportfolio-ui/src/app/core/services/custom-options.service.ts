@@ -7,14 +7,16 @@ import { HttpHeaders, HttpParams } from "@angular/common/http";
 export class CustomOptionsService {
 
   constructor() { }
-
-  public httpOptions = {
-    headers: new HttpHeaders({ 
-      'Content-Type':  'application/json',
-      'Authorization': localStorage.getItem('jwt_token'),
-    }),
-    params: new HttpParams(),
-    observe: 'response' as 'response'
-  }
   
+  public getHttpOptions(params: HttpParams): {} {
+    const httpOptions = {
+      headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('jwt_token'),
+      }),
+      params: params,
+      observe: 'body' as 'response'
+    }
+    return httpOptions
+  }
 }

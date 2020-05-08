@@ -21,22 +21,29 @@ export class ModalIntroductionComponent implements OnInit {
   model:Introduction 
   fields: FormlyFieldConfig[] = [
     {
-      key: 'firstName',
-      type: 'input',
-      templateOptions: {
-        label: 'First Name',
-        required: true,
-      }
-    },
-    {
-      key: 'lastName',
-      type: 'input',
-      templateOptions: {
-        label: 'Last Name',
-      },
-      expressionProperties: {
-        // 'templateOptions.disabled': '!model.firstName',
-      }
+      fieldGroupClassName: 'row',
+      fieldGroup: [
+        {
+          className: 'col-6',
+          key: 'firstName',
+          type: 'input',
+          templateOptions: {
+            label: 'First Name',
+            required: true,
+          }
+        },
+        {
+          className: 'col-6',
+          key: 'lastName',
+          type: 'input',
+          templateOptions: {
+            label: 'Last Name',
+          },
+          expressionProperties: {
+            // 'templateOptions.disabled': '!model.firstName',
+          }
+        }
+      ]
     },
     {
       className: 'expandingArea',
@@ -77,57 +84,76 @@ export class ModalIntroductionComponent implements OnInit {
       }
     },
     {
-      key: 'gender',
-      type: 'select',
-      templateOptions: {
-        label: 'Gender',
-        options: this.dataService.getGender(),
-      }
+      fieldGroupClassName: 'row',
+      fieldGroup: [
+        {
+          className: 'col-6',
+          key: 'gender',
+          type: 'select',
+          templateOptions: {
+            label: 'Gender',
+            options: this.dataService.getGender(),
+          }
+        },
+        {
+          className: 'col-6',
+          key: 'birthday',
+          type: 'datepicker',
+          templateOptions: {
+            placeholder: 'dd-MM-yyyy',
+            label: 'Date of Birth',
+          }
+        }
+      ]
     },
     {
-      key: 'birthday',
-      type: 'datepicker',
-      templateOptions: {
-        placeholder: 'DD/MM/YYYY',
-        label: 'Date of Birth',
-        // pattern: '^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$'
-      }
+      fieldGroupClassName: 'row',
+      fieldGroup: [
+        {
+          className: 'col-6',
+          key: 'country',
+          type: 'input',
+          templateOptions: {
+            label: 'Country',
+            required: true,
+            maxLength: 20
+          }
+        },
+        {
+          className: 'col-6',
+          key: 'postalCode',
+          type: 'input',
+          templateOptions: {
+            label: 'Postal Code',
+            pattern: "^[0-9]{4}$"
+          }
+        }
+      ]
     },
     {
-      key: 'country',
-      type: 'input',
-      templateOptions: {
-        label: 'Country',
-        required: true,
-        maxLength: 20
-      }
-    },
-    {
-      key: 'postalCode',
-      type: 'input',
-      templateOptions: {
-        type: 'number',
-        label: 'Postal Code',
-        pattern: "^[0-9]{4}$"
-      }
-    },
-    {
-      key: 'email',
-      type: 'input',
-      templateOptions: {
-        type: 'email',
-        label: 'Email',
-        minLength: 3,
-        pattern: "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-      }
-    },
-    {
-      key: 'phoneNumber',
-      type: 'input',
-      templateOptions: {
-        label: 'Phone',
-        pattern: "^[0-9]{10,11}$"
-      }
+      fieldGroupClassName: 'row',
+      fieldGroup: [
+        {
+          className: 'col-6',
+          key: 'email',
+          type: 'input',
+          templateOptions: {
+            type: 'email',
+            label: 'Email',
+            minLength: 3,
+            pattern: "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+          }
+        },
+        {
+          className: 'col-6',
+          key: 'phoneNumber',
+          type: 'input',
+          templateOptions: {
+            label: 'Phone',
+            pattern: "^[0-9]{10,11}$"
+          }
+        }
+      ]
     },
     {
       key: 'address',
@@ -154,7 +180,7 @@ export class ModalIntroductionComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    refreshJwt();
+    refreshJwt(); 
     this.getIntroduction();
   }
 
@@ -174,8 +200,6 @@ export class ModalIntroductionComponent implements OnInit {
       this.introductionApiService.updateIntro(userID, this.model)
         .subscribe((result: Introduction) => {
           console.log("CV Intro patch response:", JSON.stringify(result))
-          if (result) {
-          }
         })
     }
   }

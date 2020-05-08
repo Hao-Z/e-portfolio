@@ -26,15 +26,27 @@ import { FormlyDatepickerFieldType } from './dynamic-form/datepicker.type';
 import { NgbDatepickerModule, NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalIntroductionComponent } from './cv-form/modal-introduction/modal-introduction.component';
 import { ModalEducationComponent } from './cv-form/modal-education/modal-education.component';
+import { ModalAboutComponent } from './cv-form/modal-about/modal-about.component';
+import { ModalFeatureComponent } from './cv-form/modal-feature/modal-feature.component';
+import { ModalWorkExperienceComponent } from './cv-form/modal-work-experience/modal-work-experience.component';
+import { ModalLicenseCertificationComponent } from './cv-form/modal-license-certification/modal-license-certification.component';
+import { ModalVolunteerExperienceComponent } from './cv-form/modal-volunteer-experience/modal-volunteer-experience.component';
+import { ModalSkillComponent } from './cv-form/modal-skill/modal-skill.component';
+import { ModalProjectComponent } from './cv-form/modal-project/modal-project.component';
+import { ModalHonourAwardComponent } from './cv-form/modal-honour-award/modal-honour-award.component';
+import { ModalPublicationComponent } from './cv-form/modal-publication/modal-publication.component';
+import { ModalLanguageComponent } from './cv-form/modal-language/modal-language.component';
+import { ModalRecommendationComponent } from './cv-form/modal-recommendation/modal-recommendation.component';
 
 registerLocaleData(zh);
 
 export function patternValidationMessage(err, field: FormlyFieldConfig) {
-  if (field.key ==='phoneNumber') {
+  if (field.key === 'phoneNumber') {
     return 'Please provide a phone number with correct format! '
-  } else if (field.key ==='email') {
+  } else if (field.key === 'email') {
     return 'Please provide a email address with correct format! '
-  }
+  } else if (field.type === 'datepicker')
+    return 'Please provide a date with valid format!'
 }
 
 @NgModule({
@@ -50,7 +62,18 @@ export function patternValidationMessage(err, field: FormlyFieldConfig) {
     LayoutComponent,
     FormlyDatepickerFieldType,
     ModalIntroductionComponent,
-    ModalEducationComponent
+    ModalEducationComponent,
+    ModalAboutComponent,
+    ModalFeatureComponent,
+    ModalWorkExperienceComponent,
+    ModalLicenseCertificationComponent,
+    ModalVolunteerExperienceComponent,
+    ModalSkillComponent,
+    ModalProjectComponent,
+    ModalHonourAwardComponent,
+    ModalPublicationComponent,
+    ModalLanguageComponent,
+    ModalRecommendationComponent
   ],
   imports: [
     BrowserModule,

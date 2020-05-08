@@ -2,7 +2,7 @@ export interface Introduction {
     firstName: string;
     lastName: string;
     headline: string;
-    industry : number;
+    industry : string;
     currentPosition: string;
     currentEducation: string;
     gender: string;
