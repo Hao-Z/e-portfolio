@@ -11,17 +11,17 @@ import { CustomOptionsService } from "../../core/services/custom-options.service
   providedIn: 'root'
 })
 export class IntroductionApiService {
-
-  private introductionsUrl = globals.backend_path + "users/";
+  
+  private apiUrl = globals.backend_path + "users/";
 
   constructor(private http: HttpClient, private options: CustomOptionsService) { }
 
   public getIntro(id: number): Observable<Introduction> {
-    const url = `${this.introductionsUrl}${id}/introduction`;
-    return this.http.get<Introduction>(url, this.options.httpOptions)
+    const url = `${this.apiUrl}${id}/introduction`;
+    return this.http.get<Introduction>(url, this.options.getHttpOptions(null))
       .pipe(
         map(response => {
-          return response.body as Introduction
+          return response as Introduction
         }),
         retry(1),
         catchError(this.errorHandler)
@@ -29,12 +29,12 @@ export class IntroductionApiService {
   }
 
   public updateIntro(id: number, introduction: Introduction): Observable<Introduction> {
-    const url = `${this.introductionsUrl}${id}/introduction`;
-    this.options.httpOptions.params = PATCH
-    return this.http.post(url, introduction, this.options.httpOptions)
+    const url = `${this.apiUrl}${id}/introduction`;
+    const httpOptions = this.options.getHttpOptions(PATCH);
+    return this.http.post(url, introduction, httpOptions)
       .pipe(
         map(response => {
-          return response.body as Introduction
+          return response as Introduction
         }),
         retry(1),
         catchError(this.errorHandler)
