@@ -10,15 +10,21 @@
                         Add section
                     </button>
                     <div class="dropdown-menu" aria-labelledby="AddSectionButton">
-                        <!-- Button trigger modal -->
-                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#cvIntroModal" data-backdrop="static">Introduction</a>
-                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#cvEducationModal" data-backdrop="static">Education</a>
+                        <a class="dropdown-item" href="#" (click)="openModal('introduction')">Introduction</a>
+                        <a class="dropdown-item" href="#" (click)="openModal('about')">About</a>
+                        <a class="dropdown-item" href="#" (click)="openModal('feature')">Feature</a>
+                        <a class="dropdown-item" href="#" (click)="openModal('workExperience')">Work Experience</a>
+                        <a class="dropdown-item" href="#" (click)="openModal('education')">Education</a>
+                        <a class="dropdown-item" href="#" (click)="openModal('licenseCertification')">License Certification</a>
+                        <a class="dropdown-item" href="#" (click)="openModal('volunteerExperience')">Volunteer Experience</a>
+                        <a class="dropdown-item" href="#" (click)="openModal('skill')">Skill	</a>
+                        <a class="dropdown-item" href="#" (click)="openModal('project')">Project</a>
+                        <a class="dropdown-item" href="#" (click)="openModal('honourAward')">Honour Award</a>
+                        <a class="dropdown-item" href="#" (click)="openModal('publication')">Publication</a>
+                        <a class="dropdown-item" href="#" (click)="openModal('language')">Language</a>
+                        <a class="dropdown-item" href="#" (click)="openModal('recommendation')">Recommendation</a>
                     </div>
-                    <!-- Modal -->
-                    <app-cv-intro></app-cv-intro>
-                    <app-cv-education></app-cv-education>
                 </div>
-
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="MoreButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:30px;">
                         More...
@@ -30,23 +36,25 @@
                 </div>
              </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="row">{{ userDatas.firstName }} {{ userDatas.lastName }}</div>
-                <div class="row">Title: {{ userDatas.headline }}</div>
-                <div class="row">Education: {{userDatas.education}}</div>
-                <div class="row">Industry: {{userDatas.industry}}</div>
-            </div>
-            <div class="col-md-6">
-                <div class="row">Region: {{userDatas.region}}</div>
-                <div class="row">Email: {{userDatas.email}}</div>
-                <div class="row">Phone: {{userDatas.phone}}</div>
-                <div class="row">ProfileUrl: {{userDatas.profileUrl}}</div>
+        <div class="row itemsBlock">
+            <div *ngFor="let key of Object.keys(userDatas)" class="col-md-12">
+                <span class="itemitle " *ngIf="userDatas[key]">{{key}}: {{userDatas[key]}}</span>
             </div>
         </div>
     </div>
 </div>
 
+<!-- <div *ngFor="let cvData of cvDatas">
+    {{ cvData }}
+    <div *ngIf="cvData.value!=[]" class="card" class="inner-content">
+        <div class="card-body">
+            <h5 class="card-title">cvData.key</h5>
+            <div class="row align-items-center">
+               <span>cvData.value</span>
+            </div>
+        </div>
+    </div>
+</div> -->
 
 
 
