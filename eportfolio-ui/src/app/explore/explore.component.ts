@@ -22,16 +22,10 @@ export class ExploreComponent implements OnInit {
   };
 
   constructor() { }
-  CVs = [
-    {'industry': 'Information Technology'},
-    {'industry': 'Computer Software'},
-    {'industry': 'Computer Games'},
-    {'industry': 'Computer Hardware'},
-    {'industry': 'Computer Networking'},
-  ];
   sortValues: any;
   defalutValue: any;
   nodes: NzTreeNodeOptions[];
+  CVs: any;
   defaultCheckedKeys: any;
  /** industryColor: any = {
     "Information technology":"background-color : #6a8dc3",
@@ -49,14 +43,22 @@ industryColor: any = {
   "Computer Networking":"background-color : rgba(163, 141, 128, 0.7)",
 };
 test_nodes = [
-    {title: 'Information Technology', key: 'demo1', isLeaf: true},
-    {title: 'Computer Software', key: 'demo2', isLeaf: true},
-    {title: 'Computer Games', key: 'demo3', isLeaf: true},
-    {title: 'Computer Hardware', key: 'demo4', isLeaf: true},
-    {title: 'Computer Networking', key: 'demo5', isLeaf: true},
-]
+      {title: 'Information Technology', key: 'Information Technology', isLeaf: true, checked: false},
+      {title: 'Computer Software', key: 'Computer Software', isLeaf: true, checked: false},
+      {title: 'Computer Games', key: 'Computer Games', isLeaf: true, checked: false},
+      {title: 'Computer Hardware', key: 'Computer Hardware', isLeaf: true, checked: false},
+      {title: 'Computer Networking', key: 'Computer Networking', isLeaf: true, checked: false},
+    ]
   ngOnInit(): void {
     this.nodes = this.test_nodes;
+    this.CVs = [
+      {'industry': 'Information Technology'},
+      {'industry': 'Computer Software'},
+      {'industry': 'Computer Games'},
+      {'industry': 'Computer Hardware'},
+      {'industry': 'Computer Networking'},
+    ];
+    this.tempCVs = this.CVs;
     this.defalutValue = null;
     this.sortValues = ['order by xxx','order by xxx','order by xxx'];
     
@@ -72,7 +74,33 @@ test_nodes = [
     // console.log(node)
     // return false
   // }
-  nzCheck($event: NzFormatEmitEvent) {
 
+  checked: any;
+  tempCVs : any;
+  nzCheck(event: NzFormatEmitEvent) {
+    if(event.checkedKeys.length == 0){
+      this.tempCVs=this.CVs;
+    }else{
+      this.checked = [];
+      for(let e of event.checkedKeys){
+        this.checked.push(e.key)
+      }
+      this.tempCVs=[];
+      for(let CV of this.CVs){
+        console.log(this.tempCVs);
+        if(!(this.checked.indexOf(CV.industry)==-1)){
+          this.tempCVs.push(CV);
+        }
+      }
+    }
+  }
+
+  toCV(profileUrl: string) {
+    alert("to CV!")
+  }
+
+
+  clear() {
+    this.ngOnInit();
   }
 }
