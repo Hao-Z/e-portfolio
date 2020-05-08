@@ -13,7 +13,7 @@
           <input type="password" class="form-control" id="Current password" formControlName="Current password" nz-input>
           <div
             *ngIf="updatePassword.get('Current password').invalid && (updatePassword.get('Current password').dirty || updatePassword.get('Current password').touched)">
-            <div [style]="errorBG" class="errprompt" *ngIf="updatePassword.get('Current password').errors.required">
+            <div class="errprompt" *ngIf="updatePassword.get('Current password').errors.required">
               Password is required.
             </div>
           </div>
@@ -22,10 +22,10 @@
           <input type="password" class="form-control" id="New password" formControlName="New password" nz-input>
           <div
             *ngIf="updatePassword.get('New password').invalid && (updatePassword.get('New password').dirty || updatePassword.get('New password').touched)">
-            <div [style]="errorBG" class="errprompt" *ngIf="updatePassword.get('New password').errors.required">
+            <div class="errprompt" *ngIf="updatePassword.get('New password').errors.required">
               Password is required.
             </div>
-            <div [style]="errorBG" class="errprompt" *ngIf="updatePassword.get('New password').errors.minlength">
+            <div class="errprompt" *ngIf="updatePassword.get('New password').errors.minlength">
               Password must be at least 6 characters.
             </div>
           </div>
@@ -34,10 +34,10 @@
           <input type="password" class="form-control" id="Confirm password" formControlName="Confirm password" nz-input>
           <div
             *ngIf="updatePassword.get('Confirm password').invalid && (updatePassword.get('Confirm password').dirty || updatePassword.get('Confirm password').touched)">
-            <div [style]="errorBG" class="errprompt" *ngIf="updatePassword.get('Confirm password').errors.required">
+            <div class="errprompt" *ngIf="updatePassword.get('Confirm password').errors.required">
               Please confirm new password.
             </div>
-            <div [style]="errorBG" class="errprompt" *ngIf="updatePassword.get('Confirm password').errors">
+            <div class="errprompt" *ngIf="updatePassword.get('Confirm password').errors">
               Two passwords didn't match.
             </div>
           </div>
