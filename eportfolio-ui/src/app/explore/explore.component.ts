@@ -7,44 +7,100 @@ import {NzFormatEmitEvent, NzTreeNodeOptions} from "ng-zorro-antd";
   styleUrls: ['./explore.component.css']
 })
 export class ExploreComponent implements OnInit {
-
+  searchValue = '';
+  isCollapsed = window.innerWidth < Number(770);
   userDatas = {
     firstName: 'Chuqiao',
     lastName: 'Chen',
     headline: 'Student of the University of Melbourne',
     education: 'the University of Melbourne',
-    industry: 'Information technology',
-    region: 'Melbourn, VIC',
+    industry: 'Information Technology',
+    region: 'Melbourne, VIC',
     email: 'chuqiao.chen@gmail.com',
-    phone: '(61)0400000000',
-    profileUrl: 'www.xxxx.xxxxxxxxxxxx.xxx'
+    phone: '(+61)0400000000',
+    profileUrl: 'www.xxxxxxxx.com'
   };
 
   constructor() { }
-  isCollapsed = false;
-  CVs = ["Name 1","Name 2","Name 3","Name 4","Name 5","Name 6","Name 7","Name 8","Name 9","Name 10"];
   sortValues: any;
   defalutValue: any;
   nodes: NzTreeNodeOptions[];
+  CVs: any;
   defaultCheckedKeys: any;
-  defaultSelectedKeys: any;
+ /** industryColor: any = {
+    "Information technology":"background-color : #6a8dc3",
+    "Computer Software":"background-color : #7c858a",
+    "Computer Games":"background-color : #0f4c81",
+    "Computer Hardware":"background-color : #f4b894",
+    "Computer Networking":"background-color : #a38d80",
+  };**/
 
+industryColor: any = {
+  "Information Technology":"background-color : rgba(106, 141, 195, 0.7)",
+  "Computer Software":"background-color : rgba(124, 133, 138, 0.7)",
+  "Computer Games":"background-color : rgba(15, 76, 129, 0.7)",
+  "Computer Hardware":"background-color : rgba(244, 184, 148, 0.7)",
+  "Computer Networking":"background-color : rgba(163, 141, 128, 0.7)",
+};
+test_nodes = [
+      {title: 'Information Technology', key: 'Information Technology', isLeaf: true, checked: false},
+      {title: 'Computer Software', key: 'Computer Software', isLeaf: true, checked: false},
+      {title: 'Computer Games', key: 'Computer Games', isLeaf: true, checked: false},
+      {title: 'Computer Hardware', key: 'Computer Hardware', isLeaf: true, checked: false},
+      {title: 'Computer Networking', key: 'Computer Networking', isLeaf: true, checked: false},
+    ]
   ngOnInit(): void {
-    this.nodes = [
-      {title: 'demo1', key: 'demo1', isLeaf: true},
-      {title: 'demo2', key: 'demo2', isLeaf: true},
-      {title: 'demo3', key: 'demo3', isLeaf: true},
-      {title: 'demo4', key: 'demo4', isLeaf: true},
+    this.nodes = this.test_nodes;
+    this.CVs = [
+      {'industry': 'Information Technology'},
+      {'industry': 'Computer Software'},
+      {'industry': 'Computer Games'},
+      {'industry': 'Computer Hardware'},
+      {'industry': 'Computer Networking'},
     ];
+    this.tempCVs = this.CVs;
     this.defalutValue = null;
-    this.sortValues = ['demo1','demo2','demo3'];
+    this.sortValues = ['order by xxx','order by xxx','order by xxx'];
+    
   }
 
   getSearch(){
     alert('searched')
   }
+  nzEvent(event: NzFormatEmitEvent): void {
+    // console.log(event);
+  }
+  // filterSearch (node: NzTreeNodeOptions): boolean {
+    // console.log(node)
+    // return false
+  // }
 
-  nzCheck($event: NzFormatEmitEvent) {
+  checked: any;
+  tempCVs : any;
+  nzCheck(event: NzFormatEmitEvent) {
+    if(event.checkedKeys.length == 0){
+      this.tempCVs=this.CVs;
+    }else{
+      this.checked = [];
+      for(let e of event.checkedKeys){
+        this.checked.push(e.key)
+      }
+      this.tempCVs=[];
+      for(let CV of this.CVs){
+        console.log(this.tempCVs);
+        if(!(this.checked.indexOf(CV.industry)==-1)){
+          this.tempCVs.push(CV);
+        }
+      }
+    }
+  }
 
+  toCV(profileUrl: string) {
+    alert("to CV!")
+  }
+
+
+  clear() {
+    this.ngOnInit();
   }
 }

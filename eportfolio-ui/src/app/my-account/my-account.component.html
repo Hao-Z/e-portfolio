@@ -1,4 +1,4 @@
-<nz-layout style="background-color: white">
+<nz-layout style="background-color: transparent">
   <div class="row" style="margin-top: 50px">
     <div class="col-md-6 offset-md-3 col-xs-12">
       <form [formGroup]="updateForm">
@@ -6,14 +6,14 @@
           <nz-form-label>User Name</nz-form-label>
           <nz-input-group nzSearch>
             <input *ngIf="editable['username']" type="text" class="form-control" id='username' formControlName='username' nz-input [ngModel]="profiles_value['username']">
-            <input *ngIf="!editable['username']" class="form-control" [placeholder]="profiles_value['username']" [disabled]="true" />
+            <input [style]="inputBG" *ngIf="!editable['username']" class="form-control" [placeholder]="profiles_value['username']" [disabled]="true" />
           </nz-input-group>
         </div>
         <div class="form-group">
           <nz-form-label>Email</nz-form-label>
           <nz-input-group nzSearch [nzAddOnAfter]=Email>
             <input *ngIf="editable['email']" type="text" class="form-control" id='email' formControlName='email' nz-input [ngModel]="profiles_value['email']">
-            <input *ngIf="!editable['email']" class="form-control" [placeholder]="profiles_value['email']" [disabled]="true" />
+            <input [style]="inputBG" *ngIf="!editable['email']" class="form-control" [placeholder]="profiles_value['email']" [disabled]="true" />
           </nz-input-group>
           <ng-template #Email>
             <button *ngIf="!editable['email']" type="button" class="btn btn-primary" (click)="editable['email']=!editable['email']" >Edit</button>
@@ -22,7 +22,7 @@
           </ng-template>
           <div
             *ngIf="editable['email']">
-            <div class="errprompt" *ngIf="updateForm.get('email').invalid && (updateForm.get('email').dirty || updateForm.get('email').touched)">
+            <div [style]="errorBG" class="errprompt" *ngIf="updateForm.get('email').invalid && (updateForm.get('email').dirty || updateForm.get('email').touched)">
               Email form is invalid.
             </div>
           </div>
@@ -33,7 +33,7 @@
 
           <nz-input-group nzSearch [nzAddOnAfter]=Birthday>
             <input *ngIf="editable['birthday']" type="date" class="form-control" id='birthday' formControlName='birthday' nz-input [ngModel]="profiles_value['birthday']">
-            <input *ngIf="!editable['birthday']" class="form-control" [placeholder]="profiles_value['birthday']" [disabled]="true" />
+            <input [style]="inputBG" *ngIf="!editable['birthday']" class="form-control" [placeholder]="profiles_value['birthday']" [disabled]="true" />
 
           </nz-input-group>
           <ng-template #Birthday>
@@ -46,7 +46,7 @@
           <nz-form-label>Phone Number</nz-form-label>
           <nz-input-group nzSearch [nzAddOnAfter]=PhoneNumber>
             <input *ngIf="editable['phoneNumber']" type="text" class="form-control" id='phoneNumber' formControlName='phoneNumber' nz-input [ngModel]="profiles_value['phoneNumber']">
-            <input *ngIf="!editable['phoneNumber']" class="form-control" [placeholder]="profiles_value['phoneNumber']" [disabled]="true" />
+            <input [style]="inputBG" *ngIf="!editable['phoneNumber']" class="form-control" [placeholder]="profiles_value['phoneNumber']" [disabled]="true" />
           </nz-input-group>
           <ng-template #PhoneNumber>
             <button *ngIf="!editable['phoneNumber']" type="button" class="btn btn-primary" (click)="editable['phoneNumber']=!editable['phoneNumber']" >Edit</button>
@@ -55,7 +55,7 @@
           </ng-template>
           <div
             *ngIf="editable['phoneNumber']">
-            <div class="errprompt" *ngIf="updateForm.get('phoneNumber').invalid && (updateForm.get('phoneNumber').dirty || updateForm.get('phoneNumber').touched)">
+            <div [style]="errorBG" class="errprompt" *ngIf="updateForm.get('phoneNumber').invalid && (updateForm.get('phoneNumber').dirty || updateForm.get('phoneNumber').touched)">
               Phone number is invalid.
             </div>
           </div>
