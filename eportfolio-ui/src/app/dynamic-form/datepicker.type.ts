@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FieldType } from '@ngx-formly/core';
+import { NgbDateParserFormatter, NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateFRParserFormatter, CustomAdapter } from './ngb-date-custom';
  
 @Component({
  selector: 'formly-datepicker',
@@ -16,5 +18,9 @@ import { FieldType } from '@ngx-formly/core';
         </div>
     </div>
  `,
+ providers: [
+     { provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter },
+     { provide: NgbDateAdapter, useClass: CustomAdapter }
+    ]
 })
 export class FormlyDatepickerFieldType extends FieldType {}
