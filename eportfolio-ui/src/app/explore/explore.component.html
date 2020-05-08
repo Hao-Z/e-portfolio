@@ -9,25 +9,23 @@
               [(nzCollapsed)]="isCollapsed"
               [nzTrigger]="null">
       <ul nz-menu nzTheme="light" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-      <li>
+      
+      <li *ngIf="!isCollapsed">
           <nz-content style="font-size: 20px; color: #0068A7; font-family: NotoSerif;">
             Industry Fields
           </nz-content>
-      </li>
       <nz-content>
       <nz-input-group [nzSuffix]="suffixIcon">
-        <input type="text" nz-input placeholder="Search" [(ngModel)]="searchValue" />
+        <input type="text" nz-input placeholder="Filter..." [(ngModel)]="searchValue" />
       </nz-input-group>
       <ng-template #suffixIcon>
         <i nz-icon nzType="search"></i>
       </ng-template>
       </nz-content>
 
-        <li *ngIf="!isCollapsed">
           <nz-tree
             [nzData]="nodes"
             [nzSearchValue]="searchValue"
-            [nzSearchFunc]="filterSearch"
             nzCheckable
             nzShowExpand = true
             [nzCheckedKeys]="defaultCheckedKeys"
@@ -36,6 +34,17 @@
             (nzSearchValueChange)="nzEvent($event)"
           >
           </nz-tree>
+        </li>
+
+        <li *ngIf="isCollapsed">
+        <nz-content>
+          <nz-input-group [nzSuffix]="suffixIcon">
+            
+          </nz-input-group>
+          <ng-template #suffixIcon>
+            <i nz-icon nzType="search"></i>
+          </ng-template>
+        </nz-content>
         </li>
       </ul>
     </nz-sider>

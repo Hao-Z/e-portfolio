@@ -68,10 +68,10 @@ test_nodes = [
   nzEvent(event: NzFormatEmitEvent): void {
     // console.log(event);
   }
-  filterSearch (node: NzTreeNodeOptions): boolean {
+  // filterSearch (node: NzTreeNodeOptions): boolean {
     // console.log(node)
-    return false
-  }
+    // return false
+  // }
   nzCheck($event: NzFormatEmitEvent) {
 
   }
