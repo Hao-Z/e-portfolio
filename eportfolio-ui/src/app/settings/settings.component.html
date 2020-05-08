@@ -46,7 +46,7 @@
 
         <nz-row>
           <div nz-col nzSpan="8">
-          <button type="button" class="btn btn-primary" *ngIf="update" [disabled]="updatePassword.invalid" (click)="updatePW(updatePassword.value)">Save new password</button>
+          <button type="button" class="btn btn-primary" *ngIf="update" [disabled]="updatePassword.invalid" (click)="updatePW(updatePassword.value)">Save</button>
           </div>
           <div  align="right">
             <a [routerLink] *ngIf="update" (click)="update = !update;cancel()" style="horiz-align:right">Cancel</a>
