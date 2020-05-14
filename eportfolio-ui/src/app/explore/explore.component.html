@@ -80,6 +80,7 @@
 
       <nz-content>
         <div *ngFor="let item of tempCVs">
+        <a [routerLink]="['/cv-show']" class="nav-link" href="#">
           <div class="card-body">
             <div *ngIf="!isCollapsed">
             <div class="row">
@@ -112,6 +113,7 @@
               </div>
             </div>
           </div>
+          </a>
           <br/>
         </div>
         <br/>

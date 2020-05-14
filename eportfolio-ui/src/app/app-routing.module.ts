@@ -7,7 +7,7 @@ import { MyAccountComponent } from "./my-account/my-account.component";
 import { SettingsComponent } from "./settings/settings.component";
 import { LayoutComponent } from "./layout/layout.component";
 import { CvComponent } from "./cv/cv.component";
-
+import { CvShowComponent} from "./cv-show/cv-show.component"
 
 
 const routes: Routes = [
@@ -24,6 +24,10 @@ const routes: Routes = [
   {
     path: 'explore',
     component: ExploreComponent
+  },
+  {
+    path: 'cv-show',
+    component: CvShowComponent
   },
   {
     path: 'cv',
