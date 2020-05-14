@@ -13,4 +13,6 @@ public interface UserService {
     User patchUser(Long id, User user);
 
     void changePassword(Long id, PasswordDTO passwordDTO);
+
+    String createSharedLink();
 }
