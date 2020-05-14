@@ -13,4 +13,6 @@ public interface GenericUserDataService {
     <T extends GenericUserData> T postObject(Long id, T object);
 
     <T extends GenericUserData> T putObject(Long id, Long objectId, T object);
+
+    <T extends GenericUserData> void deleteObject(Long id, Long objectId, Type T);
 }
