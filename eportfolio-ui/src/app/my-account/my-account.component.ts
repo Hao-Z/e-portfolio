@@ -77,7 +77,7 @@ export class MyAccountComponent implements OnInit {
         this.profiles_value[key] = value;
       });
     }else{
-      if(key == 'birthday'){
+      if(key == 'birthday' && value[4] == '-'){
         // yyyy-MM-dd to dd-MM-yyyy
         value = value[8]+value[9]+'-'+value[5]+value[6]+'-'+value[0]+value[1]+value[2]+value[3];
       }
