@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Type;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static java.util.stream.Collectors.toList;
 
@@ -21,6 +23,9 @@ import static java.util.stream.Collectors.toList;
 public class GenericUserDataController {
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private UserController userController;
 
     @Autowired
     private UserService userService;
@@ -37,6 +42,19 @@ public class GenericUserDataController {
             EducationDTO.class, FeatureDTO.class, HonourAwardDTO.class, LanguageDTO.class,
             LicenseCertificationDTO.class, ProjectDTO.class, PublicationDTO.class, RecommendationDTO.class,
             SkillDTO.class, VolunteerExperienceDTO.class, WorkExperienceDTO.class);
+
+    @GetMapping("/cv")
+    public Map<String, Object> getCV(@PathVariable Long id) {
+        Map<String, Object> result = new HashMap<>();
+        result.put("introduction", userController.getIntroduction(id));
+        entityClasses.stream()
+                .forEach(x -> {
+                            String className = ((Class) x).getSimpleName().toLowerCase();
+                            result.put(className, getAllObjects(id, className));
+                        }
+                );
+        return result;
+    }
 
 
     @GetMapping("/all")
@@ -79,6 +97,14 @@ public class GenericUserDataController {
         GenericUserData result = genericUserDataService.putObject(id, objectId, modelMapper.map(object, entityClass));
         result = resetDefault(result, modelMapper.map(object, dtoClass));
         return toDTO(result, dtoClass);
+    }
+
+    @DeleteMapping
+    public void deleteObject(@PathVariable Long id,
+                         @RequestParam("class") String targetClass,
+                         @RequestParam("object-id") Long objectId) {
+        Type entityClass = getEntityClass(targetClass);
+        genericUserDataService.deleteObject(id, objectId, entityClass);
     }
 
     private Type getEntityClass(String className) {
