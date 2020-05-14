@@ -3,10 +3,12 @@ import { FormGroup } from '@angular/forms';
 import { Education } from '../../core/models/education.model';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { EducationApiService } from "../../core/services/education-api.service";
+import { userID } from 'src/global';
 
 @Component({
   selector: 'app-modal-education',
-  templateUrl: './modal-education.component.html',
+  templateUrl: '../modal.component.html',
   styleUrls: ['./modal-education.component.css']
 })
 export class ModalEducationComponent implements OnInit {
@@ -21,7 +23,8 @@ export class ModalEducationComponent implements OnInit {
       key: 'schoolName',
       type: 'input',
       templateOptions: {
-        label: 'School Name'
+        label: 'School Name',
+        required: true
       }
     },
     {
@@ -46,25 +49,38 @@ export class ModalEducationComponent implements OnInit {
       }
     },
     {
-      key: 'startYear',
-      type: 'input',
-      templateOptions: {
-        type: 'date',
-        label: 'Start Year',
-      }
+      fieldGroupClassName: 'row',
+      fieldGroup: [
+        {
+          className: 'col-6',
+          key: 'startYear',
+          type: 'datepicker',
+          templateOptions: {
+            label: 'Start Date',
+            placeholder: 'dd-MM-yyyy',
+          }
+        },
+        {
+          className: 'col-6',
+          key: 'endYear',
+          type: 'datepicker',
+          templateOptions: {
+            placeholder: 'dd-MM-yyyy',
+            label: 'End Date',
+          }
+        }
+      ]
     },
     {
-      key: 'endYear',
-      type: 'datepicker',
-      templateOptions: {
-        label: 'End Year',
-      }
-    },
-    {
-      key: 'activitiesAndSocieties',
-      type: 'input',
+      key: 'activityAndSociety',
+      type: 'textarea',
       templateOptions: {
         label: 'Activities And Societies',
+      },
+      hooks: {
+        onInit: (field: FormlyFieldConfig) => {
+          field.templateOptions.rows = 3
+        }
       }
     },
     {
@@ -72,6 +88,11 @@ export class ModalEducationComponent implements OnInit {
       type: 'textarea',
       templateOptions: {
         label: 'Description',
+      },
+      hooks: {
+        onInit: (field: FormlyFieldConfig) => {
+          field.templateOptions.rows = 3
+        }
       }
     },
     {
@@ -83,7 +104,10 @@ export class ModalEducationComponent implements OnInit {
       }
     },
   ];
-  constructor( public modal: NgbActiveModal ) { }
+  constructor( 
+    public modal: NgbActiveModal,
+    private educationApiService: EducationApiService
+  ) { }
 
   ngOnInit(): void {
     this.model = {
@@ -93,15 +117,30 @@ export class ModalEducationComponent implements OnInit {
       grade: null,
       startYear: null,
       endYear: null,
-      activitiesAndSocieties: null,
+      activityAndSociety: null,
       description: null,
       media: null,
     }
-    console.log(this.model)
   }
 
   onSubmit() {
-    console.log(this.model)
+    console.log("CV Edu submit form:", this.model);
+		if (this.form.valid) {
+      this.educationApiService.create(userID, this.model)
+        .subscribe((result: Education) => {
+          console.log("CV Edu create response:", JSON.stringify(result))
+        })
+    }
+  }
+
+  getEducation(){
+    this.educationApiService.get(userID)
+      .subscribe((result: Education) => {
+        console.log("CV Edu get response: ", JSON.stringify(result))
+        if (result) {
+          this.model =result;
+        }
+      })
   }
 
 }

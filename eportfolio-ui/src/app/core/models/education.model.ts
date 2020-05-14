@@ -5,7 +5,7 @@ export interface Education {
     grade: string;
     startYear: string;
     endYear: string;
-    activitiesAndSocieties: string;
+    activityAndSociety: string;
     description: string;
     media: string;
 }

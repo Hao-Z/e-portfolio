@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalEducationComponent } from "../cv-form/modal-education/modal-education.component";
 import { ModalIntroductionComponent } from "../cv-form/modal-introduction/modal-introduction.component"
+import { ModalAboutComponent } from "../cv-form/modal-about/modal-about.component";
 import { IntroductionApiService } from "../core/services/introduction-api.service";
 import { userID, refreshJwt } from "../../global";
 import { Introduction } from '../core/models/introduction.model';
@@ -49,7 +50,7 @@ export class CvComponent implements OnInit {
         modalRef = this.modalService.open(ModalEducationComponent, {backdrop: 'static', size: 'lg'});
         break;
       case 'about':
-        console.log("about modal!");
+        modalRef = this.modalService.open(ModalAboutComponent, {backdrop: 'static', size: 'lg'});
         break;
       case 'feature':
         console.log("feature modal!");
@@ -94,7 +95,7 @@ export class CvComponent implements OnInit {
   }
 
   getIntroduction() {
-    this.introductionApiService.getIntro(userID)
+    this.introductionApiService.get(userID)
       .subscribe((result: Introduction) => {
         this.userDatas = result;
         console.log("Get!")

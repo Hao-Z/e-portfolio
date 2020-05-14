@@ -185,19 +185,19 @@ export class ModalIntroductionComponent implements OnInit {
   }
 
   getIntroduction() {
-    this.introductionApiService.getIntro(userID)
+    this.introductionApiService.get(userID)
       .subscribe((result: Introduction) => {
         console.log("CV Intro get response: ", JSON.stringify(result))
         if (result) {
           this.model =result;
         }
-    })
+      })
   }
 
   onSubmit() {
     console.log("CV Intro submit form:", this.model);
 		if (this.form.valid) {
-      this.introductionApiService.updateIntro(userID, this.model)
+      this.introductionApiService.update(userID, this.model)
         .subscribe((result: Introduction) => {
           console.log("CV Intro patch response:", JSON.stringify(result))
         })

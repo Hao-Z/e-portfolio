@@ -15,7 +15,7 @@ export class CustomOptionsService {
         'Authorization': localStorage.getItem('jwt_token'),
       }),
       params: params,
-      observe: 'body' as 'response'
+      observe: 'response' 
     }
     return httpOptions
   }
