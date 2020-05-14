@@ -81,6 +81,14 @@ public class GenericUserDataController {
         return toDTO(result, dtoClass);
     }
 
+    @DeleteMapping
+    public void deleteObject(@PathVariable Long id,
+                         @RequestParam("class") String targetClass,
+                         @RequestParam("object-id") Long objectId) {
+        Type entityClass = getEntityClass(targetClass);
+        genericUserDataService.deleteObject(id, objectId, entityClass);
+    }
+
     private Type getEntityClass(String className) {
         return entityClasses.stream()
                 .filter(x -> ((Class) x).getSimpleName().toLowerCase().equals(className))
