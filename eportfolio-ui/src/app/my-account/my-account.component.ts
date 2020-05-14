@@ -18,7 +18,12 @@ import {refreshJwt} from "../../global";
 export class MyAccountComponent implements OnInit {
 
   updateForm: FormGroup;
-  profiles_value : any;
+  profiles_value = {
+    'username': null,
+    'email': null,
+    'birthday': null,
+    'phoneNumber': null,
+  };
   editable = new Map<string,boolean>();
   profiles = ['username', 'email', 'birthday', 'phoneNumber'];
 
@@ -34,13 +39,7 @@ export class MyAccountComponent implements OnInit {
 
   ngOnInit(): void {
     refreshJwt();
-    // this.getProfile();
-    this.profiles_value = {
-      'username': 'Demo',
-      'email': 'demo@demo.com',
-      'birthday': '30-12-1999',
-      'phoneNumber': '0455555555',
-    };
+    this.getProfile();
     for(let p of this.profiles){
       this.editable.set(p,false);
     }
@@ -53,37 +52,41 @@ export class MyAccountComponent implements OnInit {
         'Authorization': localStorage.getItem("jwt_token")})
     };
     this.http.get<any>(globals.backend_path + "users/" + userID + "/profile",HttpOptions).subscribe((result:any)=>{
-      this.profiles_value = result.body;
+      this.profiles_value['birthday'] = result['birthday'];
+      this.profiles_value['phoneNumber'] = result['phoneNumber'];
+    });
+    this.http.get<any>(globals.backend_path + "users/" + userID + "/user-information",HttpOptions).subscribe((result:any)=>{
+      this.profiles_value['username'] = result['username'];
+      this.profiles_value['email'] = result['email'];
+      console.log(this.profiles_value)
     });
   }
 
   data:any;
-  inputBG: any = "background-color : rgba(255, 255, 255, 0.6)";
-  errorBG: any = "background-color: rgba(255,255,255,0.4)";
   onSubmit(key, value) {
     refreshJwt();
+    const HttpOptions = {
+      headers : new HttpHeaders({'content-Type': 'application/json',
+        'Authorization': localStorage.getItem("jwt_token")}
+      )
+    };
     if(key == 'email'){
-      this.data = {"user":{[key]:value}};
+      this.data = {[key]:value};
+      this.http.post<any>(globals.backend_path + "users/" + userID + "/user-information?_method=patch", this.data, HttpOptions).subscribe((result) => {
+        // This code will be executed when the HTTP call returns successfully
+        this.profiles_value[key] = value;
+      });
     }else{
       if(key == 'birthday'){
         // yyyy-MM-dd to dd-MM-yyyy
         value = value[8]+value[9]+'-'+value[5]+value[6]+'-'+value[0]+value[1]+value[2]+value[3];
       }
       this.data = {[key]:value};
+      this.http.post<any>(globals.backend_path + "users/" + userID + "/profile?_method=patch", this.data, HttpOptions).subscribe((result) => {
+        // This code will be executed when the HTTP call returns successfully
+        this.profiles_value[key] = value;
+      });
     }
-
-    const HttpOptions = {
-      headers : new HttpHeaders({'content-Type': 'application/json',
-        'Authorization': localStorage.getItem("jwt_token")}
-      )
-    };
-    this.http.post<any>(globals.backend_path + "users/" + userID + "/profile?_method=patch", this.data, HttpOptions).subscribe((result) => {
-      // This code will be executed when the HTTP call returns successfully
-      this.profiles_value[key] = value;
-      alert(result.body)
-    });
-    this.profiles_value[key] = value; //delete
-    alert('Changes succeed: ' + JSON.stringify(this.data));
   }
 
 }
