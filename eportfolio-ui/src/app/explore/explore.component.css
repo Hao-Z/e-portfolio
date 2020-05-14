@@ -2,9 +2,13 @@
   height: 100vh;
 }
 
+nz-header {
+  position: fixed;
+  width: 100%;
+}
+
 .menu-sidebar {
-  position: relative;
-  z-index: 10;
+  position: fixed;
   min-height: 100vh;
   background: #ffffff;
 }
@@ -82,10 +86,10 @@ nz-card {
   border: 1px;
   border-style: solid;
   border-color: #e6e6e6;
-  box-shadow: 10px 5px 5px grey; 
+  box-shadow: 10px 5px 5px grey;
   border-radius: 5px;
   position: relative;
-  
+
   width: auto;
   max-width: 800px;
   height: auto;
@@ -99,7 +103,7 @@ nz-card {
   transition-duration: 1s;
   border-radius: 15px;
   overflow: hidden;
- 
+
 }
 
 #div1, #div2 {
@@ -112,7 +116,7 @@ nz-card {
 }
 #div2 {
   /* max-width: 70%; */
-  
+
 }
 #div3 {
   background-color: var(--primary-color);
@@ -172,7 +176,7 @@ nz-card {
 }
 
 .square{
-  width: 15px; 
+  width: 15px;
   height: 100%;
   right: 0px;
   bottom: 0px;

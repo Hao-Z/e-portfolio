@@ -1,16 +1,19 @@
 <nz-layout>
-  <app-top-bar>
-  </app-top-bar>
-  <nz-layout class="app-layout">
+    <app-top-bar style="position: fixed;width: 100%;z-index: 10">
+    </app-top-bar>
+
+  <nz-layout style="padding-top: 55px">
     <nz-sider class="menu-sidebar"
               nzCollapsible
               nzWidth="256px"
               nzBreakpoint="md"
               [(nzCollapsed)]="isCollapsed"
               [nzTrigger]="null"
-              [nzCollapsedWidth]="0">
+              [nzCollapsedWidth]="0"
+              (nzCollapsedChange)="changeWidth()"
+              >
       <ul nz-menu nzTheme="light" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-      
+
       <li *ngIf="!isCollapsed">
           <nz-content style="font-size: 20px; color: #0068A7; font-family: NotoSerif;">
             Industry Fields
@@ -48,7 +51,7 @@
         <li *ngIf="isCollapsed">
         <nz-content>
           <nz-input-group [nzSuffix]="suffixIcon">
-            
+
           </nz-input-group>
           <ng-template #suffixIcon>
             <i nz-icon nzType="search"></i>
@@ -57,7 +60,7 @@
         </li>
       </ul>
     </nz-sider>
-    <nz-layout style="background-color: #F4F3F2">
+    <nz-layout [style]=width>
       <nz-content>
         <div align="right">
           <table>
@@ -81,7 +84,7 @@
             <div *ngIf="!isCollapsed">
             <div class="row">
             <div class="col-4"><img src="assets/untitled.png" class="rounded-circle" alt="anonymous-user" style="width: 140px; height:140px;"></div>
-              
+
                 <div class="col-16">
                   <h2>{{userDatas.firstName +" " + userDatas.lastName}}
                   <span>{{item.industry}}</span></h2>
@@ -111,6 +114,12 @@
           </div>
           <br/>
         </div>
+        <br/>
+        <div align="center">
+          <nz-pagination (nzPageIndexChange)="changePage()" [nzPageIndex]="1" [nzTotal]="500" nzShowQuickJumper></nz-pagination>
+        </div>
+        <br/>
+        <nz-footer>Footer</nz-footer>
       </nz-content>
     </nz-layout>
   </nz-layout>
