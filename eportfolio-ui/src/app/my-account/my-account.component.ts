@@ -19,10 +19,10 @@ export class MyAccountComponent implements OnInit {
 
   updateForm: FormGroup;
   profiles_value = {
-    'username': null,
-    'email': null,
-    'birthday': null,
-    'phoneNumber': null,
+    'username': '',
+    'email': '',
+    'birthday': '',
+    'phoneNumber': '',
   };
   editable = new Map<string,boolean>();
   profiles = ['username', 'email', 'birthday', 'phoneNumber'];
@@ -52,12 +52,18 @@ export class MyAccountComponent implements OnInit {
         'Authorization': localStorage.getItem("jwt_token")})
     };
     this.http.get<any>(globals.backend_path + "users/" + userID + "/profile",HttpOptions).subscribe((result:any)=>{
-      this.profiles_value['birthday'] = result['birthday'];
-      this.profiles_value['phoneNumber'] = result['phoneNumber'];
+      if(result['birthday']) {
+        this.profiles_value['birthday'] = result['birthday'];
+      }
+      if(result['phoneNumber']) {
+        this.profiles_value['phoneNumber'] = result['phoneNumber'];
+      }
     });
     this.http.get<any>(globals.backend_path + "users/" + userID + "/user-information",HttpOptions).subscribe((result:any)=>{
       this.profiles_value['username'] = result['username'];
-      this.profiles_value['email'] = result['email'];
+      if(result['email']) {
+        this.profiles_value['email'] = result['email'];
+      }
       console.log(this.profiles_value)
     });
   }
