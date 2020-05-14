@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import static COMP90082.team18.ePortfolioAPI.security.SecurityConstants.*;
 
@@ -30,7 +32,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest req,
                                     HttpServletResponse res,
                                     FilterChain chain) throws IOException, ServletException {
-        String header = req.getHeader(HEADER_STRING);
+        String header = req.getHeader(JWT_HEADER_STRING);
 
         if (header == null || !header.startsWith(TOKEN_PREFIX)) {
             chain.doFilter(req, res);
@@ -44,11 +46,16 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     }
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-        String token = request.getHeader(HEADER_STRING);
-        if (token != null) {
-            User user = JWTMethod.parse(token);
+        String jwtToken = request.getHeader(JWT_HEADER_STRING);
+        String sharedLink = request.getHeader(SHARED_LINK_HEADER_STRING);
+        if (jwtToken != null) {
+            User user = JWTMethod.parse(jwtToken);
             if (user != null) {
-                return new UsernamePasswordAuthenticationToken(user.getId(), null,
+                Map<String, Object> credentials = new HashMap<>();
+                if (sharedLink != null) {
+                    credentials.put("read_only_id", JWTMethod.parseSharedLink(sharedLink));
+                }
+                return new UsernamePasswordAuthenticationToken(user.getId(), credentials,
                         user.isAdmin() ?
                                 Collections.singletonList(new SimpleGrantedAuthority("ADMIN"))
                                 : new ArrayList<>());

@@ -3,11 +3,13 @@ package COMP90082.team18.ePortfolioAPI.service.serviceImplement;
 import COMP90082.team18.ePortfolioAPI.DTO.PasswordDTO;
 import COMP90082.team18.ePortfolioAPI.entity.User;
 import COMP90082.team18.ePortfolioAPI.repository.UserRepository;
+import COMP90082.team18.ePortfolioAPI.security.JWTMethod;
 import COMP90082.team18.ePortfolioAPI.service.UserService;
 import COMP90082.team18.ePortfolioAPI.util.ObjectMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -56,5 +58,10 @@ public class UserServiceImp implements UserService {
             targetUser.setPassword(passwordDTO.getNewPassword());
             userRepository.save(targetUser);
         } else throw new AccessDeniedException("Wrong password.");
+    }
+
+    @Override
+    public String createSharedLink() {
+        return JWTMethod.createSharedLink((Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     }
 }
