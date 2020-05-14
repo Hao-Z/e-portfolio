@@ -7,6 +7,8 @@ import {NzFormatEmitEvent, NzTreeNodeOptions} from "ng-zorro-antd";
   styleUrls: ['./explore.component.css']
 })
 export class ExploreComponent implements OnInit {
+  width;
+
   searchValue = '';
   isCollapsed = window.innerWidth < Number(770);
   userDatas = {
@@ -48,8 +50,13 @@ test_nodes = [
       {title: 'Computer Games', key: 'Computer Games', isLeaf: true, checked: false},
       {title: 'Computer Hardware', key: 'Computer Hardware', isLeaf: true, checked: false},
       {title: 'Computer Networking', key: 'Computer Networking', isLeaf: true, checked: false},
-    ]
+    ];
   ngOnInit(): void {
+    if(window.innerWidth < Number(770)){
+      this.width = "background-color: #F4F3F2;padding-left:0";
+    }else{
+      this.width = "background-color: #F4F3F2;padding-left:256px";
+    }
     this.nodes = this.test_nodes;
     this.CVs = [
       {'industry': 'Information Technology'},
@@ -61,7 +68,7 @@ test_nodes = [
     this.tempCVs = this.CVs;
     this.defalutValue = null;
     this.sortValues = ['order by xxx','order by xxx','order by xxx'];
-    
+
   }
 
   getSearch(){
@@ -102,5 +109,17 @@ test_nodes = [
 
   clear() {
     this.ngOnInit();
+  }
+
+  changePage() {
+
+  }
+
+  changeWidth() {
+    if(window.innerWidth < Number(770)){
+      this.width = "background-color: #F4F3F2;padding-left:0";
+    }else{
+      this.width = "background-color: #F4F3F2;padding-left:256px";
+    }
   }
 }
