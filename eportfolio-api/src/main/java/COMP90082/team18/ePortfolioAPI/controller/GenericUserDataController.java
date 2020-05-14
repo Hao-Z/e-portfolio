@@ -56,7 +56,6 @@ public class GenericUserDataController {
         return result;
     }
 
-
     @GetMapping("/all")
     public List<Object> getAllObjects(@PathVariable Long id,
                                       @RequestParam("class") String targetClass) {
