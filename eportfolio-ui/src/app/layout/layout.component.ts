@@ -7,7 +7,6 @@ import {Router} from "@angular/router";
   styleUrls: ['./layout.component.css']
 })
 export class LayoutComponent implements OnInit {
-
   isCollapsed = window.innerWidth < Number(770);
   constructor( private router: Router) { }
 

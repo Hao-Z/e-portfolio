@@ -79,6 +79,15 @@ public class GenericUserDataServiceImp implements GenericUserDataService {
         return (T) repository.save(object);
     }
 
+    @Override
+    @SuppressWarnings("unchecked")
+    @PreAuthorize("hasPermission(#id, 'write')")
+    public <T extends GenericUserData> void deleteObject(Long id, Long objectId, Type T) {
+        UserDataRepository repository = getRepository(T);
+        GenericUserData targetObject = getObject(id, objectId, T);
+        repository.delete(targetObject);
+    }
+
     @SuppressWarnings("unchecked")
     private UserDataRepository getRepository(Type T) {
         if (allJpaRepositories == null) {

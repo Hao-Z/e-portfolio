@@ -1,33 +1,66 @@
 <nz-layout>
-  <app-top-bar>
-  </app-top-bar>
-  <nz-layout class="app-layout">
+    <app-top-bar style="position: fixed;width: 100%;z-index: 10">
+    </app-top-bar>
+
+  <nz-layout style="padding-top: 55px">
     <nz-sider class="menu-sidebar"
               nzCollapsible
               nzWidth="256px"
               nzBreakpoint="md"
               [(nzCollapsed)]="isCollapsed"
-              [nzTrigger]="null">
+              [nzTrigger]="null"
+              [nzCollapsedWidth]="0"
+              (nzCollapsedChange)="changeWidth()"
+              >
       <ul nz-menu nzTheme="light" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-        <li>
-          <nz-content style="font-size: 20px">
-            Filter
+
+      <li *ngIf="!isCollapsed">
+          <nz-content style="font-size: 20px; color: #0068A7; font-family: NotoSerif;">
+            Industry Fields
           </nz-content>
-        </li>
-        <li *ngIf="!isCollapsed">
+      <nz-content>
+      <nz-input-group [nzSuffix]="suffixIcon">
+        <input type="text" nz-input placeholder="Filter..." [(ngModel)]="searchValue" />
+      </nz-input-group>
+      <ng-template #suffixIcon>
+        <i nz-icon nzType="search"></i>
+      </ng-template>
+      </nz-content>
+
           <nz-tree
             [nzData]="nodes"
+            [nzSearchValue]="searchValue"
             nzCheckable
-            nzShowExpand = true
             [nzCheckedKeys]="defaultCheckedKeys"
             (nzCheckBoxChange)="nzCheck($event)"
             (nzExpandChange)="nzCheck($event)"
+            (nzSearchValueChange)="nzEvent($event)"
           >
           </nz-tree>
         </li>
+
+        <li>
+          <nz-col nzOffset="4">
+            <button type="button" class="btn btn-link" (click)="clear()">
+              Clear
+            </button>
+          </nz-col>
+
+        </li>
+
+        <li *ngIf="isCollapsed">
+        <nz-content>
+          <nz-input-group [nzSuffix]="suffixIcon">
+
+          </nz-input-group>
+          <ng-template #suffixIcon>
+            <i nz-icon nzType="search"></i>
+          </ng-template>
+        </nz-content>
+        </li>
       </ul>
     </nz-sider>
-    <nz-layout style="background: url(assets/bg1.jpg)">
+    <nz-layout [style]=width>
       <nz-content>
         <div align="right">
           <table>
@@ -46,37 +79,47 @@
       </nz-content>
 
       <nz-content>
-        <div *ngFor="let item of CVs">
-          <div class="card-body" [style]="industryColor[item.industry]">
+        <div *ngFor="let item of tempCVs">
+          <div class="card-body">
             <div *ngIf="!isCollapsed">
-              <div class="col-md-6">
-                <img src="assets/untitled.png" class="center-block rounded-circle" alt="anonymous-user"  width="80px" height="80px">
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="row">{{ userDatas.firstName }} {{ userDatas.lastName }}</div>
-                  <div class="row">Title: {{ userDatas.headline }}</div>
-                  <div class="row">Education: {{userDatas.education}}</div>
-                  <div class="row">Industry: {{item.industry}}</div>
-                </div>
-                <div class="col-md-6">
-                  <div class="row">Region: {{userDatas.region}}</div>
-                  <div class="row">Email: {{userDatas.email}}</div>
-                  <div class="row">Phone: {{userDatas.phone}}</div>
-                  <div class="row">ProfileUrl: {{userDatas.profileUrl}}</div>
+            <div class="row">
+            <div class="col-4"><img src="assets/untitled.png" class="rounded-circle" alt="anonymous-user" style="width: 140px; height:140px;"></div>
+
+                <div class="col-16">
+                  <h2>{{userDatas.firstName +" " + userDatas.lastName}}
+                  <span>{{item.industry}}</span></h2>
+                  <h5>{{userDatas.headline}}</h5>
+                  <hr>
+                  <p>{{userDatas.region}}</p>
+                  <p>{{userDatas.email}}</p>
+                  <p>{{userDatas.phone}}</p>
+                  <div class="square"></div>
+
                 </div>
               </div>
+
             </div>
 
             <div *ngIf="isCollapsed">
+              <div class="row">
+              <div class="col-4">
+              <img src="assets/untitled.png" class="rounded-circle" alt="anonymous-user" style="width: 60px; height:60px;"></div>
               <div>
-                {{userDatas.firstName}} {{userDatas.lastName}}
+                <h2>{{userDatas.firstName +" " + userDatas.lastName}}</h2>
+                <hr>
+                <p style="color: #0068A7;">{{item.industry}}</p>
+              </div>
               </div>
             </div>
-
           </div>
           <br/>
         </div>
+        <br/>
+        <div align="center">
+          <nz-pagination (nzPageIndexChange)="changePage()" [nzPageIndex]="1" [nzTotal]="500" nzShowQuickJumper></nz-pagination>
+        </div>
+        <br/>
+        <nz-footer>Footer</nz-footer>
       </nz-content>
     </nz-layout>
   </nz-layout>

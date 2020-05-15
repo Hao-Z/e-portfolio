@@ -1,9 +1,10 @@
 .card-body {
-    margin-right: 80px; 
-    height: auto; 
+    margin-right: 80px;
+    height: auto;
     border: 1px;
     border-style: solid;
     border-color: #e6e6e6;
     box-shadow: 10px 5px 5px grey;
     border-radius: 5px;
 }
+

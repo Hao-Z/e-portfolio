@@ -5,6 +5,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.io.Serializable;
+import java.util.Map;
 
 public class CustomPermissionEvaluator implements PermissionEvaluator {
     @Override
@@ -31,22 +32,26 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
     }
 
     private boolean writePermission(Authentication authentication, Object targetDomainObject) {
-        if(authentication.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))){
+        if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))) {
             return true;
         }
-        if(targetDomainObject instanceof Long){
+        if (targetDomainObject instanceof Long) {
             return authentication.getPrincipal().equals(targetDomainObject);
         }
         return false;
     }
 
     private boolean readPermission(Authentication authentication, Object targetDomainObject) {
-        if(authentication.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))){
+        if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))) {
             return true;
         }
-        if(targetDomainObject instanceof Long){
-            // TODO: 2020/4/22 User with sharing code should also be permitted.
-            return authentication.getPrincipal().equals(targetDomainObject);
+        if (targetDomainObject instanceof Long) {
+            if (targetDomainObject.equals(authentication.getPrincipal()))
+                return true;
+        }
+        if (authentication.getCredentials() instanceof Map) {
+            if (targetDomainObject.equals(((Map) authentication.getCredentials()).get("read_only_id")))
+                return true;
         }
         return false;
     }
