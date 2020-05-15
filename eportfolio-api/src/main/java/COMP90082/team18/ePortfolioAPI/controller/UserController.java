@@ -62,10 +62,12 @@ public class UserController {
     }
 
     @GetMapping(value = "/test")
-    public Page<User> test(@RequestParam Long id, @RequestParam String name,
-                           @RequestParam int page, @RequestParam int size){
-        Page<User> res = userService.customizedFind(id, name, page, size);
+    public List<Object> test(@RequestParam Long id, @RequestParam String name,
+                           @RequestParam int page, @RequestParam int size) {
+        List<Object> res = userService.customizedFind(id, name, page, size);
         return res;
+    }
+
     @GetMapping("users/{id}/about")
     public AboutDTO getAbout(@PathVariable Long id){
         return modelMapper.map(userService.getUser(id), AboutDTO.class);

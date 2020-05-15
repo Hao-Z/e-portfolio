@@ -1,7 +1,8 @@
 package COMP90082.team18.ePortfolioAPI.service;
 
-import COMP90082.team18.ePortfolioAPI.DTO.UserDTO;
 import COMP90082.team18.ePortfolioAPI.DTO.PasswordDTO;
+import COMP90082.team18.ePortfolioAPI.DTO.UserDTO;
+import COMP90082.team18.ePortfolioAPI.DTO.UserProjection;
 import COMP90082.team18.ePortfolioAPI.entity.User;
 import org.springframework.data.domain.Page;
 
@@ -12,7 +13,8 @@ public interface UserService {
 
     boolean checkUsername(User user);
 
-    Page<User> customizedFind(Long id, String name, int page, int size);
+    List<Object> customizedFind(Long id, String name, int page, int size);
+
     User getUser(Long id);
 
     User patchUser(Long id, User user);

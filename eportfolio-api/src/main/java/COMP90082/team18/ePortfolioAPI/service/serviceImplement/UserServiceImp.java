@@ -1,28 +1,26 @@
 package COMP90082.team18.ePortfolioAPI.service.serviceImplement;
 
 import COMP90082.team18.ePortfolioAPI.DTO.UserDTO;
+import COMP90082.team18.ePortfolioAPI.DTO.UserProjection;
 import COMP90082.team18.ePortfolioAPI.entity.User;
 import COMP90082.team18.ePortfolioAPI.repository.UserRepository;
 import COMP90082.team18.ePortfolioAPI.service.UserService;
-import COMP90082.team18.ePortfolioAPI.util.CustomizedSpecification;
+import org.hibernate.query.internal.NativeQueryImpl;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import COMP90082.team18.ePortfolioAPI.DTO.PasswordDTO;
-import COMP90082.team18.ePortfolioAPI.entity.User;
-import COMP90082.team18.ePortfolioAPI.repository.UserRepository;
-import COMP90082.team18.ePortfolioAPI.service.UserService;
 import COMP90082.team18.ePortfolioAPI.util.ObjectMethod;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import java.util.List;
 
 @Service
 public class UserServiceImp implements UserService {
@@ -31,6 +29,9 @@ public class UserServiceImp implements UserService {
     private UserRepository userRepository;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    private EntityManager em;
 
     public User signUp(User user) {
         if (checkUsername(user)) {
@@ -45,11 +46,21 @@ public class UserServiceImp implements UserService {
     }
 
 
-    public Page<User> customizedFind(Long id, String name, int page, int size) {
-        Specification<User> spec = new CustomizedSpecification<>("id", ">", id);
+    public List<Object> customizedFind(Long id, String name, int page, int size) {
+        Query q = em.createNativeQuery("select email as email, username as usersdf, admin as adm, degree as deg " +
+                "from user join education on user.id = education.user_id");
+        q.unwrap(NativeQueryImpl.class).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+        List<Object> res = q.getResultList();
+        return res;
 
-        return userRepository.findCustomized(Specification.where(spec), PageRequest.of(page, size,
-                Sort.by(Sort.Direction.DESC, "id")));
+//        Specification<User> spec = new CustomizedSpecification<>("id", ">", id);
+//
+//        return userRepository.findAll(Specification.where(spec), PageRequest.of(page, size,
+//                Sort.by(Sort.Direction.DESC, "id")));
+
+//        return userRepository.resfindCustomized(PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id")));
+
+    }
 
     @Override
     @PreAuthorize("hasPermission(#id, 'read')")
