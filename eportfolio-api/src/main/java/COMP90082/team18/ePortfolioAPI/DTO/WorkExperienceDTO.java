@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.File;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -20,9 +20,9 @@ public class WorkExperienceDTO extends DTO {
     @JsonProperty("isCurrentWork")
     private boolean isDefault;
     @JsonFormat(pattern = "dd-MM-yyyy")
-    private Date startDate;
+    private LocalDate startDate;
     @JsonFormat(pattern = "dd-MM-yyyy")
-    private Date endDate;
+    private LocalDate endDate;
     private String description;
     private File media;
 }

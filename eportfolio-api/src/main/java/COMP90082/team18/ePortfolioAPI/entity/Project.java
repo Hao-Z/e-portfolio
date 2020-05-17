@@ -5,15 +5,15 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.File;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = true)
 public class Project extends GenericUserData {
     private String projectName;
-    private Date startDate;
-    private Date endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private String projectURL;
     private String description;
     private File media;

@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.File;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @Entity
@@ -14,8 +14,8 @@ public class VolunteerExperience extends GenericUserData {
     private String organizationName;
     private String role;
     private String cause;
-    private Date startDate;
-    private Date endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private String description;
     private File media;
 }

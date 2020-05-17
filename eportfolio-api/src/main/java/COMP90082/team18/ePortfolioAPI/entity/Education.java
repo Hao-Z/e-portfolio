@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.File;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -15,8 +16,8 @@ public class Education extends GenericUserData {
     private String degree;
     private String fieldOfStudy;
     private String grade;
-    private Date startYear;
-    private Date endYear;
+    private LocalDate startYear;
+    private LocalDate endYear;
     private String activityAndSociety;
     private String description;
     private File media;

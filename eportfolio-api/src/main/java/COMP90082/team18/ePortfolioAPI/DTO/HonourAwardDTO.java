@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -14,6 +14,6 @@ public class HonourAwardDTO extends DTO {
     private String associatedWith;
     private String issuer;
     @JsonFormat(pattern = "dd-MM-yyyy")
-    private Date issueDate;
+    private LocalDate issueDate;
     private String description;
 }

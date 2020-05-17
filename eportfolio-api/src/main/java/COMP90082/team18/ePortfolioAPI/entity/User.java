@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.File;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -35,7 +35,7 @@ public class User {
     private String headline;
     private String industry;
     private Gender gender;
-    private Date birthday;
+    private LocalDate birthday;
     private String country;
     private String postalCode;
     private String address;
@@ -48,9 +48,6 @@ public class User {
     @OneToOne
     private Education currentEducation;
 
-//    @OneToOne(mappedBy = "user")
-//    private Profile profile;
-//
 //    @OneToMany(mappedBy = "user")
 //    private List<WorkExperience> workExperiences;
 //

@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.File;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @Entity
@@ -13,7 +13,7 @@ import java.util.Date;
 public class Publication extends GenericUserData {
     private String title;
     private String publicationPublisher;
-    private Date publicationDate;
+    private LocalDate publicationDate;
     private String publicationURL;
     private String description;
     private File media;

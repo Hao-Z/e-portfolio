@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.File;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @Entity
@@ -16,8 +16,8 @@ public class WorkExperience extends GenericUserData {
     private String companyName;
     private String location;
     private String industry;
-    private Date startDate;
-    private Date endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private String description;
     private File media;
 }

@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.File;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -14,9 +14,9 @@ public class LicenseCertificationDTO extends DTO {
     private String name;
     private String issuingOrganization;
     @JsonFormat(pattern = "dd-MM-yyyy")
-    private Date issueDate;
+    private LocalDate issueDate;
     @JsonFormat(pattern = "dd-MM-yyyy")
-    private Date expirationDate;
+    private LocalDate expirationDate;
     private String credentialID;
     private String credentialURL;
     private File media;

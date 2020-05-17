@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @Entity
@@ -13,6 +13,6 @@ public class HonourAward extends GenericUserData{
     private String title;
     private String associatedWith;
     private String issuer;
-    private Date issueDate;
+    private LocalDate issueDate;
     private String description;
 }
