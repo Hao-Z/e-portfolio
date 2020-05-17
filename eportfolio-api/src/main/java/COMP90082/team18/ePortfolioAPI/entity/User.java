@@ -1,12 +1,13 @@
 package COMP90082.team18.ePortfolioAPI.entity;
 
+import COMP90082.team18.ePortfolioAPI.entity.userDataEntity.Education;
+import COMP90082.team18.ePortfolioAPI.entity.userDataEntity.WorkExperience;
 import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.File;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Data

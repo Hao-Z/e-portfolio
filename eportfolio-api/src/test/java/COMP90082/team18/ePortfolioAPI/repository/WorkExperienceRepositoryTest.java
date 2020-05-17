@@ -1,7 +1,8 @@
 package COMP90082.team18.ePortfolioAPI.repository;
 
 import COMP90082.team18.ePortfolioAPI.entity.User;
-import COMP90082.team18.ePortfolioAPI.entity.WorkExperience;
+import COMP90082.team18.ePortfolioAPI.entity.userDataEntity.WorkExperience;
+import COMP90082.team18.ePortfolioAPI.repository.userDataRepository.WorkExperienceRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -10,8 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

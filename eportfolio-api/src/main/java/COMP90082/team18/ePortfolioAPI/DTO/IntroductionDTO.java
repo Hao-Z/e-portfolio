@@ -1,5 +1,7 @@
 package COMP90082.team18.ePortfolioAPI.DTO;
 
+import COMP90082.team18.ePortfolioAPI.DTO.userDataDTO.EducationDTO;
+import COMP90082.team18.ePortfolioAPI.DTO.userDataDTO.WorkExperienceDTO;
 import COMP90082.team18.ePortfolioAPI.entity.Gender;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
