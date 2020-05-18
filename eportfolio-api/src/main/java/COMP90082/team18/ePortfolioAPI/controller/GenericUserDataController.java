@@ -17,6 +17,7 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static java.util.stream.Collectors.toList;
 
@@ -37,10 +38,10 @@ public class GenericUserDataController {
     private GenericUserDataService genericUserDataService;
 
     @Autowired
-    private List<Class<? extends GenericUserData>> entityClasses;
+    private Set<Class<? extends GenericUserData>> entityClasses;
 
     @Autowired
-    private List<Class<? extends DTO>> dtoClasses;
+    private Set<Class<? extends DTO>> userDataDTOClasses;
 
     @GetMapping("/cv")
     public Map<String, Object> getCV(@PathVariable Long id) {
@@ -113,7 +114,7 @@ public class GenericUserDataController {
     }
 
     private Class<? extends DTO> getDTOClass(String className) {
-        return dtoClasses.stream()
+        return userDataDTOClasses.stream()
                 .filter(x -> x.getSimpleName().toLowerCase().equals(className.toLowerCase() + "dto"))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("No matched object type."));
