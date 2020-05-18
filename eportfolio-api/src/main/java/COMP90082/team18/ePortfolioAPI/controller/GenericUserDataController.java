@@ -27,19 +27,14 @@ import static java.util.stream.Collectors.toList;
 public class GenericUserDataController {
     @Autowired
     private ModelMapper modelMapper;
-
     @Autowired
     private UserController userController;
-
     @Autowired
     private UserService userService;
-
     @Autowired
     private GenericUserDataService genericUserDataService;
-
     @Autowired
     private Set<Class<? extends GenericUserData>> entityClasses;
-
     @Autowired
     private Set<Class<? extends DTO>> userDataDTOClasses;
 
@@ -47,12 +42,10 @@ public class GenericUserDataController {
     public Map<String, Object> getCV(@PathVariable Long id) {
         Map<String, Object> result = new HashMap<>();
         result.put("introduction", userController.getIntroduction(id));
-        entityClasses.stream()
-                .forEach(x -> {
-                            String className = x.getSimpleName().toLowerCase();
-                            result.put(className, getAllObjects(id, className));
-                        }
-                );
+        for (Class<? extends GenericUserData> x : entityClasses) {
+            String className = x.getSimpleName().toLowerCase();
+            result.put(className, getAllObjects(id, className));
+        }
         return result;
     }
 
@@ -100,8 +93,8 @@ public class GenericUserDataController {
 
     @DeleteMapping
     public void deleteObject(@PathVariable Long id,
-                         @RequestParam("class") String targetClass,
-                         @RequestParam("object-id") Long objectId) {
+                             @RequestParam("class") String targetClass,
+                             @RequestParam("object-id") Long objectId) {
         Class<? extends GenericUserData> entityClass = getEntityClass(targetClass);
         genericUserDataService.deleteObject(id, objectId, entityClass);
     }
