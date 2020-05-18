@@ -34,7 +34,7 @@ public class GenericUserDataController {
     @Autowired
     private GenericUserDataService genericUserDataService;
     @Autowired
-    private Set<Class<? extends GenericUserData>> entityClasses;
+    private Set<Class<? extends GenericUserData>> userDataEntityClasses;
     @Autowired
     private Set<Class<? extends DTO>> userDataDTOClasses;
 
@@ -42,7 +42,7 @@ public class GenericUserDataController {
     public Map<String, Object> getCV(@PathVariable Long id) {
         Map<String, Object> result = new HashMap<>();
         result.put("introduction", userController.getIntroduction(id));
-        for (Class<? extends GenericUserData> x : entityClasses) {
+        for (Class<? extends GenericUserData> x : userDataEntityClasses) {
             String className = x.getSimpleName().toLowerCase();
             result.put(className, getAllObjects(id, className));
         }
@@ -100,7 +100,7 @@ public class GenericUserDataController {
     }
 
     private Class<? extends GenericUserData> getEntityClass(String className) {
-        return entityClasses.stream()
+        return userDataEntityClasses.stream()
                 .filter(x -> x.getSimpleName().toLowerCase().equals(className.toLowerCase()))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("No matched object type."));

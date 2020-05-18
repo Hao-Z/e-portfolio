@@ -20,13 +20,10 @@ import static COMP90082.team18.ePortfolioAPI.security.SecurityConstants.TOKEN_PR
 @RestController
 @RequiredArgsConstructor
 public class UserController {
-
     @Autowired
     private UserService userService;
-
     @Autowired
     private ModelMapper modelMapper;
-
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
