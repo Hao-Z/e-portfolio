@@ -17,6 +17,7 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static java.util.stream.Collectors.toList;
 
@@ -26,32 +27,25 @@ import static java.util.stream.Collectors.toList;
 public class GenericUserDataController {
     @Autowired
     private ModelMapper modelMapper;
-
     @Autowired
     private UserController userController;
-
     @Autowired
     private UserService userService;
-
     @Autowired
     private GenericUserDataService genericUserDataService;
-
     @Autowired
-    private List<Class<? extends GenericUserData>> entityClasses;
-
+    private Set<Class<? extends GenericUserData>> userDataEntityClasses;
     @Autowired
-    private List<Class<? extends DTO>> dtoClasses;
+    private Set<Class<? extends DTO>> userDataDTOClasses;
 
     @GetMapping("/cv")
     public Map<String, Object> getCV(@PathVariable Long id) {
         Map<String, Object> result = new HashMap<>();
         result.put("introduction", userController.getIntroduction(id));
-        entityClasses.stream()
-                .forEach(x -> {
-                            String className = x.getSimpleName().toLowerCase();
-                            result.put(className, getAllObjects(id, className));
-                        }
-                );
+        for (Class<? extends GenericUserData> x : userDataEntityClasses) {
+            String className = x.getSimpleName().toLowerCase();
+            result.put(className, getAllObjects(id, className));
+        }
         return result;
     }
 
@@ -99,21 +93,21 @@ public class GenericUserDataController {
 
     @DeleteMapping
     public void deleteObject(@PathVariable Long id,
-                         @RequestParam("class") String targetClass,
-                         @RequestParam("object-id") Long objectId) {
+                             @RequestParam("class") String targetClass,
+                             @RequestParam("object-id") Long objectId) {
         Class<? extends GenericUserData> entityClass = getEntityClass(targetClass);
         genericUserDataService.deleteObject(id, objectId, entityClass);
     }
 
     private Class<? extends GenericUserData> getEntityClass(String className) {
-        return entityClasses.stream()
+        return userDataEntityClasses.stream()
                 .filter(x -> x.getSimpleName().toLowerCase().equals(className.toLowerCase()))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("No matched object type."));
     }
 
     private Class<? extends DTO> getDTOClass(String className) {
-        return dtoClasses.stream()
+        return userDataDTOClasses.stream()
                 .filter(x -> x.getSimpleName().toLowerCase().equals(className.toLowerCase() + "dto"))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("No matched object type."));
