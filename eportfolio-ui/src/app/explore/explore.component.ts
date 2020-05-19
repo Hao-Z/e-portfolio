@@ -59,7 +59,7 @@ export class ExploreComponent implements OnInit {
     this.defalutValue = null;
     this.sortValues = ['order by xxx','order by xxx','order by xxx'];
 
-    // this.getCVsData(stringify(this.pageNum),stringify(this.pageSize),this.CheckedGender,this.order);
+    // this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order);
 
   }
 
@@ -83,7 +83,7 @@ export class ExploreComponent implements OnInit {
         this.CheckedIndustry.push(e.key)
       }
     }
-    this.getCVsData(stringify(this.pageNum),stringify(this.pageSize),this.CheckedIndustry,this.CheckedGender,this.order);
+    this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order);
   }
 
   clear() {
@@ -91,8 +91,7 @@ export class ExploreComponent implements OnInit {
   }
 
   changePage(event) {
-    console.log(event);
-    this.getCVsData(stringify(this.pageNum),stringify(this.pageSize),this.CheckedIndustry,this.CheckedGender,this.order);
+    this.getCVsData((event-1).toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order);
   }
 
   changeWidth() {
