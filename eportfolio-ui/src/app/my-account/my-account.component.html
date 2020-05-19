@@ -3,14 +3,14 @@
     <div class="col-md-6 offset-md-3 col-xs-12">
       <form [formGroup]="updateForm">
         <div class="form-group">
-          <nz-form-label>User Name</nz-form-label>
+          <nz-form-label>{{value_map['username']}}</nz-form-label>
           <nz-input-group nzSearch>
             <input *ngIf="editable['username']" type="text" class="form-control" id='username' formControlName='username' nz-input [ngModel]="profiles_value['username']">
             <input *ngIf="!editable['username']" class="form-control" [placeholder]="profiles_value['username']" [disabled]="true" />
           </nz-input-group>
         </div>
         <div class="form-group">
-          <nz-form-label>Email</nz-form-label>
+          <nz-form-label>{{value_map['email']}}</nz-form-label>
           <nz-input-group nzSearch [nzAddOnAfter]=Email>
             <input *ngIf="editable['email']" type="text" class="form-control" id='email' formControlName='email' nz-input [ngModel]="profiles_value['email']">
             <input *ngIf="!editable['email']" class="form-control" [placeholder]="profiles_value['email']" [disabled]="true" />
@@ -29,7 +29,7 @@
         </div>
 
         <div class="form-group">
-          <nz-form-label>Birthday</nz-form-label>
+          <nz-form-label>{{value_map['birthday']}}</nz-form-label>
 
           <nz-input-group nzSearch [nzAddOnAfter]=Birthday>
             <input *ngIf="editable['birthday']" type="date" class="form-control" id='birthday' formControlName='birthday' nz-input [ngModel]="profiles_value['birthday']">
@@ -43,7 +43,7 @@
         </div>
 
         <div class="form-group">
-          <nz-form-label>Phone Number</nz-form-label>
+          <nz-form-label>{{value_map['phoneNumber']}}</nz-form-label>
           <nz-input-group nzSearch [nzAddOnAfter]=PhoneNumber>
             <input *ngIf="editable['phoneNumber']" type="text" class="form-control" id='phoneNumber' formControlName='phoneNumber' nz-input [ngModel]="profiles_value['phoneNumber']">
             <input *ngIf="!editable['phoneNumber']" class="form-control" [placeholder]="profiles_value['phoneNumber']" [disabled]="true" />
