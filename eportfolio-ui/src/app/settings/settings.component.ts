@@ -1,5 +1,5 @@
 import {Component, Injectable, OnInit} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from "@angular/forms";
 import validate = WebAssembly.validate;
 import {Subscription} from "rxjs";
@@ -86,22 +86,24 @@ export class SettingsComponent implements OnInit {
       'currentPassword':data['Current password'],
       'newPassword':data['New password']
     };
-    this.http.post<any>(globals.backend_path + "users/" + userID + "/update-password", this.message, HttpOptions).subscribe((result) => {
+    this.http.post<any>(globals.backend_path + "users/" + userID + "/password?_method=patch", this.message, HttpOptions).subscribe((result) => {
       // do sth when HTTP post returns sucessfully
+      alert('Password changed successfully.');
       this.updatePassword = this.formBuilder.group({
         "Current password" : ['',Validators.required],
         "New password" : ['',[Validators.required, Validators.minLength(6)]],
         "Confirm password" : ['',[Validators.required, this.matchPassword('New password')]],
       });
       this.update = !this.update
+    },error => {
+      this.updatePassword = this.formBuilder.group({
+        "Current password" : ['',Validators.required],
+        "New password" : ['',[Validators.required, Validators.minLength(6)]],
+        "Confirm password" : ['',[Validators.required, this.matchPassword('New password')]],
+      });
+      alert('Password incorrect.')
     });
-    this.updatePassword = this.formBuilder.group({
-      "Current password" : ['',Validators.required],
-      "New password" : ['',[Validators.required, Validators.minLength(6)]],
-      "Confirm password" : ['',[Validators.required, this.matchPassword('New password')]],
-    });
-    this.update = !this.update; //delete
-    alert('You ve submitted' + JSON.stringify(this.message));
+
   }
 
   cancel(){
