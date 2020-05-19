@@ -44,6 +44,13 @@ public class JWTMethod {
                 .sign(RSA256(publicKey(), privateKey()));
     }
 
+    public static String createSharedLink(Long id) {
+        return JWT.create()
+                .withClaim("read_only_id", id)
+                .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .sign(RSA256(publicKey(), privateKey()));
+    }
+
     public static User parse(String token) {
         Map<String, Claim> claimMap = JWT.require(RSA256(publicKey(), privateKey()))
                 .build()
@@ -53,6 +60,13 @@ public class JWTMethod {
         user.setUsername(claimMap.get("username").asString());
         user.setAdmin(claimMap.get("admin").asBoolean());
         return user;
+    }
+
+    public static Long parseSharedLink(String token) {
+        Map<String, Claim> claimMap = JWT.require(RSA256(publicKey(), privateKey()))
+                .build()
+                .verify(token.replace(TOKEN_PREFIX, "")).getClaims();
+        return claimMap.get("read_only_id").asLong();
     }
 
     private static RSAPublicKey publicKey() {

@@ -1,12 +1,13 @@
 package COMP90082.team18.ePortfolioAPI.entity;
 
+import COMP90082.team18.ePortfolioAPI.entity.userDataEntity.Education;
+import COMP90082.team18.ePortfolioAPI.entity.userDataEntity.WorkExperience;
 import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.File;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -35,22 +36,19 @@ public class User {
     private String headline;
     private String industry;
     private Gender gender;
-    private Date birthday;
+    private LocalDate birthday;
     private String country;
     private String postalCode;
     private String address;
     private File profilePhoto;
     private String phoneNumber;
-    private String about;
+    private String summery;
 
     @OneToOne
     private WorkExperience currentPosition;
     @OneToOne
     private Education currentEducation;
 
-//    @OneToOne(mappedBy = "user")
-//    private Profile profile;
-//
 //    @OneToMany(mappedBy = "user")
 //    private List<WorkExperience> workExperiences;
 //

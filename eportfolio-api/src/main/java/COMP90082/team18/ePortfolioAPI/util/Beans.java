@@ -1,17 +1,38 @@
 package COMP90082.team18.ePortfolioAPI.util;
 
+import COMP90082.team18.ePortfolioAPI.DTO.DTO;
+import COMP90082.team18.ePortfolioAPI.DTO.userDataDTO.*;
+import COMP90082.team18.ePortfolioAPI.entity.GenericUserData;
+import COMP90082.team18.ePortfolioAPI.entity.userDataEntity.*;
 import COMP90082.team18.ePortfolioAPI.security.CustomPermissionEvaluator;
-import org.modelmapper.ModelMapper;
+import org.modelmapper.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.List;
+
 @Component
 public class Beans {
     @Bean
     public ModelMapper modelMapper() {
-        return new ModelMapper();
+        ModelMapper modelMapper = new ModelMapper();
+
+        Converter<String, LocalDate> toStringDate = new AbstractConverter<String, LocalDate>() {
+            @Override
+            protected LocalDate convert(String source) {
+                DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                LocalDate localDate = LocalDate.parse(source, format);
+                return localDate;
+            }
+        };
+
+        modelMapper.addConverter(toStringDate);
+        return modelMapper;
     }
 
     @Bean
@@ -25,7 +46,23 @@ public class Beans {
     }
 
     @Bean
-    public HiddenHttpMethodFilter hiddenHttpMethodFilter(){
+    public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
         return new HiddenHttpMethodFilter();
+    }
+
+    @Bean
+    public List<Class<? extends GenericUserData>> entityClasses() {
+        return Arrays.asList(
+                Education.class, Feature.class, HonourAward.class, Language.class,
+                LicenseCertification.class, Project.class, Publication.class, Recommendation.class,
+                Skill.class, VolunteerExperience.class, WorkExperience.class);
+    }
+
+    @Bean
+    public List<Class<? extends DTO>> dtoClasses() {
+        return Arrays.asList(
+                EducationDTO.class, FeatureDTO.class, HonourAwardDTO.class, LanguageDTO.class,
+                LicenseCertificationDTO.class, ProjectDTO.class, PublicationDTO.class, RecommendationDTO.class,
+                SkillDTO.class, VolunteerExperienceDTO.class, WorkExperienceDTO.class);
     }
 }
