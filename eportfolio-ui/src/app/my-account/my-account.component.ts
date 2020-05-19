@@ -7,6 +7,7 @@ import {jwt} from "../../global";
 import {username} from "../../global";
 import {userID} from "../../global";
 import {refreshJwt} from "../../global";
+import {NzMessageService} from "ng-zorro-antd";
 
 @Component({
   selector: 'app-my-account',
@@ -18,6 +19,13 @@ import {refreshJwt} from "../../global";
 export class MyAccountComponent implements OnInit {
 
   updateForm: FormGroup;
+  value_map = {
+    'username': 'User Name',
+    'email': 'Email',
+    'birthday': 'Birthday',
+    'phoneNumber': 'Phone Number',
+  };
+
   profiles_value = {
     'username': '',
     'email': '',
@@ -27,7 +35,7 @@ export class MyAccountComponent implements OnInit {
   editable = new Map<string,boolean>();
   profiles = ['username', 'email', 'birthday', 'phoneNumber'];
 
-  constructor(private http: HttpClient, private router: Router,private route: ActivatedRoute, private formBuilder: FormBuilder) {
+  constructor(private pop: NzMessageService, private http: HttpClient, private router: Router,private route: ActivatedRoute, private formBuilder: FormBuilder) {
 
     this.updateForm = new FormGroup({
       'username': new FormControl(''),
@@ -81,6 +89,9 @@ export class MyAccountComponent implements OnInit {
       this.http.post<any>(globals.backend_path + "users/" + userID + "/user-information?_method=patch", this.data, HttpOptions).subscribe((result) => {
         // This code will be executed when the HTTP call returns successfully
         this.profiles_value[key] = value;
+        this.pop.success(this.value_map[key] + ' update saved.', {nzDuration: 2000});
+      },error => {
+        this.pop.error(this.value_map[key] + 'update failed.', {nzDuration: 4000});
       });
     }else{
       if(key == 'birthday' && value[4] == '-'){
@@ -90,7 +101,10 @@ export class MyAccountComponent implements OnInit {
       this.data = {[key]:value};
       this.http.post<any>(globals.backend_path + "users/" + userID + "/profile?_method=patch", this.data, HttpOptions).subscribe((result) => {
         // This code will be executed when the HTTP call returns successfully
+        this.pop.success(this.value_map[key] + ' update saved.', {nzDuration: 2000});
         this.profiles_value[key] = value;
+      },error => {
+        this.pop.error(this.value_map[key] + 'update failed.', {nzDuration: 4000});
       });
     }
   }
