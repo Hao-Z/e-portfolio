@@ -1,7 +1,11 @@
 package COMP90082.team18.ePortfolioAPI.controller;
 
 import COMP90082.team18.ePortfolioAPI.DTO.*;
+import COMP90082.team18.ePortfolioAPI.DTO.userDataDTO.EducationDTO;
+import COMP90082.team18.ePortfolioAPI.DTO.userDataDTO.WorkExperienceDTO;
 import COMP90082.team18.ePortfolioAPI.entity.*;
+import COMP90082.team18.ePortfolioAPI.entity.userDataEntity.Education;
+import COMP90082.team18.ePortfolioAPI.entity.userDataEntity.WorkExperience;
 import COMP90082.team18.ePortfolioAPI.service.GenericUserDataService;
 import COMP90082.team18.ePortfolioAPI.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Type;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,15 +36,11 @@ public class GenericUserDataController {
     @Autowired
     private GenericUserDataService genericUserDataService;
 
-    private final static List<Type> entityClasses = Arrays.asList(
-            Education.class, Feature.class, HonourAward.class, Language.class,
-            LicenseCertification.class, Project.class, Publication.class, Recommendation.class,
-            Skill.class, VolunteerExperience.class, WorkExperience.class);
+    @Autowired
+    private List<Class<? extends GenericUserData>> entityClasses;
 
-    private final static List<Type> dtoClasses = Arrays.asList(
-            EducationDTO.class, FeatureDTO.class, HonourAwardDTO.class, LanguageDTO.class,
-            LicenseCertificationDTO.class, ProjectDTO.class, PublicationDTO.class, RecommendationDTO.class,
-            SkillDTO.class, VolunteerExperienceDTO.class, WorkExperienceDTO.class);
+    @Autowired
+    private List<Class<? extends DTO>> dtoClasses;
 
     @GetMapping("/cv")
     public Map<String, Object> getCV(@PathVariable Long id) {
@@ -49,7 +48,7 @@ public class GenericUserDataController {
         result.put("introduction", userController.getIntroduction(id));
         entityClasses.stream()
                 .forEach(x -> {
-                            String className = ((Class) x).getSimpleName().toLowerCase();
+                            String className = x.getSimpleName().toLowerCase();
                             result.put(className, getAllObjects(id, className));
                         }
                 );
@@ -59,8 +58,8 @@ public class GenericUserDataController {
     @GetMapping("/all")
     public List<Object> getAllObjects(@PathVariable Long id,
                                       @RequestParam("class") String targetClass) {
-        Type entityClass = getEntityClass(targetClass);
-        Type dtoClass = getDTOClass(targetClass);
+        Class<? extends GenericUserData> entityClass = getEntityClass(targetClass);
+        Class<? extends DTO> dtoClass = getDTOClass(targetClass);
         List<GenericUserData> result = genericUserDataService.getAllObjects(id, entityClass);
         return result.stream().map(x -> toDTO(x, dtoClass)).collect(toList());
     }
@@ -69,8 +68,8 @@ public class GenericUserDataController {
     public DTO getObject(@PathVariable Long id,
                          @RequestParam("class") String targetClass,
                          @RequestParam("object-id") Long objectId) {
-        Type entityClass = getEntityClass(targetClass);
-        Type dtoClass = getDTOClass(targetClass);
+        Class<? extends GenericUserData> entityClass = getEntityClass(targetClass);
+        Class<? extends DTO> dtoClass = getDTOClass(targetClass);
         GenericUserData result = genericUserDataService.getObject(id, objectId, entityClass);
         return toDTO(result, dtoClass);
     }
@@ -79,8 +78,8 @@ public class GenericUserDataController {
     public DTO postObject(@PathVariable Long id,
                           @RequestParam("class") String targetClass,
                           @RequestBody Object object) {
-        Type entityClass = getEntityClass(targetClass);
-        Type dtoClass = getDTOClass(targetClass);
+        Class<? extends GenericUserData> entityClass = getEntityClass(targetClass);
+        Class<? extends DTO> dtoClass = getDTOClass(targetClass);
         GenericUserData result = genericUserDataService.postObject(id, modelMapper.map(object, entityClass));
         result = resetDefault(result, modelMapper.map(object, dtoClass));
         return toDTO(result, dtoClass);
@@ -91,8 +90,8 @@ public class GenericUserDataController {
                          @RequestParam("class") String targetClass,
                          @RequestParam("object-id") Long objectId,
                          @RequestBody Object object) {
-        Type entityClass = getEntityClass(targetClass);
-        Type dtoClass = getDTOClass(targetClass);
+        Class<? extends GenericUserData> entityClass = getEntityClass(targetClass);
+        Class<? extends DTO> dtoClass = getDTOClass(targetClass);
         GenericUserData result = genericUserDataService.putObject(id, objectId, modelMapper.map(object, entityClass));
         result = resetDefault(result, modelMapper.map(object, dtoClass));
         return toDTO(result, dtoClass);
@@ -102,20 +101,20 @@ public class GenericUserDataController {
     public void deleteObject(@PathVariable Long id,
                          @RequestParam("class") String targetClass,
                          @RequestParam("object-id") Long objectId) {
-        Type entityClass = getEntityClass(targetClass);
+        Class<? extends GenericUserData> entityClass = getEntityClass(targetClass);
         genericUserDataService.deleteObject(id, objectId, entityClass);
     }
 
-    private Type getEntityClass(String className) {
+    private Class<? extends GenericUserData> getEntityClass(String className) {
         return entityClasses.stream()
-                .filter(x -> ((Class) x).getSimpleName().toLowerCase().equals(className))
+                .filter(x -> x.getSimpleName().toLowerCase().equals(className.toLowerCase()))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("No matched object type."));
     }
 
-    private Type getDTOClass(String className) {
+    private Class<? extends DTO> getDTOClass(String className) {
         return dtoClasses.stream()
-                .filter(x -> ((Class) x).getSimpleName().toLowerCase().equals(className + "dto"))
+                .filter(x -> x.getSimpleName().toLowerCase().equals(className.toLowerCase() + "dto"))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("No matched object type."));
     }
@@ -135,8 +134,8 @@ public class GenericUserDataController {
         return result;
     }
 
-    private <T> T toDTO(Object entity, Type T) {
-        T result = modelMapper.map(entity, T);
+    private <T extends DTO> T toDTO(Object entity, Class<? extends DTO> T) {
+        T result = modelMapper.map(entity, (Type) T);
         if (entity instanceof WorkExperience) {
             User targetUser = userService.getUser(((WorkExperience) entity).getUser().getId());
             boolean isDefault = (entity.equals(targetUser.getCurrentPosition()));
