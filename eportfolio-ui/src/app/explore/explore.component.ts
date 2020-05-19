@@ -83,7 +83,7 @@ export class ExploreComponent implements OnInit {
         this.CheckedIndustry.push(e.key)
       }
     }
-    this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order);
+    this.getCVsData('0',this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order);
   }
 
   clear() {
