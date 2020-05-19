@@ -31,9 +31,8 @@
             [nzData]="nodes"
             [nzSearchValue]="searchValue"
             nzCheckable
-            [nzCheckedKeys]="defaultCheckedKeys"
-            (nzCheckBoxChange)="nzCheck($event)"
-            (nzExpandChange)="nzCheck($event)"
+            [nzCheckedKeys]="CheckedIndustry"
+            (nzCheckBoxChange)="nzCheckIndustry($event)"
             (nzSearchValueChange)="nzEvent($event)"
           >
           </nz-tree>
@@ -79,20 +78,20 @@
       </nz-content>
 
       <nz-content>
-        <div *ngFor="let item of tempCVs">
+        <div *ngFor="let userData of userDatas">
           <div class="card-body">
             <div *ngIf="!isCollapsed">
             <div class="row">
             <div class="col-4"><img src="assets/untitled.png" class="rounded-circle" alt="anonymous-user" style="width: 140px; height:140px;"></div>
 
                 <div class="col-16">
-                  <h2>{{userDatas.firstName +" " + userDatas.lastName}}
-                  <span>{{item.industry}}</span></h2>
-                  <h5>{{userDatas.headline}}</h5>
+                  <h2>{{userData.firstName +" " + userData.lastName}}
+                  <span>{{userData.industry}}</span></h2>
+                  <h5>{{userData.headline}}</h5>
                   <hr>
-                  <p>{{userDatas.region}}</p>
-                  <p>{{userDatas.email}}</p>
-                  <p>{{userDatas.phone}}</p>
+                  <p>{{userData.region}}</p>
+                  <p>{{userData.email}}</p>
+                  <p>{{userData.phone}}</p>
                   <div class="square"></div>
 
                 </div>
@@ -105,9 +104,9 @@
               <div class="col-4">
               <img src="assets/untitled.png" class="rounded-circle" alt="anonymous-user" style="width: 60px; height:60px;"></div>
               <div>
-                <h2>{{userDatas.firstName +" " + userDatas.lastName}}</h2>
+                <h2>{{userData.firstName +" " + userData.lastName}}</h2>
                 <hr>
-                <p style="color: #0068A7;">{{item.industry}}</p>
+                <p style="color: #0068A7;">{{userData.industry}}</p>
               </div>
               </div>
             </div>
@@ -116,7 +115,7 @@
         </div>
         <br/>
         <div align="center">
-          <nz-pagination (nzPageIndexChange)="changePage()" [nzPageIndex]="1" [nzTotal]="500" nzShowQuickJumper></nz-pagination>
+          <nz-pagination (nzPageIndexChange)="changePage($event)" [nzPageIndex]=pageNum+1 [nzTotal]=50 nzShowQuickJumper></nz-pagination>
         </div>
         <br/>
         <nz-footer>Footer</nz-footer>

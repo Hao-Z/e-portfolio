@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {NzFormatEmitEvent, NzTreeNodeOptions} from "ng-zorro-antd";
+import {refreshJwt} from "../../global";
+import * as globals from "../../global";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {stringify} from "querystring";
 
 @Component({
   selector: 'app-cvs',
@@ -11,63 +15,51 @@ export class ExploreComponent implements OnInit {
 
   searchValue = '';
   isCollapsed = window.innerWidth < Number(770);
-  userDatas = {
-    firstName: 'Chuqiao',
-    lastName: 'Chen',
-    headline: 'Student of the University of Melbourne',
-    education: 'the University of Melbourne',
-    industry: 'Information Technology',
-    region: 'Melbourne, VIC',
-    email: 'chuqiao.chen@gmail.com',
-    phone: '(+61)0400000000',
-    profileUrl: 'www.xxxxxxxx.com'
-  };
+  userDatas;
+  pageNum: number = 0;
+  pageSize: number = 10;
+  totalPage: number = 1;
+  CheckedIndustry: any = null;
+  CheckedGender: string = null;
+  order: string = null;
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
   sortValues: any;
   defalutValue: any;
   nodes: NzTreeNodeOptions[];
-  CVs: any;
-  defaultCheckedKeys: any;
- /** industryColor: any = {
-    "Information technology":"background-color : #6a8dc3",
-    "Computer Software":"background-color : #7c858a",
-    "Computer Games":"background-color : #0f4c81",
-    "Computer Hardware":"background-color : #f4b894",
-    "Computer Networking":"background-color : #a38d80",
-  };**/
 
-industryColor: any = {
-  "Information Technology":"background-color : rgba(106, 141, 195, 0.7)",
-  "Computer Software":"background-color : rgba(124, 133, 138, 0.7)",
-  "Computer Games":"background-color : rgba(15, 76, 129, 0.7)",
-  "Computer Hardware":"background-color : rgba(244, 184, 148, 0.7)",
-  "Computer Networking":"background-color : rgba(163, 141, 128, 0.7)",
-};
-test_nodes = [
-      {title: 'Information Technology', key: 'Information Technology', isLeaf: true, checked: false},
-      {title: 'Computer Software', key: 'Computer Software', isLeaf: true, checked: false},
-      {title: 'Computer Games', key: 'Computer Games', isLeaf: true, checked: false},
-      {title: 'Computer Hardware', key: 'Computer Hardware', isLeaf: true, checked: false},
-      {title: 'Computer Networking', key: 'Computer Networking', isLeaf: true, checked: false},
-    ];
+
+  test_nodes = [
+    {title: 'Information Technology', key: 'Information Technology', isLeaf: true, checked: false},
+    {title: 'Computer Software', key: 'Computer Software', isLeaf: true, checked: false},
+    {title: 'Computer Games', key: 'Computer Games', isLeaf: true, checked: false},
+    {title: 'Computer Hardware', key: 'Computer Hardware', isLeaf: true, checked: false},
+    {title: 'Computer Networking', key: 'Computer Networking', isLeaf: true, checked: false},
+  ];
   ngOnInit(): void {
+    this.userDatas = [];
+    this.userDatas.push({
+      firstName: 'Chuqiao',
+      lastName: 'Chen',
+      headline: 'Student of the University of Melbourne',
+      education: 'the University of Melbourne',
+      industry: 'Information Technology',
+      region: 'Melbourne, VIC',
+      email: 'chuqiao.chen@gmail.com',
+      phone: '(+61)0400000000',
+      profileUrl: 'www.xxxxxxxx.com'
+    }); //Delete
     if(window.innerWidth < Number(770)){
       this.width = "background-color: #F4F3F2;padding-left:0";
     }else{
       this.width = "background-color: #F4F3F2;padding-left:256px";
     }
     this.nodes = this.test_nodes;
-    this.CVs = [
-      {'industry': 'Information Technology'},
-      {'industry': 'Computer Software'},
-      {'industry': 'Computer Games'},
-      {'industry': 'Computer Hardware'},
-      {'industry': 'Computer Networking'},
-    ];
-    this.tempCVs = this.CVs;
+
     this.defalutValue = null;
     this.sortValues = ['order by xxx','order by xxx','order by xxx'];
+
+    // this.getCVsData(stringify(this.pageNum),stringify(this.pageSize),this.CheckedGender,this.order);
 
   }
 
@@ -82,37 +74,25 @@ test_nodes = [
     // return false
   // }
 
-  checked: any;
-  tempCVs : any;
-  nzCheck(event: NzFormatEmitEvent) {
+  nzCheckIndustry(event: NzFormatEmitEvent) {
     if(event.checkedKeys.length == 0){
-      this.tempCVs=this.CVs;
+      this.CheckedIndustry = null;
     }else{
-      this.checked = [];
+      this.CheckedIndustry = [];
       for(let e of event.checkedKeys){
-        this.checked.push(e.key)
-      }
-      this.tempCVs=[];
-      for(let CV of this.CVs){
-        console.log(this.tempCVs);
-        if(!(this.checked.indexOf(CV.industry)==-1)){
-          this.tempCVs.push(CV);
-        }
+        this.CheckedIndustry.push(e.key)
       }
     }
+    this.getCVsData(stringify(this.pageNum),stringify(this.pageSize),this.CheckedIndustry,this.CheckedGender,this.order);
   }
-
-  toCV(profileUrl: string) {
-    alert("to CV!")
-  }
-
 
   clear() {
     this.ngOnInit();
   }
 
-  changePage() {
-
+  changePage(event) {
+    console.log(event);
+    this.getCVsData(stringify(this.pageNum),stringify(this.pageSize),this.CheckedIndustry,this.CheckedGender,this.order);
   }
 
   changeWidth() {
@@ -121,5 +101,39 @@ test_nodes = [
     }else{
       this.width = "background-color: #F4F3F2;padding-left:256px";
     }
+  }
+
+  getCVsData(pageNum='0', pageSize='10', industry:string[]=null, gender:string=null, orders:string=null) {
+    refreshJwt();
+    const HttpOptions = {
+      headers : new HttpHeaders({'content-Type': 'application/json',
+        'Authorization': localStorage.getItem("jwt_token")}
+      )
+    };
+
+    //url parameters
+    let para = 'pageNum='+pageNum+'&pageSize='+pageSize;
+    if(industry!=null){
+      for(let i of industry){
+        i = i.replace(' ','%20');
+        para = para+'&industry%5B%5D='+i;
+      }
+    }
+    if(gender!=null){
+      para = para+'&gender='+gender
+    }
+    if(orders!=null){
+      para = para+'&orders='+orders
+    }
+
+    this.http.get<any>(globals.backend_path + "explore/filters?" + para, HttpOptions).subscribe((result) => {
+      this.userDatas = [];
+      for(let cv of result['data']){
+        this.userDatas.push(cv);
+      }
+      this.pageNum = result['PageNum'];
+      this.pageSize = result['PageNum'];
+      this.totalPage = result['TotalPage'];
+    });
   }
 }
