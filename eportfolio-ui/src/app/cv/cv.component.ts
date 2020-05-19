@@ -1,11 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Type } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ModalEducationComponent } from "../cv-form/modal-education/modal-education.component";
-import { ModalIntroductionComponent } from "../cv-form/modal-introduction/modal-introduction.component"
-import { ModalAboutComponent } from "../cv-form/modal-about/modal-about.component";
 import { IntroductionApiService } from "../core/services/introduction-api.service";
 import { userID, refreshJwt } from "../../global";
 import { Introduction } from '../core/models/introduction.model';
+import { ModalService } from '../core/services/modal.service';
+
 
 @Component({
   selector: 'app-cv',
@@ -28,64 +27,24 @@ export class CvComponent implements OnInit {
   };
 
   constructor(
-    private modalService: NgbModal,
+    private ngbModalService: NgbModal,
+    private modalService: ModalService,
     private introductionApiService: IntroductionApiService
     ) { }
 
   ngOnInit(): void {
     refreshJwt();
-    console.log("Refresh!")
     this.getIntroduction();
   }
 
-  openModal(modalName: string) {
-    this.modalService.dismissAll;
-    var modalRef: any;
-    
-    switch (modalName) {
-      case 'introduction':
-        modalRef = this.modalService.open(ModalIntroductionComponent, {backdrop: 'static', size: 'lg'});
-        break;
-      case 'education':
-        modalRef = this.modalService.open(ModalEducationComponent, {backdrop: 'static', size: 'lg'});
-        break;
-      case 'about':
-        modalRef = this.modalService.open(ModalAboutComponent, {backdrop: 'static', size: 'lg'});
-        break;
-      case 'feature':
-        console.log("feature modal!");
-        break;
-      case 'workExperience':
-        console.log("workExperience modal!");
-        break;  
-      case 'licenseCertification':
-        console.log("licenseCertification modal!");
-        break;
-      case 'volunteerExperience':
-        console.log("volunteerExperience modal!");
-        break;
-      case 'skill':
-        console.log("skill modal!");
-        break;
-      case 'project':
-        console.log("project modal!");
-        break;
-      case 'honourAward':
-        console.log("honourAward modal!");
-        break;
-      case 'publication':
-        console.log("publication modal!");
-        break;
-      case 'language':
-        console.log("language modal!");
-        break;      
-      case 'recommendation':
-        console.log("recommendation modal!");
-        break;           
-      default:
-        console.log("No such modal exists!");
-        break;
-    }
+  openModal(className: string) {
+    var modalComp: Component;
+    this.modalService.getModal(className).subscribe(res => {
+      modalComp = res;
+    })
+    this.ngbModalService.dismissAll;
+    var modalRef = this.ngbModalService.open(modalComp, {backdrop: 'static', size: 'lg'})
+    modalRef.componentInstance.title = this.modalService.getTitle(className)
     modalRef.result.then(
       () => {
         setTimeout(() => {

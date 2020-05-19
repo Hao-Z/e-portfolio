@@ -1,4 +1,4 @@
 export interface Feature {
-    link: string[]
-    media: string[]
+    link: string
+    media: string
 }

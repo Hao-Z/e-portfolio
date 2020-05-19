@@ -3,8 +3,8 @@ import { FormGroup } from '@angular/forms';
 import { Education } from '../../core/models/education.model';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { EducationApiService } from "../../core/services/education-api.service";
 import { userID } from 'src/global';
+import { ApiService } from "../../core/services/api.service";
 
 @Component({
   selector: 'app-modal-education',
@@ -13,7 +13,7 @@ import { userID } from 'src/global';
 })
 export class ModalEducationComponent implements OnInit {
 
-  title: string = `Education`;
+  title: string = `education`;
 
   form = new FormGroup({});
   options: FormlyFormOptions = {};
@@ -102,11 +102,11 @@ export class ModalEducationComponent implements OnInit {
         type: 'file',
         label: 'Media',
       }
-    },
+    }
   ];
   constructor( 
     public modal: NgbActiveModal,
-    private educationApiService: EducationApiService
+    private apiService: ApiService
   ) { }
 
   ngOnInit(): void {
@@ -126,21 +126,11 @@ export class ModalEducationComponent implements OnInit {
   onSubmit() {
     console.log("CV Edu submit form:", this.model);
 		if (this.form.valid) {
-      this.educationApiService.create(userID, this.model)
+      this.apiService.create(userID, this.model, this.title.toLowerCase().split(" ").join(""))
         .subscribe((result: Education) => {
           console.log("CV Edu create response:", JSON.stringify(result))
         })
     }
-  }
-
-  getEducation(){
-    this.educationApiService.get(userID)
-      .subscribe((result: Education) => {
-        console.log("CV Edu get response: ", JSON.stringify(result))
-        if (result) {
-          this.model =result;
-        }
-      })
   }
 
 }
