@@ -25,6 +25,7 @@ export class ExploreComponent implements OnInit {
   constructor(private http: HttpClient) { }
   sortValues: any;
   nodes: NzTreeNodeOptions[];
+  displayed_nodes: NzTreeNodeOptions[];
   gender_nodes: NzTreeNodeOptions[] = [
     {title: 'Male', key: 'Male', isLeaf: true, checked: false},
     {title: 'Female', key: 'Female', isLeaf: true, checked: false},
@@ -89,6 +90,7 @@ export class ExploreComponent implements OnInit {
       this.nodes.push({title: n, key: n, isLeaf: true, checked: false});
     }
     // >Delete
+    this.displayed_nodes = this.nodes;
   }
 
   getOrder(event){
@@ -101,8 +103,16 @@ export class ExploreComponent implements OnInit {
     }
     this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
   }
+
   nzEvent(event: NzFormatEmitEvent): void {
-    // console.log(event);
+    if(event.keys.length==0){
+      this.displayed_nodes = this.nodes;
+    } else {
+      this.displayed_nodes = [];
+      for(let n of event.keys){
+        this.displayed_nodes.push({title: n, key: n, isLeaf: true, checked: false});
+      }
+    }
   }
   // filterSearch (node: NzTreeNodeOptions): boolean {
     // console.log(node)
@@ -138,7 +148,29 @@ export class ExploreComponent implements OnInit {
   }
 
   clear() {
-    this.ngOnInit();
+    // <
+    var temp_nodes = [
+      'Information Technology',
+      'Computer Software',
+      'Computer Games',
+      'Computer Hardware',
+      'Computer Networking'
+    ];
+    this.nodes = [];
+    for(let n of temp_nodes){
+      this.nodes.push({title: n, key: n, isLeaf: true, checked: false});
+    }
+    // >Delete
+    this.CheckedIndustry = null;
+    this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
+    //TODO: Clear displayed_nodes
+    var temp = this.displayed_nodes;
+    this.displayed_nodes = [];
+    for(let dn of temp){
+      dn.checked=false;
+      this.displayed_nodes.push(dn);
+    }
+    console.log(this.displayed_nodes)
   }
 
   changePage(event) {
@@ -181,6 +213,7 @@ export class ExploreComponent implements OnInit {
       this.nodes = [];
       for(let cv of result['data']){
         this.userDatas.push(cv);
+        //TODO:Fix nodes
         if(this.nodes.indexOf(cv['industry'])==null){
           this.nodes.push({title: cv['industry'], key: cv['industry'], isLeaf: true, checked: false});
         }
