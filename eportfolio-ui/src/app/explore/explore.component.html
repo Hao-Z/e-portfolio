@@ -92,8 +92,8 @@
               </nz-select>
             </td>
             <td *ngIf="order!=null">
-              <button (click)="Ascending=!Ascending" *ngIf="!Ascending" nz-button nzType="primary"><i nz-icon nzType="SortDescendingOutlined"></i>Descending</button>
-              <button (click)="Ascending=!Ascending" *ngIf="Ascending" nz-button nzType="primary"><i nz-icon nzType="SortAscendingOutlined"></i>Ascending</button>
+              <button (click)="changeAscending()" *ngIf="!Ascending" nz-button nzType="primary"><i nz-icon nzType="sort-descending"></i></button>
+              <button (click)="changeAscending()" *ngIf="Ascending" nz-button nzType="primary"><i nz-icon nzType="sort-ascending"></i></button>
             </td>
           </table>
         </div>

@@ -62,18 +62,20 @@ export class ExploreComponent implements OnInit {
 
     this.defalutValue = null;
     this.sortValues = ['Age','Experience','Education'];
-    this.Ascending = false;
-    // this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order);
+    this.Ascending = null;
+    // this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
 
   }
 
   getOrder(event){
     if(event==null){
       this.order = event;
+      this.Ascending = null
     } else {
       this.order = event.toLowerCase();
+      this.Ascending = false
     }
-    this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order);
+    this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
   }
   nzEvent(event: NzFormatEmitEvent): void {
     // console.log(event);
@@ -96,7 +98,7 @@ export class ExploreComponent implements OnInit {
         this.CheckedIndustry.push(e.key)
       }
     }
-    this.getCVsData('0',this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order);
+    this.getCVsData('0',this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
   }
 
   nzCheckGender(event: NzFormatEmitEvent) {
@@ -108,7 +110,7 @@ export class ExploreComponent implements OnInit {
         this.CheckedGender.push(e.key)
       }
     }
-    this.getCVsData('0',this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order);
+    this.getCVsData('0',this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
   }
 
   clear() {
@@ -116,7 +118,7 @@ export class ExploreComponent implements OnInit {
   }
 
   changePage(event) {
-    this.getCVsData((event-1).toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order);
+    this.getCVsData((event-1).toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
   }
 
   changeWidth() {
@@ -127,7 +129,7 @@ export class ExploreComponent implements OnInit {
     }
   }
 
-  getCVsData(pageNum='0', pageSize='10', industry:string[]=null, gender:string=null, orders:string=null) {
+  getCVsData(pageNum='0', pageSize='10', industry:string[]=null, gender:string=null, orders:string=null, ascending:boolean=null) {
     refreshJwt();
     const HttpOptions = {
       headers : new HttpHeaders({'content-Type': 'application/json',
@@ -147,7 +149,7 @@ export class ExploreComponent implements OnInit {
       para = para+'&gender='+gender
     }
     if(orders!=null){
-      para = para+'&orders='+orders
+      para = para+'&orders='+orders+'&ascending='+ascending.toString()
     }
 
     this.http.get<any>(globals.backend_path + "explore/filters?" + para, HttpOptions).subscribe((result) => {
@@ -161,4 +163,8 @@ export class ExploreComponent implements OnInit {
     });
   }
 
+  changeAscending() {
+    this.Ascending = !this.Ascending;
+    this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
+  }
 }
