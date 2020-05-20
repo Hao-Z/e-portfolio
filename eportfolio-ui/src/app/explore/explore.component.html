@@ -1,6 +1,6 @@
 <nz-layout>
-    <app-top-bar style="position: fixed;width: 100%;z-index: 10">
-    </app-top-bar>
+  <app-top-bar style="position: fixed;width: 100%;z-index: 10">
+  </app-top-bar>
 
   <nz-layout style="padding-top: 55px">
     <nz-sider class="menu-sidebar"
@@ -11,23 +11,24 @@
               [nzTrigger]="null"
               [nzCollapsedWidth]="0"
               (nzCollapsedChange)="changeWidth()"
-              >
+    >
       <ul nz-menu nzTheme="light" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
 
-      <li *ngIf="!isCollapsed">
+        <li *ngIf="!isCollapsed">
           <nz-content style="font-size: 20px; color: #0068A7; font-family: NotoSerif;">
             Industry Fields
           </nz-content>
-      <nz-content>
-      <nz-input-group [nzSuffix]="suffixIcon">
-        <input type="text" nz-input placeholder="Filter..." [(ngModel)]="searchValue" />
-      </nz-input-group>
-      <ng-template #suffixIcon>
-        <i nz-icon nzType="search"></i>
-      </ng-template>
-      </nz-content>
+          <nz-content>
+            <nz-input-group [nzSuffix]="suffixIcon">
+              <input type="text" nz-input placeholder="Filter..." [(ngModel)]="searchValue" />
+            </nz-input-group>
+            <ng-template #suffixIcon>
+              <i nz-icon nzType="search"></i>
+            </ng-template>
+          </nz-content>
 
           <nz-tree
+
             [nzData]="nodes"
             [nzSearchValue]="searchValue"
             nzCheckable
@@ -48,16 +49,33 @@
         </li>
 
         <li *ngIf="isCollapsed">
-        <nz-content>
-          <nz-input-group [nzSuffix]="suffixIcon">
+          <nz-content>
+            <nz-input-group [nzSuffix]="suffixIcon">
 
-          </nz-input-group>
-          <ng-template #suffixIcon>
-            <i nz-icon nzType="search"></i>
-          </ng-template>
-        </nz-content>
+            </nz-input-group>
+            <ng-template #suffixIcon>
+              <i nz-icon nzType="search"></i>
+            </ng-template>
+          </nz-content>
         </li>
       </ul>
+
+      <ul nz-menu nzTheme="light" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+        <li *ngIf="!isCollapsed">
+          <nz-content style="font-size: 20px; color: #0068A7; font-family: NotoSerif;">
+            Gender
+          </nz-content>
+          <nz-tree
+            [nzData]="gender_nodes"
+            nzCheckable
+            [nzCheckedKeys]="CheckedGender"
+            (nzCheckBoxChange)="nzCheckGender($event)"
+            (nzSearchValueChange)="nzGenderEvent($event)"
+          >
+          </nz-tree>
+        </li>
+      </ul>
+
     </nz-sider>
     <nz-layout [style]=width>
       <nz-content>
@@ -65,11 +83,11 @@
           <table>
             <td>
               <label>
-                Sort by:
+                Order by:
               </label>
             </td>
             <td>
-              <nz-select [ngModel]="defalutValue" (ngModelChange)="getSearch()" nzAllowClear nzPlaceHolder="Choose" style="width: 200px">
+              <nz-select [ngModel]="defalutValue" (ngModelChange)="getSearch($event)" nzAllowClear nzPlaceHolder="Choose" style="width: 200px">
                 <nz-option *ngFor="let sortValue of sortValues" [nzValue]="sortValue" [nzLabel]="sortValue"></nz-option>
               </nz-select>
             </td>
@@ -81,12 +99,12 @@
         <div *ngFor="let userData of userDatas">
           <div class="card-body">
             <div *ngIf="!isCollapsed">
-            <div class="row">
-            <div class="col-4"><img src="assets/untitled.png" class="rounded-circle" alt="anonymous-user" style="width: 140px; height:140px;"></div>
+              <div class="row">
+                <div class="col-4"><img src="assets/untitled.png" class="rounded-circle" alt="anonymous-user" style="width: 140px; height:140px;"></div>
 
                 <div class="col-16">
                   <h2>{{userData.firstName +" " + userData.lastName}}
-                  <span>{{userData.industry}}</span></h2>
+                    <span>{{userData.industry}}</span></h2>
                   <h5>{{userData.headline}}</h5>
                   <hr>
                   <p>{{userData.region}}</p>
@@ -101,13 +119,13 @@
 
             <div *ngIf="isCollapsed">
               <div class="row">
-              <div class="col-4">
-              <img src="assets/untitled.png" class="rounded-circle" alt="anonymous-user" style="width: 60px; height:60px;"></div>
-              <div>
-                <h2>{{userData.firstName +" " + userData.lastName}}</h2>
-                <hr>
-                <p style="color: #0068A7;">{{userData.industry}}</p>
-              </div>
+                <div class="col-4">
+                  <img src="assets/untitled.png" class="rounded-circle" alt="anonymous-user" style="width: 60px; height:60px;"></div>
+                <div>
+                  <h2>{{userData.firstName +" " + userData.lastName}}</h2>
+                  <hr>
+                  <p style="color: #0068A7;">{{userData.industry}}</p>
+                </div>
               </div>
             </div>
           </div>

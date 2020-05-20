@@ -20,13 +20,17 @@ export class ExploreComponent implements OnInit {
   pageSize: number = 10;
   totalPage: number = 1;
   CheckedIndustry: any = null;
-  CheckedGender: string = null;
+  CheckedGender: any = null;
   order: string = null;
 
   constructor(private http: HttpClient) { }
   sortValues: any;
   defalutValue: any;
   nodes: NzTreeNodeOptions[];
+  gender_nodes: NzTreeNodeOptions[] = [
+    {title: 'Male', key: 'Male', isLeaf: true, checked: false},
+    {title: 'Female', key: 'Female', isLeaf: true, checked: false},
+  ];
 
 
   test_nodes = [
@@ -57,14 +61,15 @@ export class ExploreComponent implements OnInit {
     this.nodes = this.test_nodes;
 
     this.defalutValue = null;
-    this.sortValues = ['order by xxx','order by xxx','order by xxx'];
+    this.sortValues = ['age','experience','education'];
 
     // this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order);
 
   }
 
-  getSearch(){
-    alert('searched')
+  getSearch(event){
+    this.order = event;
+    this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order);
   }
   nzEvent(event: NzFormatEmitEvent): void {
     // console.log(event);
@@ -74,6 +79,10 @@ export class ExploreComponent implements OnInit {
     // return false
   // }
 
+  nzGenderEvent($event: NzFormatEmitEvent) {
+
+  }
+
   nzCheckIndustry(event: NzFormatEmitEvent) {
     if(event.checkedKeys.length == 0){
       this.CheckedIndustry = null;
@@ -81,6 +90,18 @@ export class ExploreComponent implements OnInit {
       this.CheckedIndustry = [];
       for(let e of event.checkedKeys){
         this.CheckedIndustry.push(e.key)
+      }
+    }
+    this.getCVsData('0',this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order);
+  }
+
+  nzCheckGender(event: NzFormatEmitEvent) {
+    if(event.checkedKeys.length == 0){
+      this.CheckedGender = null;
+    }else{
+      this.CheckedGender = [];
+      for(let e of event.checkedKeys){
+        this.CheckedGender.push(e.key)
       }
     }
     this.getCVsData('0',this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order);
@@ -135,4 +156,5 @@ export class ExploreComponent implements OnInit {
       this.totalPage = result['TotalPage'];
     });
   }
+
 }
