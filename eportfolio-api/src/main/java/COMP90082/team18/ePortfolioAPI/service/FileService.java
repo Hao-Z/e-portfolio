@@ -7,8 +7,8 @@ import java.io.IOException;
 
 public interface FileService {
 
-    String storeFile(Long id, MultipartFile file) throws IOException;
+    String saveFile(Long id, MultipartFile file) throws IOException;
 
-    Resource loadFileAsResource(Long id, String fileName);
+    Resource loadFile(Long id, String fileName);
 
 }

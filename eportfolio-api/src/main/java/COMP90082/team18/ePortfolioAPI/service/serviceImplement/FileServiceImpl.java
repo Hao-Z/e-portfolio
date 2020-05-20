@@ -1,3 +1,9 @@
+/*
+    Referenced & modified according to threads in Stackoverflow like:
+    https://stackoverflow.com/questions/35680932/download-a-file-from-spring-boot-rest-service
+    ...
+ */
+
 package COMP90082.team18.ePortfolioAPI.service.serviceImplement;
 
 import COMP90082.team18.ePortfolioAPI.service.FileService;
@@ -22,7 +28,7 @@ import java.util.Objects;
 @Service
 public class FileServiceImpl implements FileService {
 
-    public String storeFile(Long id, MultipartFile file) throws IOException {
+    public String saveFile(Long id, MultipartFile file) throws IOException {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
         Path dirLocation = Paths.get("./upload/" + id).toAbsolutePath().normalize();
         if(!Files.isDirectory(dirLocation)) Files.createDirectories(dirLocation);
@@ -31,7 +37,7 @@ public class FileServiceImpl implements FileService {
         return fileName;
     }
 
-    public Resource loadFileAsResource(Long id, String fileName) {
+    public Resource loadFile(Long id, String fileName) {
         try {
             Path filePath = Paths.get("./upload/" + id + "/" + fileName).toAbsolutePath().normalize();
             Resource resource = new UrlResource(filePath.toUri());
