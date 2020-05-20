@@ -19,14 +19,13 @@ import {NzMessageDataOptions, NzMessageService} from "ng-zorro-antd";
 @Injectable()
 export class SettingsComponent implements OnInit {
 
-  security = ["privacy"];
   checkbox : any;
   updatePassword: FormGroup;
   update = false;
   constructor(private pop: NzMessageService, private http: HttpClient, private router: Router,private formBuilder: FormBuilder) { }
   ngOnInit(): void {
     refreshJwt();
-    //getSecurity();
+    this.getSecurity();
     this.checkbox = {
       'privacy' : false
     };
@@ -58,7 +57,12 @@ export class SettingsComponent implements OnInit {
     this.http.post<any>(globals.backend_path + "users/" + userID + "/security?_method=patch", this.checkbox, HttpOptions).subscribe((result) => {
       // This code will be executed when the HTTP call returns successfully
     });
-    alert('Changes succeed: ' + JSON.stringify(this.checkbox));
+    // alert('Changes succeed: ' + JSON.stringify(this.checkbox));
+    if(this.checkbox['privacy']){
+      this.pop.success('Your CV is INVISIBLE from public now!', {nzDuration: 2000});
+    } else {
+      this.pop.success('Your CV is VISIBLE from public now!', {nzDuration: 2000});
+    }
   }
 
   matchPassword(comparedName: string): ValidatorFn {
@@ -90,7 +94,7 @@ export class SettingsComponent implements OnInit {
     this.http.post<any>(globals.backend_path + "users/" + userID + "/password?_method=patch", this.message, HttpOptions).subscribe((result) => {
       // do sth when HTTP post returns sucessfully
       // alert('Password changed successfully.');
-      this.pop.success('Password changed successfully.', {nzDuration: 2000});
+      this.pop.success('Password changed successfully!', {nzDuration: 2000});
       this.updatePassword = this.formBuilder.group({
         "Current password" : ['',Validators.required],
         "New password" : ['',[Validators.required, Validators.minLength(6)]],
@@ -104,7 +108,7 @@ export class SettingsComponent implements OnInit {
         "Confirm password" : ['',[Validators.required, this.matchPassword('New password')]],
       });
       // alert('Password incorrect.');
-      this.pop.error('Password incorrect.', {nzDuration: 4000});
+      this.pop.error('Password incorrect!', {nzDuration: 4000});
     });
 
   }
