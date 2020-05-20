@@ -89,7 +89,7 @@ export class MyAccountComponent implements OnInit {
       this.http.post<any>(globals.backend_path + "users/" + userID + "/user-information?_method=patch", this.data, HttpOptions).subscribe((result) => {
         // This code will be executed when the HTTP call returns successfully
         this.profiles_value[key] = value;
-        this.pop.success(this.value_map[key] + ' update saved.', {nzDuration: 2000});
+        this.pop.success(this.value_map[key] + ' updated.', {nzDuration: 2000});
       },error => {
         this.pop.error(this.value_map[key] + 'update failed.', {nzDuration: 4000});
       });
@@ -101,7 +101,7 @@ export class MyAccountComponent implements OnInit {
       this.data = {[key]:value};
       this.http.post<any>(globals.backend_path + "users/" + userID + "/profile?_method=patch", this.data, HttpOptions).subscribe((result) => {
         // This code will be executed when the HTTP call returns successfully
-        this.pop.success(this.value_map[key] + ' update saved.', {nzDuration: 2000});
+        this.pop.success(this.value_map[key] + ' updated.', {nzDuration: 2000});
         this.profiles_value[key] = value;
       },error => {
         this.pop.error(this.value_map[key] + 'update failed.', {nzDuration: 4000});
