@@ -21,7 +21,6 @@ import static COMP90082.team18.ePortfolioAPI.security.SecurityConstants.*;
 import static com.auth0.jwt.algorithms.Algorithm.RSA256;
 
 public class JWTMethod {
-
     private static RSAPublicKey publicKey;
     private static RSAPrivateKey privateKey;
 

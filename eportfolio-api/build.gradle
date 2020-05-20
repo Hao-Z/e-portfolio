@@ -29,6 +29,7 @@ dependencies {
     implementation 'org.springframework.security:spring-security-test'
     compile("com.auth0:java-jwt:3.4.0")
     compile group: 'org.modelmapper', name: 'modelmapper', version: '2.3.7'
+    compile group: 'org.reflections', name: 'reflections', version: '0.9.12'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.h2database:h2'
