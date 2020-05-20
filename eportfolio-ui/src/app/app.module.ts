@@ -37,6 +37,7 @@ import { ModalHonourAwardComponent } from './cv-form/modal-honour-award/modal-ho
 import { ModalPublicationComponent } from './cv-form/modal-publication/modal-publication.component';
 import { ModalLanguageComponent } from './cv-form/modal-language/modal-language.component';
 import { ModalRecommendationComponent } from './cv-form/modal-recommendation/modal-recommendation.component';
+import { FileDownloadExample } from './filedownloadExample/filedownload';
 
 registerLocaleData(zh);
 
@@ -73,7 +74,8 @@ export function patternValidationMessage(err, field: FormlyFieldConfig) {
     ModalHonourAwardComponent,
     ModalPublicationComponent,
     ModalLanguageComponent,
-    ModalRecommendationComponent
+    ModalRecommendationComponent,
+    FileDownloadExample
   ],
   imports: [
     BrowserModule,
@@ -104,9 +106,9 @@ export function patternValidationMessage(err, field: FormlyFieldConfig) {
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    ModalIntroductionComponent, 
+    ModalIntroductionComponent,
     ModalEducationComponent
   ]
-  
+
 })
 export class AppModule { }

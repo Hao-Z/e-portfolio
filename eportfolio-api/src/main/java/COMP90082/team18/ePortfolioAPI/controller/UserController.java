@@ -8,16 +8,16 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.lang.Nullable;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletResponse;
-import javax.websocket.server.PathParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static COMP90082.team18.ePortfolioAPI.security.SecurityConstants.JWT_HEADER_STRING;
@@ -62,13 +62,25 @@ public class UserController {
         return userService.checkUsername(user);
     }
 
-    @GetMapping(value = "/test")
-    public List<Object> test(@RequestParam Long id, @RequestParam String name,
-                           @RequestParam int page, @RequestParam int size) {
-        List<Object> res = userService.customizedFind(id, name, page, size);
-        return res;
+    @GetMapping(value = "/filter")
+    public Page<IntroductionDTO> filterUsers(@RequestParam int page, @RequestParam int size,
+                                                       @Nullable @RequestParam("industry[]") String[] industry,
+                                                       @Nullable @RequestParam String order) {
+        Page<User> p = userService.filterUsers(page, size, industry, order);
+        List<User> l = p.getContent();
+        List<IntroductionDTO> nl = new ArrayList<>();
+        for(User u : l){
+            IntroductionDTO i = modelMapper.map(u, IntroductionDTO.class);
+            nl.add(i);
+        }
+//        CustomizedPage<IntroductionDTO> result = new CustomizedPage<>();
+//        result.setCurPageNum( p.getNumber());
+//        result.setTotalPages(p.getTotalPages());
+//        result.setTotalElems(p.getTotalElements());
+//        result.setContent(nl);
+        return new PageImpl<>(nl, p.getPageable(), p.getTotalElements());
     }
-    
+
     @GetMapping(value = "/users/{id}/shared-link")
     public String getSharedLink(){
         return userService.createSharedLink();

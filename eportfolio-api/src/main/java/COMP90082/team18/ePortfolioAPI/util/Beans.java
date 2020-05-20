@@ -28,4 +28,5 @@ public class Beans {
     public HiddenHttpMethodFilter hiddenHttpMethodFilter(){
         return new HiddenHttpMethodFilter();
     }
+
 }
