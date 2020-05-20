@@ -42,7 +42,7 @@ public class User {
     private String address;
     private File profilePhoto;
     private String phoneNumber;
-    private String summery;
+    private String summary;
 
     @OneToOne
     private WorkExperience currentPosition;

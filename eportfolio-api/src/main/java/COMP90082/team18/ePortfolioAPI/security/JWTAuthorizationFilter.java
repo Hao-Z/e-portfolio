@@ -1,6 +1,8 @@
 package COMP90082.team18.ePortfolioAPI.security;
 
 import COMP90082.team18.ePortfolioAPI.entity.User;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -38,11 +40,14 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             chain.doFilter(req, res);
             return;
         }
-
-        UsernamePasswordAuthenticationToken authentication = getAuthentication(req);
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        chain.doFilter(req, res);
+        try {
+            UsernamePasswordAuthenticationToken authentication = getAuthentication(req);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            chain.doFilter(req, res);
+        } catch (JWTVerificationException e){
+            res.setStatus(HttpStatus.FORBIDDEN.value());
+            res.getWriter().println(e.getMessage());
+        }
     }
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
