@@ -11,7 +11,6 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 })
 export class ExploreComponent implements OnInit {
   width;
-
   searchValue = '';
   isCollapsed = window.innerWidth < Number(770);
   userDatas;
@@ -25,21 +24,12 @@ export class ExploreComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
   sortValues: any;
-  defalutValue: any;
   nodes: NzTreeNodeOptions[];
   gender_nodes: NzTreeNodeOptions[] = [
     {title: 'Male', key: 'Male', isLeaf: true, checked: false},
     {title: 'Female', key: 'Female', isLeaf: true, checked: false},
   ];
 
-
-  test_nodes = [
-    {title: 'Information Technology', key: 'Information Technology', isLeaf: true, checked: false},
-    {title: 'Computer Software', key: 'Computer Software', isLeaf: true, checked: false},
-    {title: 'Computer Games', key: 'Computer Games', isLeaf: true, checked: false},
-    {title: 'Computer Hardware', key: 'Computer Hardware', isLeaf: true, checked: false},
-    {title: 'Computer Networking', key: 'Computer Networking', isLeaf: true, checked: false},
-  ];
   ngOnInit(): void {
     this.userDatas = [];
     this.userDatas.push({
@@ -58,13 +48,17 @@ export class ExploreComponent implements OnInit {
     }else{
       this.width = "background-color: #F4F3F2;padding-left:256px";
     }
-    this.nodes = this.test_nodes;
 
-    this.defalutValue = null;
+    var temp_nodes = ['Information Technology','Computer Software','Computer Games','Computer Hardware','Computer Networking'];
+    this.nodes = [];
+    for(let n of temp_nodes){
+      this.nodes.push({title: n, key: n, isLeaf: true, checked: false});
+    }
+
+    this.CheckedIndustry = null;
     this.sortValues = ['Age','Experience','Education'];
     this.Ascending = null;
-    // this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
-
+    this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
   }
 
   getOrder(event){

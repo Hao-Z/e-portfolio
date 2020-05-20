@@ -13,9 +13,8 @@
               (nzCollapsedChange)="changeWidth()"
     >
       <ul nz-menu nzTheme="light" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-
         <li *ngIf="!isCollapsed">
-          <nz-content style="font-size: 20px; color: #0068A7; font-family: NotoSerif;">
+          <nz-content style="font-size: 20px; color: #0068A7; font-family: NotoSerif,sans-serif">
             Industry Fields
           </nz-content>
           <nz-content>
@@ -26,56 +25,42 @@
               <i nz-icon nzType="search"></i>
             </ng-template>
           </nz-content>
-
-          <nz-tree
-
-            [nzData]="nodes"
-            [nzSearchValue]="searchValue"
-            nzCheckable
-            [nzCheckedKeys]="CheckedIndustry"
-            (nzCheckBoxChange)="nzCheckIndustry($event)"
-            (nzSearchValueChange)="nzEvent($event)"
-          >
-          </nz-tree>
-        </li>
-
-        <li>
+          <nz-content style="overflow-y: auto;max-height: 350px">
+            <nz-tree
+              [nzData]="nodes"
+              [nzSearchValue]="searchValue"
+              nzCheckable
+              [nzCheckedKeys]="CheckedIndustry"
+              (nzCheckBoxChange)="nzCheckIndustry($event)"
+              (nzSearchValueChange)="nzEvent($event)"
+              >
+            </nz-tree>
+          </nz-content>
           <nz-col nzOffset="4">
-            <button type="button" class="btn btn-link" (click)="clear()">
+            <button nz-button nzType="primary" (click)="clear()" style="height: 25px">
               Clear
             </button>
           </nz-col>
-
-        </li>
-
-        <li *ngIf="isCollapsed">
-          <nz-content>
-            <nz-input-group [nzSuffix]="suffixIcon">
-
-            </nz-input-group>
-            <ng-template #suffixIcon>
-              <i nz-icon nzType="search"></i>
-            </ng-template>
-          </nz-content>
         </li>
       </ul>
-
+      <br/>
       <ul nz-menu nzTheme="light" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
         <li *ngIf="!isCollapsed">
-          <nz-content style="font-size: 20px; color: #0068A7; font-family: NotoSerif;">
+          <nz-content style="font-size: 20px; color: #0068A7; font-family: NotoSerif,sans-serif">
             Gender
           </nz-content>
-          <nz-tree
-            [nzData]="gender_nodes"
-            nzCheckable
-            [nzCheckedKeys]="CheckedGender"
-            (nzCheckBoxChange)="nzCheckGender($event)"
-            (nzSearchValueChange)="nzGenderEvent($event)"
-          >
-          </nz-tree>
+          <nz-content>
+            <nz-tree
+              [nzData]="gender_nodes"
+              nzCheckable
+              [nzCheckedKeys]="CheckedGender"
+              (nzCheckBoxChange)="nzCheckGender($event)"
+              (nzSearchValueChange)="nzGenderEvent($event)"
+            >
+            </nz-tree>
+          </nz-content>
         </li>
       </ul>
-
     </nz-sider>
     <nz-layout [style]=width>
       <nz-content>
@@ -87,13 +72,13 @@
               </label>
             </td>
             <td>
-              <nz-select [ngModel]="defalutValue" (ngModelChange)="getOrder($event)" nzAllowClear nzPlaceHolder="Choose" style="width: 200px">
+              <nz-select [ngModel]="order" (ngModelChange)="getOrder($event)" nzAllowClear nzPlaceHolder="Choose" style="width: 200px">
                 <nz-option *ngFor="let sortValue of sortValues" [nzValue]="sortValue" [nzLabel]="sortValue"></nz-option>
               </nz-select>
             </td>
             <td *ngIf="order!=null">
-              <button (click)="changeAscending()" *ngIf="!Ascending" nz-button nzType="primary"><i nz-icon nzType="sort-descending"></i></button>
-              <button (click)="changeAscending()" *ngIf="Ascending" nz-button nzType="primary"><i nz-icon nzType="sort-ascending"></i></button>
+              <button (click)="changeAscending()" *ngIf="!Ascending" nz-button nzType="primary"><i nz-icon nzType="sort-descending"></i>Descending</button>
+              <button (click)="changeAscending()" *ngIf="Ascending" nz-button nzType="primary"><i nz-icon nzType="sort-ascending"></i>Ascending</button>
             </td>
           </table>
         </div>
