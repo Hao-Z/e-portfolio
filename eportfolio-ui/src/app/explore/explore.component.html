@@ -87,9 +87,13 @@
               </label>
             </td>
             <td>
-              <nz-select [ngModel]="defalutValue" (ngModelChange)="getSearch($event)" nzAllowClear nzPlaceHolder="Choose" style="width: 200px">
+              <nz-select [ngModel]="defalutValue" (ngModelChange)="getOrder($event)" nzAllowClear nzPlaceHolder="Choose" style="width: 200px">
                 <nz-option *ngFor="let sortValue of sortValues" [nzValue]="sortValue" [nzLabel]="sortValue"></nz-option>
               </nz-select>
+            </td>
+            <td *ngIf="order!=null">
+              <button (click)="Ascending=!Ascending" *ngIf="!Ascending" nz-button nzType="primary"><i nz-icon nzType="SortDescendingOutlined"></i>Descending</button>
+              <button (click)="Ascending=!Ascending" *ngIf="Ascending" nz-button nzType="primary"><i nz-icon nzType="SortAscendingOutlined"></i>Ascending</button>
             </td>
           </table>
         </div>

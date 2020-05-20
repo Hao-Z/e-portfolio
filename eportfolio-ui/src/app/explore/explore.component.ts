@@ -3,7 +3,6 @@ import {NzFormatEmitEvent, NzTreeNodeOptions} from "ng-zorro-antd";
 import {refreshJwt} from "../../global";
 import * as globals from "../../global";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {stringify} from "querystring";
 
 @Component({
   selector: 'app-cvs',
@@ -22,6 +21,7 @@ export class ExploreComponent implements OnInit {
   CheckedIndustry: any = null;
   CheckedGender: any = null;
   order: string = null;
+  Ascending : boolean;
 
   constructor(private http: HttpClient) { }
   sortValues: any;
@@ -61,14 +61,18 @@ export class ExploreComponent implements OnInit {
     this.nodes = this.test_nodes;
 
     this.defalutValue = null;
-    this.sortValues = ['age','experience','education'];
-
+    this.sortValues = ['Age','Experience','Education'];
+    this.Ascending = false;
     // this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order);
 
   }
 
-  getSearch(event){
-    this.order = event;
+  getOrder(event){
+    if(event==null){
+      this.order = event;
+    } else {
+      this.order = event.toLowerCase();
+    }
     this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order);
   }
   nzEvent(event: NzFormatEmitEvent): void {
