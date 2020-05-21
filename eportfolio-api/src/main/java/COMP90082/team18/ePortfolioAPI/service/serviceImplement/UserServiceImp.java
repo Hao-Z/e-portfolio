@@ -51,7 +51,7 @@ public class UserServiceImp implements UserService {
     }
 
     public Page<User> filterUsers(Integer page, Integer size, @Nullable String[] industry, Integer gender,
-                                  @Nullable String order, @Nullable Boolean ascending) {
+                                  @Nullable String order, @Nullable boolean ascending) {
         Specification<User> spec = null;
 
         if(industry != null){
@@ -67,6 +67,8 @@ public class UserServiceImp implements UserService {
             if (spec == null) spec = s;
             else spec = spec.and(s);
         }
+
+        System.out.println(ascending);
 
         Sort.Direction direction = ascending ? Sort.Direction.ASC : Sort.Direction.DESC;
         Page<User> result = (order == null) ? userRepository.findAll(spec, PageRequest.of(page, size)) :

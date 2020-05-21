@@ -64,7 +64,7 @@ public class UserController {
                                              @Nullable @RequestParam("industry[]") String[] industry,
                                              @Nullable @RequestParam Integer gender,
                                              @Nullable @RequestParam String order,
-                                             @Nullable @RequestParam Boolean ascending) {
+                                             @Nullable @RequestParam boolean ascending) {
         Page<User> p = userService.filterUsers(pageNum, pageSize, industry, gender, order, ascending);
         List<User> l = p.getContent();
         List<IntroductionDTO> nl = new ArrayList<>();
