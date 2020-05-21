@@ -42,6 +42,7 @@ public class GenericUserDataController {
     public Map<String, Object> getCV(@PathVariable Long id) {
         Map<String, Object> result = new HashMap<>();
         result.put("introduction", userController.getIntroduction(id));
+        result.put("about", userController.getAbout(id));
         for (Class<? extends GenericUserData> x : userDataEntityClasses) {
             String className = x.getSimpleName().toLowerCase();
             result.put(className, getAllObjects(id, className));
@@ -64,7 +65,9 @@ public class GenericUserDataController {
                          @RequestParam("object-id") Long objectId) {
         Class<? extends GenericUserData> entityClass = getEntityClass(targetClass);
         Class<? extends DTO> dtoClass = getDTOClass(targetClass);
-        GenericUserData result = genericUserDataService.getObject(id, objectId, entityClass);
+        GenericUserData result = genericUserDataService.getObject(id, objectId, entityClass)
+                .orElseThrow(() -> new NullPointerException(
+                        "Cannot find " + entityClass.getSimpleName() + " with id = " + objectId));
         return toDTO(result, dtoClass);
     }
 
@@ -118,12 +121,14 @@ public class GenericUserDataController {
             User user = new User();
             user.setCurrentPosition((WorkExperience) result);
             userService.patchUser(result.getUser().getId(), user);
-            result = genericUserDataService.getObject(result.getUser().getId(), result.getId(), result.getClass());
+            result = genericUserDataService.getObject(result.getUser().getId(), result.getId(), result.getClass())
+                    .orElse(null);
         } else if (result instanceof Education && ((EducationDTO) object).isDefault()) {
             User user = new User();
             user.setCurrentEducation((Education) result);
             userService.patchUser(result.getUser().getId(), user);
-            result = genericUserDataService.getObject(result.getUser().getId(), result.getId(), result.getClass());
+            result = genericUserDataService.getObject(result.getUser().getId(), result.getId(), result.getClass())
+                    .orElse(null);
         }
         return result;
     }

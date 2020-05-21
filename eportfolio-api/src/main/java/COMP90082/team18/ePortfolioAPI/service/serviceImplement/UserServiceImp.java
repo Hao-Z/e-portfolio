@@ -30,7 +30,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 @Service
+@Transactional
 public class UserServiceImp implements UserService {
     @Autowired
     private UserRepository userRepository;
