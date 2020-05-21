@@ -29,6 +29,7 @@ export class CvComponent implements OnInit {
     refreshJwt();
     this.getIntroduction();
     this.getCv()
+    console.log(this.cvItems)
   }
 
   openModal(className: string) {

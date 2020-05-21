@@ -10,7 +10,13 @@
                         Add section
                     </button>
                     <div class="dropdown-menu" aria-labelledby="AddSectionButton">
-                        <a class="dropdown-item" href="#" (click)="openModal('introduction')">Introduction</a>
+                        <ng-container *ngFor="let item of cvItems" >
+                            <ng-container *ngIf="!(item=='introduction')">
+                                <a class="dropdown-item" href="#" (click)="openModal(item)">{{modalService.getTitle(item)}}</a>
+                            </ng-container>
+                        </ng-container>
+                        
+                        <!-- <a class="dropdown-item" href="#" (click)="openModal('introduction')">Introduction</a>
                         <a class="dropdown-item" href="#" (click)="openModal('about')">About</a>
                         <a class="dropdown-item" href="#" (click)="openModal('feature')">Feature</a>
                         <a class="dropdown-item" href="#" (click)="openModal('workexperience')">Work Experience</a>
@@ -22,7 +28,7 @@
                         <a class="dropdown-item" href="#" (click)="openModal('honouraward')">Honour Award</a>
                         <a class="dropdown-item" href="#" (click)="openModal('publication')">Publication</a>
                         <a class="dropdown-item" href="#" (click)="openModal('language')">Language</a>
-                        <a class="dropdown-item" href="#" (click)="openModal('recommendation')">Recommendation</a>
+                        <a class="dropdown-item" href="#" (click)="openModal('recommendation')">Recommendation</a> -->
                     </div>
                 </div>
                 <div class="dropdown">

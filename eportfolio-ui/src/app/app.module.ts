@@ -39,7 +39,8 @@ import { ModalLanguageComponent } from './cv-form/modal-language/modal-language.
 import { ModalRecommendationComponent } from './cv-form/modal-recommendation/modal-recommendation.component';
 import { PropertiesPipe } from "./core/properties-pipe";
 import { AboutComponent } from "./cv/cv-card/about.component"
-import {FooterComponent} from "./footer/footer.component";
+import { IntroductionComponent } from "./cv/cv-card/introduction.component"
+import { FooterComponent } from "./footer/footer.component";
 
 registerLocaleData(zh);
 
@@ -79,6 +80,7 @@ export function patternValidationMessage(err, field: FormlyFieldConfig) {
     ModalRecommendationComponent,
     PropertiesPipe,
     AboutComponent,
+    IntroductionComponent,
     FooterComponent,
   ],
   imports: [
