@@ -8,7 +8,7 @@ import { SettingsComponent } from "./settings/settings.component";
 import { LayoutComponent } from "./layout/layout.component";
 import { CvComponent } from "./cv/cv.component";
 import { CvShowComponent} from "./cv-show/cv-show.component"
-
+import {FileDownloadExample} from "./filedownloadExample/filedownload";
 
 const routes: Routes = [
   {
@@ -44,6 +44,11 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [{ path: '', component: SettingsComponent }]
   },
+  {
+    path: 'downloadexample',
+    component: FileDownloadExample
+  },
+
 ];
 
 @NgModule({

@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {NzFormatEmitEvent, NzTreeNodeOptions} from "ng-zorro-antd";
+import {refreshJwt} from "../../global";
+import * as globals from "../../global";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {isAsciiLetter} from "codelyzer/angular/styles/chars";
 
 @Component({
   selector: 'app-cvs',
@@ -8,111 +12,170 @@ import {NzFormatEmitEvent, NzTreeNodeOptions} from "ng-zorro-antd";
 })
 export class ExploreComponent implements OnInit {
   width;
-
   searchValue = '';
   isCollapsed = window.innerWidth < Number(770);
-  userDatas = {
-    firstName: 'Chuqiao',
-    lastName: 'Chen',
-    headline: 'Student of the University of Melbourne',
-    education: 'the University of Melbourne',
-    industry: 'Information Technology',
-    region: 'Melbourne, VIC',
-    email: 'chuqiao.chen@gmail.com',
-    phone: '(+61)0400000000',
-    profileUrl: 'www.xxxxxxxx.com'
-  };
+  userDatas;
+  pageNum: number = 0;
+  pageSize: number = 5;
+  totalPage: number = 1;
+  CheckedIndustry: any = null;
+  CheckedGender: any = null;
+  order: string = null;
+  Ascending : boolean;
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
   sortValues: any;
-  defalutValue: any;
   nodes: NzTreeNodeOptions[];
-  CVs: any;
-  defaultCheckedKeys: any;
- /** industryColor: any = {
-    "Information technology":"background-color : #6a8dc3",
-    "Computer Software":"background-color : #7c858a",
-    "Computer Games":"background-color : #0f4c81",
-    "Computer Hardware":"background-color : #f4b894",
-    "Computer Networking":"background-color : #a38d80",
-  };**/
+  displayed_nodes: NzTreeNodeOptions[];
+  gender_nodes: NzTreeNodeOptions[] = [
+    {title: 'Male', key: 'Male', isLeaf: true, checked: false},
+    {title: 'Female', key: 'Female', isLeaf: true, checked: false},
+  ];
 
-industryColor: any = {
-  "Information Technology":"background-color : rgba(106, 141, 195, 0.7)",
-  "Computer Software":"background-color : rgba(124, 133, 138, 0.7)",
-  "Computer Games":"background-color : rgba(15, 76, 129, 0.7)",
-  "Computer Hardware":"background-color : rgba(244, 184, 148, 0.7)",
-  "Computer Networking":"background-color : rgba(163, 141, 128, 0.7)",
-};
-test_nodes = [
-      {title: 'Information Technology', key: 'Information Technology', isLeaf: true, checked: false},
-      {title: 'Computer Software', key: 'Computer Software', isLeaf: true, checked: false},
-      {title: 'Computer Games', key: 'Computer Games', isLeaf: true, checked: false},
-      {title: 'Computer Hardware', key: 'Computer Hardware', isLeaf: true, checked: false},
-      {title: 'Computer Networking', key: 'Computer Networking', isLeaf: true, checked: false},
-    ];
   ngOnInit(): void {
     if(window.innerWidth < Number(770)){
       this.width = "background-color: #F4F3F2;padding-left:0";
     }else{
       this.width = "background-color: #F4F3F2;padding-left:256px";
     }
-    this.nodes = this.test_nodes;
-    this.CVs = [
-      {'industry': 'Information Technology'},
-      {'industry': 'Computer Software'},
-      {'industry': 'Computer Games'},
-      {'industry': 'Computer Hardware'},
-      {'industry': 'Computer Networking'},
+    this.CheckedIndustry = null;
+    this.sortValues = ['Age','Experience','Education'];
+    this.Ascending = null;
+    this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
+
+    // <
+    this.userDatas = [];
+    this.userDatas.push({
+      firstName: 'Chuqiao',
+      lastName: 'Chen',
+      headline: 'Student of the University of Melbourne',
+      education: 'the University of Melbourne',
+      industry: 'Information Technology',
+      region: 'Melbourne, VIC',
+      email: 'chuqiao.chen@gmail.com',
+      phone: '(+61)0400000000',
+      profileUrl: 'www.xxxxxxxx.com'
+    },
+      {
+        firstName: 'Chuqiao',
+        lastName: 'Chen',
+        headline: 'Student of the University of Melbourne',
+        education: 'the University of Melbourne',
+        industry: 'Information Technology',
+        region: 'Melbourne, VIC',
+        email: 'chuqiao.chen@gmail.com',
+        phone: '(+61)0400000000',
+        profileUrl: 'www.xxxxxxxx.com'
+      },
+      {
+        firstName: 'Chuqiao',
+        lastName: 'Chen',
+        headline: 'Student of the University of Melbourne',
+        education: 'the University of Melbourne',
+        industry: 'Information Technology',
+        region: 'Melbourne, VIC',
+        email: 'chuqiao.chen@gmail.com',
+        phone: '(+61)0400000000',
+        profileUrl: 'www.xxxxxxxx.com'
+      },);
+
+    var temp_nodes = [
+      'Information Technology',
+      'Computer Software',
+      'Computer Games',
+      'Computer Hardware',
+      'Computer Networking'
     ];
-    this.tempCVs = this.CVs;
-    this.defalutValue = null;
-    this.sortValues = ['order by xxx','order by xxx','order by xxx'];
-
+    this.nodes = [];
+    for(let n of temp_nodes){
+      this.nodes.push({title: n, key: n, isLeaf: true, checked: false});
+    }
+    // >Delete
+    this.displayed_nodes = this.nodes;
   }
 
-  getSearch(){
-    alert('searched')
+  getOrder(event){
+    if(event==null){
+      this.order = event;
+      this.Ascending = null
+    } else {
+      this.order = event.toLowerCase();
+      this.Ascending = false
+    }
+    this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
   }
+
   nzEvent(event: NzFormatEmitEvent): void {
-    // console.log(event);
+    if(event.keys.length==0){
+      this.displayed_nodes = this.nodes;
+    } else {
+      this.displayed_nodes = [];
+      for(let n of event.keys){
+        this.displayed_nodes.push({title: n, key: n, isLeaf: true, checked: false});
+      }
+    }
   }
   // filterSearch (node: NzTreeNodeOptions): boolean {
     // console.log(node)
     // return false
   // }
 
-  checked: any;
-  tempCVs : any;
-  nzCheck(event: NzFormatEmitEvent) {
+  nzGenderEvent($event: NzFormatEmitEvent) {
+
+  }
+
+  nzCheckIndustry(event: NzFormatEmitEvent) {
     if(event.checkedKeys.length == 0){
-      this.tempCVs=this.CVs;
+      this.CheckedIndustry = null;
     }else{
-      this.checked = [];
+      this.CheckedIndustry = [];
       for(let e of event.checkedKeys){
-        this.checked.push(e.key)
-      }
-      this.tempCVs=[];
-      for(let CV of this.CVs){
-        console.log(this.tempCVs);
-        if(!(this.checked.indexOf(CV.industry)==-1)){
-          this.tempCVs.push(CV);
-        }
+        this.CheckedIndustry.push(e.key)
       }
     }
+    this.getCVsData('0',this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
   }
 
-  toCV(profileUrl: string) {
-    alert("to CV!")
+  nzCheckGender(event: NzFormatEmitEvent) {
+    if(event.checkedKeys.length == 0){
+      this.CheckedGender = null;
+    }else{
+      this.CheckedGender = [];
+      for(let e of event.checkedKeys){
+        this.CheckedGender.push(e.key)
+      }
+    }
+    this.getCVsData('0',this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
   }
-
 
   clear() {
-    this.ngOnInit();
+    // <
+    var temp_nodes = [
+      'Information Technology',
+      'Computer Software',
+      'Computer Games',
+      'Computer Hardware',
+      'Computer Networking'
+    ];
+    this.nodes = [];
+    for(let n of temp_nodes){
+      this.nodes.push({title: n, key: n, isLeaf: true, checked: false});
+    }
+    // >Delete
+    this.CheckedIndustry = null;
+    this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
+    //TODO: Clear displayed_nodes
+    var temp = this.displayed_nodes;
+    this.displayed_nodes = [];
+    for(let dn of temp){
+      dn.checked=false;
+      this.displayed_nodes.push(dn);
+    }
+    console.log(this.displayed_nodes)
   }
 
-  changePage() {
-
+  changePage(event) {
+    this.getCVsData((event-1).toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
   }
 
   changeWidth() {
@@ -121,5 +184,49 @@ test_nodes = [
     }else{
       this.width = "background-color: #F4F3F2;padding-left:256px";
     }
+  }
+
+  getCVsData(pageNum='0', pageSize='10', industry:string[]=null, gender:string=null, orders:string=null, ascending:boolean=null) {
+    refreshJwt();
+    const HttpOptions = {
+      headers : new HttpHeaders({'content-Type': 'application/json',
+        'Authorization': localStorage.getItem("jwt_token")}
+      )
+    };
+
+    //url parameters
+    let para = 'pageNum='+pageNum+'&pageSize='+pageSize;
+    if(industry!=null){
+      for(let i of industry){
+        i = i.replace(' ','%20');
+        para = para+'&industry%5B%5D='+i;
+      }
+    }
+    if(gender!=null){
+      para = para+'&gender='+gender
+    }
+    if(orders!=null){
+      para = para+'&orders='+orders+'&ascending='+ascending.toString()
+    }
+
+    this.http.get<any>(globals.backend_path + "explore/filters?" + para, HttpOptions).subscribe((result) => {
+      this.userDatas = [];
+      this.nodes = [];
+      for(let cv of result['content']){
+        this.userDatas.push(cv);
+        //TODO:Fix nodes
+        if(this.nodes.indexOf(cv['industry'])==null){
+          this.nodes.push({title: cv['industry'], key: cv['industry'], isLeaf: true, checked: false});
+        }
+      }
+      this.pageNum = result['number'];
+      this.pageSize = result['size'];
+      this.totalPage = result['totalPages'];
+    });
+  }
+
+  changeAscending() {
+    this.Ascending = !this.Ascending;
+    this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
   }
 }

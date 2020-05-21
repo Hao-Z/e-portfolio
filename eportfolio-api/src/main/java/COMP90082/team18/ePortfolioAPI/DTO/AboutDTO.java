@@ -6,5 +6,5 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper=false)
 public class AboutDTO extends DTO {
-    private String about;
+    private String summary;
 }

@@ -1,6 +1,6 @@
 <nz-layout>
-    <app-top-bar style="position: fixed;width: 100%;z-index: 10">
-    </app-top-bar>
+  <app-top-bar style="position: fixed;width: 100%;z-index: 10">
+  </app-top-bar>
 
   <nz-layout style="padding-top: 55px">
     <nz-sider class="menu-sidebar"
@@ -11,52 +11,54 @@
               [nzTrigger]="null"
               [nzCollapsedWidth]="0"
               (nzCollapsedChange)="changeWidth()"
-              >
+    >
       <ul nz-menu nzTheme="light" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-
-      <li *ngIf="!isCollapsed">
-          <nz-content style="font-size: 20px; color: #0068A7; font-family: NotoSerif;">
+        <li *ngIf="!isCollapsed">
+          <nz-content style="font-size: 20px; color: #0068A7; font-family: NotoSerif,sans-serif">
             Industry Fields
           </nz-content>
-      <nz-content>
-      <nz-input-group [nzSuffix]="suffixIcon">
-        <input type="text" nz-input placeholder="Filter..." [(ngModel)]="searchValue" />
-      </nz-input-group>
-      <ng-template #suffixIcon>
-        <i nz-icon nzType="search"></i>
-      </ng-template>
-      </nz-content>
-
-          <nz-tree
-            [nzData]="nodes"
-            [nzSearchValue]="searchValue"
-            nzCheckable
-            [nzCheckedKeys]="defaultCheckedKeys"
-            (nzCheckBoxChange)="nzCheck($event)"
-            (nzExpandChange)="nzCheck($event)"
-            (nzSearchValueChange)="nzEvent($event)"
-          >
-          </nz-tree>
-        </li>
-
-        <li>
+          <nz-content>
+            <nz-input-group [nzSuffix]="suffixIcon">
+              <input type="text" nz-input placeholder="Filter..." [(ngModel)]="searchValue" />
+            </nz-input-group>
+            <ng-template #suffixIcon>
+              <i nz-icon nzType="search"></i>
+            </ng-template>
+          </nz-content>
+          <nz-content style="overflow-y: auto;max-height: 350px">
+            <nz-tree
+              [nzData]="displayed_nodes"
+              [nzSearchValue]="searchValue"
+              nzCheckable
+              [nzCheckedKeys]="CheckedIndustry"
+              (nzCheckBoxChange)="nzCheckIndustry($event)"
+              (nzSearchValueChange)="nzEvent($event)"
+              >
+            </nz-tree>
+          </nz-content>
           <nz-col nzOffset="4">
-            <button type="button" class="btn btn-link" (click)="clear()">
+            <button nz-button nzType="primary" (click)="clear()" style="height: 25px">
               Clear
             </button>
           </nz-col>
-
         </li>
-
-        <li *ngIf="isCollapsed">
-        <nz-content>
-          <nz-input-group [nzSuffix]="suffixIcon">
-
-          </nz-input-group>
-          <ng-template #suffixIcon>
-            <i nz-icon nzType="search"></i>
-          </ng-template>
-        </nz-content>
+      </ul>
+      <br/>
+      <ul nz-menu nzTheme="light" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+        <li *ngIf="!isCollapsed">
+          <nz-content style="font-size: 20px; color: #0068A7; font-family: NotoSerif,sans-serif">
+            Gender
+          </nz-content>
+          <nz-content>
+            <nz-tree
+              [nzData]="gender_nodes"
+              nzCheckable
+              [nzCheckedKeys]="CheckedGender"
+              (nzCheckBoxChange)="nzCheckGender($event)"
+              (nzSearchValueChange)="nzGenderEvent($event)"
+            >
+            </nz-tree>
+          </nz-content>
         </li>
       </ul>
     </nz-sider>
@@ -66,34 +68,39 @@
           <table>
             <td>
               <label>
-                Sort by:
+                Order by:
               </label>
             </td>
             <td>
-              <nz-select [ngModel]="defalutValue" (ngModelChange)="getSearch()" nzAllowClear nzPlaceHolder="Choose" style="width: 200px">
+              <nz-select [ngModel]="order" (ngModelChange)="getOrder($event)" nzAllowClear nzPlaceHolder="Choose" style="width: 200px">
                 <nz-option *ngFor="let sortValue of sortValues" [nzValue]="sortValue" [nzLabel]="sortValue"></nz-option>
               </nz-select>
+            </td>
+            <td *ngIf="order!=null">
+              <button (click)="changeAscending()" *ngIf="!Ascending" nz-button nzType="primary"><i nz-icon nzType="sort-descending"></i>Descending</button>
+              <button (click)="changeAscending()" *ngIf="Ascending" nz-button nzType="primary"><i nz-icon nzType="sort-ascending"></i>Ascending</button>
             </td>
           </table>
         </div>
       </nz-content>
 
       <nz-content>
-        <div *ngFor="let item of tempCVs">
+
+        <div *ngFor="let userData of userDatas">
         <a [routerLink]="['/cv-show']" class="nav-link" href="#">
           <div class="card-body">
             <div *ngIf="!isCollapsed">
-            <div class="row">
-            <div class="col-4"><img src="assets/untitled.png" class="rounded-circle" alt="anonymous-user" style="width: 140px; height:140px;"></div>
+              <div class="row">
+                <div class="col-4"><img src="assets/untitled.png" class="rounded-circle" alt="anonymous-user" style="width: 140px; height:140px;"></div>
 
                 <div class="col-16">
-                  <h2>{{userDatas.firstName +" " + userDatas.lastName}}
-                  <span>{{item.industry}}</span></h2>
-                  <h5>{{userDatas.headline}}</h5>
+                  <h2>{{userData.firstName +" " + userData.lastName}}
+                    <span>{{userData.industry}}</span></h2>
+                  <h5>{{userData.headline}}</h5>
                   <hr>
-                  <p>{{userDatas.region}}</p>
-                  <p>{{userDatas.email}}</p>
-                  <p>{{userDatas.phone}}</p>
+                  <p>{{userData.region}}</p>
+                  <p>{{userData.email}}</p>
+                  <p>{{userData.phone}}</p>
                   <div class="square"></div>
 
                 </div>
@@ -103,13 +110,13 @@
 
             <div *ngIf="isCollapsed">
               <div class="row">
-              <div class="col-4">
-              <img src="assets/untitled.png" class="rounded-circle" alt="anonymous-user" style="width: 60px; height:60px;"></div>
-              <div>
-                <h2>{{userDatas.firstName +" " + userDatas.lastName}}</h2>
-                <hr>
-                <p style="color: #0068A7;">{{item.industry}}</p>
-              </div>
+                <div class="col-4">
+                  <img src="assets/untitled.png" class="rounded-circle" alt="anonymous-user" style="width: 60px; height:60px;"></div>
+                <div>
+                  <h2>{{userData.firstName +" " + userData.lastName}}</h2>
+                  <hr>
+                  <p style="color: #0068A7;">{{userData.industry}}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -118,10 +125,10 @@
         </div>
         <br/>
         <div align="center">
-          <nz-pagination (nzPageIndexChange)="changePage()" [nzPageIndex]="1" [nzTotal]="500" nzShowQuickJumper></nz-pagination>
+          <nz-pagination *ngIf="totalPage!=1"  (nzPageIndexChange)="changePage($event)" [nzPageIndex]=pageNum+1 [nzTotal]=3 nzShowQuickJumper></nz-pagination>
         </div>
         <br/>
-        <nz-footer>Footer</nz-footer>
+        <app-footer></app-footer>
       </nz-content>
     </nz-layout>
   </nz-layout>

@@ -1,5 +1,5 @@
 import {Component, Injectable, OnInit} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from "@angular/forms";
 import validate = WebAssembly.validate;
 import {Subscription} from "rxjs";
@@ -8,6 +8,7 @@ import {userID} from "../../global";
 import {refreshJwt} from "../../global";
 import {jwt} from "../../global";
 import {Router} from "@angular/router";
+import {NzMessageDataOptions, NzMessageService} from "ng-zorro-antd";
 
 @Component({
   selector: 'app-settings',
@@ -18,14 +19,13 @@ import {Router} from "@angular/router";
 @Injectable()
 export class SettingsComponent implements OnInit {
 
-  security = ["privacy"];
   checkbox : any;
   updatePassword: FormGroup;
   update = false;
-  constructor(private http: HttpClient, private router: Router,private formBuilder: FormBuilder) { }
+  constructor(private pop: NzMessageService, private http: HttpClient, private router: Router,private formBuilder: FormBuilder) { }
   ngOnInit(): void {
     refreshJwt();
-    //getSecurity();
+    this.getSecurity();
     this.checkbox = {
       'privacy' : false
     };
@@ -57,7 +57,12 @@ export class SettingsComponent implements OnInit {
     this.http.post<any>(globals.backend_path + "users/" + userID + "/security?_method=patch", this.checkbox, HttpOptions).subscribe((result) => {
       // This code will be executed when the HTTP call returns successfully
     });
-    alert('Changes succeed: ' + JSON.stringify(this.checkbox));
+    // alert('Changes succeed: ' + JSON.stringify(this.checkbox));
+    if(this.checkbox['privacy']){
+      this.pop.success('Your CV is INVISIBLE from public now!', {nzDuration: 2000});
+    } else {
+      this.pop.success('Your CV is VISIBLE from public now!', {nzDuration: 2000});
+    }
   }
 
   matchPassword(comparedName: string): ValidatorFn {
@@ -86,22 +91,26 @@ export class SettingsComponent implements OnInit {
       'currentPassword':data['Current password'],
       'newPassword':data['New password']
     };
-    this.http.post<any>(globals.backend_path + "users/" + userID + "/update-password", this.message, HttpOptions).subscribe((result) => {
+    this.http.post<any>(globals.backend_path + "users/" + userID + "/password?_method=patch", this.message, HttpOptions).subscribe((result) => {
       // do sth when HTTP post returns sucessfully
+      // alert('Password changed successfully.');
+      this.pop.success('Password changed successfully!', {nzDuration: 2000});
       this.updatePassword = this.formBuilder.group({
         "Current password" : ['',Validators.required],
         "New password" : ['',[Validators.required, Validators.minLength(6)]],
         "Confirm password" : ['',[Validators.required, this.matchPassword('New password')]],
       });
       this.update = !this.update
+    },error => {
+      this.updatePassword = this.formBuilder.group({
+        "Current password" : ['',Validators.required],
+        "New password" : ['',[Validators.required, Validators.minLength(6)]],
+        "Confirm password" : ['',[Validators.required, this.matchPassword('New password')]],
+      });
+      // alert('Password incorrect.');
+      this.pop.error('Password incorrect!', {nzDuration: 4000});
     });
-    this.updatePassword = this.formBuilder.group({
-      "Current password" : ['',Validators.required],
-      "New password" : ['',[Validators.required, Validators.minLength(6)]],
-      "Confirm password" : ['',[Validators.required, this.matchPassword('New password')]],
-    });
-    this.update = !this.update; //delete
-    alert('You ve submitted' + JSON.stringify(this.message));
+
   }
 
   cancel(){
