@@ -50,7 +50,8 @@ public class UserServiceImp implements UserService {
         return userRepository.findByUsername(user.getUsername()) == null;
     }
 
-    public Page<User> filterUsers(int page, int size, @Nullable String[] industry, @Nullable String order) {
+    public Page<User> filterUsers(Integer page, Integer size, @Nullable String[] industry, Integer gender,
+                                  @Nullable String order, @Nullable Boolean ascending) {
         Specification<User> spec = null;
 
         if(industry != null){
@@ -60,8 +61,16 @@ public class UserServiceImp implements UserService {
                 else spec = spec.or(s);
             }
         }
+
+        if(gender != null) {
+            Specification<User> s = new CustomizedSpecification<>("gender", "=", gender);
+            if (spec == null) spec = s;
+            else spec = spec.and(s);
+        }
+
+        Sort.Direction direction = ascending ? Sort.Direction.ASC : Sort.Direction.DESC;
         Page<User> result = (order == null) ? userRepository.findAll(spec, PageRequest.of(page, size)) :
-                userRepository.findAll(spec, PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, order)));
+                userRepository.findAll(spec, PageRequest.of(page, size, Sort.by(direction, order)));
 
         return result;
     }

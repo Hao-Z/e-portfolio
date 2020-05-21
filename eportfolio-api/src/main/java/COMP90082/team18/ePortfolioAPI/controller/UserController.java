@@ -59,11 +59,13 @@ public class UserController {
         return userService.checkUsername(user);
     }
 
-    @GetMapping(value = "/filter")
-    public Page<IntroductionDTO> filterUsers(@RequestParam int page, @RequestParam int size,
-                                                       @Nullable @RequestParam("industry[]") String[] industry,
-                                                       @Nullable @RequestParam String order) {
-        Page<User> p = userService.filterUsers(page, size, industry, order);
+    @GetMapping(value = "/explore/filters")
+    public Page<IntroductionDTO> filterUsers(@RequestParam Integer pageNum, @RequestParam Integer pageSize,
+                                             @Nullable @RequestParam("industry[]") String[] industry,
+                                             @Nullable @RequestParam Integer gender,
+                                             @Nullable @RequestParam String order,
+                                             @Nullable @RequestParam Boolean ascending) {
+        Page<User> p = userService.filterUsers(pageNum, pageSize, industry, gender, order, ascending);
         List<User> l = p.getContent();
         List<IntroductionDTO> nl = new ArrayList<>();
         for(User u : l){

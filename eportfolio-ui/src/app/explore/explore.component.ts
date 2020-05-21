@@ -3,6 +3,7 @@ import {NzFormatEmitEvent, NzTreeNodeOptions} from "ng-zorro-antd";
 import {refreshJwt} from "../../global";
 import * as globals from "../../global";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {isAsciiLetter} from "codelyzer/angular/styles/chars";
 
 @Component({
   selector: 'app-cvs',
@@ -15,7 +16,7 @@ export class ExploreComponent implements OnInit {
   isCollapsed = window.innerWidth < Number(770);
   userDatas;
   pageNum: number = 0;
-  pageSize: number = 10;
+  pageSize: number = 5;
   totalPage: number = 1;
   CheckedIndustry: any = null;
   CheckedGender: any = null;
@@ -211,16 +212,16 @@ export class ExploreComponent implements OnInit {
     this.http.get<any>(globals.backend_path + "explore/filters?" + para, HttpOptions).subscribe((result) => {
       this.userDatas = [];
       this.nodes = [];
-      for(let cv of result['data']){
+      for(let cv of result['content']){
         this.userDatas.push(cv);
         //TODO:Fix nodes
         if(this.nodes.indexOf(cv['industry'])==null){
           this.nodes.push({title: cv['industry'], key: cv['industry'], isLeaf: true, checked: false});
         }
       }
-      this.pageNum = result['PageNum'];
-      this.pageSize = result['PageNum'];
-      this.totalPage = result['TotalPage'];
+      this.pageNum = result['number'];
+      this.pageSize = result['size'];
+      this.totalPage = result['totalPages'];
     });
   }
 
