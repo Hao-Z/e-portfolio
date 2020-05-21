@@ -7,8 +7,7 @@ import { MyAccountComponent } from "./my-account/my-account.component";
 import { SettingsComponent } from "./settings/settings.component";
 import { LayoutComponent } from "./layout/layout.component";
 import { CvComponent } from "./cv/cv.component";
-
-
+import {FileDownloadExample} from "./filedownloadExample/filedownload";
 
 const routes: Routes = [
   {
@@ -40,6 +39,11 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [{ path: '', component: SettingsComponent }]
   },
+  {
+    path: 'downloadexample',
+    component: FileDownloadExample
+  },
+
 ];
 
 @NgModule({
