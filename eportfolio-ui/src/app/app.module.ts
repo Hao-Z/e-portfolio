@@ -39,6 +39,7 @@ import { ModalLanguageComponent } from './cv-form/modal-language/modal-language.
 import { ModalRecommendationComponent } from './cv-form/modal-recommendation/modal-recommendation.component';
 import { PropertiesPipe } from "./core/properties-pipe";
 import { AboutComponent } from "./cv/cv-card/about.component"
+import {FooterComponent} from "./footer/footer.component";
 
 registerLocaleData(zh);
 
@@ -77,7 +78,8 @@ export function patternValidationMessage(err, field: FormlyFieldConfig) {
     ModalLanguageComponent,
     ModalRecommendationComponent,
     PropertiesPipe,
-    AboutComponent
+    AboutComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
@@ -108,9 +110,9 @@ export function patternValidationMessage(err, field: FormlyFieldConfig) {
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    ModalIntroductionComponent, 
+    ModalIntroductionComponent,
     ModalEducationComponent
   ]
-  
+
 })
 export class AppModule { }

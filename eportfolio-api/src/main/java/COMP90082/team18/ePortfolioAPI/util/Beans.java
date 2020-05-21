@@ -1,11 +1,10 @@
 package COMP90082.team18.ePortfolioAPI.util;
 
 import COMP90082.team18.ePortfolioAPI.DTO.DTO;
-import COMP90082.team18.ePortfolioAPI.DTO.userDataDTO.*;
 import COMP90082.team18.ePortfolioAPI.entity.GenericUserData;
-import COMP90082.team18.ePortfolioAPI.entity.userDataEntity.*;
 import COMP90082.team18.ePortfolioAPI.security.CustomPermissionEvaluator;
 import org.modelmapper.*;
+import org.reflections.Reflections;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -13,8 +12,7 @@ import org.springframework.web.filter.HiddenHttpMethodFilter;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Set;
 
 @Component
 public class Beans {
@@ -51,18 +49,26 @@ public class Beans {
     }
 
     @Bean
-    public List<Class<? extends GenericUserData>> entityClasses() {
-        return Arrays.asList(
-                Education.class, Feature.class, HonourAward.class, Language.class,
-                LicenseCertification.class, Project.class, Publication.class, Recommendation.class,
-                Skill.class, VolunteerExperience.class, WorkExperience.class);
+    public Set<Class<? extends GenericUserData>> userDataEntityClasses() {
+        Reflections reflections = new Reflections("COMP90082.team18.ePortfolioAPI");
+        return reflections.getSubTypesOf(GenericUserData.class);
+
+//        Alternate hard coding
+//        return Arrays.asList(
+//                Education.class, Feature.class, HonourAward.class, Language.class,
+//                LicenseCertification.class, Project.class, Publication.class, Recommendation.class,
+//                Skill.class, VolunteerExperience.class, WorkExperience.class);
     }
 
     @Bean
-    public List<Class<? extends DTO>> dtoClasses() {
-        return Arrays.asList(
-                EducationDTO.class, FeatureDTO.class, HonourAwardDTO.class, LanguageDTO.class,
-                LicenseCertificationDTO.class, ProjectDTO.class, PublicationDTO.class, RecommendationDTO.class,
-                SkillDTO.class, VolunteerExperienceDTO.class, WorkExperienceDTO.class);
+    public Set<Class<? extends DTO>> userDataDTOClasses() {
+        Reflections reflections = new Reflections("COMP90082.team18.ePortfolioAPI.DTO.userDataDTO");
+        return reflections.getSubTypesOf(DTO.class);
+
+//        Alternate hard coding
+//        return Arrays.asList(
+//                EducationDTO.class, FeatureDTO.class, HonourAwardDTO.class, LanguageDTO.class,
+//                LicenseCertificationDTO.class, ProjectDTO.class, PublicationDTO.class, RecommendationDTO.class,
+//                SkillDTO.class, VolunteerExperienceDTO.class, WorkExperienceDTO.class);
     }
 }

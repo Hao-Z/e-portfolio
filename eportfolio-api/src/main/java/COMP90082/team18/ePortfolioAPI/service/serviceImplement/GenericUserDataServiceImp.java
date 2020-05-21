@@ -8,9 +8,12 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
+@Transactional
 public class GenericUserDataServiceImp implements GenericUserDataService {
     @Autowired
     private ApplicationContext context;
@@ -28,9 +31,9 @@ public class GenericUserDataServiceImp implements GenericUserDataService {
     @Override
     @SuppressWarnings("unchecked")
     @PreAuthorize("hasPermission(#id, 'read')")
-    public <T extends GenericUserData> T getObject(Long id, Long objectId, Class T) {
+    public <T extends GenericUserData> Optional<T> getObject(Long id, Long objectId, Class T) {
         UserDataRepository repository = getRepository(T);
-        return (T) repository.findById(objectId).orElse(null);
+        return repository.findById(objectId);
     }
 
     @Override
@@ -49,7 +52,9 @@ public class GenericUserDataServiceImp implements GenericUserDataService {
     @PreAuthorize("hasPermission(#id, 'write')")
     public <T extends GenericUserData> T putObject(Long id, Long objectId, T object) {
         UserDataRepository repository = getRepository(object.getClass());
-        GenericUserData targetObject = getObject(id, objectId, object.getClass());
+        GenericUserData targetObject = getObject(id, objectId, object.getClass())
+                .orElseThrow(() -> new NullPointerException(
+                        "Cannot find " + object.getClass().getSimpleName() + " with id = " + objectId));
         object.setId(targetObject.getId());
         object.setUser(targetObject.getUser());
         return (T) repository.save(object);
@@ -60,7 +65,8 @@ public class GenericUserDataServiceImp implements GenericUserDataService {
     @PreAuthorize("hasPermission(#id, 'write')")
     public <T extends GenericUserData> void deleteObject(Long id, Long objectId, Class T) {
         UserDataRepository repository = getRepository(T);
-        GenericUserData targetObject = getObject(id, objectId, T);
+        GenericUserData targetObject = getObject(id, objectId, T).orElseThrow(() -> new NullPointerException(
+                "Cannot find " + T.getSimpleName() + " with id = " + objectId));
         repository.delete(targetObject);
     }
 

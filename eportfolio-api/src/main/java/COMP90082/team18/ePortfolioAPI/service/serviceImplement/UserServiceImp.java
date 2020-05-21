@@ -13,9 +13,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-@Service
-public class UserServiceImp implements UserService {
+import javax.transaction.Transactional;
 
+@Service
+@Transactional
+public class UserServiceImp implements UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
