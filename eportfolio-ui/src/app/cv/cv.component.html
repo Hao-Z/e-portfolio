@@ -31,30 +31,23 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="MoreButton">
                         <a class="dropdown-item" href="#">Share CV via Secure Link</a>
-                        <a class="dropdown-item" href="#">Save to PDF</a>
                     </div>
                 </div>
              </div>
         </div>
-        <div class="row itemsBlock">
-            <div *ngFor="let key of Object.keys(userDatas)" class="col-md-12">
-                <span class="itemitle " *ngIf="userDatas[key]">{{key}}: {{userDatas[key]}}</span>
-            </div>
+        <hr />
+
+        <div *ngFor="let property of introForm | appProperties">
+            {{property}} : {{introForm[property]}}
         </div>
+        
     </div>
 </div>
 
-<!-- <div *ngFor="let cvData of cvDatas">
-    {{ cvData }}
-    <div *ngIf="cvData.value!=[]" class="card" class="inner-content">
-        <div class="card-body">
-            <h5 class="card-title">cvData.key</h5>
-            <div class="row align-items-center">
-               <span>cvData.value</span>
-            </div>
-        </div>
-    </div>
-</div> -->
+<div *ngFor="let item of cvItems">
+    <P></P>
+    <card-about [title]=modalService.getTitle(item) [data]=cvForms[item]></card-about>
+</div>
 
 
 

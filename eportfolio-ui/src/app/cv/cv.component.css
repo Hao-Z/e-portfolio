@@ -8,3 +8,14 @@
     border-radius: 5px;
 }
 
+.add-btn:active {
+  outline: none ;
+}
+
+.a-left {
+  float:left
+}
+
+.a-right {
+  float:right
+}

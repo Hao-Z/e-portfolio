@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core'
 import { DataService } from '../../core/services/data.service';
 import { userID, refreshJwt } from "../../../global";
-import { IntroductionApiService } from "../../core/services/introduction-api.service";
+import { UniqueApiService } from "../../core/services/unique-api.service";
 import { Introduction } from "../../core/models/introduction.model";
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -176,7 +176,7 @@ export class ModalIntroductionComponent implements OnInit {
   constructor(
     public modal: NgbActiveModal,
     private dataService: DataService,
-    private introductionApiService: IntroductionApiService
+    private uniqueApiService: UniqueApiService
   ) { }
 
   ngOnInit(): void {
@@ -185,7 +185,7 @@ export class ModalIntroductionComponent implements OnInit {
   }
 
   getIntroduction() {
-    this.introductionApiService.get(userID)
+    this.uniqueApiService.get(userID, this.title.toLowerCase())
       .subscribe((result: Introduction) => {
         console.log("CV Intro get response: ", JSON.stringify(result))
         if (result) {
@@ -197,7 +197,7 @@ export class ModalIntroductionComponent implements OnInit {
   onSubmit() {
     console.log("CV Intro submit form:", this.model);
 		if (this.form.valid) {
-      this.introductionApiService.update(userID, this.model)
+      this.uniqueApiService.update(userID, this.model, this.title.toLowerCase())
         .subscribe((result: Introduction) => {
           console.log("CV Intro patch response:", JSON.stringify(result))
         })

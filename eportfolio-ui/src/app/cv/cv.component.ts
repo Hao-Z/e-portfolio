@@ -1,9 +1,10 @@
 import { Component, OnInit, Type } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { IntroductionApiService } from "../core/services/introduction-api.service";
+import { UniqueApiService } from "../core/services/unique-api.service";
 import { userID, refreshJwt } from "../../global";
 import { Introduction } from '../core/models/introduction.model';
 import { ModalService } from '../core/services/modal.service';
+import { Cv } from '../core/models/cv.model';
 
 
 @Component({
@@ -13,28 +14,21 @@ import { ModalService } from '../core/services/modal.service';
 })
 export class CvComponent implements OnInit {
 
-  Object = Object;
-  userDatas:Introduction;
-  cvDatas: any = {
-    "educations": [
-      {
-        "schoolName": "Unimelb"
-      },
-      {
-        "schoolName": "Unimelb"
-      }
-    ]
-  };
-
   constructor(
     private ngbModalService: NgbModal,
-    private modalService: ModalService,
-    private introductionApiService: IntroductionApiService
-    ) { }
+    public modalService: ModalService,
+    private uniqueApiService: UniqueApiService
+  ) { }
+  
+  introForm: Introduction;
+  cvForms: Cv;
+  cvItems: Array<string> = this.modalService.getKeys();  
+  a : string = 'introduction'
 
   ngOnInit(): void {
     refreshJwt();
     this.getIntroduction();
+    this.getCv()
   }
 
   openModal(className: string) {
@@ -54,11 +48,18 @@ export class CvComponent implements OnInit {
   }
 
   getIntroduction() {
-    this.introductionApiService.get(userID)
+    this.uniqueApiService.get(userID, "introduction")
       .subscribe((result: Introduction) => {
-        this.userDatas = result;
-        console.log("Get!")
-        console.log("CV get response:", JSON.stringify(result))
+        this.introForm = result;
+        console.log("Inntro get response:", JSON.stringify(result))
+    })
+  }
+
+  getCv() {
+    this.uniqueApiService.get(userID, "cv")
+      .subscribe((result: Cv) => {
+        this.cvForms = result;
+        console.log("Cv get response:", JSON.stringify(result))
     })
   }
   

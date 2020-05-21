@@ -59,7 +59,11 @@ export class ModalService {
     return this.lists[key]
   }
 
-  getLists(key: string) {
+  getLists() {
     return this.lists
+  }
+
+  getKeys() {
+    return Object.keys(this.lists) as Array<string>
   }
 }
