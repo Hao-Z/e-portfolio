@@ -98,6 +98,9 @@ export class ExploreComponent implements OnInit {
     if(event==null){
       this.order = event;
       this.Ascending = null
+    } else if(event=='Age'){
+      this.order = 'birthday';
+      this.Ascending = false
     } else {
       this.order = event.toLowerCase();
       this.Ascending = false
