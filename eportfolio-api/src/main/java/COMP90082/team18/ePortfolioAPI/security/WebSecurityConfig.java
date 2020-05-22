@@ -36,8 +36,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
-                .antMatchers(HttpMethod.POST, SIGN_UP_URL, SIGN_IN_URL, "/signup/checkuser").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers(HttpMethod.POST, SIGN_UP_URL, SIGN_IN_URL).permitAll().
+                and().authorizeRequests().antMatchers(HttpMethod.GET, "/download/65/*").permitAll().
+                anyRequest().authenticated()
             .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
                 .addFilter(new JWTAuthorizationFilter(authenticationManager()))

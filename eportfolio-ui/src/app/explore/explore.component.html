@@ -85,7 +85,9 @@
       </nz-content>
 
       <nz-content>
+
         <div *ngFor="let userData of userDatas">
+        <a [routerLink]="['/cv-show']" class="nav-link" href="#">
           <div class="card-body">
             <div *ngIf="!isCollapsed">
               <div class="row">
@@ -118,11 +120,12 @@
               </div>
             </div>
           </div>
+          </a>
           <br/>
         </div>
         <br/>
         <div align="center">
-          <nz-pagination *ngIf="pageNum!=0"  (nzPageIndexChange)="changePage($event)" [nzPageIndex]=pageNum+1 [nzTotal]=totalPage nzShowQuickJumper></nz-pagination>
+          <nz-pagination *ngIf="totalPage!=1"  (nzPageIndexChange)="changePage($event)" [nzPageIndex]=pageNum+1 [nzTotal]=3 nzShowQuickJumper></nz-pagination>
         </div>
         <br/>
         <app-footer></app-footer>

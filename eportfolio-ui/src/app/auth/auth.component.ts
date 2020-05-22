@@ -5,6 +5,7 @@ import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {Observable, Subscription} from "rxjs";
 import * as globals from '../../global';
 import {refreshJwt} from "../../global";
+import {NzModalService} from "ng-zorro-antd";
 
 @Component({
   templateUrl: './auth.component.html',
@@ -17,7 +18,8 @@ export class AuthComponent implements OnInit {
   mainForm: FormGroup;
   title: String = '';
 
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient) {
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient,
+              private modal: NzModalService) {
   }
 
   ngOnInit() {
@@ -70,32 +72,65 @@ export class AuthComponent implements OnInit {
       observe: 'response',
     }).subscribe(
         (resp) => {
-            localStorage.setItem('jwt_token', resp.headers.get("Authorization"));
-            alert("Login successful, this is your jwt \n" + resp.headers.get("Authorization"));
+          localStorage.setItem('jwt_token', resp.headers.get("Authorization"));
+          let ref = this.modal.success({
+              nzTitle: 'Login successful',
+              nzContent: 'The page will be automatically refreshed after 2s.',
+              nzOnOk: () => {
+                this.router.navigateByUrl("/cv")
+                refreshJwt()
+              }
+          })
+          setTimeout(() => {
+            ref.destroy()
             this.router.navigateByUrl("/cv")
             refreshJwt()
+          }, 2000);
         },
         () =>{
-          this.mainForm.reset()
-          alert("Login failed")
+
+          this.modal.error({
+            nzTitle: 'Login failed',
+            nzContent: 'Wrong username or password!',
+            nzOnOk: () => {
+              this.mainForm.reset()
+            }
+          })
         })
   }
 
   onSubmit(data) {
     if(this.reqType == 'login'){
       this.login(data.username, data.password)
-    }
-    else{
+    } else {
       this.http.post<any>(globals.backend_path + "signup", data, {
         observe: 'response',
       }).subscribe(resp => {
         localStorage.setItem('jwt_token', resp.headers.get("Authorization"));
-        alert("register successful, this is ur jwt" + resp.headers.get("Authorization"))
-        this.router.navigateByUrl("/cv")
-        refreshJwt()
+        let ref = this.modal.success({
+          nzTitle: 'Register successful',
+          nzContent: 'The page will be automatically refreshed after 2s.',
+          nzOnOk: () => {
+            this.router.navigateByUrl("/cv")
+            refreshJwt()
+          }
+        });
+        setTimeout(() => {
+          ref.destroy()
+          this.router.navigateByUrl("/cv")
+          refreshJwt()
+          }, 2000
+        )},
+        () =>{
+        this.modal.error({
+          nzTitle: 'Register failed',
+          nzContent: 'Duplicated username!',
+          nzOnOk: () => {
+            this.mainForm.reset()
+          }
+        })
       });
     }
-
     alert('You ve submitted' + JSON.stringify(data));
   }
 }

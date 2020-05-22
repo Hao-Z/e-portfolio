@@ -41,6 +41,9 @@ import { PropertiesPipe } from "./core/properties-pipe";
 import { AboutComponent } from "./cv/cv-card/about.component"
 import { WorkExperienceComponent } from "./cv/cv-card/work-experience.component"
 import { FooterComponent } from "./footer/footer.component";
+import { CvShowComponent } from './cv-show/cv-show.component';
+import { FileDownloadExample } from './filedownloadExample/filedownload';
+
 
 registerLocaleData(zh);
 
@@ -63,6 +66,7 @@ export function patternValidationMessage(err, field: FormlyFieldConfig) {
     MyAccountComponent,
     SettingsComponent,
     CvComponent,
+    CvShowComponent,
     LayoutComponent,
     FormlyDatepickerFieldType,
     ModalIntroductionComponent,
@@ -82,6 +86,8 @@ export function patternValidationMessage(err, field: FormlyFieldConfig) {
     AboutComponent,
     WorkExperienceComponent,
     FooterComponent,
+    FileDownloadExample,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
