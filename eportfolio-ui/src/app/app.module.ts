@@ -37,7 +37,7 @@ import { ModalHonourAwardComponent } from './cv-form/modal-honour-award/modal-ho
 import { ModalPublicationComponent } from './cv-form/modal-publication/modal-publication.component';
 import { ModalLanguageComponent } from './cv-form/modal-language/modal-language.component';
 import { ModalRecommendationComponent } from './cv-form/modal-recommendation/modal-recommendation.component';
-import { FileDownloadExample } from './filedownloadExample/filedownload';
+// import { FileDownloadExample } from './filedownloadExample/filedownload';
 import {FooterComponent} from "./footer/footer.component";
 
 registerLocaleData(zh);
