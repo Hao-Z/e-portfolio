@@ -13,6 +13,8 @@ export class FileDownloadExample implements OnInit {
       uid: '123213213',
       name: 'test.pdf',
       status: 'done',
+      size: 1234,
+      type: 'pdf',
       url: ''
     }
   ];
