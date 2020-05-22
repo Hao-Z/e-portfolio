@@ -87,6 +87,7 @@ export class ModalLicenseCertificationComponent implements OnInit {
 
   ngOnInit(): void {
     this.model = {
+      id: null,
       name: null,
       issuingOrganization: null,
       issueDate: null,

@@ -3,8 +3,8 @@ import { FormGroup } from '@angular/forms';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 import { About } from 'src/app/core/models/about.model';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { AboutApiService } from 'src/app/core/services/about-api.service';
 import { userID } from 'src/global';
+import { UniqueApiService } from 'src/app/core/services/unique-api.service';
 
 @Component({
   selector: 'app-modal-about',
@@ -14,10 +14,12 @@ import { userID } from 'src/global';
 export class ModalAboutComponent implements OnInit {
 
   title: string = `About`;
+  classname: string = `about`
+  isNew: boolean = true;
   
+  model: About;
   form = new FormGroup({});
   options: FormlyFormOptions = {};
-  model: About;
   fields: FormlyFieldConfig[] = [
     {
       key: 'summary',
@@ -33,21 +35,22 @@ export class ModalAboutComponent implements OnInit {
     }
   ]
 
-
   constructor(
     public modal: NgbActiveModal,
-    private aboutApiService: AboutApiService
+    private apiService: UniqueApiService
   ) { }
 
   ngOnInit(): void {
-    this.model = {
-      summary: null
+    if (this.isNew) {
+      this.model = {
+        summary: null
+      }
     }
   }
 
   onSubmit() {
     if (this.form.valid) {
-      this.aboutApiService.create(userID, this.model)
+      this.apiService.create(userID, this.model, this.classname)
         .subscribe((result: About) => {
           console.log("CV About create response:", JSON.stringify(result))
         })

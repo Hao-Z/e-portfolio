@@ -78,6 +78,7 @@ export class ModalPublicationComponent implements OnInit {
 
   ngOnInit(): void {
     this.model = {
+      id: null,
       title: null,
       publicationPublisher: null,
       publicationDate: null,

@@ -15,11 +15,12 @@ import { DataService } from '../../core/services/data.service';
 export class ModalWorkExperienceComponent implements OnInit {
 
   title: string = `Work Experience`;
-  className: string = `workexperience`
+  classname: string = `workexperience`;
+  isNew: boolean = true;
 
-  form = new FormGroup({});
-  options: FormlyFormOptions = {};
   model: WorkExperience;
+  form = new FormGroup({});
+  options: FormlyFormOptions = {}; 
   fields: FormlyFieldConfig[] = [
     {
       key: 'title',
@@ -119,26 +120,29 @@ export class ModalWorkExperienceComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.model = {
-      title: null,
-      employmentType: null,
-      companyName: null,
-      location: null,
-      industry: null,
-      isCurrentWork: null,
-      startDate: null,
-      endDate: null,
-      description: null,
-      media: null,
+    if (this.isNew) {
+      this.model = {
+        id: null,
+        title: null,
+        employmentType: null,
+        companyName: null,
+        location: null,
+        industry: null,
+        isCurrentWork: null,
+        startDate: null,
+        endDate: null,
+        description: null,
+        media: null,
+      }
     }
   }
 
   onSubmit() {
     console.log("CV WE submit form:", this.model);
 		if (this.form.valid) {
-      this.apiService.create(userID, this.model, this.className)
+      this.apiService.create(userID, this.model, this.classname)
         .subscribe((result: WorkExperience) => {
-          console.log("CV WE create response:", JSON.stringify(result))
+          alert("Form submitted successfully!");
         })
     }
   }

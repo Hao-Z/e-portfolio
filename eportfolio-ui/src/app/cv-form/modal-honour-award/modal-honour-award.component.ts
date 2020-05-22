@@ -69,6 +69,7 @@ export class ModalHonourAwardComponent implements OnInit {
 
   ngOnInit(): void {
     this.model = {
+      id: null,
       title: null,
       associatedWith: null,
       issuer: null,

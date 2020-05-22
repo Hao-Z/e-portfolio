@@ -63,6 +63,7 @@ export class ModalRecommendationComponent implements OnInit {
 
   ngOnInit(): void {
     this.model = {
+      id: null,
       referrerName: null,
       referrerTitle: null,
       description: null,

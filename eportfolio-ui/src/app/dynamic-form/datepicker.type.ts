@@ -14,7 +14,6 @@ import { NgbDateFRParserFormatter, CustomAdapter } from './ngb-date-custom';
         ngbDatepicker #d="ngbDatepicker">
         <div class="input-group-append">
             <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
-            <i class="fa fa-calendar"></i>
         </div>
     </div>
  `,

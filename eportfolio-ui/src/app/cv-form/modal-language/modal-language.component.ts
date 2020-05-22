@@ -43,6 +43,7 @@ export class ModalLanguageComponent implements OnInit {
 
   ngOnInit(): void {
     this.model = {
+      id: null,
       language: null,
       proficiency: null,
     }

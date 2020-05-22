@@ -1,5 +1,5 @@
 import { Component, OnInit, Type } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { UniqueApiService } from "../core/services/unique-api.service";
 import { userID, refreshJwt } from "../../global";
 import { Introduction } from '../core/models/introduction.model';
@@ -23,7 +23,6 @@ export class CvComponent implements OnInit {
   introForm: Introduction;
   cvForms: Cv;
   cvItems: Array<string> = this.modalService.getKeys();  
-  a : string = 'introduction'
 
   ngOnInit(): void {
     refreshJwt();
@@ -31,6 +30,8 @@ export class CvComponent implements OnInit {
     this.getCv()
     console.log(this.cvItems)
   }
+
+  closeResult = '';
 
   openModal(className: string) {
     var modalComp: Component;
@@ -40,13 +41,27 @@ export class CvComponent implements OnInit {
     this.ngbModalService.dismissAll;
     var modalRef = this.ngbModalService.open(modalComp, {backdrop: 'static', size: 'lg'})
     modalRef.componentInstance.title = this.modalService.getTitle(className)
-    modalRef.result.then(
-      () => {
-        setTimeout(() => {
-          this.ngOnInit();
-        }, 100);
-      });
+    modalRef.result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    }),
+    () => {
+      setTimeout(() => {
+        this.ngOnInit();
+      }, 100);
+    };
   }
+  
+    private getDismissReason(reason: any): string {
+      if (reason === ModalDismissReasons.ESC) {
+        return 'by pressing ESC';
+      } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+        return 'by clicking on a backdrop';
+      } else {
+        return `with: ${reason}`;
+      }
+    }
 
   getIntroduction() {
     this.uniqueApiService.get(userID, "introduction")
@@ -62,6 +77,10 @@ export class CvComponent implements OnInit {
         this.cvForms = result;
         console.log("Cv get response:", JSON.stringify(result))
     })
+  }
+
+  editForm(className: string) {
+    this.openModal(className)
   }
   
 }

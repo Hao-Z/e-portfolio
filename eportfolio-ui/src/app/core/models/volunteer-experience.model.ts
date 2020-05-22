@@ -1,4 +1,5 @@
 export interface VolunteerExperience {
+    id: string;
     organizationName: string;
     role: string;
     cause: string;

@@ -9,7 +9,7 @@ export class CustomOptionsService {
   constructor() { }
   
   public getHttpOptions(params: HttpParams): {} {
-    const httpOptions = {
+    return {
       headers: new HttpHeaders({ 
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('jwt_token'),
@@ -17,6 +17,5 @@ export class CustomOptionsService {
       params: params,
       observe: 'response' 
     }
-    return httpOptions
   }
 }

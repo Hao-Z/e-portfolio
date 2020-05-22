@@ -1,4 +1,4 @@
-import { Injectable} from '@angular/core';
+import { Injectable, Component} from '@angular/core';
 import { ModalIntroductionComponent } from 'src/app/cv-form/modal-introduction/modal-introduction.component';
 import { of } from 'rxjs';
 import { ModalEducationComponent } from 'src/app/cv-form/modal-education/modal-education.component';
@@ -13,11 +13,16 @@ import { ModalHonourAwardComponent } from 'src/app/cv-form/modal-honour-award/mo
 import { ModalPublicationComponent } from 'src/app/cv-form/modal-publication/modal-publication.component';
 import { ModalLanguageComponent } from 'src/app/cv-form/modal-language/modal-language.component';
 import { ModalRecommendationComponent } from 'src/app/cv-form/modal-recommendation/modal-recommendation.component';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ModalService {
+
+  constructor(
+    private ngbModalService: NgbModal,) {
+  }
 
   lists: Record<string, string> = {
     "introduction": "Introduction",
@@ -66,4 +71,37 @@ export class ModalService {
   getKeys() {
     return Object.keys(this.lists) as Array<string>
   }
+
+  closeResult = '';
+
+  openModal<T>(classname: string, item: T | null, isNew: boolean) {
+    var modalComp: Component;
+    this.getModal(classname).subscribe(res => {
+      modalComp = res;
+    })
+    this.ngbModalService.dismissAll;
+    var modalRef = this.ngbModalService.open(modalComp, {backdrop: 'static', size: 'lg'})
+    modalRef.componentInstance.classname = classname
+    modalRef.componentInstance.title = this.getTitle(classname)
+    modalRef.componentInstance.isNew = isNew
+    if (!isNew) {
+        modalRef.componentInstance.model = item as T
+    }
+    modalRef.result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+  
 }

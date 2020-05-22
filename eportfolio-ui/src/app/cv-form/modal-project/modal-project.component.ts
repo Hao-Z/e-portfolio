@@ -86,6 +86,7 @@ export class ModalProjectComponent implements OnInit {
 
   ngOnInit(): void {
     this.model = {
+      id: null,
       projectName: null,
       startDate: null,
       endDate: null,

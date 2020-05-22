@@ -43,6 +43,7 @@ export class ModalFeatureComponent implements OnInit {
 
   ngOnInit(): void {
     this.model = {
+      id: null,
       link: null,
       media: null
     }

@@ -94,6 +94,7 @@ export class ModalVolunteerExperienceComponent implements OnInit {
 
   ngOnInit(): void {
     this.model = {
+      id: null,
       organizationName: null,
       role: null,
       cause: null,

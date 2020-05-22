@@ -49,7 +49,7 @@ export class ApiService {
   public delete<T>(id: number, className: string, object_id: string): Observable<T>{
     const url = `${this.apiUrl}${id}`;
     const httpOptions = this.options.getHttpOptions(DELETE.set('class', className).set('object-id', object_id));
-    return this.http.post(url, httpOptions)
+    return this.http.post(url, null, httpOptions)
       .pipe(
         map((res:any) => {
           return res.body as T

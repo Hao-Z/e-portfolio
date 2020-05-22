@@ -111,6 +111,7 @@ export class ModalEducationComponent implements OnInit {
 
   ngOnInit(): void {
     this.model = {
+      id: null,
       schoolName: null,
       degree: null,
       fieldOfStudy: null,

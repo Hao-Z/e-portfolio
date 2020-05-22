@@ -35,6 +35,7 @@ export class ModalSkillComponent implements OnInit {
 
   ngOnInit(): void {
     this.model = {
+      id: null,
       skillName: null,
     }
   }

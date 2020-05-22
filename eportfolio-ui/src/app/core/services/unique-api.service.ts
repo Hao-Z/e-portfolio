@@ -45,4 +45,16 @@ export class UniqueApiService {
       )
   }
 
+  public create<T>(id: number, body: T, subUrl: string): Observable<T>{
+    const url = `${this.apiUrl}${id}/${subUrl}`;
+    return this.http.post(url, body, this.options.getHttpOptions(PATCH))
+      .pipe(
+        map((res:any) => {
+          return res.body as T
+        }),
+        retry(1),
+        catchError(this.httpErrorHandler.errorHandler)
+      )
+  }
+
 }
