@@ -1,60 +1,123 @@
-<div class="card" class="inner-content">
-    <div class="card-body" style="background-color: white">
-        <div class="row align-items-center">
-            <div class="col-md-6">
-                <img src="assets/untitled.png" class="center-block rounded-circle" alt="anonymous-user"  width="80px" height="80px">
+<div *ngFor="let item of cvItems">
+    <ng-template [ngIf]="item=='introduction'" [ngIfElse]="about">
+        <div class="card-body" style="background-color: white">
+            <button class="btn add-btn a-right" (click)="editForm('introduction')" type="button" style="margin-left:15px;"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+            <div class="dropdown a-right">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="MoreButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:30px;">
+                    More...
+                </button>
+                <div class="dropdown-menu" aria-labelledby="MoreButton">
+                    <a class="dropdown-item" href="#">Share CV via Secure Link</a>
+                </div>
             </div>
-            <div class="col-md-6 form-inline">
-                <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" id="AddSectionButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Add section
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="AddSectionButton">
-                        <a class="dropdown-item" href="#" (click)="openModal('introduction')">Introduction</a>
-                        <a class="dropdown-item" href="#" (click)="openModal('about')">About</a>
-                        <a class="dropdown-item" href="#" (click)="openModal('feature')">Feature</a>
-                        <a class="dropdown-item" href="#" (click)="openModal('workExperience')">Work Experience</a>
-                        <a class="dropdown-item" href="#" (click)="openModal('education')">Education</a>
-                        <a class="dropdown-item" href="#" (click)="openModal('licenseCertification')">License Certification</a>
-                        <a class="dropdown-item" href="#" (click)="openModal('volunteerExperience')">Volunteer Experience</a>
-                        <a class="dropdown-item" href="#" (click)="openModal('skill')">Skill	</a>
-                        <a class="dropdown-item" href="#" (click)="openModal('project')">Project</a>
-                        <a class="dropdown-item" href="#" (click)="openModal('honourAward')">Honour Award</a>
-                        <a class="dropdown-item" href="#" (click)="openModal('publication')">Publication</a>
-                        <a class="dropdown-item" href="#" (click)="openModal('language')">Language</a>
-                        <a class="dropdown-item" href="#" (click)="openModal('recommendation')">Recommendation</a>
-                    </div>
+            <div class="dropdown a-right">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="AddSectionButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Add section
+                </button>
+                <div class="dropdown-menu" aria-labelledby="AddSectionButton">
+                    <ng-container *ngFor="let item of cvItems" >
+                        <ng-container *ngIf="!(item=='introduction') && !(cvForms[item].summary)">
+                            <a class="dropdown-item" href="#" (click)="openModal(item)">{{modalService.getTitle(item)}}</a>
+                        </ng-container>
+                    </ng-container>  
                 </div>
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="MoreButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:30px;">
-                        More...
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="MoreButton">
-                        <a class="dropdown-item" href="#">Share CV via Secure Link</a>
-                        <a class="dropdown-item" href="#">Save to PDF</a>
-                    </div>
-                </div>
-             </div>
-        </div>
-        <div class="row itemsBlock">
-            <div *ngFor="let key of Object.keys(userDatas)" class="col-md-12">
-                <span class="itemitle " *ngIf="userDatas[key]">{{key}}: {{userDatas[key]}}</span>
+            </div>
+            <img src="assets/untitled.png" class="center-block rounded-circle" alt="anonymous-user"  width="80px" height="80px">
+            <hr />
+            <div *ngFor="let property of cvForms[item] | appProperties">
+                {{cvForms[item][property]}}
             </div>
         </div>
-    </div>
-</div>
+        <P></P>
+    </ng-template>
 
-<!-- <div *ngFor="let cvData of cvDatas">
-    {{ cvData }}
-    <div *ngIf="cvData.value!=[]" class="card" class="inner-content">
-        <div class="card-body">
-            <h5 class="card-title">cvData.key</h5>
-            <div class="row align-items-center">
-               <span>cvData.value</span>
-            </div>
-        </div>
-    </div>
-</div> -->
+    <ng-template #about>
+        <ng-template [ngIf]="item=='about'" [ngIfElse]="feature">
+            <ng-container *ngIf="cvForms[item].summary">
+                <card-about [title]=modalService.getTitle(item) [data]=cvForms[item] [classname]=item></card-about>
+            </ng-container>
+        </ng-template>
+    </ng-template>
+    <ng-template #feature>
+        <ng-template [ngIf]="item=='feature'" [ngIfElse]="workexperience">
+            <ng-container *ngIf="cvForms[item].length">
+                <card-about [title]=modalService.getTitle(item) [data]=cvForms[item]></card-about>
+            </ng-container>
+        </ng-template>
+    </ng-template>
+    <ng-template #workexperience>
+        <ng-template [ngIf]="item=='workexperience'" [ngIfElse]="education">
+            <ng-container *ngIf="cvForms[item].length">
+                <card-we [title]=modalService.getTitle(item) [data]=cvForms[item]  [classname]=item></card-we>
+            </ng-container>
+        </ng-template>
+    </ng-template>
+    <ng-template #education>
+        <ng-template [ngIf]="item=='education'" [ngIfElse]="licensecertification">
+            <ng-container *ngIf="cvForms[item].length">
+                <card-about [title]=modalService.getTitle(item) [data]=cvForms[item]></card-about>
+            </ng-container>
+        </ng-template>
+    </ng-template>
+    <ng-template #licensecertification>
+        <ng-template [ngIf]="item=='licensecertification'" [ngIfElse]="volunteerexperience">
+            <ng-container *ngIf="cvForms[item].length">
+                <card-about [title]=modalService.getTitle(item) [data]=cvForms[item]></card-about>
+            </ng-container>
+        </ng-template>
+    </ng-template>
+    <ng-template #volunteerexperience>
+        <ng-template [ngIf]="item=='volunteerexperience'" [ngIfElse]="skill">
+            <ng-container *ngIf="cvForms[item].length">
+                <card-about [title]=modalService.getTitle(item) [data]=cvForms[item]></card-about>
+            </ng-container>
+        </ng-template>
+    </ng-template>
+    <ng-template #skill>
+        <ng-template [ngIf]="item=='skill'" [ngIfElse]="project">
+            <ng-container *ngIf="cvForms[item].length">
+                <card-about [title]=modalService.getTitle(item) [data]=cvForms[item]></card-about>
+            </ng-container>
+        </ng-template>
+    </ng-template>
+    <ng-template #project>
+        <ng-template [ngIf]="item=='project'" [ngIfElse]="honouraward">
+            <ng-container *ngIf="cvForms[item].length">
+                <card-about [title]=modalService.getTitle(item) [data]=cvForms[item]></card-about>
+            </ng-container>
+        </ng-template>
+    </ng-template>
+    <ng-template #honouraward>
+        <ng-template [ngIf]="item=='honouraward'" [ngIfElse]="publication">
+            <ng-container *ngIf="cvForms[item].length">
+                <card-about [title]=modalService.getTitle(item) [data]=cvForms[item]></card-about>
+            </ng-container>
+        </ng-template>
+    </ng-template>
+    <ng-template #publication>
+        <ng-template [ngIf]="item=='publication'" [ngIfElse]="language">
+            <ng-container *ngIf="cvForms[item].length">
+                <card-about [title]=modalService.getTitle(item) [data]=cvForms[item]></card-about>
+            </ng-container>
+        </ng-template>
+    </ng-template>
+    <ng-template #language>
+        <ng-template [ngIf]="item=='language'" [ngIfElse]="recommendation">
+            <ng-container *ngIf="cvForms[item].length">
+                <card-about [title]=modalService.getTitle(item) [data]=cvForms[item]></card-about>
+            </ng-container>
+        </ng-template>
+    </ng-template>
+    <ng-template #recommendation>
+        <ng-template [ngIf]="item=='recommendation'">
+            <ng-container *ngIf="cvForms[item].length">
+                <card-about [title]=modalService.getTitle(item) [data]=cvForms[item]></card-about>
+            </ng-container>
+        </ng-template>
+    </ng-template>
+    
+    <P></P>
+</div>
 
 
 

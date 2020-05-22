@@ -1,0 +1,31 @@
+<div class="card-body" style="background-color: white">
+    <button class="btn add-btn a-right" (click)="addForm()" type="button">
+        <i class="fa fa-plus" aria-hidden="true"></i></button>
+    <h4 class="card-title">{{title}}</h4>
+    <hr />
+    <div *ngFor="let item of data">
+        <div class="row">
+            <div class="col-10">
+                <h5 style="display: inline-block;">{{item.title}}&nbsp;&nbsp;</h5>
+                <h6 style="display: inline-block;">{{item.startDate + "--" + item.endDate}}&nbsp;&nbsp;</h6>
+                <br>
+                <h6 *ngIf="item.industry" style="display: inline-block;">{{item.industry}}&nbsp;&nbsp;</h6>
+                <h6 *ngIf="item.employmentType" style="display: inline-block;">{{item.employmentType}}</h6>
+                <br>
+                <h6 *ngIf="item.companyName" style="display: inline-block;">{{item.companyName}}&nbsp;&nbsp;</h6>
+                <h6 *ngIf="item.location" style="display: inline-block;">{{item.location}}&nbsp;&nbsp;</h6>
+                <h6 *ngIf="item.isCurrentWork" style="display: inline-block;">{{"Current work"}}&nbsp;&nbsp;</h6>
+                <br>
+                <h6 *ngIf="item.description" style="display: inline-block;">{{item.description}}&nbsp;&nbsp;</h6>
+                <h6 *ngIf="item.media" style="display: inline-block;">{{item.media}}&nbsp;&nbsp;</h6>
+            </div>
+            <div class="col-2">
+                <button class="btn add-btn a-right" (click)="deleteForm(item.id)" type="button">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                <button class="btn add-btn a-right" (click)="editForm(item)" type="button">
+                    <i class="fa fa-pencil" aria-hidden="true"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+<P></P>

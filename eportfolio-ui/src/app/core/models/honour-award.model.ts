@@ -1,4 +1,5 @@
 export interface HonourAward {
+    id: string;
     title: string;
     associatedWith: string;
     issuer: string;

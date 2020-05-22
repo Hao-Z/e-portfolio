@@ -1,4 +1,5 @@
 export interface Feature {
-    link: string[]
-    media: string[]
+    id: string;
+    link: string
+    media: string
 }
