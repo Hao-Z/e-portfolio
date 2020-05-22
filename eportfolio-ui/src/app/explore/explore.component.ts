@@ -42,55 +42,6 @@ export class ExploreComponent implements OnInit {
     this.sortValues = ['Age','Experience','Education'];
     this.Ascending = null;
     this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
-
-    // <
-    this.userDatas = [];
-    this.userDatas.push({
-      firstName: 'Chuqiao',
-      lastName: 'Chen',
-      headline: 'Student of the University of Melbourne',
-      education: 'the University of Melbourne',
-      industry: 'Information Technology',
-      region: 'Melbourne, VIC',
-      email: 'chuqiao.chen@gmail.com',
-      phone: '(+61)0400000000',
-      profileUrl: 'www.xxxxxxxx.com'
-    },
-      {
-        firstName: 'Chuqiao',
-        lastName: 'Chen',
-        headline: 'Student of the University of Melbourne',
-        education: 'the University of Melbourne',
-        industry: 'Information Technology',
-        region: 'Melbourne, VIC',
-        email: 'chuqiao.chen@gmail.com',
-        phone: '(+61)0400000000',
-        profileUrl: 'www.xxxxxxxx.com'
-      },
-      {
-        firstName: 'Chuqiao',
-        lastName: 'Chen',
-        headline: 'Student of the University of Melbourne',
-        education: 'the University of Melbourne',
-        industry: 'Information Technology',
-        region: 'Melbourne, VIC',
-        email: 'chuqiao.chen@gmail.com',
-        phone: '(+61)0400000000',
-        profileUrl: 'www.xxxxxxxx.com'
-      },);
-
-    var temp_nodes = [
-      'Information Technology',
-      'Computer Software',
-      'Computer Games',
-      'Computer Hardware',
-      'Computer Networking'
-    ];
-    this.nodes = [];
-    for(let n of temp_nodes){
-      this.nodes.push({title: n, key: n, isLeaf: true, checked: false});
-    }
-    // >Delete
     this.displayed_nodes = this.nodes;
   }
 
@@ -118,14 +69,6 @@ export class ExploreComponent implements OnInit {
       }
     }
   }
-  // filterSearch (node: NzTreeNodeOptions): boolean {
-    // console.log(node)
-    // return false
-  // }
-
-  nzGenderEvent($event: NzFormatEmitEvent) {
-
-  }
 
   nzCheckIndustry(event: NzFormatEmitEvent) {
     if(event.checkedKeys.length == 0){
@@ -152,22 +95,8 @@ export class ExploreComponent implements OnInit {
   }
 
   clear() {
-    // <
-    var temp_nodes = [
-      'Information Technology',
-      'Computer Software',
-      'Computer Games',
-      'Computer Hardware',
-      'Computer Networking'
-    ];
-    this.nodes = [];
-    for(let n of temp_nodes){
-      this.nodes.push({title: n, key: n, isLeaf: true, checked: false});
-    }
-    // >Delete
     this.CheckedIndustry = null;
     this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
-    //TODO: Clear displayed_nodes
     var temp = this.displayed_nodes;
     this.displayed_nodes = [];
     for(let dn of temp){
@@ -217,7 +146,6 @@ export class ExploreComponent implements OnInit {
       this.nodes = [];
       for(let cv of result['content']){
         this.userDatas.push(cv);
-        //TODO:Fix nodes
         if(this.nodes.indexOf(cv['industry'])==null){
           this.nodes.push({title: cv['industry'], key: cv['industry'], isLeaf: true, checked: false});
         }
