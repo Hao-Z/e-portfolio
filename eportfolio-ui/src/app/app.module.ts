@@ -45,6 +45,7 @@ import { CvShowComponent } from './cv-show/cv-show.component';
 import { FileDownloadExample } from './filedownloadExample/filedownload';
 
 
+
 registerLocaleData(zh);
 
 export function patternValidationMessage(err, field: FormlyFieldConfig) {

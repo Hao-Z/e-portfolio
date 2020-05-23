@@ -38,7 +38,7 @@
         </nz-content>
         <nz-content>
           <nz-tree [nzData]="gender_nodes" nzCheckable [nzCheckedKeys]="CheckedGender"
-            (nzCheckBoxChange)="nzCheckGender($event)" (nzSearchValueChange)="nzGenderEvent($event)">
+            (nzCheckBoxChange)="nzCheckGender($event)">
           </nz-tree>
         </nz-content>
       </li>
@@ -68,9 +68,7 @@
         </table>
       </div>
     </nz-content>
-
     <nz-content style="min-height: 100%;">
-
       <div *ngFor="let userData of userDatas">
         <div class="card-body">
           <a [routerLink]="['/cv-show']" class="nav-link" href="#">
@@ -112,7 +110,7 @@
       </div>
       <br />
       <div align="center">
-        <nz-pagination *ngIf="totalPage!=1" (nzPageIndexChange)="changePage($event)" [nzPageIndex]=pageNum+1 [nzTotal]=3
+        <nz-pagination *ngIf="totalPage!=1" (nzPageIndexChange)="changePage($event)" [nzPageIndex]=pageNum+1 [nzTotal]=totalPage
           nzShowQuickJumper></nz-pagination>
       </div>
       <br />
