@@ -29,8 +29,8 @@ export class ExploreComponent implements OnInit {
   constructor(private http: HttpClient) { }
   sortValues: any;
   gender_nodes: NzTreeNodeOptions[] = [
-    {title: 'Male', key: '0', isLeaf: true, checked: false},
-    {title: 'Female', key: '1', isLeaf: true, checked: false},
+    {title: 'Male', key: '1', isLeaf: true, checked: false},
+    {title: 'Female', key: '0', isLeaf: true, checked: false},
   ];
 
   ngOnInit(): void {
