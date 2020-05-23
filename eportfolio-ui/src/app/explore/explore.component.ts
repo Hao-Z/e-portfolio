@@ -110,7 +110,7 @@ export class ExploreComponent implements OnInit {
     }
   }
 
-  getCVsData(pageNum='0', pageSize='10', industry:string[]=null, gender:string[]=null, orders:string=null, ascending:boolean=null) {
+  getCVsData(pageNum='0', pageSize='10', industry:string[]=null, gender:string=null, orders:string=null, ascending:boolean=null) {
     refreshJwt();
     const HttpOptions = {
       headers : new HttpHeaders({'content-Type': 'application/json',
@@ -127,8 +127,8 @@ export class ExploreComponent implements OnInit {
       }
     }
     if(gender!=null){
-      for(let i of gender) {
-        para = para + '&gender%5B%5D=' + i
+      if(gender=='0' || gender=='1'){
+        para = para + '&gender=' + gender
       }
     }
     if(orders!=null){
