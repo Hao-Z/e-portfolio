@@ -1,10 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ModalEducationComponent } from "../cv-form/modal-education/modal-education.component";
-import { ModalIntroductionComponent } from "../cv-form/modal-introduction/modal-introduction.component"
-import { IntroductionApiService } from "../core/services/introduction-api.service";
+import { Component, OnInit, Type } from '@angular/core';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { UniqueApiService } from "../core/services/unique-api.service";
 import { userID, refreshJwt } from "../../global";
 import { Introduction } from '../core/models/introduction.model';
+import { ModalService } from '../core/services/modal.service';
+import { Cv } from '../core/models/cv.model';
+
 
 @Component({
   selector: 'app-cv',
@@ -13,93 +14,73 @@ import { Introduction } from '../core/models/introduction.model';
 })
 export class CvComponent implements OnInit {
 
-  Object = Object;
-  userDatas:Introduction;
-  cvDatas: any = {
-    "educations": [
-      {
-        "schoolName": "Unimelb"
-      },
-      {
-        "schoolName": "Unimelb"
-      }
-    ]
-  };
-
   constructor(
-    private modalService: NgbModal,
-    private introductionApiService: IntroductionApiService
-    ) { }
+    private ngbModalService: NgbModal,
+    public modalService: ModalService,
+    private uniqueApiService: UniqueApiService
+  ) { }
+  
+  introForm: Introduction;
+  cvForms: Cv;
+  cvItems: Array<string> = this.modalService.getKeys();  
 
   ngOnInit(): void {
     refreshJwt();
-    console.log("Refresh!")
     this.getIntroduction();
+    this.getCv()
+    console.log(this.cvItems)
   }
 
-  openModal(modalName: string) {
-    this.modalService.dismissAll;
-    var modalRef: any;
-    
-    switch (modalName) {
-      case 'introduction':
-        modalRef = this.modalService.open(ModalIntroductionComponent, {backdrop: 'static', size: 'lg'});
-        break;
-      case 'education':
-        modalRef = this.modalService.open(ModalEducationComponent, {backdrop: 'static', size: 'lg'});
-        break;
-      case 'about':
-        console.log("about modal!");
-        break;
-      case 'feature':
-        console.log("feature modal!");
-        break;
-      case 'workExperience':
-        console.log("workExperience modal!");
-        break;  
-      case 'licenseCertification':
-        console.log("licenseCertification modal!");
-        break;
-      case 'volunteerExperience':
-        console.log("volunteerExperience modal!");
-        break;
-      case 'skill':
-        console.log("skill modal!");
-        break;
-      case 'project':
-        console.log("project modal!");
-        break;
-      case 'honourAward':
-        console.log("honourAward modal!");
-        break;
-      case 'publication':
-        console.log("publication modal!");
-        break;
-      case 'language':
-        console.log("language modal!");
-        break;      
-      case 'recommendation':
-        console.log("recommendation modal!");
-        break;           
-      default:
-        console.log("No such modal exists!");
-        break;
-    }
-    modalRef.result.then(
-      () => {
-        setTimeout(() => {
-          this.ngOnInit();
-        }, 100);
-      });
+  closeResult = '';
+
+  openModal(className: string) {
+    var modalComp: Component;
+    this.modalService.getModal(className).subscribe(res => {
+      modalComp = res;
+    })
+    this.ngbModalService.dismissAll;
+    var modalRef = this.ngbModalService.open(modalComp, {backdrop: 'static', size: 'lg'})
+    modalRef.componentInstance.title = this.modalService.getTitle(className)
+    modalRef.result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    }),
+    () => {
+      setTimeout(() => {
+        this.ngOnInit();
+      }, 100);
+    };
   }
+  
+    private getDismissReason(reason: any): string {
+      if (reason === ModalDismissReasons.ESC) {
+        return 'by pressing ESC';
+      } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+        return 'by clicking on a backdrop';
+      } else {
+        return `with: ${reason}`;
+      }
+    }
 
   getIntroduction() {
-    this.introductionApiService.getIntro(userID)
+    this.uniqueApiService.get(userID, "introduction")
       .subscribe((result: Introduction) => {
-        this.userDatas = result;
-        console.log("Get!")
-        console.log("CV get response:", JSON.stringify(result))
+        this.introForm = result;
+        console.log("Inntro get response:", JSON.stringify(result))
     })
+  }
+
+  getCv() {
+    this.uniqueApiService.get(userID, "cv")
+      .subscribe((result: Cv) => {
+        this.cvForms = result;
+        console.log("Cv get response:", JSON.stringify(result))
+    })
+  }
+
+  editForm(className: string) {
+    this.openModal(className)
   }
   
 }

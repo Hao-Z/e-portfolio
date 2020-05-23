@@ -91,7 +91,7 @@ export class MyAccountComponent implements OnInit {
         this.profiles_value[key] = value;
         this.pop.success(this.value_map[key] + ' updated.', {nzDuration: 2000});
       },error => {
-        this.pop.error(this.value_map[key] + 'update failed.', {nzDuration: 4000});
+        this.pop.error(this.value_map[key] + ' update failed.', {nzDuration: 4000});
       });
     }else{
       if(key == 'birthday' && value[4] == '-'){
@@ -104,7 +104,7 @@ export class MyAccountComponent implements OnInit {
         this.pop.success(this.value_map[key] + ' updated.', {nzDuration: 2000});
         this.profiles_value[key] = value;
       },error => {
-        this.pop.error(this.value_map[key] + 'update failed.', {nzDuration: 4000});
+        this.pop.error(this.value_map[key] + ' update failed.', {nzDuration: 4000});
       });
     }
   }

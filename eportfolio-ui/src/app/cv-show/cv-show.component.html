@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<app-top-bar>
+</app-top-bar>
+<div class='back'>
+  <div class="parent">
+    <div *ngIf="!isCollapsed">
+      <div class="card-body cover">
+        <img src="assets/untitled.png" class="rounded-circle" alt="anonymous-user" style="width: 120px; height:120px;">
+        <div class='square'></div>
+        <div class="col-16">
+          <h2>{{userDatas.firstName +" " + userDatas.lastName}}
+            <span>Information Technology</span></h2>
+          <h5>{{userDatas.headline}}</h5>
+          <hr>
+          <p>{{userDatas.region}}</p>
+          <p>{{userDatas.email}}</p>
+          <p>{{userDatas.phone}}</p>
+
+        </div>
+      </div>
+
+      <div *ngFor="let item of cvData">
+
+        <div class="card-body">
+          <h2>{{item.block}}</h2>
+          <hr>
+          <p *ngFor="let exp of experiences">
+            <span class='time'>{{exp.time}}</span> <span class='detail'>{{exp.detail}}</span></p>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div *ngIf="isCollapsed"></div>
+
+  </div>
+</div>

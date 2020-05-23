@@ -3,7 +3,6 @@ import {NzFormatEmitEvent, NzTreeNodeOptions} from "ng-zorro-antd";
 import {refreshJwt} from "../../global";
 import * as globals from "../../global";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {isAsciiLetter} from "codelyzer/angular/styles/chars";
 
 @Component({
   selector: 'app-cvs',
@@ -11,12 +10,16 @@ import {isAsciiLetter} from "codelyzer/angular/styles/chars";
   styleUrls: ['./explore.component.css']
 })
 export class ExploreComponent implements OnInit {
+
+  nodes: NzTreeNodeOptions[];
+  nodes_str: string[];
+
   width;
   searchValue = '';
   isCollapsed = window.innerWidth < Number(770);
   userDatas;
   pageNum: number = 0;
-  pageSize: number = 5;
+  pageSize: number = 3;
   totalPage: number = 1;
   CheckedIndustry: any = null;
   CheckedGender: any = null;
@@ -25,8 +28,6 @@ export class ExploreComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
   sortValues: any;
-  nodes: NzTreeNodeOptions[];
-  displayed_nodes: NzTreeNodeOptions[];
   gender_nodes: NzTreeNodeOptions[] = [
     {title: 'Male', key: '1', isLeaf: true, checked: false},
     {title: 'Female', key: '0', isLeaf: true, checked: false},
@@ -34,70 +35,33 @@ export class ExploreComponent implements OnInit {
 
   ngOnInit(): void {
     if(window.innerWidth < Number(770)){
-      this.width = "background-color: #F4F3F2;padding-left:0";
+      this.width = "background-color: #F4F3F2;padding-left:0;";
     }else{
-      this.width = "background-color: #F4F3F2;padding-left:256px";
+      this.width = "background-color: #F4F3F2; padding-left:256px;";
     }
     this.CheckedIndustry = null;
     this.sortValues = ['Age','Experience','Education'];
     this.Ascending = null;
-    this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
 
     // <
-    this.userDatas = [];
-    this.userDatas.push({
-      firstName: 'Chuqiao',
-      lastName: 'Chen',
-      headline: 'Student of the University of Melbourne',
-      education: 'the University of Melbourne',
-      industry: 'Information Technology',
-      region: 'Melbourne, VIC',
-      email: 'chuqiao.chen@gmail.com',
-      phone: '(+61)0400000000',
-      profileUrl: 'www.xxxxxxxx.com'
-    },
-      {
-        firstName: 'Chuqiao',
-        lastName: 'Chen',
-        headline: 'Student of the University of Melbourne',
-        education: 'the University of Melbourne',
-        industry: 'Information Technology',
-        region: 'Melbourne, VIC',
-        email: 'chuqiao.chen@gmail.com',
-        phone: '(+61)0400000000',
-        profileUrl: 'www.xxxxxxxx.com'
-      },
-      {
-        firstName: 'Chuqiao',
-        lastName: 'Chen',
-        headline: 'Student of the University of Melbourne',
-        education: 'the University of Melbourne',
-        industry: 'Information Technology',
-        region: 'Melbourne, VIC',
-        email: 'chuqiao.chen@gmail.com',
-        phone: '(+61)0400000000',
-        profileUrl: 'www.xxxxxxxx.com'
-      },);
-
-    var temp_nodes = [
-      'Information Technology',
-      'Computer Software',
-      'Computer Games',
-      'Computer Hardware',
-      'Computer Networking'
-    ];
+    // this.getNodes();
+    this.nodes_str = ['Computer Games','Computer dsf','Computer cvcv','Computer aas'];
     this.nodes = [];
-    for(let n of temp_nodes){
-      this.nodes.push({title: n, key: n, isLeaf: true, checked: false});
+    for(let n of this.nodes_str){
+      this.nodes.push({title: n, key: n, isLeaf: true, checked: false})
     }
-    // >Delete
-    this.displayed_nodes = this.nodes;
+    // > Delete
+
+    this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
   }
 
   getOrder(event){
     if(event==null){
       this.order = event;
       this.Ascending = null
+    } else if(event=='Age'){
+      this.order = 'birthday';
+      this.Ascending = false
     } else {
       this.order = event.toLowerCase();
       this.Ascending = false
@@ -105,43 +69,24 @@ export class ExploreComponent implements OnInit {
     this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
   }
 
-  nzEvent(event: NzFormatEmitEvent): void {
-    if(event.keys.length==0){
-      this.displayed_nodes = this.nodes;
-    } else {
-      this.displayed_nodes = [];
-      for(let n of event.keys){
-        this.displayed_nodes.push({title: n, key: n, isLeaf: true, checked: false});
-      }
-    }
-  }
-  // filterSearch (node: NzTreeNodeOptions): boolean {
-    // console.log(node)
-    // return false
-  // }
-
-  nzGenderEvent($event: NzFormatEmitEvent) {
-
-  }
-
-  nzCheckIndustry(event: NzFormatEmitEvent) {
-    if(event.checkedKeys.length == 0){
+  nzCheckIndustry($event: NzFormatEmitEvent) {
+    if($event.checkedKeys.length == 0){
       this.CheckedIndustry = null;
     }else{
       this.CheckedIndustry = [];
-      for(let e of event.checkedKeys){
+      for(let e of $event.checkedKeys){
         this.CheckedIndustry.push(e.key)
       }
     }
     this.getCVsData('0',this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
   }
 
-  nzCheckGender(event: NzFormatEmitEvent) {
-    if(event.checkedKeys.length == 0){
+  nzCheckGender($event: NzFormatEmitEvent) {
+    if($event.checkedKeys.length == 0){
       this.CheckedGender = null;
     }else{
       this.CheckedGender = [];
-      for(let e of event.checkedKeys){
+      for(let e of $event.checkedKeys){
         this.CheckedGender.push(e.key)
       }
     }
@@ -149,33 +94,12 @@ export class ExploreComponent implements OnInit {
   }
 
   clear() {
-    // <
-    var temp_nodes = [
-      'Information Technology',
-      'Computer Software',
-      'Computer Games',
-      'Computer Hardware',
-      'Computer Networking'
-    ];
-    this.nodes = [];
-    for(let n of temp_nodes){
-      this.nodes.push({title: n, key: n, isLeaf: true, checked: false});
-    }
-    // >Delete
-    this.CheckedIndustry = null;
-    this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
-    //TODO: Clear displayed_nodes
-    var temp = this.displayed_nodes;
-    this.displayed_nodes = [];
-    for(let dn of temp){
-      dn.checked=false;
-      this.displayed_nodes.push(dn);
-    }
-    console.log(this.displayed_nodes)
+    this.CheckedIndustry = [];
+    this.getCVsData('0',this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
   }
 
-  changePage(event) {
-    this.getCVsData((event-1).toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
+  changePage($event) {
+    this.getCVsData(($event-1).toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
   }
 
   changeWidth() {
@@ -186,7 +110,7 @@ export class ExploreComponent implements OnInit {
     }
   }
 
-  getCVsData(pageNum='0', pageSize='10', industry:string[]=null, gender:string=null, orders:string=null, ascending:boolean=null) {
+  getCVsData(pageNum='0', pageSize='10', industry:string[]=null, gender:string[]=null, orders:string=null, ascending:boolean=null) {
     refreshJwt();
     const HttpOptions = {
       headers : new HttpHeaders({'content-Type': 'application/json',
@@ -203,7 +127,9 @@ export class ExploreComponent implements OnInit {
       }
     }
     if(gender!=null){
-      para = para+'&gender='+gender
+      for(let i of gender) {
+        para = para + '&gender%5B%5D=' + i
+      }
     }
     if(orders!=null){
       para = para+'&orders='+orders+'&ascending='+ascending.toString()
@@ -211,13 +137,8 @@ export class ExploreComponent implements OnInit {
 
     this.http.get<any>(globals.backend_path + "explore/filters?" + para, HttpOptions).subscribe((result) => {
       this.userDatas = [];
-      this.nodes = [];
       for(let cv of result['content']){
         this.userDatas.push(cv);
-        //TODO:Fix nodes
-        if(this.nodes.indexOf(cv['industry'])==null){
-          this.nodes.push({title: cv['industry'], key: cv['industry'], isLeaf: true, checked: false});
-        }
       }
       this.pageNum = result['number'];
       this.pageSize = result['size'];
@@ -228,5 +149,20 @@ export class ExploreComponent implements OnInit {
   changeAscending() {
     this.Ascending = !this.Ascending;
     this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
+  }
+
+  getNodes() {
+    refreshJwt();
+    const HttpOptions = {
+      headers : new HttpHeaders({'content-Type': 'application/json',
+        'Authorization': localStorage.getItem("jwt_token")}
+      )
+    };
+    this.http.get<any>(globals.backend_path + "explore/industries", HttpOptions).subscribe((result) => {
+      this.nodes_str = [];
+      for(let n of result['content']){
+        this.nodes_str.push(n);
+      }
+    });
   }
 }

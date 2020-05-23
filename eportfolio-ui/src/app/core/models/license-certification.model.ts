@@ -1,4 +1,5 @@
 export interface LicenseCertification {
+    id: string;
     name: string;
     issuingOrganization: string;
     issueDate: string;

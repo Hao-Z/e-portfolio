@@ -114,10 +114,6 @@ nz-card {
   width: 10px;
   background-color: red;
 }
-#div2 {
-  /* max-width: 70%; */
-
-}
 #div3 {
   background-color: var(--primary-color);
   height: 100%;
@@ -161,7 +157,6 @@ nz-card {
   transform: translateY(0px) translateX(-40px);
   box-shadow: 10px 10px 30px rgba(50, 50, 50, 0.3);
   background-color: #fff;
-  color: red;
 
 }
 
