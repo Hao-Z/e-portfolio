@@ -74,7 +74,7 @@ export class ModalWorkExperienceComponent implements OnInit {
       fieldGroup: [
         {
           className: 'col-6',
-          key: 'startYear',
+          key: 'startDate',
           type: 'datepicker',
           templateOptions: {
             label: 'Start Date',
@@ -83,7 +83,7 @@ export class ModalWorkExperienceComponent implements OnInit {
         },
         {
           className: 'col-6',
-          key: 'endYear',
+          key: 'endDate',
           type: 'datepicker',
           templateOptions: {
             placeholder: 'dd-MM-yyyy',
@@ -144,7 +144,7 @@ export class ModalWorkExperienceComponent implements OnInit {
 		if (this.form.valid) {
       this.apiService.create(userID, this.model, this.classname)
         .subscribe(() => {
-          this.alertService.success("Successfully modified the Work Experience section!");
+          this.alertService.success(`Successfully modified the ${this.title} section!`);
         })
     }
   }

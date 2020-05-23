@@ -1,17 +1,17 @@
 import { Component, Input } from '@angular/core';
-import { WorkExperience } from 'src/app/core/models/work-experience.model';
 import { ModalService } from 'src/app/core/services/modal.service';
 import { ApiService } from 'src/app/core/services/api.service';
 import { userID } from 'src/global';
 import { AlertService } from 'src/app/core/services/alert.service';
+import { Education } from 'src/app/core/models/education.model';
 
 @Component({
-    selector: 'card-we',
-    templateUrl: './work-experience.component.html',
+    selector: 'card-edu',
+    templateUrl: './education.component.html',
     styleUrls: ['../cv.component.css']
 })
 
-export class WorkExperienceComponent {
+export class EducationComponent {
 
     constructor(
         public modalService: ModalService,
@@ -21,9 +21,9 @@ export class WorkExperienceComponent {
 
     @Input() classname: string
     @Input() title: string;
-    @Input() data: WorkExperience[];
+    @Input() data: Education[];
 
-    editForm(item: WorkExperience) {
+    editForm(item: Education) {
         this.modalService.openModal(this.classname, false, item)
     }
 

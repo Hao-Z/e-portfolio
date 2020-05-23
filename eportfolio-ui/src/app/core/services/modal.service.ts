@@ -14,6 +14,7 @@ import { ModalPublicationComponent } from 'src/app/cv-form/modal-publication/mod
 import { ModalLanguageComponent } from 'src/app/cv-form/modal-language/modal-language.component';
 import { ModalRecommendationComponent } from 'src/app/cv-form/modal-recommendation/modal-recommendation.component';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { AlertService } from './alert.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,8 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 export class ModalService {
 
   constructor(
-    private ngbModalService: NgbModal,) {
+    private ngbModalService: NgbModal,
+    private alertService: AlertService) {
   }
 
   lists: Record<string, string> = {
@@ -90,8 +92,10 @@ export class ModalService {
     modalRef.result.then(
       (result) => {
         this.closeResult = `Closed with: ${result}`;
+        this.alertService.msg("Close only!")
       }, (reason) => {
         this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        this.alertService.msg("Close only!")
       });
   }
 

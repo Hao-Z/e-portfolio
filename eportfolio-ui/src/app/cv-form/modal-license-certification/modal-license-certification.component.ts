@@ -5,6 +5,7 @@ import { LicenseCertification } from 'src/app/core/models/license-certification.
 import { ApiService } from 'src/app/core/services/api.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { userID } from 'src/global';
+import { AlertService } from 'src/app/core/services/alert.service';
 
 @Component({
   selector: 'app-modal-license-certification',
@@ -13,11 +14,13 @@ import { userID } from 'src/global';
 })
 export class ModalLicenseCertificationComponent implements OnInit {
 
-  title: string = `License Certification`;
+  title: string = `"License Certification`;
+  classname: string = `licensecertification`;
+  isNew: boolean = true;
 
+  model: LicenseCertification;
   form = new FormGroup({});
   options: FormlyFormOptions = {};
-  model: LicenseCertification;
   fields: FormlyFieldConfig[] = [
     {
       key: 'name',
@@ -82,19 +85,22 @@ export class ModalLicenseCertificationComponent implements OnInit {
 
   constructor(
     public modal: NgbActiveModal,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit(): void {
-    this.model = {
-      id: null,
-      name: null,
-      issuingOrganization: null,
-      issueDate: null,
-      expirationDate: null,
-      credentialID: null,
-      credentialURL: null,
-      media: null,
+    if (this.isNew) {
+      this.model = {
+        id: null,
+        name: null,
+        issuingOrganization: null,
+        issueDate: null,
+        expirationDate: null,
+        credentialID: null,
+        credentialURL: null,
+        media: null,
+      }
     }
   }
 
@@ -102,8 +108,8 @@ export class ModalLicenseCertificationComponent implements OnInit {
     console.log("CV LC submit form:", this.model);
 		if (this.form.valid) {
       this.apiService.create(userID, this.model, this.title.toLowerCase().split(" ").join(""))
-        .subscribe((result: LicenseCertification) => {
-          console.log("CV LC create response:", JSON.stringify(result))
+        .subscribe(() => {
+          this.alertService.success(`Successfully modified the ${this.title} section!`);
         })
     }
   }

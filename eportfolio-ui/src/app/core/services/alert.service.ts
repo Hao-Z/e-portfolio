@@ -6,6 +6,9 @@ import { Subject } from "rxjs";
 })
 export class AlertService {
 
+    private message = new Subject<string>();  
+    messageObserve = this.message.asObservable();
+
     private messageSu = new Subject<string>();  
     messageSuObserve = this.messageSu.asObservable();
 
@@ -20,6 +23,10 @@ export class AlertService {
         this.messageEr.next(message);
     }
 
+    private setMessage(message: string) {
+        this.message.next(message);
+    }
+
     public success(message: string, callback?: Function) {
         this.setSuMessage(message);
         if (callback) {
@@ -29,6 +36,13 @@ export class AlertService {
 
     public error(message: string, callback?: Function) {
         this.setErMessage(message);
+        if (callback) {
+            callback();
+        }
+    }
+
+    public msg(message: string, callback?: Function) {
+        this.setMessage(message);
         if (callback) {
             callback();
         }

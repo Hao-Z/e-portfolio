@@ -5,6 +5,7 @@ import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { userID } from 'src/global';
 import { ApiService } from "../../core/services/api.service";
+import { AlertService } from 'src/app/core/services/alert.service';
 
 @Component({
   selector: 'app-modal-education',
@@ -13,11 +14,13 @@ import { ApiService } from "../../core/services/api.service";
 })
 export class ModalEducationComponent implements OnInit {
 
-  title: string = `education`;
+  title: string = `Education`;
+  classname: string = `education`;
+  isNew: boolean = true;
 
+  model: Education;
   form = new FormGroup({});
   options: FormlyFormOptions = {};
-  model: Education;
   fields: FormlyFieldConfig[] = [
     {
       key: 'schoolName',
@@ -106,21 +109,24 @@ export class ModalEducationComponent implements OnInit {
   ];
   constructor( 
     public modal: NgbActiveModal,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit(): void {
-    this.model = {
-      id: null,
-      schoolName: null,
-      degree: null,
-      fieldOfStudy: null,
-      grade: null,
-      startYear: null,
-      endYear: null,
-      activityAndSociety: null,
-      description: null,
-      media: null,
+    if (this.isNew) {
+      this.model = {
+        id: null,
+        schoolName: null,
+        degree: null,
+        fieldOfStudy: null,
+        grade: null,
+        startYear: null,
+        endYear: null,
+        activityAndSociety: null,
+        description: null,
+        media: null,
+      }
     }
   }
 
@@ -128,8 +134,8 @@ export class ModalEducationComponent implements OnInit {
     console.log("CV Edu submit form:", this.model);
 		if (this.form.valid) {
       this.apiService.create(userID, this.model, this.title.toLowerCase().split(" ").join(""))
-        .subscribe((result: Education) => {
-          console.log("CV Edu create response:", JSON.stringify(result))
+        .subscribe(() => {
+          this.alertService.success(`Successfully modified the ${this.title} section!`);
         })
     }
   }

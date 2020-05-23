@@ -25,6 +25,9 @@ export class CvComponent implements OnInit{
     })
       this.alertService.messageErObserve.subscribe((res: string) => {
         this.refresh(false, res)
+    })
+      this.alertService.messageObserve.subscribe((res: string) => {
+        this.ngOnInit()
   })
    };
   
@@ -39,7 +42,9 @@ export class CvComponent implements OnInit{
 
   refresh(isSuccess: boolean, msg: string) {
     if (isSuccess) {
-      this.pop.success(msg)      
+      if (!msg) {
+        this.pop.success(msg)  
+      }          
     } else {
       this.pop.error(msg)     
     }

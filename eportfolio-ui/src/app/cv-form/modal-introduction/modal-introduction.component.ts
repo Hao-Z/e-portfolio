@@ -201,7 +201,7 @@ export class ModalIntroductionComponent implements OnInit {
 		if (this.form.valid) {
       this.apiService.update(userID, this.model, this.title.toLowerCase())
         .subscribe(() => {
-          this.alertService.success("Successfully modified the Introduction section!");
+          this.alertService.success(`Successfully modified the ${this.title} section!`);
         })
     }
   }
