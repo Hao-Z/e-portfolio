@@ -74,7 +74,7 @@ export class ModalService {
 
   closeResult = '';
 
-  openModal<T>(classname: string, item: T | null, isNew: boolean) {
+  openModal<T>(classname: string, isNew: boolean, item?: T) {
     var modalComp: Component;
     this.getModal(classname).subscribe(res => {
       modalComp = res;
@@ -87,11 +87,12 @@ export class ModalService {
     if (!isNew) {
         modalRef.componentInstance.model = item as T
     }
-    modalRef.result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+    modalRef.result.then(
+      (result) => {
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
   }
 
   private getDismissReason(reason: any): string {

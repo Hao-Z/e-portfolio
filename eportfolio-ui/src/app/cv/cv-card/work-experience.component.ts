@@ -3,6 +3,7 @@ import { WorkExperience } from 'src/app/core/models/work-experience.model';
 import { ModalService } from 'src/app/core/services/modal.service';
 import { ApiService } from 'src/app/core/services/api.service';
 import { userID } from 'src/global';
+import { AlertService } from 'src/app/core/services/alert.service';
 
 @Component({
     selector: 'card-we',
@@ -14,7 +15,8 @@ export class WorkExperienceComponent {
 
     constructor(
         public modalService: ModalService,
-        private apiService: ApiService
+        private apiService: ApiService,
+        private alertService: AlertService
     ) { }
 
     @Input() classname: string
@@ -22,17 +24,17 @@ export class WorkExperienceComponent {
     @Input() data: WorkExperience[];
 
     editForm(item: WorkExperience) {
-        this.modalService.openModal(this.classname, item, false)
+        this.modalService.openModal(this.classname, false, item)
     }
 
     addForm() {
-        this.modalService.openModal(this.classname, null, true)
+        this.modalService.openModal(this.classname, true)
     }
 
     deleteForm(object_id: string) {
         this.apiService.delete(userID, this.classname, object_id)
-          .subscribe(result => {
-            alert("Delete successfully!");
+          .subscribe(() => {
+            this.alertService.success("Successfully deleted the Work Experience section!");
           })
     }
 }

@@ -6,6 +6,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ApiService } from 'src/app/core/services/api.service';
 import { userID } from 'src/global';
 import { DataService } from '../../core/services/data.service';
+import { AlertService } from 'src/app/core/services/alert.service';
 
 @Component({
   selector: 'app-modal-work-experience',
@@ -116,7 +117,8 @@ export class ModalWorkExperienceComponent implements OnInit {
   constructor(
     public modal: NgbActiveModal,
     private dataService: DataService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit(): void {
@@ -141,8 +143,8 @@ export class ModalWorkExperienceComponent implements OnInit {
     console.log("CV WE submit form:", this.model);
 		if (this.form.valid) {
       this.apiService.create(userID, this.model, this.classname)
-        .subscribe((result: WorkExperience) => {
-          alert("Form submitted successfully!");
+        .subscribe(() => {
+          this.alertService.success("Successfully modified the Work Experience section!");
         })
     }
   }
