@@ -3,7 +3,6 @@ import {NzFormatEmitEvent, NzTreeNodeOptions} from "ng-zorro-antd";
 import {refreshJwt} from "../../global";
 import * as globals from "../../global";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {isAsciiLetter} from "codelyzer/angular/styles/chars";
 
 @Component({
   selector: 'app-cvs',
@@ -11,12 +10,15 @@ import {isAsciiLetter} from "codelyzer/angular/styles/chars";
   styleUrls: ['./explore.component.css']
 })
 export class ExploreComponent implements OnInit {
+
+  nodes: NzTreeNodeOptions[];
+  displayed_nodes: NzTreeNodeOptions[];
   width;
   searchValue = '';
   isCollapsed = window.innerWidth < Number(770);
   userDatas;
   pageNum: number = 0;
-  pageSize: number = 5;
+  pageSize: number = 10;
   totalPage: number = 1;
   CheckedIndustry: any = null;
   CheckedGender: any = null;
@@ -25,8 +27,6 @@ export class ExploreComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
   sortValues: any;
-  nodes: NzTreeNodeOptions[];
-  displayed_nodes: NzTreeNodeOptions[];
   gender_nodes: NzTreeNodeOptions[] = [
     {title: 'Male', key: '0', isLeaf: true, checked: false},
     {title: 'Female', key: '1', isLeaf: true, checked: false},
@@ -41,6 +41,7 @@ export class ExploreComponent implements OnInit {
     this.CheckedIndustry = null;
     this.sortValues = ['Age','Experience','Education'];
     this.Ascending = null;
+
     this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
     this.displayed_nodes = this.nodes;
   }
@@ -103,7 +104,6 @@ export class ExploreComponent implements OnInit {
       dn.checked=false;
       this.displayed_nodes.push(dn);
     }
-    console.log(this.displayed_nodes)
   }
 
   changePage(event) {
@@ -118,7 +118,7 @@ export class ExploreComponent implements OnInit {
     }
   }
 
-  getCVsData(pageNum='0', pageSize='10', industry:string[]=null, gender:string=null, orders:string=null, ascending:boolean=null) {
+  getCVsData(pageNum='0', pageSize='10', industry:string[]=null, gender:string[]=null, orders:string=null, ascending:boolean=null) {
     refreshJwt();
     const HttpOptions = {
       headers : new HttpHeaders({'content-Type': 'application/json',
@@ -135,24 +135,24 @@ export class ExploreComponent implements OnInit {
       }
     }
     if(gender!=null){
-      para = para+'&gender='+gender
+      for(let i of gender) {
+        para = para + '&gender%5B%5D=' + i
+      }
     }
     if(orders!=null){
       para = para+'&orders='+orders+'&ascending='+ascending.toString()
     }
-
+    this.userDatas = [];
+    this.nodes = [];
     this.http.get<any>(globals.backend_path + "explore/filters?" + para, HttpOptions).subscribe((result) => {
-      this.userDatas = [];
-      this.nodes = [];
 
       for(let cv of result['content']){
         this.userDatas.push(cv);
-
         if(this.nodes.indexOf(cv['industry'])==-1){
-          console.log(this.nodes);
           this.nodes.push({title: cv['industry'], key: cv['industry'], isLeaf: true, checked: false});
         }
       }
+      console.log(this.nodes);
       this.pageNum = result['number'];
       this.pageSize = result['size'];
       this.totalPage = result['totalPages'];
