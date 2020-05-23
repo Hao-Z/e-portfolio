@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.Null;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -44,10 +45,10 @@ public class FileServiceImpl implements FileService {
             if(resource.exists()) {
                 return resource;
             } else {
-                throw new RuntimeException("File not found " + fileName);
+                throw new NullPointerException("File not found " + fileName);
             }
         } catch (MalformedURLException e) {
-            throw new RuntimeException("File not found " + fileName, e);
+            throw new NullPointerException("File not found " + fileName);
         }
     }
 }

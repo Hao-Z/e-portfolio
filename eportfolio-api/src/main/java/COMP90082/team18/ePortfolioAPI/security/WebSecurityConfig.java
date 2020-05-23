@@ -37,7 +37,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, SIGN_UP_URL, SIGN_IN_URL).permitAll().
-                and().authorizeRequests().antMatchers(HttpMethod.GET, "/download/65/*").permitAll().
+                // tbc. whether to allow download without authorization check
+                and().authorizeRequests().antMatchers(HttpMethod.GET, "/download/**").permitAll().
                 anyRequest().authenticated()
             .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))

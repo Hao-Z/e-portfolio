@@ -28,8 +28,8 @@ export class ExploreComponent implements OnInit {
   nodes: NzTreeNodeOptions[];
   displayed_nodes: NzTreeNodeOptions[];
   gender_nodes: NzTreeNodeOptions[] = [
-    {title: 'Male', key: 'Male', isLeaf: true, checked: false},
-    {title: 'Female', key: 'Female', isLeaf: true, checked: false},
+    {title: 'Male', key: '1', isLeaf: true, checked: false},
+    {title: 'Female', key: '0', isLeaf: true, checked: false},
   ];
 
   ngOnInit(): void {

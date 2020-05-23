@@ -76,7 +76,7 @@ export function patternValidationMessage(err, field: FormlyFieldConfig) {
     ModalPublicationComponent,
     ModalLanguageComponent,
     ModalRecommendationComponent,
-    FileDownloadExample
+    FileDownloadExample,
     FooterComponent
   ],
   imports: [
