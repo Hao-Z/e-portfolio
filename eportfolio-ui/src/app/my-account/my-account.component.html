@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <nz-layout style="background-color: transparent">
   <div class="row" style="margin-top: 50px">
     <div class="col-md-6 offset-md-3 col-xs-12">
@@ -5,24 +6,30 @@
         <div class="form-group">
           <nz-form-label>{{value_map['username']}}</nz-form-label>
           <nz-input-group nzSearch>
-            <input *ngIf="editable['username']" type="text" class="form-control" id='username' formControlName='username' nz-input [ngModel]="profiles_value['username']">
-            <input *ngIf="!editable['username']" class="form-control" [placeholder]="profiles_value['username']" [disabled]="true" />
+            <input *ngIf="editable['username']" type="text" class="form-control" id='username'
+              formControlName='username' nz-input [ngModel]="profiles_value['username']">
+            <input *ngIf="!editable['username']" class="form-control" [placeholder]="profiles_value['username']"
+              [disabled]="true" />
           </nz-input-group>
         </div>
         <div class="form-group">
           <nz-form-label>{{value_map['email']}}</nz-form-label>
           <nz-input-group nzSearch [nzAddOnAfter]=Email>
-            <input *ngIf="editable['email']" type="text" class="form-control" id='email' formControlName='email' nz-input [ngModel]="profiles_value['email']">
-            <input *ngIf="!editable['email']" class="form-control" [placeholder]="profiles_value['email']" [disabled]="true" />
+            <input *ngIf="editable['email']" type="text" class="form-control" id='email' formControlName='email'
+              nz-input [ngModel]="profiles_value['email']">
+            <input *ngIf="!editable['email']" class="form-control" [placeholder]="profiles_value['email']"
+              [disabled]="true" />
           </nz-input-group>
           <ng-template #Email>
-            <button *ngIf="!editable['email']" type="button" class="btn btn-primary" (click)="editable['email']=!editable['email']" >Edit</button>
-            <button *ngIf="editable['email']" type="button" class="btn btn-primary" (click)="editable['email']=!editable['email'];onSubmit('email', updateForm.value['email'])"
-                    [disabled]="updateForm.get('email').invalid">Save</button>
+            <button *ngIf="!editable['email']" type="button" class="btn btn-primary"
+              (click)="editable['email']=!editable['email']">Edit</button>
+            <button *ngIf="editable['email']" type="button" class="btn btn-primary"
+              (click)="editable['email']=!editable['email'];onSubmit('email', updateForm.value['email'])"
+              [disabled]="updateForm.get('email').invalid">Save</button>
           </ng-template>
-          <div
-            *ngIf="editable['email']">
-            <div class="errprompt" *ngIf="updateForm.get('email').invalid && (updateForm.get('email').dirty || updateForm.get('email').touched)">
+          <div *ngIf="editable['email']">
+            <div class="errprompt"
+              *ngIf="updateForm.get('email').invalid && (updateForm.get('email').dirty || updateForm.get('email').touched)">
               Email form is invalid.
             </div>
           </div>
@@ -32,30 +39,38 @@
           <nz-form-label>{{value_map['birthday']}}</nz-form-label>
 
           <nz-input-group nzSearch [nzAddOnAfter]=Birthday>
-            <input *ngIf="editable['birthday']" type="date" class="form-control" id='birthday' formControlName='birthday' nz-input [ngModel]="profiles_value['birthday']">
-            <input *ngIf="!editable['birthday']" class="form-control" [placeholder]="profiles_value['birthday']" [disabled]="true" />
+            <input *ngIf="editable['birthday']" type="date" class="form-control" id='birthday'
+              formControlName='birthday' nz-input [ngModel]="profiles_value['birthday']">
+            <input *ngIf="!editable['birthday']" class="form-control" [placeholder]="profiles_value['birthday']"
+              [disabled]="true" />
 
           </nz-input-group>
           <ng-template #Birthday>
-            <button *ngIf="!editable['birthday']" type="button" class="btn btn-primary" (click)="editable['birthday']=!editable['birthday']" >Edit</button>
-            <button *ngIf="editable['birthday']" type="button" class="btn btn-primary" (click)="editable['birthday']=!editable['birthday'];onSubmit('birthday', updateForm.value['birthday'])">Save</button>
+            <button *ngIf="!editable['birthday']" type="button" class="btn btn-primary"
+              (click)="editable['birthday']=!editable['birthday']">Edit</button>
+            <button *ngIf="editable['birthday']" type="button" class="btn btn-primary"
+              (click)="editable['birthday']=!editable['birthday'];onSubmit('birthday', updateForm.value['birthday'])">Save</button>
           </ng-template>
         </div>
 
         <div class="form-group">
           <nz-form-label>{{value_map['phoneNumber']}}</nz-form-label>
           <nz-input-group nzSearch [nzAddOnAfter]=PhoneNumber>
-            <input *ngIf="editable['phoneNumber']" type="text" class="form-control" id='phoneNumber' formControlName='phoneNumber' nz-input [ngModel]="profiles_value['phoneNumber']">
-            <input *ngIf="!editable['phoneNumber']" class="form-control" [placeholder]="profiles_value['phoneNumber']" [disabled]="true" />
+            <input *ngIf="editable['phoneNumber']" type="text" class="form-control" id='phoneNumber'
+              formControlName='phoneNumber' nz-input [ngModel]="profiles_value['phoneNumber']">
+            <input *ngIf="!editable['phoneNumber']" class="form-control" [placeholder]="profiles_value['phoneNumber']"
+              [disabled]="true" />
           </nz-input-group>
           <ng-template #PhoneNumber>
-            <button *ngIf="!editable['phoneNumber']" type="button" class="btn btn-primary" (click)="editable['phoneNumber']=!editable['phoneNumber']" >Edit</button>
-            <button *ngIf="editable['phoneNumber']" type="button" class="btn btn-primary" (click)="editable['phoneNumber']=!editable['phoneNumber'];onSubmit('phoneNumber', updateForm.value['phoneNumber'])"
-                    [disabled]="updateForm.get('phoneNumber').invalid">Save</button>
+            <button *ngIf="!editable['phoneNumber']" type="button" class="btn btn-primary"
+              (click)="editable['phoneNumber']=!editable['phoneNumber']">Edit</button>
+            <button *ngIf="editable['phoneNumber']" type="button" class="btn btn-primary"
+              (click)="editable['phoneNumber']=!editable['phoneNumber'];onSubmit('phoneNumber', updateForm.value['phoneNumber'])"
+              [disabled]="updateForm.get('phoneNumber').invalid">Save</button>
           </ng-template>
-          <div
-            *ngIf="editable['phoneNumber']">
-            <div class="errprompt" *ngIf="updateForm.get('phoneNumber').invalid && (updateForm.get('phoneNumber').dirty || updateForm.get('phoneNumber').touched)">
+          <div *ngIf="editable['phoneNumber']">
+            <div class="errprompt"
+              *ngIf="updateForm.get('phoneNumber').invalid && (updateForm.get('phoneNumber').dirty || updateForm.get('phoneNumber').touched)">
               Phone number is invalid.
             </div>
           </div>
