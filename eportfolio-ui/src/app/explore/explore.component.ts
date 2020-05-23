@@ -12,13 +12,14 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 export class ExploreComponent implements OnInit {
 
   nodes: NzTreeNodeOptions[];
-  displayed_nodes: NzTreeNodeOptions[];
+  nodes_str: string[];
+
   width;
   searchValue = '';
   isCollapsed = window.innerWidth < Number(770);
   userDatas;
   pageNum: number = 0;
-  pageSize: number = 10;
+  pageSize: number = 3;
   totalPage: number = 1;
   CheckedIndustry: any = null;
   CheckedGender: any = null;
@@ -42,8 +43,16 @@ export class ExploreComponent implements OnInit {
     this.sortValues = ['Age','Experience','Education'];
     this.Ascending = null;
 
+    // <
+    // this.getNodes();
+    this.nodes_str = ['Computer Games','Computer dsf','Computer cvcv','Computer aas'];
+    this.nodes = [];
+    for(let n of this.nodes_str){
+      this.nodes.push({title: n, key: n, isLeaf: true, checked: false})
+    }
+    // > Delete
+
     this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
-    this.displayed_nodes = this.nodes;
   }
 
   getOrder(event){
@@ -60,35 +69,24 @@ export class ExploreComponent implements OnInit {
     this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
   }
 
-  nzEvent(event: NzFormatEmitEvent): void {
-    if(event.keys.length==0){
-      this.displayed_nodes = this.nodes;
-    } else {
-      this.displayed_nodes = [];
-      for(let n of event.keys){
-        this.displayed_nodes.push({title: n, key: n, isLeaf: true, checked: false});
-      }
-    }
-  }
-
-  nzCheckIndustry(event: NzFormatEmitEvent) {
-    if(event.checkedKeys.length == 0){
+  nzCheckIndustry($event: NzFormatEmitEvent) {
+    if($event.checkedKeys.length == 0){
       this.CheckedIndustry = null;
     }else{
       this.CheckedIndustry = [];
-      for(let e of event.checkedKeys){
+      for(let e of $event.checkedKeys){
         this.CheckedIndustry.push(e.key)
       }
     }
     this.getCVsData('0',this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
   }
 
-  nzCheckGender(event: NzFormatEmitEvent) {
-    if(event.checkedKeys.length == 0){
+  nzCheckGender($event: NzFormatEmitEvent) {
+    if($event.checkedKeys.length == 0){
       this.CheckedGender = null;
     }else{
       this.CheckedGender = [];
-      for(let e of event.checkedKeys){
+      for(let e of $event.checkedKeys){
         this.CheckedGender.push(e.key)
       }
     }
@@ -96,18 +94,12 @@ export class ExploreComponent implements OnInit {
   }
 
   clear() {
-    this.CheckedIndustry = null;
-    this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
-    var temp = this.displayed_nodes;
-    this.displayed_nodes = [];
-    for(let dn of temp){
-      dn.checked=false;
-      this.displayed_nodes.push(dn);
-    }
+    this.CheckedIndustry = [];
+    this.getCVsData('0',this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
   }
 
-  changePage(event) {
-    this.getCVsData((event-1).toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
+  changePage($event) {
+    this.getCVsData(($event-1).toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
   }
 
   changeWidth() {
@@ -142,15 +134,11 @@ export class ExploreComponent implements OnInit {
     if(orders!=null){
       para = para+'&orders='+orders+'&ascending='+ascending.toString()
     }
-    this.userDatas = [];
-    this.nodes = [];
-    this.http.get<any>(globals.backend_path + "explore/filters?" + para, HttpOptions).subscribe((result) => {
 
+    this.http.get<any>(globals.backend_path + "explore/filters?" + para, HttpOptions).subscribe((result) => {
+      this.userDatas = [];
       for(let cv of result['content']){
         this.userDatas.push(cv);
-        if(this.nodes.indexOf(cv['industry'])==-1){
-          this.nodes.push({title: cv['industry'], key: cv['industry'], isLeaf: true, checked: false});
-        }
       }
       this.pageNum = result['number'];
       this.pageSize = result['size'];
@@ -161,5 +149,20 @@ export class ExploreComponent implements OnInit {
   changeAscending() {
     this.Ascending = !this.Ascending;
     this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
+  }
+
+  getNodes() {
+    refreshJwt();
+    const HttpOptions = {
+      headers : new HttpHeaders({'content-Type': 'application/json',
+        'Authorization': localStorage.getItem("jwt_token")}
+      )
+    };
+    this.http.get<any>(globals.backend_path + "explore/industries", HttpOptions).subscribe((result) => {
+      this.nodes_str = [];
+      for(let n of result['content']){
+        this.nodes_str.push(n);
+      }
+    });
   }
 }
