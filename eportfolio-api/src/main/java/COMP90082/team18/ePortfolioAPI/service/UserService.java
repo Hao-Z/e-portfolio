@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.lang.Nullable;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserService {
     User signUp(User user);
@@ -20,7 +21,7 @@ public interface UserService {
 
     User getUser(Long id);
 
-    User patchUser(Long id, User user);
+    User patchUser(Long id, Map<String, Object> updateFields);
 
     void changePassword(Long id, PasswordDTO passwordDTO);
 

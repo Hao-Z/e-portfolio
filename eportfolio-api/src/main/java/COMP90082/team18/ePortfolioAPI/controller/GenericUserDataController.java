@@ -7,7 +7,6 @@ import COMP90082.team18.ePortfolioAPI.entity.*;
 import COMP90082.team18.ePortfolioAPI.entity.userDataEntity.Education;
 import COMP90082.team18.ePortfolioAPI.entity.userDataEntity.WorkExperience;
 import COMP90082.team18.ePortfolioAPI.service.GenericUserDataService;
-import COMP90082.team18.ePortfolioAPI.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +28,6 @@ public class GenericUserDataController {
     private ModelMapper modelMapper;
     @Autowired
     private UserController userController;
-    @Autowired
-    private UserService userService;
     @Autowired
     private GenericUserDataService genericUserDataService;
     @Autowired
@@ -74,11 +71,10 @@ public class GenericUserDataController {
     @PostMapping
     public DTO postObject(@PathVariable Long id,
                           @RequestParam("class") String targetClass,
-                          @RequestBody Object object) {
+                          @RequestBody Map<String, Object> object) {
         Class<? extends GenericUserData> entityClass = getEntityClass(targetClass);
         Class<? extends DTO> dtoClass = getDTOClass(targetClass);
-        GenericUserData result = genericUserDataService.postObject(id, modelMapper.map(object, entityClass));
-        result = resetDefault(result, modelMapper.map(object, dtoClass));
+        GenericUserData result = genericUserDataService.postObject(id, toEntity(id, object, entityClass));
         return toDTO(result, dtoClass);
     }
 
@@ -86,11 +82,10 @@ public class GenericUserDataController {
     public DTO putObject(@PathVariable Long id,
                          @RequestParam("class") String targetClass,
                          @RequestParam("object-id") Long objectId,
-                         @RequestBody Object object) {
+                         @RequestBody Map<String, Object> object) {
         Class<? extends GenericUserData> entityClass = getEntityClass(targetClass);
         Class<? extends DTO> dtoClass = getDTOClass(targetClass);
-        GenericUserData result = genericUserDataService.putObject(id, objectId, modelMapper.map(object, entityClass));
-        result = resetDefault(result, modelMapper.map(object, dtoClass));
+        GenericUserData result = genericUserDataService.putObject(id, objectId, toEntity(id, object, entityClass));
         return toDTO(result, dtoClass);
     }
 
@@ -116,19 +111,20 @@ public class GenericUserDataController {
                 .orElseThrow(() -> new IllegalArgumentException("No matched object type."));
     }
 
-    private GenericUserData resetDefault(GenericUserData result, DTO object) {
-        if (result instanceof WorkExperience && ((WorkExperienceDTO) object).isDefault()) {
-            User user = new User();
-            user.setCurrentPosition((WorkExperience) result);
-            userService.patchUser(result.getUser().getId(), user);
-            result = genericUserDataService.getObject(result.getUser().getId(), result.getId(), result.getClass())
-                    .orElse(null);
-        } else if (result instanceof Education && ((EducationDTO) object).isDefault()) {
-            User user = new User();
-            user.setCurrentEducation((Education) result);
-            userService.patchUser(result.getUser().getId(), user);
-            result = genericUserDataService.getObject(result.getUser().getId(), result.getId(), result.getClass())
-                    .orElse(null);
+    private <T extends GenericUserData> T toEntity(Long userId, Map<String, Object> dto, Class T) {
+        T result = modelMapper.map(dto, (Type) T);
+        if (result instanceof WorkExperience) {
+            if (dto.containsKey("isCurrentWork") && (boolean) dto.get("isCurrentWork")) {
+                User targetUser = new User();
+                targetUser.setId(userId);
+                ((WorkExperience) result).setFlagCurrentPosition(targetUser);
+            }
+        } else if (result instanceof Education) {
+            if (dto.containsKey("isDefault") && (boolean) dto.get("isDefault")) {
+                User targetUser = new User();
+                targetUser.setId(userId);
+                ((Education) result).setFlagCurrentEducation(targetUser);
+            }
         }
         return result;
     }
@@ -136,12 +132,10 @@ public class GenericUserDataController {
     private <T extends DTO> T toDTO(Object entity, Class<? extends DTO> T) {
         T result = modelMapper.map(entity, (Type) T);
         if (entity instanceof WorkExperience) {
-            User targetUser = userService.getUser(((WorkExperience) entity).getUser().getId());
-            boolean isDefault = (entity.equals(targetUser.getCurrentPosition()));
+            boolean isDefault = ((WorkExperience) entity).getFlagCurrentPosition() != null;
             ((WorkExperienceDTO) result).setDefault(isDefault);
         } else if (entity instanceof Education) {
-            User targetUser = userService.getUser(((Education) entity).getUser().getId());
-            boolean isDefault = (entity.equals(targetUser.getCurrentEducation()));
+            boolean isDefault = ((Education) entity).getFlagCurrentEducation() != null;
             ((EducationDTO) result).setDefault(isDefault);
         }
         return result;

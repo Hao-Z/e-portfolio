@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static COMP90082.team18.ePortfolioAPI.security.SecurityConstants.JWT_HEADER_STRING;
 import static COMP90082.team18.ePortfolioAPI.security.SecurityConstants.TOKEN_PREFIX;
@@ -91,8 +92,8 @@ public class UserController {
     }
 
     @PatchMapping("/users/{id}/about")
-    public AboutDTO patchAbout(@PathVariable Long id, @RequestBody AboutDTO aboutDTO){
-        User result = userService.patchUser(id, modelMapper.map(aboutDTO, User.class));
+    public AboutDTO patchAbout(@PathVariable Long id, @RequestBody Map<String, Object> updateFields){
+        User result = userService.patchUser(id, updateFields);
         return modelMapper.map(result, AboutDTO.class);
     }
 
@@ -102,8 +103,8 @@ public class UserController {
     }
 
     @PatchMapping("/users/{id}/introduction")
-    public IntroductionDTO patchIntroduction(@PathVariable Long id, @RequestBody IntroductionDTO introductionDTO){
-        User result = userService.patchUser(id, modelMapper.map(introductionDTO, User.class));
+    public IntroductionDTO patchIntroduction(@PathVariable Long id, @RequestBody Map<String, Object> updateFields){
+        User result = userService.patchUser(id, updateFields);
         return modelMapper.map(result, IntroductionDTO.class);
     }
 
@@ -113,26 +114,19 @@ public class UserController {
     }
 
     @PatchMapping("/users/{id}/profile")
-    public ProfileDTO patchProfile(@PathVariable Long id, @RequestBody ProfileDTO profileDTO){
-        User result = userService.patchUser(id, modelMapper.map(profileDTO, User.class));
+    public ProfileDTO patchProfile(@PathVariable Long id, @RequestBody Map<String, Object> updateFields){
+        User result = userService.patchUser(id, updateFields);
         return modelMapper.map(result, ProfileDTO.class);
     }
 
     @GetMapping("/users/{id}/user-information")
     public UserDTO getUser(@PathVariable Long id){
-        UserDTO user = null;
-        try{
-            user = modelMapper.map(userService.getUser(id), UserDTO.class);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        return user;
+        return modelMapper.map(userService.getUser(id), UserDTO.class);
     }
 
     @PatchMapping("/users/{id}/user-information")
-    public UserDTO patchUser(@PathVariable Long id, @RequestBody UserDTO userDTO){
-        User result = userService.patchUser(id, modelMapper.map(userDTO, User.class));
+    public UserDTO patchUser(@PathVariable Long id, @RequestBody Map<String, Object> updateFields){
+        User result = userService.patchUser(id, updateFields);
         return modelMapper.map(result, UserDTO.class);
     }
 }
