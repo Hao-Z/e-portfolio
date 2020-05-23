@@ -152,7 +152,6 @@ export class ExploreComponent implements OnInit {
           this.nodes.push({title: cv['industry'], key: cv['industry'], isLeaf: true, checked: false});
         }
       }
-      console.log(this.nodes);
       this.pageNum = result['number'];
       this.pageSize = result['size'];
       this.totalPage = result['totalPages'];
