@@ -120,7 +120,14 @@ public class UserController {
 
     @GetMapping("/users/{id}/user-information")
     public UserDTO getUser(@PathVariable Long id){
-        return modelMapper.map(userService.getUser(id), UserDTO.class);
+        UserDTO user = null;
+        try{
+            user = modelMapper.map(userService.getUser(id), UserDTO.class);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return user;
     }
 
     @PatchMapping("/users/{id}/user-information")

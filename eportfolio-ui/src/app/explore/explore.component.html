@@ -18,9 +18,8 @@
           </ng-template>
         </nz-content>
         <nz-content style="overflow-y: auto;max-height: 350px">
-          <nz-tree [nzData]="displayed_nodes" [nzSearchValue]="searchValue" nzCheckable
-            [nzCheckedKeys]="CheckedIndustry" (nzCheckBoxChange)="nzCheckIndustry($event)"
-            (nzSearchValueChange)="nzEvent($event)">
+          <nz-tree [nzHideUnMatched]="true" [nzData]="nodes" [nzSearchValue]="searchValue" nzCheckable nzMultiple
+            [(nzCheckedKeys)]="CheckedIndustry" (nzCheckBoxChange)="nzCheckIndustry($event)">
           </nz-tree>
         </nz-content>
         <nz-col nzOffset="4">
@@ -110,7 +109,7 @@
       </div>
       <br />
       <div align="center">
-        <nz-pagination *ngIf="totalPage!=1" (nzPageIndexChange)="changePage($event)" [nzPageIndex]=pageNum+1 [nzTotal]=totalPage
+        <nz-pagination *ngIf="totalPage!=1" (nzPageIndexChange)="changePage($event)" [nzPageIndex]=pageNum+1 [nzTotal]=totalPage*10
           nzShowQuickJumper></nz-pagination>
       </div>
       <br />

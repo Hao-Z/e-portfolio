@@ -11,29 +11,31 @@ export class FileDownloadExample implements OnInit {
   fileList: UploadFile[] = [
     {
       uid: '123213213',
+      size: 100,
       name: 'test.pdf',
       status: 'done',
-      size: 1234,
-      type: 'pdf',
-      url: ''
+      url: '',
+      type: 'sdfsdf'
     }
   ];
+
+  download = (file: UploadFile) => {
+    // for authorization purpose
+    // do sth to fetch the file from the backend and prompt user to download at the front
+  };
 
   constructor() {
   }
 
   ngOnInit() {
-
   }
 
   upload(info: UploadChangeParam) {
     if (info.file.status === 'done') {
       let fileList = info.fileList;
-
       fileList = fileList.map(file => {
         alert(file.name)
         if (file.response) {
-
           file.url = 'http://localhost:8080/download/' + file.response.url;
         }
         return file;
@@ -42,11 +44,4 @@ export class FileDownloadExample implements OnInit {
 
     }
   }
-
-    //   this.msg.success(`${info.file.name} file uploaded successfully`);
-    //   alert(info.file.response.url)
-    //   alert(info.file.response.uid)
-    // } else if (info.file.status === 'error') {
-    //   this.msg.error(`${info.file.name} file upload failed.`);
-    // }
 }
