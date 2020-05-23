@@ -1,11 +1,18 @@
 package COMP90082.team18.ePortfolioAPI.util;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.lang.reflect.Field;
 import java.util.Map;
-import java.util.Optional;
 
+@Service
 public class ObjectMethod {
-    public static <T> T update(T baseObj, T updateObj) {
+    @Autowired
+    private ModelMapper modelMapper;
+
+    public <T> T update(T baseObj, T updateObj) {
         try {
             for (Field field : baseObj.getClass().getDeclaredFields()) {
                 field.setAccessible(true);
@@ -17,17 +24,16 @@ public class ObjectMethod {
         return baseObj;
     }
 
-    public static <T> T update(T baseObj, Map<String, Object> updateObj) {
+    public <T> T update(T baseObj, Map<String, Object> updateObj) {
         try {
             for (Field field : baseObj.getClass().getDeclaredFields()) {
                 field.setAccessible(true);
                 if (updateObj.containsKey(field.getName())) {
                     Object value = updateObj.get(field.getName());
-                    if (value instanceof Optional) {
-                        field.set(baseObj, ((Optional) value).orElse(null));
-                    } else {
-                        field.set(baseObj, value);
+                    if(value != null){
+                        value = modelMapper.map(value, field.getType());
                     }
+                    field.set(baseObj, value);
                 }
             }
         } catch (IllegalAccessException e) {

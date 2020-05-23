@@ -15,7 +15,7 @@ import { AlertService } from 'src/app/core/services/alert.service';
 export class ModalVolunteerExperienceComponent implements OnInit {
 
   title: string = `Volunteer Experience`;
-  className: string = `volunteerexperience`
+  classname: string = `volunteerexperience`
   isNew: boolean = true;
 
   model: VolunteerExperience;
@@ -113,10 +113,17 @@ export class ModalVolunteerExperienceComponent implements OnInit {
   onSubmit() {
     console.log("CV VE submit form:", this.model);
     if (this.form.valid) {
-      this.apiService.create(userID, this.model, this.className)
-        .subscribe(() => {
-          this.alertService.success(`Successfully modified the ${this.title} section!`);
-        })
+      if (this.isNew) {
+        this.apiService.create(userID, this.model, this.classname)
+          .subscribe(() => {
+            this.alertService.success(`Successfully added the ${this.title} section!`);
+          })
+      } else {
+        this.apiService.update(userID, this.model, this.classname, this.model.id)
+          .subscribe(() => {
+            this.alertService.success(`Successfully modified the ${this.title} section!`);
+          })
+      }
     }
   }
 

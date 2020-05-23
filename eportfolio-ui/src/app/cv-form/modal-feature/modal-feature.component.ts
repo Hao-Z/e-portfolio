@@ -58,10 +58,17 @@ export class ModalFeatureComponent implements OnInit {
   onSubmit() {
     console.log("CV Feature submit form:", this.model);
 		if (this.form.valid) {
-      this.apiService.create(userID, this.model, this.title.toLowerCase())
-        .subscribe(() => {
-          this.alertService.success(`Successfully modified the ${this.title} section!`);
-        })
+      if (this.isNew) {
+        this.apiService.create(userID, this.model, this.classname)
+          .subscribe(() => {
+            this.alertService.success(`Successfully added the ${this.title} section!`);
+          })
+      } else {
+        this.apiService.update(userID, this.model, this.classname, this.model.id)
+          .subscribe(() => {
+            this.alertService.success(`Successfully modified the ${this.title} section!`);
+          })
+      }
     }
   }
 

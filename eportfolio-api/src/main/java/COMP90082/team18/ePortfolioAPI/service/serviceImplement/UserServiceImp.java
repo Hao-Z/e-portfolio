@@ -38,6 +38,8 @@ public class UserServiceImp implements UserService {
     private UserRepository userRepository;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private ObjectMethod objectMethod;
 
     public User signUp(User user) {
         if (checkUsername(user)) {
@@ -104,7 +106,7 @@ public class UserServiceImp implements UserService {
                 || (updateFields.containsKey("id") && updateFields.get("id") != id)) {
             throw new IllegalArgumentException("Forbidden argument.");
         }
-        return userRepository.save(ObjectMethod.update(originalUser, updateFields));
+        return userRepository.save(objectMethod.update(originalUser, updateFields));
     }
 
     @Override
