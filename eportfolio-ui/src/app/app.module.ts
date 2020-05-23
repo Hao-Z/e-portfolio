@@ -37,11 +37,13 @@ import { ModalHonourAwardComponent } from './cv-form/modal-honour-award/modal-ho
 import { ModalPublicationComponent } from './cv-form/modal-publication/modal-publication.component';
 import { ModalLanguageComponent } from './cv-form/modal-language/modal-language.component';
 import { ModalRecommendationComponent } from './cv-form/modal-recommendation/modal-recommendation.component';
-
-// import { FileDownloadExample } from './filedownloadExample/filedownload';
-
+import { PropertiesPipe } from "./core/properties-pipe";
+import { AboutComponent } from "./cv/cv-card/about.component"
+import { WorkExperienceComponent } from "./cv/cv-card/work-experience.component"
+import { FooterComponent } from "./footer/footer.component";
 import { CvShowComponent } from './cv-show/cv-show.component';
-import {FooterComponent} from "./footer/footer.component";
+import { FileDownloadExample } from './filedownloadExample/filedownload';
+
 
 
 registerLocaleData(zh);
@@ -81,6 +83,11 @@ export function patternValidationMessage(err, field: FormlyFieldConfig) {
     ModalPublicationComponent,
     ModalLanguageComponent,
     ModalRecommendationComponent,
+    PropertiesPipe,
+    AboutComponent,
+    WorkExperienceComponent,
+    FooterComponent,
+    FileDownloadExample,
     FooterComponent
   ],
   imports: [

@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<app-top-bar></app-top-bar>
+<div>
+
+  <nz-upload nzAction="http://localhost:8080/upload/65"
+    [nzHeaders]="{Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhZG1pbiI6ZmFsc2UsImlkIjo2NSwiZXhwIjoxNTkwMzA0NzMzLCJ1c2VybmFtZSI6Indhbmd6MTIifQ.EnZcY6_FOI825jB592kR_oGfHMWueDHaQpbAylC71g9qTIphTIoczvIi90XdLXjM8O1SVl2xQz9Wgi_8H7OOFW03TyGCqO-fDodqQHBEIUnkXnsu5bKspfDIu-P7fTEUG4Z0lSJVh8txj_eT8OYMQnc-oomTe90F2GJ9WFlLDn8'}"
+    [nzName]="'file'" [nzFileList]="fileList" (nzChange)="upload($event)">
+    <button nz-button><i nz-icon nzType="upload"></i>Click to Upload</button>
+  </nz-upload>
+
+</div>

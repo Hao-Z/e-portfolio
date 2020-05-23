@@ -9,14 +9,13 @@ export class CustomOptionsService {
   constructor() { }
   
   public getHttpOptions(params: HttpParams): {} {
-    const httpOptions = {
+    return {
       headers: new HttpHeaders({ 
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('jwt_token'),
       }),
       params: params,
-      observe: 'body' as 'response'
+      observe: 'response' 
     }
-    return httpOptions
   }
 }

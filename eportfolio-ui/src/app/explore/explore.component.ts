@@ -34,9 +34,9 @@ export class ExploreComponent implements OnInit {
 
   ngOnInit(): void {
     if(window.innerWidth < Number(770)){
-      this.width = "background-color: #F4F3F2;padding-left:0";
+      this.width = "background-color: #F4F3F2;padding-left:0;";
     }else{
-      this.width = "background-color: #F4F3F2;padding-left:256px";
+      this.width = "background-color: #F4F3F2; padding-left:256px;";
     }
     this.CheckedIndustry = null;
     this.sortValues = ['Age','Experience','Education'];

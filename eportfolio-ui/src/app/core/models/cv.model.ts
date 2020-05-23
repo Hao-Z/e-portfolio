@@ -15,7 +15,7 @@ import { Recommendation } from './recommendation.model';
 export interface Cv {
     introduction: Introduction;
     about: About;
-    feature: Feature;
+    feature: Feature[];
     workExperience: WorkExperience[];
     education: Education[];
     licenseCertification: LicenseCertification[];

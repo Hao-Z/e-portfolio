@@ -11,6 +11,6 @@
     </form>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
+    <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('Cross click')">Cancel</button>
     <button type="submit" ngbAutofocus class="btn btn-primary submit-button" [disabled]="!form.valid" (click)="onSubmit(); modal.close('Ok click');">Save</button>
 </div>
