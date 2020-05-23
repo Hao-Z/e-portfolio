@@ -1,22 +1,26 @@
 package COMP90082.team18.ePortfolioAPI.service.serviceImplement;
 
 import COMP90082.team18.ePortfolioAPI.entity.*;
+import COMP90082.team18.ePortfolioAPI.entity.userDataEntity.Education;
+import COMP90082.team18.ePortfolioAPI.entity.userDataEntity.WorkExperience;
 import COMP90082.team18.ePortfolioAPI.repository.*;
 import COMP90082.team18.ePortfolioAPI.service.GenericUserDataService;
+import COMP90082.team18.ePortfolioAPI.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
 public class GenericUserDataServiceImp implements GenericUserDataService {
     @Autowired
     private ApplicationContext context;
+    @Autowired
+    private UserService userService;
 
     @Override
     @SuppressWarnings("unchecked")
@@ -44,7 +48,8 @@ public class GenericUserDataServiceImp implements GenericUserDataService {
         User targetUser = new User();
         targetUser.setId(id);
         object.setUser(targetUser);
-        return (T) repository.save(object);
+        repository.save(object);
+        return resetDefault(object);
     }
 
     @Override
@@ -57,7 +62,8 @@ public class GenericUserDataServiceImp implements GenericUserDataService {
                         "Cannot find " + object.getClass().getSimpleName() + " with id = " + objectId));
         object.setId(targetObject.getId());
         object.setUser(targetObject.getUser());
-        return (T) repository.save(object);
+        repository.save(object);
+        return resetDefault(object);
     }
 
     @Override
@@ -67,7 +73,37 @@ public class GenericUserDataServiceImp implements GenericUserDataService {
         UserDataRepository repository = getRepository(T);
         GenericUserData targetObject = getObject(id, objectId, T).orElseThrow(() -> new NullPointerException(
                 "Cannot find " + T.getSimpleName() + " with id = " + objectId));
+        deleteDefault(targetObject);
         repository.delete(targetObject);
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T extends GenericUserData> T resetDefault(T object) {
+        if (object instanceof WorkExperience && ((WorkExperience) object).getFlagCurrentPosition() != null) {
+            Long userId = ((WorkExperience) object).getFlagCurrentPosition().getId();
+            Map updateField = Map.of("currentPosition", object);
+            userService.patchUser(userId, updateField);
+            object = (T) getObject(userId, object.getId(), object.getClass()).orElse(null);
+        } else if (object instanceof Education && ((Education) object).getFlagCurrentEducation() != null) {
+            Long userId = ((Education) object).getFlagCurrentEducation().getId();
+            Map updateField = Map.of("currentEducation", object);
+            userService.patchUser(userId, updateField);
+            object = (T) getObject(userId, object.getId(), object.getClass()).orElse(null);
+        }
+        return object;
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T extends GenericUserData> void deleteDefault(T object) {
+        if (object instanceof WorkExperience && ((WorkExperience) object).getFlagCurrentPosition() != null) {
+            Long userId = ((WorkExperience) object).getFlagCurrentPosition().getId();
+            Map updateField = Map.of("currentPosition", Optional.empty());
+            userService.patchUser(userId, updateField);
+        } else if (object instanceof Education && ((Education) object).getFlagCurrentEducation() != null) {
+            Long userId = ((Education) object).getFlagCurrentEducation().getId();
+            Map updateField = Map.of("currentEducation", Optional.empty());
+            userService.patchUser(userId, updateField);
+        }
     }
 
     @SuppressWarnings("unchecked")

@@ -1,6 +1,5 @@
 package COMP90082.team18.ePortfolioAPI.exception;
 
-import com.auth0.jwt.exceptions.SignatureVerificationException;
 import org.modelmapper.MappingException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -17,24 +16,28 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     @ExceptionHandler(value = {MappingException.class})
     protected ResponseEntity<Object> handleMappingException(RuntimeException ex, WebRequest request) {
+//        ex.printStackTrace();
         String bodyOfResponse = "Wrong data format.";
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
     @ExceptionHandler(value = {IllegalArgumentException.class})
     protected ResponseEntity<Object> handleIllegalArgumentException(RuntimeException ex, WebRequest request) {
+//        ex.printStackTrace();
         String bodyOfResponse = ex.getMessage();
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
     @ExceptionHandler(value = {NullPointerException.class})
     protected ResponseEntity<Object> handleNullPointerException(RuntimeException ex, WebRequest request) {
+//        ex.printStackTrace();
         String bodyOfResponse = ex.getMessage();
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
     @ExceptionHandler(value = {AccessDeniedException.class})
     protected ResponseEntity<Object> handleAccessDeniedException(RuntimeException ex, WebRequest request) {
+//        ex.printStackTrace();
         String bodyOfResponse = ex.getMessage();
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.FORBIDDEN, request);
     }

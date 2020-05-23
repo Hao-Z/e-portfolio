@@ -1,6 +1,7 @@
 package COMP90082.team18.ePortfolioAPI.entity.userDataEntity;
 
 import COMP90082.team18.ePortfolioAPI.entity.GenericUserData;
+import COMP90082.team18.ePortfolioAPI.entity.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -22,4 +23,7 @@ public class Education extends GenericUserData {
     private String activityAndSociety;
     private String description;
     private File media;
+
+    @OneToOne(mappedBy = "currentEducation")
+    private User flagCurrentEducation;
 }
