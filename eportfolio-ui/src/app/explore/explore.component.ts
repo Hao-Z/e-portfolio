@@ -28,8 +28,8 @@ export class ExploreComponent implements OnInit {
   nodes: NzTreeNodeOptions[];
   displayed_nodes: NzTreeNodeOptions[];
   gender_nodes: NzTreeNodeOptions[] = [
-    {title: 'Male', key: 'Male', isLeaf: true, checked: false},
-    {title: 'Female', key: 'Female', isLeaf: true, checked: false},
+    {title: 'Male', key: '0', isLeaf: true, checked: false},
+    {title: 'Female', key: '1', isLeaf: true, checked: false},
   ];
 
   ngOnInit(): void {
@@ -144,9 +144,12 @@ export class ExploreComponent implements OnInit {
     this.http.get<any>(globals.backend_path + "explore/filters?" + para, HttpOptions).subscribe((result) => {
       this.userDatas = [];
       this.nodes = [];
+
       for(let cv of result['content']){
         this.userDatas.push(cv);
-        if(this.nodes.indexOf(cv['industry'])==null){
+
+        if(this.nodes.indexOf(cv['industry'])==-1){
+          console.log(this.nodes);
           this.nodes.push({title: cv['industry'], key: cv['industry'], isLeaf: true, checked: false});
         }
       }
