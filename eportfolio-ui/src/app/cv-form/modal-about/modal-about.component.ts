@@ -5,6 +5,7 @@ import { About } from 'src/app/core/models/about.model';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { userID } from 'src/global';
 import { UniqueApiService } from 'src/app/core/services/unique-api.service';
+import { AlertService } from 'src/app/core/services/alert.service';
 
 @Component({
   selector: 'app-modal-about',
@@ -37,7 +38,8 @@ export class ModalAboutComponent implements OnInit {
 
   constructor(
     public modal: NgbActiveModal,
-    private apiService: UniqueApiService
+    private apiService: UniqueApiService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit(): void {
@@ -51,8 +53,8 @@ export class ModalAboutComponent implements OnInit {
   onSubmit() {
     if (this.form.valid) {
       this.apiService.create(userID, this.model, this.classname)
-        .subscribe((result: About) => {
-          console.log("CV About create response:", JSON.stringify(result))
+        .subscribe(() => {
+          this.alertService.success(`Successfully modified the ${this.title} section!`);
         })
     }
   }

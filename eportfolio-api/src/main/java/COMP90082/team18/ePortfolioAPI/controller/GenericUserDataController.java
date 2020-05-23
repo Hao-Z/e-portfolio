@@ -114,13 +114,15 @@ public class GenericUserDataController {
     private <T extends GenericUserData> T toEntity(Long userId, Map<String, Object> dto, Class T) {
         T result = modelMapper.map(dto, (Type) T);
         if (result instanceof WorkExperience) {
-            if (dto.containsKey("isCurrentWork") && (boolean) dto.get("isCurrentWork")) {
+            if (dto.containsKey("isCurrentWork")
+                    && dto.get("isCurrentWork") != null && (boolean) dto.get("isCurrentWork")) {
                 User targetUser = new User();
                 targetUser.setId(userId);
                 ((WorkExperience) result).setFlagCurrentPosition(targetUser);
             }
         } else if (result instanceof Education) {
-            if (dto.containsKey("isDefault") && (boolean) dto.get("isDefault")) {
+            if (dto.containsKey("isDefault")
+                    && dto.get("isDefault")!= null && (boolean) dto.get("isDefault")) {
                 User targetUser = new User();
                 targetUser.setId(userId);
                 ((Education) result).setFlagCurrentEducation(targetUser);

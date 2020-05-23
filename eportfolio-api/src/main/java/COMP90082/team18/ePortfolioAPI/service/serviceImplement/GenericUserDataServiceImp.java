@@ -45,6 +45,7 @@ public class GenericUserDataServiceImp implements GenericUserDataService {
     @PreAuthorize("hasPermission(#id, 'write')")
     public <T extends GenericUserData> T postObject(Long id, T object) {
         UserDataRepository repository = getRepository(object.getClass());
+        object.setId(null);
         User targetUser = new User();
         targetUser.setId(id);
         object.setUser(targetUser);
@@ -62,6 +63,14 @@ public class GenericUserDataServiceImp implements GenericUserDataService {
                         "Cannot find " + object.getClass().getSimpleName() + " with id = " + objectId));
         object.setId(targetObject.getId());
         object.setUser(targetObject.getUser());
+        if(object instanceof WorkExperience && ((WorkExperience) object).getFlagCurrentPosition() != null){
+            targetObject.getUser().setCurrentPosition((WorkExperience) object);
+            ((WorkExperience) object).setFlagCurrentPosition(targetObject.getUser());
+        }
+        if(object instanceof Education && ((Education) object).getFlagCurrentEducation() != null){
+            targetObject.getUser().setCurrentEducation((Education) object);
+            ((Education) object).setFlagCurrentEducation(targetObject.getUser());
+        }
         repository.save(object);
         return resetDefault(object);
     }
@@ -81,13 +90,15 @@ public class GenericUserDataServiceImp implements GenericUserDataService {
     private <T extends GenericUserData> T resetDefault(T object) {
         if (object instanceof WorkExperience && ((WorkExperience) object).getFlagCurrentPosition() != null) {
             Long userId = ((WorkExperience) object).getFlagCurrentPosition().getId();
-            Map updateField = Map.of("currentPosition", object);
-            userService.patchUser(userId, updateField);
+            Map updateFields = new HashMap<String, Object>();
+            updateFields.put("currentPosition", object);
+            userService.patchUser(userId, updateFields);
             object = (T) getObject(userId, object.getId(), object.getClass()).orElse(null);
         } else if (object instanceof Education && ((Education) object).getFlagCurrentEducation() != null) {
             Long userId = ((Education) object).getFlagCurrentEducation().getId();
-            Map updateField = Map.of("currentEducation", object);
-            userService.patchUser(userId, updateField);
+            Map updateFields = new HashMap<String, Object>();
+            updateFields.put("currentEducation", object);
+            userService.patchUser(userId, updateFields);
             object = (T) getObject(userId, object.getId(), object.getClass()).orElse(null);
         }
         return object;
@@ -97,12 +108,14 @@ public class GenericUserDataServiceImp implements GenericUserDataService {
     private <T extends GenericUserData> void deleteDefault(T object) {
         if (object instanceof WorkExperience && ((WorkExperience) object).getFlagCurrentPosition() != null) {
             Long userId = ((WorkExperience) object).getFlagCurrentPosition().getId();
-            Map updateField = Map.of("currentPosition", Optional.empty());
-            userService.patchUser(userId, updateField);
+            Map updateFields = new HashMap<String, Object>();
+            updateFields.put("currentPosition", null);
+            userService.patchUser(userId, updateFields);
         } else if (object instanceof Education && ((Education) object).getFlagCurrentEducation() != null) {
             Long userId = ((Education) object).getFlagCurrentEducation().getId();
-            Map updateField = Map.of("currentEducation", Optional.empty());
-            userService.patchUser(userId, updateField);
+            Map updateFields = new HashMap<String, Object>();
+            updateFields.put("currentEducation", null);
+            userService.patchUser(userId, updateFields);
         }
     }
 

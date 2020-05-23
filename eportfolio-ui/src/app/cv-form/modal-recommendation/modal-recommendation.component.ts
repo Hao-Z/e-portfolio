@@ -5,6 +5,7 @@ import { Recommendation } from 'src/app/core/models/recommendation.model';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ApiService } from 'src/app/core/services/api.service';
 import { userID } from 'src/global';
+import { AlertService } from 'src/app/core/services/alert.service';
 
 @Component({
   selector: 'app-modal-recommendation',
@@ -14,10 +15,12 @@ import { userID } from 'src/global';
 export class ModalRecommendationComponent implements OnInit {
 
   title: string = `Recommendation`;
+  classname: string = `recommendation`;
+  isNew: boolean = true;
 
+  model: Recommendation;
   form = new FormGroup({});
   options: FormlyFormOptions = {};
-  model: Recommendation;
   fields: FormlyFieldConfig[] = [
     {
       key: 'referrerName',
@@ -58,26 +61,36 @@ export class ModalRecommendationComponent implements OnInit {
 
   constructor(
     public modal: NgbActiveModal,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit(): void {
-    this.model = {
-      id: null,
-      referrerName: null,
-      referrerTitle: null,
-      description: null,
-      media: null,
+    if (this.isNew) {
+      this.model = {
+        id: null,
+        referrerName: null,
+        referrerTitle: null,
+        description: null,
+        media: null,
+      }
     }
   }
 
   onSubmit() {
     console.log("CV Recommendation submit form:", this.model);
 		if (this.form.valid) {
-      this.apiService.create(userID, this.model, this.title.toLowerCase())
-        .subscribe((result: Recommendation) => {
-          console.log("CV Recommendation create response:", JSON.stringify(result))
-        })
+      if (this.isNew) {
+        this.apiService.create(userID, this.model, this.classname)
+          .subscribe(() => {
+            this.alertService.success(`Successfully added the ${this.title} section!`);
+          })
+      } else {
+        this.apiService.update(userID, this.model, this.classname, this.model.id)
+          .subscribe(() => {
+            this.alertService.success(`Successfully modified the ${this.title} section!`);
+          })
+      }
     }
   }
 

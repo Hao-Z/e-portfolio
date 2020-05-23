@@ -5,6 +5,7 @@ import { VolunteerExperience } from 'src/app/core/models/volunteer-experience.mo
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ApiService } from 'src/app/core/services/api.service';
 import { userID } from 'src/global';
+import { AlertService } from 'src/app/core/services/alert.service';
 
 @Component({
   selector: 'app-modal-volunteer-experience',
@@ -14,11 +15,12 @@ import { userID } from 'src/global';
 export class ModalVolunteerExperienceComponent implements OnInit {
 
   title: string = `Volunteer Experience`;
-  className: string = `volunteerexperience`
+  classname: string = `volunteerexperience`
+  isNew: boolean = true;
 
+  model: VolunteerExperience;
   form = new FormGroup({});
   options: FormlyFormOptions = {};
-  model: VolunteerExperience;
   fields: FormlyFieldConfig[] = [
     {
       key: 'organizationName',
@@ -89,29 +91,39 @@ export class ModalVolunteerExperienceComponent implements OnInit {
 
   constructor(
     public modal: NgbActiveModal,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit(): void {
-    this.model = {
-      id: null,
-      organizationName: null,
-      role: null,
-      cause: null,
-      startDate: null,
-      endDate: null,
-      description: null,
-      media: null,
+    if (this.isNew) {
+      this.model = {
+        id: null,
+        organizationName: null,
+        role: null,
+        cause: null,
+        startDate: null,
+        endDate: null,
+        description: null,
+        media: null,
+      }
     }
   }
 
   onSubmit() {
     console.log("CV VE submit form:", this.model);
     if (this.form.valid) {
-      this.apiService.create(userID, this.model, this.className)
-        .subscribe((result: VolunteerExperience) => {
-          console.log("CV VE create response:", JSON.stringify(result))
-        })
+      if (this.isNew) {
+        this.apiService.create(userID, this.model, this.classname)
+          .subscribe(() => {
+            this.alertService.success(`Successfully added the ${this.title} section!`);
+          })
+      } else {
+        this.apiService.update(userID, this.model, this.classname, this.model.id)
+          .subscribe(() => {
+            this.alertService.success(`Successfully modified the ${this.title} section!`);
+          })
+      }
     }
   }
 

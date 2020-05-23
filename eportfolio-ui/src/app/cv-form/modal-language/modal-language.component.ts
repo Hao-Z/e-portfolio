@@ -5,6 +5,7 @@ import { Language } from 'src/app/core/models/language.model';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ApiService } from 'src/app/core/services/api.service';
 import { userID } from 'src/global';
+import { AlertService } from 'src/app/core/services/alert.service';
 
 @Component({
   selector: 'app-modal-language',
@@ -14,10 +15,12 @@ import { userID } from 'src/global';
 export class ModalLanguageComponent implements OnInit {
 
   title: string = `Language`;
+  classname: string = `language`;
+  isNew: boolean = true;
 
+  model: Language;
   form = new FormGroup({});
   options: FormlyFormOptions = {};
-  model: Language;
   fields: FormlyFieldConfig[] = [
     {
       key: 'language',
@@ -38,24 +41,34 @@ export class ModalLanguageComponent implements OnInit {
 
   constructor(
     public modal: NgbActiveModal,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit(): void {
-    this.model = {
-      id: null,
-      language: null,
-      proficiency: null,
+    if (this.isNew) {
+      this.model = {
+        id: null,
+        language: null,
+        proficiency: null,
+      }
     }
   }
 
   onSubmit() {
     console.log("CV language submit form:", this.model);
 		if (this.form.valid) {
-      this.apiService.create(userID, this.model, this.title.toLowerCase())
-        .subscribe((result: Language) => {
-          console.log("CV language create response:", JSON.stringify(result))
-        })
+      if (this.isNew) {
+        this.apiService.create(userID, this.model, this.classname)
+          .subscribe(() => {
+            this.alertService.success(`Successfully added the ${this.title} section!`);
+          })
+      } else {
+        this.apiService.update(userID, this.model, this.classname, this.model.id)
+          .subscribe(() => {
+            this.alertService.success(`Successfully modified the ${this.title} section!`);
+          })
+      }
     }
   }
 

@@ -5,6 +5,7 @@ import { Publication } from 'src/app/core/models/publication.model';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ApiService } from 'src/app/core/services/api.service';
 import { userID } from 'src/global';
+import { AlertService } from 'src/app/core/services/alert.service';
 
 @Component({
   selector: 'app-modal-publication',
@@ -13,11 +14,13 @@ import { userID } from 'src/global';
 })
 export class ModalPublicationComponent implements OnInit {
 
-  title: string = `Education`;
+  title: string = `Publication`;
+  classname: string = `publication`;
+  isNew: boolean = true;
 
+  model: Publication;
   form = new FormGroup({});
   options: FormlyFormOptions = {};
-  model: Publication;
   fields: FormlyFieldConfig[] = [
     {
       key: 'title',
@@ -73,28 +76,38 @@ export class ModalPublicationComponent implements OnInit {
 
   constructor(
     public modal: NgbActiveModal,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit(): void {
-    this.model = {
-      id: null,
-      title: null,
-      publicationPublisher: null,
-      publicationDate: null,
-      publicationURL: null,
-      description: null,
-      media: null,
+    if (this.isNew) {
+      this.model = {
+        id: null,
+        title: null,
+        publicationPublisher: null,
+        publicationDate: null,
+        publicationURL: null,
+        description: null,
+        media: null,
+      }
     }
   }
 
   onSubmit() {
     console.log("CV publication submit form:", this.model);
 		if (this.form.valid) {
-      this.apiService.create(userID, this.model, this.title.toLowerCase())
-        .subscribe((result: Publication) => {
-          console.log("CV publication create response:", JSON.stringify(result))
-        })
+      if (this.isNew) {
+        this.apiService.create(userID, this.model, this.classname)
+          .subscribe(() => {
+            this.alertService.success(`Successfully added the ${this.title} section!`);
+          })
+      } else {
+        this.apiService.update(userID, this.model, this.classname, this.model.id)
+          .subscribe(() => {
+            this.alertService.success(`Successfully modified the ${this.title} section!`);
+          })
+      }
     }
   }
 

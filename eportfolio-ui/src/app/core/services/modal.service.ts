@@ -14,6 +14,7 @@ import { ModalPublicationComponent } from 'src/app/cv-form/modal-publication/mod
 import { ModalLanguageComponent } from 'src/app/cv-form/modal-language/modal-language.component';
 import { ModalRecommendationComponent } from 'src/app/cv-form/modal-recommendation/modal-recommendation.component';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { AlertService } from './alert.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,8 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 export class ModalService {
 
   constructor(
-    private ngbModalService: NgbModal,) {
+    private ngbModalService: NgbModal,
+    private alertService: AlertService) {
   }
 
   lists: Record<string, string> = {
@@ -74,7 +76,7 @@ export class ModalService {
 
   closeResult = '';
 
-  openModal<T>(classname: string, item: T | null, isNew: boolean) {
+  openModal<T>(classname: string, isNew: boolean, item?: T) {
     var modalComp: Component;
     this.getModal(classname).subscribe(res => {
       modalComp = res;
@@ -87,11 +89,14 @@ export class ModalService {
     if (!isNew) {
         modalRef.componentInstance.model = item as T
     }
-    modalRef.result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+    modalRef.result.then(
+      (result) => {
+        this.closeResult = `Closed with: ${result}`;
+        this.alertService.msg("Close only!")
+      }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        this.alertService.msg("Close only!")
+      });
   }
 
   private getDismissReason(reason: any): string {

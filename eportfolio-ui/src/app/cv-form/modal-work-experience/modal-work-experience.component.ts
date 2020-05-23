@@ -6,6 +6,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ApiService } from 'src/app/core/services/api.service';
 import { userID } from 'src/global';
 import { DataService } from '../../core/services/data.service';
+import { AlertService } from 'src/app/core/services/alert.service';
 
 @Component({
   selector: 'app-modal-work-experience',
@@ -73,7 +74,7 @@ export class ModalWorkExperienceComponent implements OnInit {
       fieldGroup: [
         {
           className: 'col-6',
-          key: 'startYear',
+          key: 'startDate',
           type: 'datepicker',
           templateOptions: {
             label: 'Start Date',
@@ -82,7 +83,7 @@ export class ModalWorkExperienceComponent implements OnInit {
         },
         {
           className: 'col-6',
-          key: 'endYear',
+          key: 'endDate',
           type: 'datepicker',
           templateOptions: {
             placeholder: 'dd-MM-yyyy',
@@ -116,7 +117,8 @@ export class ModalWorkExperienceComponent implements OnInit {
   constructor(
     public modal: NgbActiveModal,
     private dataService: DataService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit(): void {
@@ -140,10 +142,17 @@ export class ModalWorkExperienceComponent implements OnInit {
   onSubmit() {
     console.log("CV WE submit form:", this.model);
 		if (this.form.valid) {
-      this.apiService.create(userID, this.model, this.classname)
-        .subscribe((result: WorkExperience) => {
-          alert("Form submitted successfully!");
-        })
+      if (this.isNew) {
+        this.apiService.create(userID, this.model, this.classname)
+          .subscribe(() => {
+            this.alertService.success(`Successfully added the ${this.title} section!`);
+          })
+      } else {
+        this.apiService.update(userID, this.model, this.classname, this.model.id)
+          .subscribe(() => {
+            this.alertService.success(`Successfully modified the ${this.title} section!`);
+          })
+      }
     }
   }
 

@@ -3,6 +3,7 @@ import { ModalService } from 'src/app/core/services/modal.service';
 import { UniqueApiService } from 'src/app/core/services/unique-api.service';
 import { About } from 'src/app/core/models/about.model';
 import { userID } from 'src/global';
+import { AlertService } from 'src/app/core/services/alert.service';
 
 @Component({
     selector: 'card-about',
@@ -31,7 +32,8 @@ export class AboutComponent {
 
     constructor(
         public modalService: ModalService,
-        private apiService: UniqueApiService
+        private apiService: UniqueApiService,
+        private alertService: AlertService
     ) { }
 
     deleteForm() {
@@ -39,12 +41,12 @@ export class AboutComponent {
             summary: ""
         }
         this.apiService.update(userID, nullAbout, 'about')          
-          .subscribe(result => {
-            alert("Delete successfully!");
+          .subscribe(() => {
+            this.alertService.success("Successfully deleted!");
           })
     }
     editForm() {
-        this.modalService.openModal(this.classname, this.data, false)
+        this.modalService.openModal(this.classname, false, this.data)
     }
 
 }

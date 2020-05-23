@@ -5,6 +5,7 @@ import { HonourAward } from 'src/app/core/models/honour-award.model';
 import { ApiService } from 'src/app/core/services/api.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { userID } from 'src/global';
+import { AlertService } from 'src/app/core/services/alert.service';
 
 @Component({
   selector: 'app-modal-honour-award',
@@ -14,10 +15,12 @@ import { userID } from 'src/global';
 export class ModalHonourAwardComponent implements OnInit {
 
   title: string = `Honour Award`;
+  classname: string = `honouraward`;
+  isNew: boolean = true;
 
+  model: HonourAward;
   form = new FormGroup({});
   options: FormlyFormOptions = {};
-  model: HonourAward;
   fields: FormlyFieldConfig[] = [
     {
       key: 'title',
@@ -64,27 +67,37 @@ export class ModalHonourAwardComponent implements OnInit {
 
   constructor(
     public modal: NgbActiveModal,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit(): void {
-    this.model = {
-      id: null,
-      title: null,
-      associatedWith: null,
-      issuer: null,
-      issueDate: null,
-      description: null,
+    if (this.isNew) {
+      this.model = {
+        id: null,
+        title: null,
+        associatedWith: null,
+        issuer: null,
+        issueDate: null,
+        description: null,
+      }
     }
   }
 
   onSubmit() {
     console.log("CV HA submit form:", this.model);
 		if (this.form.valid) {
-      this.apiService.create(userID, this.model, this.title.toLowerCase().split(" ").join(""))
-        .subscribe((result: HonourAward) => {
-          console.log("CV HA create response:", JSON.stringify(result))
+      if (this.isNew) {
+        this.apiService.create(userID, this.model, this.classname)
+          .subscribe(() => {
+            this.alertService.success(`Successfully added the ${this.title} section!`);
+          })
+      } else {
+        this.apiService.update(userID, this.model, this.classname, this.model.id)
+        .subscribe(() => {
+          this.alertService.success(`Successfully modified the ${this.title} section!`);
         })
+      }
     }
   }
 
