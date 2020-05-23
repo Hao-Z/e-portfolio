@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class VolunteerExperienceDTO extends DTO {
+    private Long id;
     private String organizationName;
     private String role;
     private String cause;

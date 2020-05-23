@@ -1,6 +1,7 @@
 package COMP90082.team18.ePortfolioAPI.entity.userDataEntity;
 
 import COMP90082.team18.ePortfolioAPI.entity.GenericUserData;
+import COMP90082.team18.ePortfolioAPI.entity.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -21,4 +22,7 @@ public class WorkExperience extends GenericUserData {
     private LocalDate endDate;
     private String description;
     private File media;
+
+    @OneToOne(mappedBy = "currentPosition")
+    private User flagCurrentPosition;
 }
