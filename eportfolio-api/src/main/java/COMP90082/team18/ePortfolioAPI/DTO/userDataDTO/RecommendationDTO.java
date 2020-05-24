@@ -13,5 +13,5 @@ public class RecommendationDTO extends DTO {
     private String referrerName;
     private String referrerTitle;
     private String description;
-    private File media;
+    private String media;
 }

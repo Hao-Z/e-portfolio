@@ -18,5 +18,5 @@ public class PublicationDTO extends DTO {
     private LocalDate publicationDate;
     private String publicationURL;
     private String description;
-    private File media;
+    private String media;
 }

@@ -24,7 +24,7 @@ public class GenericUserDataServiceImp implements GenericUserDataService {
 
     @Override
     @SuppressWarnings("unchecked")
-    @PreAuthorize("hasPermission(#id, 'read')")
+    @PreAuthorize("hasPermission(#id, 'User', 'read')")
     public <T extends GenericUserData> List<T> getAllObjects(Long id, Class T) {
         User targetUser = new User();
         targetUser.setId(id);
@@ -34,7 +34,7 @@ public class GenericUserDataServiceImp implements GenericUserDataService {
 
     @Override
     @SuppressWarnings("unchecked")
-    @PreAuthorize("hasPermission(#id, 'read')")
+    @PreAuthorize("hasPermission(#objectId, #T.getSimpleName(), 'read')")
     public <T extends GenericUserData> Optional<T> getObject(Long id, Long objectId, Class T) {
         UserDataRepository repository = getRepository(T);
         return repository.findById(objectId);
@@ -42,7 +42,7 @@ public class GenericUserDataServiceImp implements GenericUserDataService {
 
     @Override
     @SuppressWarnings("unchecked")
-    @PreAuthorize("hasPermission(#id, 'write')")
+    @PreAuthorize("hasPermission(#id, 'User', 'write')")
     public <T extends GenericUserData> T postObject(Long id, T object) {
         UserDataRepository repository = getRepository(object.getClass());
         object.setId(null);
@@ -55,7 +55,7 @@ public class GenericUserDataServiceImp implements GenericUserDataService {
 
     @Override
     @SuppressWarnings("unchecked")
-    @PreAuthorize("hasPermission(#id, 'write')")
+    @PreAuthorize("hasPermission(#objectId, #T.getSimpleName(), 'write')")
     public <T extends GenericUserData> T putObject(Long id, Long objectId, T object) {
         UserDataRepository repository = getRepository(object.getClass());
         GenericUserData targetObject = getObject(id, objectId, object.getClass())
@@ -77,7 +77,7 @@ public class GenericUserDataServiceImp implements GenericUserDataService {
 
     @Override
     @SuppressWarnings("unchecked")
-    @PreAuthorize("hasPermission(#id, 'write')")
+    @PreAuthorize("hasPermission(#objectId, #T.getSimpleName(), 'write')")
     public <T extends GenericUserData> void deleteObject(Long id, Long objectId, Class T) {
         UserDataRepository repository = getRepository(T);
         GenericUserData targetObject = getObject(id, objectId, T).orElseThrow(() -> new NullPointerException(

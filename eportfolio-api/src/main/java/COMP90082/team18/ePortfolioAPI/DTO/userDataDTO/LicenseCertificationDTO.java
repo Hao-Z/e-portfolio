@@ -20,5 +20,5 @@ public class LicenseCertificationDTO extends DTO {
     private LocalDate expirationDate;
     private String credentialID;
     private String credentialURL;
-    private File media;
+    private String media;
 }

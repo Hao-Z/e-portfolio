@@ -20,5 +20,5 @@ public class VolunteerExperienceDTO extends DTO {
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate endDate;
     private String description;
-    private File media;
+    private String media;
 }

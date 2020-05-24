@@ -17,5 +17,6 @@ public class Project extends GenericUserData {
     private LocalDate endDate;
     private String projectURL;
     private String description;
-    private File media;
+    @Column(length = 2048)
+    private String media;
 }
