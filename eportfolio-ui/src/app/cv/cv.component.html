@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<div *ngFor="let item of cvItems">
+<div class="parent" *ngFor="let item of cvItems">
   <ng-template [ngIf]="item=='introduction'" [ngIfElse]="about">
-    <div class="card-body" style="background-color: white">
+    <div class="card-body cover" style="min-height: 200px;">
       <button class="btn add-btn a-right" (click)="editForm('introduction')" type="button" style="margin-left:15px;"><i
           class="fa fa-pencil" aria-hidden="true"></i></button>
       <div class="dropdown a-right">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="MoreButton" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false" style="margin-left:30px;">
-          More...
+        <button class="btn btn-secondary" type="button" id="MoreButton" aria-haspopup="true" aria-expanded="false"
+          style="margin-left:20px;">
+          Share
         </button>
-        <div class="dropdown-menu" aria-labelledby="MoreButton">
+        <!-- <div class="dropdown-menu" aria-labelledby="MoreButton">
           <a class="dropdown-item" href="#">Share CV via Secure Link</a>
-        </div>
+        </div> -->
       </div>
       <div class="dropdown a-right">
         <button class="btn btn-primary dropdown-toggle" type="button" id="AddSectionButton" data-toggle="dropdown"
@@ -21,19 +21,32 @@
         <div class="dropdown-menu" aria-labelledby="AddSectionButton">
           <ng-container *ngFor="let item of cvItems">
             <ng-container *ngIf="!(item=='introduction') && !(cvForms[item].summary)">
-              <a class="dropdown-item" href="#" (click)="modalService.openModal(item, true)">{{modalService.getTitle(item)}}</a>
+              <a class="dropdown-item" href="#"
+                (click)="modalService.openModal(item, true)">{{modalService.getTitle(item)}}</a>
             </ng-container>
           </ng-container>
         </div>
       </div>
-      <img src="assets/untitled.png" class="center-block rounded-circle" alt="anonymous-user" width="80px"
-        height="80px">
-      <hr />
-      <div *ngFor="let property of cvForms[item] | appProperties">
-        {{cvForms[item][property]}}
+      <img src="assets/untitled.png" class="rounded-circle" alt="anonymous-user" width="120px" height="120px">
+      <!-- profilePhoto -->
+      <div class="square"></div>
+      <div class="col-16">
+        <h2>{{cvForms[item].firstName}} {{cvForms[item].lastName}}
+          <span> {{cvForms[item].industry}} </span></h2>
+        <h5>{{cvForms[item].headline}}</h5>
+        <hr>
+        <p>
+          {{cvForms[item].gender}}, born at {{cvForms[item].birthday}},
+          <em>  Living in {{cvForms[item].currentPosition}} currently</em>
+        </p>
+        <p>{{cvForms[item].currentEducation}}</p>
+        <p>{{cvForms[item].email}}</p>
+        <p>{{cvForms[item].phoneNumber}}</p>
+        <p>{{cvForms[item].address}}, {{cvForms[item].postalCode}}, {{cvForms[item].country}}</p>
+
       </div>
     </div>
-    <P></P>
+    <!-- <P></P> -->
   </ng-template>
 
   <ng-template #about>
