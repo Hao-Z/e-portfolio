@@ -12,5 +12,6 @@ import java.io.File;
 @EqualsAndHashCode(callSuper = true)
 public class Feature extends GenericUserData {
     private String link;
-    private File media;
+    @Column(length = 2048)
+    private String media;
 }

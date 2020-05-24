@@ -17,5 +17,6 @@ public class Publication extends GenericUserData {
     private LocalDate publicationDate;
     private String publicationURL;
     private String description;
-    private File media;
+    @Column(length = 2048)
+    private String media;
 }

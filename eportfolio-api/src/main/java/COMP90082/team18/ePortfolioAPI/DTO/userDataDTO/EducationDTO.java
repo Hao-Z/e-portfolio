@@ -25,6 +25,6 @@ public class EducationDTO extends DTO {
     private LocalDate endYear;
     private String activityAndSociety;
     private String description;
-    private File media;
+    private String media;
 
 }

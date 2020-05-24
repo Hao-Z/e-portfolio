@@ -22,7 +22,8 @@ public class Education extends GenericUserData {
     private LocalDate endYear;
     private String activityAndSociety;
     private String description;
-    private File media;
+    @Column(length = 2048)
+    private String media;
 
     @OneToOne(mappedBy = "currentEducation")
     private User flagCurrentEducation;
