@@ -31,6 +31,8 @@ public class User {
 
     private boolean admin;
 
+    private boolean isPublic;
+
     private String firstName;
     private String lastName;
     private String headline;
@@ -40,7 +42,8 @@ public class User {
     private String country;
     private String postalCode;
     private String address;
-    private File profilePhoto;
+    @Column(length = 2048)
+    private String profilePhoto;
     private String phoneNumber;
     private String summary;
 
