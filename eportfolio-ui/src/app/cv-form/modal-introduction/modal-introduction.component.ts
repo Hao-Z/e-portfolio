@@ -7,6 +7,8 @@ import { UniqueApiService } from "../../core/services/unique-api.service";
 import { Introduction } from "../../core/models/introduction.model";
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AlertService } from 'src/app/core/services/alert.service';
+import { UploadFile, UploadChangeParam } from 'ng-zorro-antd';
+import { FileService } from 'src/app/core/services/file.service';
 
 @Component({
   selector: 'app-modal-introduction',
@@ -14,6 +16,14 @@ import { AlertService } from 'src/app/core/services/alert.service';
   styleUrls: ['./modal-introduction.component.css'],
 })
 export class ModalIntroductionComponent implements OnInit {
+
+  // fileList: UploadFile[] = [];
+
+  // fileHeader: {} = {
+  //   'Authorization': localStorage.getItem('jwt_token')
+  // }
+
+  // fileAction: string = "http://localhost:8080/upload/"+userID
 
   title: string = `Introduction`;
   classname: string = `introduction`
@@ -168,10 +178,13 @@ export class ModalIntroductionComponent implements OnInit {
     }, 
     {
       key: 'profilePhoto',
-      type: 'input',
+      type: 'file',
       templateOptions: {
-        type: 'file',
         label: 'Profile',
+        filelist: this.fileService.toFileList(""),
+        fileheader: this.fileService.getUploadHeader(),
+        action: this.fileService.getUploadUrl(userID),
+        showbutton: true,
       }
     } 
   ];
@@ -180,8 +193,13 @@ export class ModalIntroductionComponent implements OnInit {
     public modal: NgbActiveModal,
     private dataService: DataService,
     private apiService: UniqueApiService,
-    private alertService: AlertService
-  ) { }
+    private alertService: AlertService,
+    private fileService: FileService
+  ) {
+    this.fileService.messageObserve.subscribe((res: string) => {
+      this.model.profilePhoto = res
+    })
+  }
 
   ngOnInit(): void {
     this.getIntroduction();
