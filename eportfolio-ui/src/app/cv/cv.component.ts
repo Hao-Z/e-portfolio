@@ -6,7 +6,6 @@ import { Cv } from '../core/models/cv.model';
 import { AlertService } from '../core/services/alert.service';
 import { NzMessageService } from 'ng-zorro-antd';
 
-
 @Component({
   selector: 'app-cv',
   templateUrl: './cv.component.html',

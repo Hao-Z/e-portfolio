@@ -17,4 +17,5 @@ public class HonourAwardDTO extends DTO {
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate issueDate;
     private String description;
+    private String media;
 }

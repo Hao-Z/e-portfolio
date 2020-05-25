@@ -7,6 +7,7 @@ import { UniqueApiService } from "../../core/services/unique-api.service";
 import { Introduction } from "../../core/models/introduction.model";
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AlertService } from 'src/app/core/services/alert.service';
+import { FileService } from 'src/app/core/services/file.service';
 
 @Component({
   selector: 'app-modal-introduction',
@@ -19,7 +20,7 @@ export class ModalIntroductionComponent implements OnInit {
   classname: string = `introduction`
   isNew: boolean = true;
 
-  model:Introduction 
+  model:Introduction
   form = new FormGroup({});
   options: FormlyFormOptions = {};
   fields: FormlyFieldConfig[] = [
@@ -70,20 +71,6 @@ export class ModalIntroductionComponent implements OnInit {
         required: true,
         placeholder: "Choose an industry...",
         options: this.dataService.getIndustry()
-      }
-    },
-    {
-      key: 'currentPosition',
-      type: 'input',
-      templateOptions: {
-        label: 'Current Position'
-      }
-    },
-    {
-      key: 'currentEducation',
-      type: 'input',
-      templateOptions: {
-        label: 'Current Education'
       }
     },
     {
@@ -168,10 +155,12 @@ export class ModalIntroductionComponent implements OnInit {
     }, 
     {
       key: 'profilePhoto',
-      type: 'input',
+      type: 'file',
       templateOptions: {
-        type: 'file',
-        label: 'Profile',
+        label: 'Profile (Maximum size: 1 MB)',
+        fileheader: this.fileService.getUploadHeader(),
+        action: this.fileService.getUploadUrl(userID),
+        showbutton: true
       }
     } 
   ];
@@ -180,8 +169,9 @@ export class ModalIntroductionComponent implements OnInit {
     public modal: NgbActiveModal,
     private dataService: DataService,
     private apiService: UniqueApiService,
-    private alertService: AlertService
-  ) { }
+    private alertService: AlertService,
+    public fileService: FileService
+  ) {}
 
   ngOnInit(): void {
     this.getIntroduction();
@@ -192,6 +182,7 @@ export class ModalIntroductionComponent implements OnInit {
       .subscribe((result: Introduction) => {
         if (result) {
           this.model =result;
+          this.fileService.msgToTem(this.model.profilePhoto)
         }
       })
   }

@@ -16,4 +16,5 @@ public class HonourAward extends GenericUserData {
     private String issuer;
     private LocalDate issueDate;
     private String description;
+    private String media;
 }

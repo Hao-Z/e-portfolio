@@ -97,6 +97,7 @@ export class ModalService {
         this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         this.alertService.msg("Close only!")
       });
+    this.ngbModalService.dismissAll;
   }
 
   private getDismissReason(reason: any): string {

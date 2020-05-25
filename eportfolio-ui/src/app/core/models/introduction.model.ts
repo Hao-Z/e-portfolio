@@ -6,8 +6,8 @@ export interface Introduction {
     lastName: string;
     headline: string;
     industry : string;
-    currentPosition: WorkExperience;
-    currentEducation: Education;
+    currentPosition?: WorkExperience;
+    currentEducation?: Education;
     gender: string;
     birthday: string;
     country: string;
