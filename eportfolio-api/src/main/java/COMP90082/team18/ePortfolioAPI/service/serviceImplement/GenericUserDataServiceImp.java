@@ -55,7 +55,7 @@ public class GenericUserDataServiceImp implements GenericUserDataService {
 
     @Override
     @SuppressWarnings("unchecked")
-    @PreAuthorize("hasPermission(#objectId, #T.getSimpleName(), 'write')")
+    @PreAuthorize("hasPermission(#objectId, #object.getClass().getSimpleName(), 'write')")
     public <T extends GenericUserData> T putObject(Long id, Long objectId, T object) {
         UserDataRepository repository = getRepository(object.getClass());
         GenericUserData targetObject = getObject(id, objectId, object.getClass())

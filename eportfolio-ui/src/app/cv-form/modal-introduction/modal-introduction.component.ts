@@ -7,7 +7,6 @@ import { UniqueApiService } from "../../core/services/unique-api.service";
 import { Introduction } from "../../core/models/introduction.model";
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AlertService } from 'src/app/core/services/alert.service';
-import { UploadFile, UploadChangeParam } from 'ng-zorro-antd';
 import { FileService } from 'src/app/core/services/file.service';
 
 @Component({
@@ -17,19 +16,11 @@ import { FileService } from 'src/app/core/services/file.service';
 })
 export class ModalIntroductionComponent implements OnInit {
 
-  // fileList: UploadFile[] = [];
-
-  // fileHeader: {} = {
-  //   'Authorization': localStorage.getItem('jwt_token')
-  // }
-
-  // fileAction: string = "http://localhost:8080/upload/"+userID
-
   title: string = `Introduction`;
   classname: string = `introduction`
   isNew: boolean = true;
 
-  model:Introduction 
+  model:Introduction
   form = new FormGroup({});
   options: FormlyFormOptions = {};
   fields: FormlyFieldConfig[] = [
@@ -80,20 +71,6 @@ export class ModalIntroductionComponent implements OnInit {
         required: true,
         placeholder: "Choose an industry...",
         options: this.dataService.getIndustry()
-      }
-    },
-    {
-      key: 'currentPosition',
-      type: 'input',
-      templateOptions: {
-        label: 'Current Position'
-      }
-    },
-    {
-      key: 'currentEducation',
-      type: 'input',
-      templateOptions: {
-        label: 'Current Education'
       }
     },
     {
@@ -180,11 +157,10 @@ export class ModalIntroductionComponent implements OnInit {
       key: 'profilePhoto',
       type: 'file',
       templateOptions: {
-        label: 'Profile',
-        filelist: this.fileService.toFileList(""),
+        label: 'Profile (Maximum size: 1 MB)',
         fileheader: this.fileService.getUploadHeader(),
         action: this.fileService.getUploadUrl(userID),
-        showbutton: true,
+        showbutton: true
       }
     } 
   ];
@@ -194,12 +170,8 @@ export class ModalIntroductionComponent implements OnInit {
     private dataService: DataService,
     private apiService: UniqueApiService,
     private alertService: AlertService,
-    private fileService: FileService
-  ) {
-    this.fileService.messageObserve.subscribe((res: string) => {
-      this.model.profilePhoto = res
-    })
-  }
+    public fileService: FileService
+  ) {}
 
   ngOnInit(): void {
     this.getIntroduction();
@@ -210,6 +182,7 @@ export class ModalIntroductionComponent implements OnInit {
       .subscribe((result: Introduction) => {
         if (result) {
           this.model =result;
+          this.fileService.msgToTem(this.model.profilePhoto)
         }
       })
   }

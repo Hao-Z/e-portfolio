@@ -30,9 +30,9 @@ import java.util.Objects;
 public class FileServiceImpl implements FileService {
 
     public String saveFile(Long id, MultipartFile file) throws IOException {
-        String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
+        String fileName = getRandomString(7) + "-" + StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
         Path dirLocation = Paths.get("./upload/" + id).toAbsolutePath().normalize();
-        if(!Files.isDirectory(dirLocation)) Files.createDirectories(dirLocation);
+        if (!Files.isDirectory(dirLocation)) Files.createDirectories(dirLocation);
         Path fileLocation = dirLocation.resolve(fileName);
         Files.copy(file.getInputStream(), fileLocation, StandardCopyOption.REPLACE_EXISTING);
         return fileName;
@@ -42,7 +42,7 @@ public class FileServiceImpl implements FileService {
         try {
             Path filePath = Paths.get("./upload/" + id + "/" + fileName).toAbsolutePath().normalize();
             Resource resource = new UrlResource(filePath.toUri());
-            if(resource.exists()) {
+            if (resource.exists()) {
                 return resource;
             } else {
                 throw new NullPointerException("File not found " + fileName);
@@ -50,5 +50,18 @@ public class FileServiceImpl implements FileService {
         } catch (MalformedURLException e) {
             throw new NullPointerException("File not found " + fileName);
         }
+    }
+
+    private String getRandomString(int n) {
+        String AlphaNumericString =
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                        + "0123456789"
+                        + "abcdefghijklmnopqrstuvxyz";
+        StringBuilder stringBuilder = new StringBuilder(n);
+        for (int i = 0; i < n; i++) {
+            int index = (int) (AlphaNumericString.length() * Math.random());
+            stringBuilder.append(AlphaNumericString.charAt(index));
+        }
+        return stringBuilder.toString();
     }
 }
