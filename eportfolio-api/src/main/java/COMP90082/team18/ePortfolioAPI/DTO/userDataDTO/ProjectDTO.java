@@ -19,5 +19,5 @@ public class ProjectDTO extends DTO {
     private LocalDate endDate;
     private String projectURL;
     private String description;
-    private File media;
+    private String media;
 }

@@ -6,6 +6,7 @@ import { ApiService } from 'src/app/core/services/api.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { userID } from 'src/global';
 import { AlertService } from 'src/app/core/services/alert.service';
+import { FileService } from 'src/app/core/services/file.service';
 
 @Component({
   selector: 'app-modal-honour-award',
@@ -62,13 +63,24 @@ export class ModalHonourAwardComponent implements OnInit {
           field.templateOptions.rows = 3
         }
       }
+    },
+    {
+      key: 'media',
+      type: 'file',
+      templateOptions: {
+        label: 'Media (Maximum size: 1 MB)',
+        fileheader: this.fileService.getUploadHeader(),
+        action: this.fileService.getUploadUrl(userID),
+        showbutton: true
+      }
     }
   ]
 
   constructor(
     public modal: NgbActiveModal,
     private apiService: ApiService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    public fileService: FileService
   ) { }
 
   ngOnInit(): void {
@@ -80,8 +92,22 @@ export class ModalHonourAwardComponent implements OnInit {
         issuer: null,
         issueDate: null,
         description: null,
+        media: null
       }
+      this.fileService.msgToTem(this.model.media)
+    } else {
+      this.get()
     }
+  }
+
+  get() {
+    this.apiService.get(userID, this.classname, this.model.id)
+      .subscribe((result: HonourAward) => {
+        if (result) {
+          this.model = result;
+          this.fileService.msgToTem(this.model.media)
+        }
+      })
   }
 
   onSubmit() {

@@ -7,6 +7,7 @@ import { ApiService } from 'src/app/core/services/api.service';
 import { userID } from 'src/global';
 import { DataService } from '../../core/services/data.service';
 import { AlertService } from 'src/app/core/services/alert.service';
+import { FileService } from 'src/app/core/services/file.service';
 
 @Component({
   selector: 'app-modal-work-experience',
@@ -106,10 +107,12 @@ export class ModalWorkExperienceComponent implements OnInit {
     },
     {
       key: 'media',
-      type: 'input',
+      type: 'file',
       templateOptions: {
-        type: 'file',
-        label: 'Media',
+        label: 'Media (Maximum size: 1 MB)',
+        fileheader: this.fileService.getUploadHeader(),
+        action: this.fileService.getUploadUrl(userID),
+        showbutton: true
       }
     }
   ]
@@ -118,7 +121,8 @@ export class ModalWorkExperienceComponent implements OnInit {
     public modal: NgbActiveModal,
     private dataService: DataService,
     private apiService: ApiService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    public fileService: FileService
   ) { }
 
   ngOnInit(): void {
@@ -136,7 +140,20 @@ export class ModalWorkExperienceComponent implements OnInit {
         description: null,
         media: null,
       }
+      this.fileService.msgToTem(this.model.media)
+    } else {
+      this.get()
     }
+  }
+
+  get() {
+    this.apiService.get(userID, this.classname, this.model.id)
+      .subscribe((result: WorkExperience) => {
+        if (result) {
+          this.model = result;
+          this.fileService.msgToTem(this.model.media)
+        }
+      })
   }
 
   onSubmit() {
