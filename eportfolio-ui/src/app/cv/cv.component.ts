@@ -36,16 +36,14 @@ export class CvComponent implements OnInit{
 
   ngOnInit(): void {
     refreshJwt();
-    this.getCv()
+    this.getCv();
   }
 
   refresh(isSuccess: boolean, msg: string) {
-    if (isSuccess) {
-      if (!msg) {
-        this.pop.success(msg)  
-      }          
+    if (isSuccess && msg) {
+      this.pop.success(msg, {nzDuration: 2000})  
     } else {
-      this.pop.error(msg)     
+      this.pop.error(msg, {nzDuration: 2000})     
     }
     this.ngOnInit()
   }
