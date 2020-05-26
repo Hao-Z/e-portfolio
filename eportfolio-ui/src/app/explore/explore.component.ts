@@ -45,7 +45,7 @@ export class ExploreComponent implements OnInit {
 
     // <
     // this.getNodes();
-    this.nodes_str = ['Computer Games','Computer dsf','Computer cvcv','Computer aas'];
+    this.nodes_str = ['Computer Games','Computer Hardware','Computer Networking','Computer Software','Information Technology'];
     this.nodes = [];
     for(let n of this.nodes_str){
       this.nodes.push({title: n, key: n, isLeaf: true, checked: false})
