@@ -2,7 +2,7 @@
 <div *ngIf="cvForms">
   <ng-container *ngFor="let item of cvItems">
     <ng-template [ngIf]="item=='introduction'" [ngIfElse]="about">
-      <div class="card-body" style="background-color: white">
+      <div class="card-body cover" style="min-height: 200px;z-index: 2;">
         <button class="btn add-btn a-right" (click)="editForm('introduction')" type="button" style="margin-left:15px;"><i
             class="fa fa-pencil" aria-hidden="true"></i></button>
         <button class="btn btn-primary a-right" type="button" id="MoreButton" style="margin-left:15px;" (click)="openShareModal()">Share CV</button>
@@ -19,15 +19,28 @@
             </ng-container>
           </div>
         </div>
-        <img src="assets/untitled.png" class="center-block rounded-circle" alt="anonymous-user" width="80px"
-          height="80px">
-        <hr />
-        <div *ngFor="let property of cvForms[item] | appProperties">
-          {{cvForms[item][property]}}
-        </div>
+     
+      <img src="assets/untitled.png" class="rounded-circle" alt="anonymous-user" width="120px" height="120px">
+      <!-- profilePhoto -->
+      <div class="square"></div>
+      <div class="col-16">
+        <h2>{{cvForms[item].firstName}} {{cvForms[item].lastName}}
+          <span> {{cvForms[item].industry}} </span></h2>
+        <h5>{{cvForms[item].headline}}</h5>
+        <hr>
+        <p>
+          {{cvForms[item].gender}}, born at {{cvForms[item].birthday}},
+          <em>  Living in {{cvForms[item].country}} currently</em>
+        </p>
+        <p>{{cvForms[item].currentEducation.degree}} in {{cvForms[item].currentEducation.fieldOfStudy}}</p>
+        <p>{{cvForms[item].email}}</p>
+        <p>{{cvForms[item].phoneNumber}}</p>
+        <p>{{cvForms[item].address}}, {{cvForms[item].postalCode}}</p>
+
       </div>
-      <P></P>
-    </ng-template>
+    </div>
+
+  </ng-template>
   
     <ng-template #about>
       <ng-template [ngIf]="item=='about'" [ngIfElse]="feature">

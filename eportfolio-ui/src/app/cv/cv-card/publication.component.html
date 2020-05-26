@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<div class="card-body" style="background-color: white">
+<div class="card-body">
   <button class="btn add-btn a-right" (click)="addForm()" type="button">
     <i class="fa fa-plus" aria-hidden="true"></i></button>
-  <h4 class="card-title">{{title}}</h4>
+  <h2>{{title}}</h2>
   <hr />
-  <div *ngFor="let item of data">
+  <div *ngFor="let item of data" class="cover">
     <div class="row">
       <div class="col-10">
-        <ng-container *ngFor="let property of item | appProperties">
-            <ng-container *ngIf="item[property]">{{property}} : {{item[property]}} <br></ng-container>
-        </ng-container>
+        <h5 *ngIf="item.title" style="display: inline-block;">{{item.title}}</h5>
+        <span *ngIf="item.publicationPublisher" style="display: inline-block;">{{item.publicationPublisher}}</span>
+        <p *ngIf="item.publicationDate">Published on {{item.publicationDate}}</p>
+        <h6 *ngIf="item.publicationURL"><a href="">{{item.publicationURL}}</a></h6>
+        <h6 *ngIf="item.description">{{item.description}}</h6>
       </div>
       <div class="col-2">
         <button class="btn add-btn a-right" (click)="deleteForm(item.id)" type="button">
@@ -18,6 +20,6 @@
           <i class="fa fa-pencil" aria-hidden="true"></i></button>
       </div>
     </div>
+    <br>
   </div>
 </div>
-<P></P>
