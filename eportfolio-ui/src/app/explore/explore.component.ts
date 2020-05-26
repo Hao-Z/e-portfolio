@@ -3,6 +3,8 @@ import {NzFormatEmitEvent, NzTreeNodeOptions} from "ng-zorro-antd";
 import {refreshJwt} from "../../global";
 import * as globals from "../../global";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import { RouterLink } from '@angular/router';
+import { UniqueApiService } from 'src/app/core/services/unique-api.service';
 
 @Component({
   selector: 'app-cvs',
@@ -10,6 +12,8 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
   styleUrls: ['./explore.component.css']
 })
 export class ExploreComponent implements OnInit {
+
+  sharelink: string
 
   nodes: NzTreeNodeOptions[];
   nodes_str: string[];
@@ -26,7 +30,10 @@ export class ExploreComponent implements OnInit {
   order: string = null;
   Ascending : boolean;
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private apiService: UniqueApiService
+  ) { }
   sortValues: any;
   gender_nodes: NzTreeNodeOptions[] = [
     {title: 'Male', key: '1', isLeaf: true, checked: false},
@@ -35,9 +42,9 @@ export class ExploreComponent implements OnInit {
 
   ngOnInit(): void {
     if(window.innerWidth < Number(770)){
-      this.width = "background-color: #F4F3F2;padding-left:0;";
+      this.width = "padding-left:0;";
     }else{
-      this.width = "background-color: #F4F3F2; padding-left:256px;";
+      this.width = " padding-left:256px;";
     }
     this.CheckedIndustry = null;
     this.sortValues = ['Age','Experience','Education'];
@@ -53,7 +60,11 @@ export class ExploreComponent implements OnInit {
     // > Delete
 
     this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
+    
+
   }
+
+  
 
   getOrder(event){
     if(event==null){
@@ -104,9 +115,9 @@ export class ExploreComponent implements OnInit {
 
   changeWidth() {
     if(window.innerWidth < Number(770)){
-      this.width = "background-color: #F4F3F2;padding-left:0";
+      this.width = "padding-left:0";
     }else{
-      this.width = "background-color: #F4F3F2;padding-left:256px";
+      this.width = "padding-left:256px";
     }
   }
 
@@ -139,10 +150,12 @@ export class ExploreComponent implements OnInit {
       this.userDatas = [];
       for(let cv of result['content']){
         this.userDatas.push(cv);
+        console.log(cv)
       }
       this.pageNum = result['number'];
       this.pageSize = result['size'];
       this.totalPage = result['totalPages'];
+      // console.log(this.userDatas)
     });
   }
 
@@ -151,6 +164,14 @@ export class ExploreComponent implements OnInit {
     this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
   }
 
+
+  getLink(userID) {
+    this.apiService.getSharedLink(userID)
+      .subscribe((result: string) => {
+        this.sharelink = `${globals.front_path}cv-show?sl=${result}`;
+    })
+    window.open(this.sharelink)
+  }
   // getNodes() {
   //   refreshJwt();
   //   const HttpOptions = {
@@ -166,3 +187,4 @@ export class ExploreComponent implements OnInit {
   //   });
   // }
 }
+

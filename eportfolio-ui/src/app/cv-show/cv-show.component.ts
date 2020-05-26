@@ -3,10 +3,11 @@ import {NzFormatEmitEvent, NzTreeNodeOptions} from "ng-zorro-antd";
 import { ActivatedRoute } from '@angular/router';
 import { UniqueApiService } from '../core/services/unique-api.service';
 import { Cv } from '../core/models/cv.model';
+import { ModalService } from '../core/services/modal.service';
 @Component({
   selector: 'app-cv-show',
   templateUrl: './cv-show.component.html',
-  styleUrls: ['./cv-show.component.css']
+  styleUrls: ['../cv/cv.component.css']
 })
 export class CvShowComponent implements OnInit {
   config;
@@ -47,15 +48,29 @@ export class CvShowComponent implements OnInit {
   ];
 
   cvForms: Cv;
+  cvItems: Array<string> = this.modalService.getKeys();  
 
   constructor(
     private route: ActivatedRoute,
+    public modalService: ModalService,
     private apiService: UniqueApiService
     ) { }
 
   ngOnInit(): void {
     this.getCv();
+    // this.disableButt()
   }
+
+  // disableButt() {
+  //   var buttons = document.getElementsByClassName('fa');
+  //   console.log(buttons[1] as HTMLElement)
+  //   // for (var x in buttons) {
+  //   //     // var butt = x as HTMLElement;
+  //   //     console.log(x)
+  //   //     x.hidden = true;
+  //   //     // butt.isConnected = false;
+  //   // }
+  // }
 
   getCv(): void {
     var link_info: string = this.route.snapshot.queryParamMap.get('link');
@@ -72,5 +87,14 @@ export class CvShowComponent implements OnInit {
         console.log("Cv get response:", JSON.stringify(result))
     })
   }
+
+  // getCvFromID() {
+  //   this.apiService.get(userID, "cv")
+  //     .subscribe((result: Cv) => {
+  //       this.cvForms = result;
+  //       console.log("Cv get response:", JSON.stringify(result))
+  //   })
+  // }
+
 
 }
