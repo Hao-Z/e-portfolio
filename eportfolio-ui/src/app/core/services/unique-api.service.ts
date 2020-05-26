@@ -57,4 +57,28 @@ export class UniqueApiService {
       )
   }
 
+  getSharedLink(id: number) {
+    const url = `${this.apiUrl}${id}/shared-link`;
+    return this.http.get(url, this.options.getLinkHttpOptions())
+      .pipe(
+        map((res:any) => {
+          return res.body
+        }),
+        retry(1),
+        catchError(this.httpErrorHandler.errorHandler)
+      )
+  }
+
+  getSharedCv(id: number, shared_link: string) {
+    const url = `${this.apiUrl}${id}/cv`;
+    return this.http.get(url, this.options.getShareHttpOptions(shared_link))
+      .pipe(
+        map((res:any) => {
+          return res.body
+        }),
+        retry(1),
+        catchError(this.httpErrorHandler.errorHandler)
+      )
+  }
+
 }

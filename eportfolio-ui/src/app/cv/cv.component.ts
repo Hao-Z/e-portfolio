@@ -6,7 +6,6 @@ import { Cv } from '../core/models/cv.model';
 import { AlertService } from '../core/services/alert.service';
 import { NzMessageService } from 'ng-zorro-antd';
 
-
 @Component({
   selector: 'app-cv',
   templateUrl: './cv.component.html',
@@ -16,7 +15,7 @@ export class CvComponent implements OnInit{
 
   constructor(
     public modalService: ModalService,
-    private uniqueApiService: UniqueApiService,
+    private apiService: UniqueApiService,
     private alertService: AlertService,
     private pop: NzMessageService
   ) {
@@ -37,22 +36,20 @@ export class CvComponent implements OnInit{
 
   ngOnInit(): void {
     refreshJwt();
-    this.getCv()
+    this.getCv();
   }
 
   refresh(isSuccess: boolean, msg: string) {
-    if (isSuccess) {
-      if (!msg) {
-        this.pop.success(msg)  
-      }          
+    if (isSuccess && msg) {
+      this.pop.success(msg, {nzDuration: 2000})  
     } else {
-      this.pop.error(msg)     
+      this.pop.error(msg, {nzDuration: 2000})     
     }
     this.ngOnInit()
   }
 
   getCv() {
-    this.uniqueApiService.get(userID, "cv")
+    this.apiService.get(userID, "cv")
       .subscribe((result: Cv) => {
         this.cvForms = result;
         console.log("Cv get response:", JSON.stringify(result))
@@ -61,6 +58,10 @@ export class CvComponent implements OnInit{
 
   editForm(className: string) {
     this.modalService.openModal(className, true)
+  }
+
+  openShareModal() {
+    this.modalService.openShare()
   }
   
 }

@@ -18,5 +18,6 @@ public class VolunteerExperience extends GenericUserData {
     private LocalDate startDate;
     private LocalDate endDate;
     private String description;
-    private File media;
+    @Column(length = 2048)
+    private String media;
 }

@@ -25,7 +25,7 @@ public class IntroductionDTO extends DTO {
     private String country;
     private String postalCode;
     private String address;
-    private File profilePhoto;
+    private String profilePhoto;
     private String phoneNumber;
     private String email;
 }

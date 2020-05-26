@@ -19,7 +19,7 @@ export class ExploreComponent implements OnInit {
   isCollapsed = window.innerWidth < Number(770);
   userDatas;
   pageNum: number = 0;
-  pageSize: number = 3;
+  pageSize: number = 10;
   totalPage: number = 1;
   CheckedIndustry: any = null;
   CheckedGender: any = null;
@@ -45,7 +45,7 @@ export class ExploreComponent implements OnInit {
 
     // <
     // this.getNodes();
-    this.nodes_str = ['Computer Games','Computer dsf','Computer cvcv','Computer aas'];
+    this.nodes_str = ['Computer Games','Computer Hardware','Computer Networking','Computer Software','Information Technology'];
     this.nodes = [];
     for(let n of this.nodes_str){
       this.nodes.push({title: n, key: n, isLeaf: true, checked: false})
@@ -110,7 +110,7 @@ export class ExploreComponent implements OnInit {
     }
   }
 
-  getCVsData(pageNum='0', pageSize='10', industry:string[]=null, gender:string[]=null, orders:string=null, ascending:boolean=null) {
+  getCVsData(pageNum='0', pageSize='10', industry:string[]=null, gender:string=null, orders:string=null, ascending:boolean=null) {
     refreshJwt();
     const HttpOptions = {
       headers : new HttpHeaders({'content-Type': 'application/json',
@@ -127,8 +127,8 @@ export class ExploreComponent implements OnInit {
       }
     }
     if(gender!=null){
-      for(let i of gender) {
-        para = para + '&gender%5B%5D=' + i
+      if(gender=='0' || gender=='1'){
+        para = para + '&gender=' + gender
       }
     }
     if(orders!=null){
@@ -151,18 +151,18 @@ export class ExploreComponent implements OnInit {
     this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
   }
 
-  getNodes() {
-    refreshJwt();
-    const HttpOptions = {
-      headers : new HttpHeaders({'content-Type': 'application/json',
-        'Authorization': localStorage.getItem("jwt_token")}
-      )
-    };
-    this.http.get<any>(globals.backend_path + "explore/industries", HttpOptions).subscribe((result) => {
-      this.nodes_str = [];
-      for(let n of result['content']){
-        this.nodes_str.push(n);
-      }
-    });
-  }
+  // getNodes() {
+  //   refreshJwt();
+  //   const HttpOptions = {
+  //     headers : new HttpHeaders({'content-Type': 'application/json',
+  //       'Authorization': localStorage.getItem("jwt_token")}
+  //     )
+  //   };
+  //   this.http.get<any>(globals.backend_path + "explore/industries", HttpOptions).subscribe((result) => {
+  //     this.nodes_str = [];
+  //     for(let n of result['content']){
+  //       this.nodes_str.push(n);
+  //     }
+  //   });
+  // }
 }

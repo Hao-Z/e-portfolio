@@ -6,6 +6,7 @@ import { ApiService } from 'src/app/core/services/api.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { userID } from 'src/global';
 import { AlertService } from 'src/app/core/services/alert.service';
+import { FileService } from 'src/app/core/services/file.service';
 
 @Component({
   selector: 'app-modal-project',
@@ -74,10 +75,12 @@ export class ModalProjectComponent implements OnInit {
     },
     {
       key: 'media',
-      type: 'input',
+      type: 'file',
       templateOptions: {
-        type: 'file',
-        label: 'Media',
+        label: 'Media (Maximum size: 1 MB)',
+        fileheader: this.fileService.getUploadHeader(),
+        action: this.fileService.getUploadUrl(userID),
+        showbutton: true
       }
     }
   ]
@@ -85,7 +88,8 @@ export class ModalProjectComponent implements OnInit {
   constructor(
     public modal: NgbActiveModal,
     private apiService: ApiService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    public fileService: FileService
   ) { }
 
   ngOnInit(): void {
@@ -99,7 +103,20 @@ export class ModalProjectComponent implements OnInit {
         description: null,
         media: null,
       }
+      this.fileService.msgToTem(this.model.media)
+    } else {
+      this.get()
     }
+  }
+
+  get() {
+    this.apiService.get(userID, this.classname, this.model.id)
+      .subscribe((result: Project) => {
+        if (result) {
+          this.model = result;
+          this.fileService.msgToTem(this.model.media)
+        }
+      })
   }
 
   onSubmit() {

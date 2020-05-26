@@ -18,6 +18,7 @@ public class LicenseCertification extends GenericUserData {
     private LocalDate expirationDate;
     private String credentialID;
     private String credentialURL;
-    private File media;
+    @Column(length = 2048)
+    private String media;
 
 }

@@ -93,13 +93,13 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    @PreAuthorize("hasPermission(#id, 'read')")
+    @PreAuthorize("hasPermission(#id, 'User', 'read')")
     public User getUser(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new NullPointerException("User not found."));
     }
 
     @Override
-    @PreAuthorize("hasPermission(#id, 'write')")
+    @PreAuthorize("hasPermission(#id, 'User', 'write')")
     public User patchUser(Long id, Map<String, Object> updateFields) {
         User originalUser = getUser(id);
         if (updateFields.containsKey("password") || updateFields.containsKey("admin")

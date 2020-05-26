@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {NzFormatEmitEvent, NzTreeNodeOptions} from "ng-zorro-antd";
+import { ActivatedRoute } from '@angular/router';
+import { UniqueApiService } from '../core/services/unique-api.service';
+import { Cv } from '../core/models/cv.model';
 @Component({
   selector: 'app-cv-show',
   templateUrl: './cv-show.component.html',
@@ -42,9 +45,26 @@ export class CvShowComponent implements OnInit {
     {'industry': 'Computer Hardware'},
     {'industry': 'Computer Networking'},
   ];
-  constructor() { }
+
+  cvForms: Cv;
+
+  constructor(
+    private route: ActivatedRoute,
+    private apiService: UniqueApiService
+    ) { }
 
   ngOnInit(): void {
+    this.getCv();
+  }
+
+  getCv(): void {
+    const shared_link: string = this.route.snapshot.queryParamMap.get('sl');
+    const shared_id = JSON.parse(atob(shared_link.split('.')[1]))['read_only_id']
+    this.apiService.getSharedCv(shared_id, shared_link)
+      .subscribe((result: Cv) => {
+        this.cvForms = result;
+        console.log("Cv get response:", JSON.stringify(result))
+    })
   }
 
 }

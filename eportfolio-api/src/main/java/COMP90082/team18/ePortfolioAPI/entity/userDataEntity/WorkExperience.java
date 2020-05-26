@@ -21,7 +21,8 @@ public class WorkExperience extends GenericUserData {
     private LocalDate startDate;
     private LocalDate endDate;
     private String description;
-    private File media;
+    @Column(length = 2048)
+    private String media;
 
     @OneToOne(mappedBy = "currentPosition")
     private User flagCurrentPosition;

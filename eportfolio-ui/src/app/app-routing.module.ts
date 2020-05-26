@@ -29,6 +29,9 @@ const routes: Routes = [
     component: CvShowComponent
   },
   {
+    path: 'cv-show', redirectTo:'/cv-show', pathMatch:'prefix'
+  },
+  {
     path: 'cv',
     component: LayoutComponent,
     children: [{ path: '', component: CvComponent }]

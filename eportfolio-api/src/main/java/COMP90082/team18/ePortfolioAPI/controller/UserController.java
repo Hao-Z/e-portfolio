@@ -129,4 +129,15 @@ public class UserController {
         User result = userService.patchUser(id, updateFields);
         return modelMapper.map(result, UserDTO.class);
     }
+
+    @GetMapping("/users/{id}/security")
+    public Setting getSetting(@PathVariable Long id){
+        return modelMapper.map(userService.getUser(id), Setting.class);
+    }
+
+    @PatchMapping("/users/{id}/security")
+    public Setting patchSetting(@PathVariable Long id, @RequestBody Map<String, Object> updateFields){
+        User result = userService.patchUser(id, updateFields);
+        return modelMapper.map(result, Setting.class);
+    }
 }
