@@ -54,6 +54,7 @@ import { ProjectComponent } from "./cv/cv-card/project.component"
 import { PublicationComponent } from "./cv/cv-card/publication.component"
 import { RecommendationComponent } from "./cv/cv-card/recommendation.component"
 import { FormlyFileFieldType } from './dynamic-form/file.type';
+import { ShareLinkComponent } from './cv/share-link/share-link.component';
 
 
 
@@ -110,7 +111,8 @@ export function patternValidationMessage(err, field: FormlyFieldConfig) {
     ProjectComponent,
     PublicationComponent,
     RecommendationComponent,
-    FormlyFileFieldType
+    FormlyFileFieldType,
+    ShareLinkComponent
   ],
   imports: [
     BrowserModule,

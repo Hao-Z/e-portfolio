@@ -15,6 +15,7 @@ import { ModalLanguageComponent } from 'src/app/cv-form/modal-language/modal-lan
 import { ModalRecommendationComponent } from 'src/app/cv-form/modal-recommendation/modal-recommendation.component';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AlertService } from './alert.service';
+import { ShareLinkComponent } from 'src/app/cv/share-link/share-link.component';
 
 @Injectable({
   providedIn: 'root'
@@ -108,6 +109,19 @@ export class ModalService {
     } else {
       return `with: ${reason}`;
     }
+  }
+
+  openShare() {
+    this.ngbModalService.dismissAll;
+    this.ngbModalService.open(ShareLinkComponent, {backdrop: 'static'}).result.then(
+      (result) => {
+        this.closeResult = `Closed with: ${result}`;
+        this.alertService.msg("Close only!")
+      }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        this.alertService.msg("Close only!")
+      });
+    this.ngbModalService.dismissAll;
   }
   
 }
