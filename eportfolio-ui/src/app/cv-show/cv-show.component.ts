@@ -48,7 +48,8 @@ export class CvShowComponent implements OnInit {
   ];
 
   cvForms: Cv;
-  cvItems: Array<string> = this.modalService.getKeys();  
+  cvItems: Array<string> = this.modalService.getKeys(); 
+  avartarUrl: string = "assets/untitled.png" 
 
   constructor(
     private route: ActivatedRoute,
@@ -84,8 +85,15 @@ export class CvShowComponent implements OnInit {
     this.apiService.getSharedCv(target_id, link_info)
       .subscribe((result: Cv) => {
         this.cvForms = result;
+        this.setAvartar();
         console.log("Cv get response:", JSON.stringify(result))
     })
+  }
+
+  setAvartar(): void {
+    if (this.cvForms.introduction.profilePhoto) {
+      this.avartarUrl = this.cvForms.introduction.profilePhoto;
+    }
   }
 
   // getCvFromID() {
