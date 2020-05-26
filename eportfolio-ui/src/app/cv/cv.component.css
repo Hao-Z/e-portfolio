@@ -14,7 +14,7 @@
     /* border-radius: 5px; */
     position: relative;
     float: center;
-    z-index: 2;
+ 
 }
 .card-body h2 {
   font-size: 24px;
@@ -26,7 +26,12 @@
   margin-left: 20px;
   margin-top: 40px;
 }
-
+.fa-trash-o {
+  color: red;
+}
+.fa {
+  /* margin: 0 0 25px 0; */
+}
 .col-16 {
   max-width: 600px;
   text-align: left;
@@ -37,16 +42,22 @@
 .cover h5 {
   /* margin-left: 20px; */
   font-size: 20px;
-  font-style: italic;
+  font-style: oblique;
   word-spacing: 2px;
   font-family: NotoSerif;
+}
+.cover h6 {
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  font-family: Calibri;
 }
 .cover h2 {
   /* margin-left: 20px; */
   font-size: 28px;
   font-family: NotoSerif;
 }
-.cover h2 span {
+.cover span {
   padding: 15px;
   font-size: 16px;
   color: var(--primary-color);
@@ -55,7 +66,7 @@
 .cover p {
   font-size: 16px;
   font-weight: 300;
-  color: #4e4e4e;
+  color: #5e5e5e;
   font-family: Calibri;
   line-height: 12px;
 }
@@ -103,4 +114,14 @@ blockquote p {
   font-style: italic;
   color: #4e4e4e;
   font-weight: 300;
+}
+
+.detail {
+  margin-left: 300px;
+  font-family: Avenir;
+}
+.time {
+  font-style: italic;
+  float: left;
+  font-family: NotoSerif;
 }

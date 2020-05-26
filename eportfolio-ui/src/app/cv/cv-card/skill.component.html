@@ -2,22 +2,25 @@
 <div class="card-body" style="background-color: white">
   <button class="btn add-btn a-right" (click)="addForm()" type="button">
     <i class="fa fa-plus" aria-hidden="true"></i></button>
-  <h4 class="card-title">{{title}}</h4>
+  <h2>{{title}}</h2>
   <hr />
-  <div *ngFor="let item of data">
-    <div class="row">
-      <div class="col-10">
-        <ng-container *ngFor="let property of item | appProperties">
-            <ng-container *ngIf="item[property]">{{property}} : {{item[property]}} <br></ng-container>
-        </ng-container>
-      </div>
-      <div class="col-2">
-        <button class="btn add-btn a-right" (click)="deleteForm(item.id)" type="button">
-          <i class="fa fa-trash-o" aria-hidden="true"></i></button>
-        <button class="btn add-btn a-right" (click)="editForm(item)" type="button">
-          <i class="fa fa-pencil" aria-hidden="true"></i></button>
+  <ul>
+    <div *ngFor="let item of data" class="cover">
+      <div class="row">
+        <div class="col-10">
+          <h6>
+
+            <li *ngIf="item.skillName">{{item.skillName}}</li>
+          </h6>
+        </div>
+        <div class="col-2">
+          <button class="btn add-btn a-right" (click)="deleteForm(item.id)" type="button">
+            <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+          <button class="btn add-btn a-right" (click)="editForm(item)" type="button">
+            <i class="fa fa-pencil" aria-hidden="true"></i></button>
+        </div>
       </div>
     </div>
-  </div>
+  </ul>
 </div>
 <P></P>

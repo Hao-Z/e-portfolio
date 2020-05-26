@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <div class="parent" *ngFor="let item of cvItems">
   <ng-template [ngIf]="item=='introduction'" [ngIfElse]="about">
-    <div class="card-body cover" style="min-height: 200px;">
+    <div class="card-body cover" style="min-height: 200px;z-index: 2;">
       <button class="btn add-btn a-right" (click)="editForm('introduction')" type="button" style="margin-left:15px;"><i
           class="fa fa-pencil" aria-hidden="true"></i></button>
       <div class="dropdown a-right">
@@ -37,12 +37,12 @@
         <hr>
         <p>
           {{cvForms[item].gender}}, born at {{cvForms[item].birthday}},
-          <em>  Living in {{cvForms[item].currentPosition}} currently</em>
+          <em>  Living in {{cvForms[item].country}} currently</em>
         </p>
-        <p>{{cvForms[item].currentEducation}}</p>
+        <p>{{cvForms[item].currentEducation.degree}} in {{cvForms[item].currentEducation.fieldOfStudy}}</p>
         <p>{{cvForms[item].email}}</p>
         <p>{{cvForms[item].phoneNumber}}</p>
-        <p>{{cvForms[item].address}}, {{cvForms[item].postalCode}}, {{cvForms[item].country}}</p>
+        <p>{{cvForms[item].address}}, {{cvForms[item].postalCode}}</p>
 
       </div>
     </div>
