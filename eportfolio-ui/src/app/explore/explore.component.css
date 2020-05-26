@@ -99,7 +99,7 @@ nz-card {
   margin-top: 20px;
   background-color: white;
   letter-spacing: 1px;
-  color: #666;
+  /* color: #666; */
   transition-duration: 1s;
   border-radius: 15px;
   overflow: hidden;
