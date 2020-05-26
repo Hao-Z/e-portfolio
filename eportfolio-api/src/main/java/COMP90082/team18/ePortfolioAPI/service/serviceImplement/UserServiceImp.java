@@ -1,7 +1,5 @@
 package COMP90082.team18.ePortfolioAPI.service.serviceImplement;
 
-import COMP90082.team18.ePortfolioAPI.DTO.IntroductionDTO;
-import COMP90082.team18.ePortfolioAPI.DTO.UserDTO;
 import COMP90082.team18.ePortfolioAPI.entity.User;
 import COMP90082.team18.ePortfolioAPI.repository.UserRepository;
 import COMP90082.team18.ePortfolioAPI.security.JWTMethod;
@@ -29,6 +27,7 @@ import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -37,9 +36,10 @@ import javax.transaction.Transactional;
 public class UserServiceImp implements UserService {
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private ObjectMethod objectMethod;
 
     public User signUp(User user) {
         if (checkUsername(user)) {
@@ -57,15 +57,15 @@ public class UserServiceImp implements UserService {
                                   @Nullable String order, @Nullable boolean ascending) {
         Specification<User> spec = null;
 
-        if(industry != null){
-            for(String item : industry) {
+        if (industry != null) {
+            for (String item : industry) {
                 Specification<User> s = new CustomizedSpecification<>("industry", "=", item);
                 if (spec == null) spec = s;
                 else spec = spec.or(s);
             }
         }
 
-        if(gender != null) {
+        if (gender != null) {
             Specification<User> s = new CustomizedSpecification<>("gender", "=", gender);
             if (spec == null) spec = s;
             else spec = spec.and(s);
@@ -93,21 +93,20 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    @PreAuthorize("hasPermission(#id, 'read')")
+    @PreAuthorize("hasPermission(#id, 'User', 'read')")
     public User getUser(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new NullPointerException("Profile not found."));
+        return userRepository.findById(id).orElseThrow(() -> new NullPointerException("User not found."));
     }
 
     @Override
-    @PreAuthorize("hasPermission(#id, 'write')")
-    public User patchUser(Long id, User user) {
+    @PreAuthorize("hasPermission(#id, 'User', 'write')")
+    public User patchUser(Long id, Map<String, Object> updateFields) {
         User originalUser = getUser(id);
-
-        user.setId(id);
-        user.setPassword(null);
-        user.setAdmin(originalUser.isAdmin());
-
-        return userRepository.save(ObjectMethod.update(originalUser, user));
+        if (updateFields.containsKey("password") || updateFields.containsKey("admin")
+                || (updateFields.containsKey("id") && updateFields.get("id") != id)) {
+            throw new IllegalArgumentException("Forbidden argument.");
+        }
+        return userRepository.save(objectMethod.update(originalUser, updateFields));
     }
 
     @Override

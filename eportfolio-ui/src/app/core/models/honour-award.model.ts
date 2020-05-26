@@ -5,4 +5,5 @@ export interface HonourAward {
     issuer: string;
     issueDate: string;
     description: string;
+    media: string;
 }
