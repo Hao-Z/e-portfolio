@@ -151,18 +151,18 @@ export class ExploreComponent implements OnInit {
     this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
   }
 
-  getNodes() {
-    refreshJwt();
-    const HttpOptions = {
-      headers : new HttpHeaders({'content-Type': 'application/json',
-        'Authorization': localStorage.getItem("jwt_token")}
-      )
-    };
-    this.http.get<any>(globals.backend_path + "explore/industries", HttpOptions).subscribe((result) => {
-      this.nodes_str = [];
-      for(let n of result['content']){
-        this.nodes_str.push(n);
-      }
-    });
-  }
+  // getNodes() {
+  //   refreshJwt();
+  //   const HttpOptions = {
+  //     headers : new HttpHeaders({'content-Type': 'application/json',
+  //       'Authorization': localStorage.getItem("jwt_token")}
+  //     )
+  //   };
+  //   this.http.get<any>(globals.backend_path + "explore/industries", HttpOptions).subscribe((result) => {
+  //     this.nodes_str = [];
+  //     for(let n of result['content']){
+  //       this.nodes_str.push(n);
+  //     }
+  //   });
+  // }
 }
