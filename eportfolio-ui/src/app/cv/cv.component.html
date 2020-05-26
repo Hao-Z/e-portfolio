@@ -2,10 +2,11 @@
 <div *ngIf="cvForms">
   <ng-container *ngFor="let item of cvItems">
     <ng-template [ngIf]="item=='introduction'" [ngIfElse]="about">
-      <div class="card-body cover" style="min-height: 200px;z-index: 2;">
-        <button class="btn add-btn a-right" (click)="editForm('introduction')" type="button" style="margin-left:15px;"><i
-            class="fa fa-pencil" aria-hidden="true"></i></button>
-        <button class="btn btn-primary a-right" type="button" id="MoreButton" style="margin-left:15px;" (click)="openShareModal()">Share CV</button>
+      <div class="card-body cover" style="min-height: 240px;z-index: 2;">
+        <button class="btn add-btn a-right" (click)="editForm('introduction')" type="button"
+          style="margin-left:15px;"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+        <button class="btn btn-primary a-right" type="button" id="MoreButton" style="margin-left:15px;"
+          (click)="openShareModal()">Share CV</button>
         <div class="dropdown a-right">
           <button class="btn btn-primary dropdown-toggle" type="button" id="AddSectionButton" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
@@ -14,37 +15,38 @@
           <div class="dropdown-menu" aria-labelledby="AddSectionButton">
             <ng-container *ngFor="let item of cvItems">
               <ng-container *ngIf="!(item=='introduction') && !(cvForms[item].summary)">
-                <a class="dropdown-item" href="#" (click)="modalService.openModal(item, true)">{{modalService.getTitle(item)}}</a>
+                <a class="dropdown-item" href="#"
+                  (click)="modalService.openModal(item, true)">{{modalService.getTitle(item)}}</a>
               </ng-container>
             </ng-container>
           </div>
         </div>
-     
-      <img src="assets/untitled.png" class="rounded-circle" alt="anonymous-user" width="120px" height="120px">
-      <!-- profilePhoto -->
-      <div class="square"></div>
-      <div class="col-16">
-        <h2 *ngIf="cvForms[item].firstName" style="display: inline-block;">{{cvForms[item].firstName}}&nbsp;</h2>
-        <h2 *ngIf="cvForms[item].lastName" style="display: inline-block;">{{cvForms[item].lastName}}</h2>
-        <span *ngIf="cvForms[item].industry" style="display: inline-block;"> {{cvForms[item].industry}} </span>
-        <h5 *ngIf="cvForms[item].industry">{{cvForms[item].headline}}</h5>
-        <hr>
-        <p *ngIf="cvForms[item].gender" style="display: inline-block;">{{cvForms[item].gender}}</p>
-        <p *ngIf="cvForms[item].birthday" style="display: inline-block;">, born at {{cvForms[item].birthday}}</p>
-        <p *ngIf="cvForms[item].country" style="display: inline-block;font-style: oblique;">, Living in
-          {{cvForms[item].country}} currently</p>
-        <p *ngIf="cvForms[item].currentEducation.degree && cvForms[item].currentEducation.fieldOfStudy">
-          {{cvForms[item].currentEducation.degree}} in {{cvForms[item].currentEducation.fieldOfStudy}}</p>
-        <p *ngIf="cvForms[item].email">{{cvForms[item].email}}</p>
-        <p *ngIf="cvForms[item].phoneNumber">{{cvForms[item].phoneNumber}}</p>
-        <p *ngIf="cvForms[item].address" style="display: inline-block;">{{cvForms[item].address}}</p>
-        <p *ngIf="cvForms[item].postalCode" style="display: inline-block;">, {{cvForms[item].postalCode}}</p>
 
+        <img src="assets/untitled.png" class="rounded-circle" alt="anonymous-user" width="120px" height="120px">
+        <!-- profilePhoto -->
+        <div class="square"></div>
+        <div class="col-16">
+          <h2 *ngIf="cvForms[item].firstName" style="display: inline-block;">{{cvForms[item].firstName}}&nbsp;</h2>
+          <h2 *ngIf="cvForms[item].lastName" style="display: inline-block;">{{cvForms[item].lastName}}</h2>
+          <span *ngIf="cvForms[item].industry" style="display: inline-block;"> {{cvForms[item].industry}} </span>
+          <h5 *ngIf="cvForms[item].industry">{{cvForms[item].headline}}</h5>
+          <hr>
+          <p *ngIf="cvForms[item].gender" style="display: inline-block;">{{cvForms[item].gender}}</p>
+          <p *ngIf="cvForms[item].birthday" style="display: inline-block;">, born at {{cvForms[item].birthday}}</p>
+          <p *ngIf="cvForms[item].country" style="display: inline-block;font-style: oblique;">, Living in
+            {{cvForms[item].country}} currently</p>
+          <p *ngIf="cvForms[item].currentEducation">
+            {{cvForms[item].currentEducation.degree}} in {{cvForms[item].currentEducation.fieldOfStudy}}</p>
+          <p *ngIf="cvForms[item].email">{{cvForms[item].email}}</p>
+          <p *ngIf="cvForms[item].phoneNumber">{{cvForms[item].phoneNumber}}</p>
+          <p *ngIf="cvForms[item].address" style="display: inline-block;">{{cvForms[item].address}}</p>
+          <p *ngIf="cvForms[item].postalCode" style="display: inline-block;">, {{cvForms[item].postalCode}}</p>
+
+        </div>
       </div>
-    </div>
-  </ng-template>
+    </ng-template>
 
-  
+
     <ng-template #about>
       <ng-template [ngIf]="item=='about'" [ngIfElse]="feature">
         <ng-container *ngIf="cvForms[item].summary">
@@ -111,7 +113,8 @@
     <ng-template #publication>
       <ng-template [ngIf]="item=='publication'" [ngIfElse]="language">
         <ng-container *ngIf="cvForms[item].length">
-          <card-publication [title]=modalService.getTitle(item) [data]=cvForms[item] [classname]=item></card-publication>
+          <card-publication [title]=modalService.getTitle(item) [data]=cvForms[item] [classname]=item>
+          </card-publication>
         </ng-container>
       </ng-template>
     </ng-template>
@@ -129,10 +132,8 @@
         </ng-container>
       </ng-template>
     </ng-template>
-  
+
     <P></P>
   </ng-container>
-  
+
 </div>
-
-
