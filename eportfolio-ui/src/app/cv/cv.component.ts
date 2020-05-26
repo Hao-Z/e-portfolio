@@ -64,10 +64,8 @@ export class CvComponent implements OnInit{
   }
 
   setAvartar(): void {
-    console.log("set avartar")
     if (this.cvForms.introduction.profilePhoto) {
       this.avartarUrl = this.cvForms.introduction.profilePhoto;
-      console.log("set avartar success")
     }
   }
 

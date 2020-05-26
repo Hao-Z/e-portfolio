@@ -7,20 +7,7 @@ import { AlertService } from 'src/app/core/services/alert.service';
 
 @Component({
     selector: 'card-about',
-    template: `         
-        <div class="card-body" style="background-color: white">
-            <button class="btn add-btn a-right" (click)="deleteForm()" type="button">
-                <i class="fa fa-trash-o" aria-hidden="true"></i></button>
-            <button class="btn add-btn a-right" (click)="editForm()" type="button">
-                <i class="fa fa-pencil" aria-hidden="true"></i></button>
-            <h4 class="card-title">{{title}}</h4>
-            <hr />
-            <div *ngFor="let property of data | appProperties">
-                {{data[property]}}
-            </div>
-        </div>
-        <P></P>
-        `,
+    templateUrl: './about.component.html',
     styleUrls: ['../cv.component.css']
 })
 
