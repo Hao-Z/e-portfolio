@@ -58,9 +58,15 @@ export class CvShowComponent implements OnInit {
   }
 
   getCv(): void {
-    const shared_link: string = this.route.snapshot.queryParamMap.get('sl');
-    const shared_id = JSON.parse(atob(shared_link.split('.')[1]))['read_only_id']
-    this.apiService.getSharedCv(shared_id, shared_link)
+    var link_info: string = this.route.snapshot.queryParamMap.get('link');
+    var target_id;
+    if (!isNaN(Number(link_info))) {
+      target_id = link_info;
+      link_info = null;
+    } else {
+      target_id = JSON.parse(atob(link_info.split('.')[1]))['read_only_id']
+    }
+    this.apiService.getSharedCv(target_id, link_info)
       .subscribe((result: Cv) => {
         this.cvForms = result;
         console.log("Cv get response:", JSON.stringify(result))

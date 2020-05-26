@@ -39,7 +39,7 @@ export class ShareLinkComponent implements OnInit {
   getLink() {
     this.apiService.getSharedLink(userID)
       .subscribe((result: string) => {
-        this.sharelink = `${globals.front_path}cv-show?sl=${result}`;
+        this.sharelink = `${globals.front_path}cv-show?link=${result}`;
     })
   }
 }
