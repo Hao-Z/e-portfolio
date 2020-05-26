@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-title">Share My CV Link</h4>
+  <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title"
+    (click)="modal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <ng-container *ngIf="sharelink">
+    <textarea [value]="sharelink" class="form-control" rows="5" readonly aria-label="With textarea"></textarea>
+  </ng-container>
+</div>
+<div class="modal-footer">
+  <button ngbAutofocus class="btn btn-outline-primary" [value]="sharelink" (click)="copyText(); modal.dismiss('ok click')" > Copy link</button>
+</div> 
+

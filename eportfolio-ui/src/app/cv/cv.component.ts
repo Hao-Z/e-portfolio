@@ -15,7 +15,7 @@ export class CvComponent implements OnInit{
 
   constructor(
     public modalService: ModalService,
-    private uniqueApiService: UniqueApiService,
+    private apiService: UniqueApiService,
     private alertService: AlertService,
     private pop: NzMessageService
   ) {
@@ -51,7 +51,7 @@ export class CvComponent implements OnInit{
   }
 
   getCv() {
-    this.uniqueApiService.get(userID, "cv")
+    this.apiService.get(userID, "cv")
       .subscribe((result: Cv) => {
         this.cvForms = result;
         console.log("Cv get response:", JSON.stringify(result))
@@ -60,6 +60,10 @@ export class CvComponent implements OnInit{
 
   editForm(className: string) {
     this.modalService.openModal(className, true)
+  }
+
+  openShareModal() {
+    this.modalService.openShare()
   }
   
 }
