@@ -50,7 +50,7 @@ export class CustomAdapter extends NgbDateAdapter<string> {
 
   readonly DELIMITER = '-';
 
-  fromModel(value: string | null): NgbDateStruct | null {
+  fromModel(value: string | null | ""): NgbDateStruct | null {
     if (value) {
       let date = value.split(this.DELIMITER);
       return {
@@ -62,7 +62,12 @@ export class CustomAdapter extends NgbDateAdapter<string> {
     return null;
   }
 
-  toModel(date: NgbDateStruct | null): string | null {
-    return date ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year : null;
+  toModel(date: NgbDateStruct | null): string | "" {
+    return date ? this.prefixInteger(date.day, 2).toString() + this.DELIMITER + this.prefixInteger(date.month, 2).toString() + this.DELIMITER + date.year : "";
   }
+
+  prefixInteger(num: number, length: number) {
+    return (Array(length).join('0') + num).slice(-length);
+  }   
+
 }

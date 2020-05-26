@@ -4,6 +4,7 @@ export interface Education {
     degree: string;
     fieldOfStudy: string;
     grade: string;
+    isDefault: boolean;
     startYear: string;
     endYear: string;
     activityAndSociety: string;

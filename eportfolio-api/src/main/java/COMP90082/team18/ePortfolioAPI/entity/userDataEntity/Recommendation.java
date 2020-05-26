@@ -14,5 +14,6 @@ public class Recommendation extends GenericUserData {
     private String referrerName;
     private String referrerTitle;
     private String description;
-    private File media;
+    @Column(length = 2048)
+    private String media;
 }

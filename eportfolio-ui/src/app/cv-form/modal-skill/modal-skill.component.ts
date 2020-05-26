@@ -5,6 +5,7 @@ import { Skill } from 'src/app/core/models/skill.model';
 import { ApiService } from 'src/app/core/services/api.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { userID } from 'src/global';
+import { AlertService } from 'src/app/core/services/alert.service';
 
 @Component({
   selector: 'app-modal-skill',
@@ -14,10 +15,12 @@ import { userID } from 'src/global';
 export class ModalSkillComponent implements OnInit {
 
   title: string = `Skill`;
+  classname: string = `skill`;
+  isNew: boolean = true;
 
+  model: Skill;
   form = new FormGroup({});
   options: FormlyFormOptions = {};
-  model: Skill;
   fields: FormlyFieldConfig[] = [
     {
       key: 'skillName',
@@ -30,23 +33,33 @@ export class ModalSkillComponent implements OnInit {
 
   constructor(
     public modal: NgbActiveModal,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit(): void {
-    this.model = {
-      id: null,
-      skillName: null,
+    if (this.isNew) {
+      this.model = {
+        id: null,
+        skillName: null,
+      }
     }
   }
 
   onSubmit() {
     console.log("CV skill submit form:", this.model);
 		if (this.form.valid) {
-      this.apiService.create(userID, this.model, this.title.toLowerCase())
-        .subscribe((result: Skill) => {
-          console.log("CV skill create response:", JSON.stringify(result))
-        })
+      if (this.isNew) {
+        this.apiService.create(userID, this.model, this.classname)
+          .subscribe(() => {
+            this.alertService.success(`Successfully added the ${this.title} section!`);
+          })
+      } else {
+        this.apiService.update(userID, this.model, this.classname, this.model.id)
+          .subscribe(() => {
+            this.alertService.success(`Successfully modified the ${this.title} section!`);
+          })
+      }
     }
   }
 

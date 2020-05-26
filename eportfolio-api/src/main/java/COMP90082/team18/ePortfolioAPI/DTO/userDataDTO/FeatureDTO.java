@@ -11,5 +11,5 @@ import java.io.File;
 public class FeatureDTO extends DTO {
     private Long id;
     private String link;
-    private File media;
+    private String media;
 }

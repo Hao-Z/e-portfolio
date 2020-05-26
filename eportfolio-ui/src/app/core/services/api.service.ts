@@ -5,7 +5,7 @@ import { catchError, map, retry } from 'rxjs/operators';
 import * as globals from "../../../global";
 import { CustomOptionsService } from "./custom-options.service";
 import { HttpErrorHandler } from './http-error-handler.service';
-import { DELETE } from './api.const';
+import { DELETE, PUT } from './api.const';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +36,19 @@ export class ApiService {
   public create<T>(id: number, body: T, className: string): Observable<T>{
     const url = `${this.apiUrl}${id}`;
     const httpOptions = this.options.getHttpOptions(new HttpParams().set('class', className));
+    return this.http.post(url, body, httpOptions)
+      .pipe(
+        map((res:any) => {
+          return res.body as T
+        }),
+        retry(1),
+        catchError(this.httpErrorHandler.errorHandler)
+      )
+  }
+
+  public update<T>(id: number, body: T, className: string, object_id: string): Observable<T>{
+    const url = `${this.apiUrl}${id}`;
+    const httpOptions = this.options.getHttpOptions(PUT.set('class', className).set('object-id', object_id));
     return this.http.post(url, body, httpOptions)
       .pipe(
         map((res:any) => {

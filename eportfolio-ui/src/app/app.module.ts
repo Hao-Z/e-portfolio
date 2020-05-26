@@ -38,11 +38,22 @@ import { ModalPublicationComponent } from './cv-form/modal-publication/modal-pub
 import { ModalLanguageComponent } from './cv-form/modal-language/modal-language.component';
 import { ModalRecommendationComponent } from './cv-form/modal-recommendation/modal-recommendation.component';
 import { PropertiesPipe } from "./core/properties-pipe";
-import { AboutComponent } from "./cv/cv-card/about.component"
-import { WorkExperienceComponent } from "./cv/cv-card/work-experience.component"
 import { FooterComponent } from "./footer/footer.component";
 import { CvShowComponent } from './cv-show/cv-show.component';
 import { FileDownloadExample } from './filedownloadExample/filedownload';
+import { AboutComponent } from "./cv/cv-card/about.component"
+import { WorkExperienceComponent } from "./cv/cv-card/work-experience.component"
+import { VolunteerExperienceComponent } from "./cv/cv-card/volunteer-experience.component"
+import { SkillComponent } from "./cv/cv-card/skill.component"
+import { EducationComponent } from "./cv/cv-card/education.component"
+import { FeatureComponent } from "./cv/cv-card/feature.component"
+import { HonourAwardComponent } from "./cv/cv-card/honour-award.component"
+import { LanguageComponent } from "./cv/cv-card/language.component"
+import { LicenseCertificationComponent } from "./cv/cv-card/license-certification.component"
+import { ProjectComponent } from "./cv/cv-card/project.component"
+import { PublicationComponent } from "./cv/cv-card/publication.component"
+import { RecommendationComponent } from "./cv/cv-card/recommendation.component"
+import { FormlyFileFieldType } from './dynamic-form/file.type';
 
 
 
@@ -84,11 +95,22 @@ export function patternValidationMessage(err, field: FormlyFieldConfig) {
     ModalLanguageComponent,
     ModalRecommendationComponent,
     PropertiesPipe,
-    AboutComponent,
-    WorkExperienceComponent,
     FooterComponent,
     FileDownloadExample,
-    FooterComponent
+    FooterComponent,
+    AboutComponent,
+    WorkExperienceComponent,
+    VolunteerExperienceComponent,
+    SkillComponent,
+    EducationComponent,
+    FeatureComponent,
+    HonourAwardComponent,
+    LanguageComponent,
+    LicenseCertificationComponent,
+    ProjectComponent,
+    PublicationComponent,
+    RecommendationComponent,
+    FormlyFileFieldType
   ],
   imports: [
     BrowserModule,
@@ -103,7 +125,8 @@ export function patternValidationMessage(err, field: FormlyFieldConfig) {
     AngularFullpageModule,
     FormlyModule.forRoot({
       types: [
-        { name: 'datepicker', component: FormlyDatepickerFieldType, wrappers: ['form-field'] }
+        { name: 'datepicker', component: FormlyDatepickerFieldType, wrappers: ['form-field'] },
+        { name: 'file', component: FormlyFileFieldType, wrappers: ['form-field'], defaultOptions: { defaultValue: [] } }
       ],
       validationMessages: [
         { name: 'required', message:'This field is required!'},

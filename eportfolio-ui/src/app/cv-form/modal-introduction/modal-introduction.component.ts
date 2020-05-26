@@ -2,23 +2,27 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core'
 import { DataService } from '../../core/services/data.service';
-import { userID, refreshJwt } from "../../../global";
+import { userID } from "../../../global";
 import { UniqueApiService } from "../../core/services/unique-api.service";
 import { Introduction } from "../../core/models/introduction.model";
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { AlertService } from 'src/app/core/services/alert.service';
+import { FileService } from 'src/app/core/services/file.service';
 
 @Component({
   selector: 'app-modal-introduction',
   templateUrl: './modal-introduction.component.html',
-  styleUrls: ['./modal-introduction.component.css']
+  styleUrls: ['./modal-introduction.component.css'],
 })
 export class ModalIntroductionComponent implements OnInit {
 
   title: string = `Introduction`;
+  classname: string = `introduction`
+  isNew: boolean = true;
 
+  model:Introduction
   form = new FormGroup({});
   options: FormlyFormOptions = {};
-  model:Introduction 
   fields: FormlyFieldConfig[] = [
     {
       fieldGroupClassName: 'row',
@@ -67,20 +71,6 @@ export class ModalIntroductionComponent implements OnInit {
         required: true,
         placeholder: "Choose an industry...",
         options: this.dataService.getIndustry()
-      }
-    },
-    {
-      key: 'currentPosition',
-      type: 'input',
-      templateOptions: {
-        label: 'Current Position'
-      }
-    },
-    {
-      key: 'currentEducation',
-      type: 'input',
-      templateOptions: {
-        label: 'Current Education'
       }
     },
     {
@@ -165,10 +155,12 @@ export class ModalIntroductionComponent implements OnInit {
     }, 
     {
       key: 'profilePhoto',
-      type: 'input',
+      type: 'file',
       templateOptions: {
-        type: 'file',
-        label: 'Profile',
+        label: 'Profile (Maximum size: 1 MB)',
+        fileheader: this.fileService.getUploadHeader(),
+        action: this.fileService.getUploadUrl(userID),
+        showbutton: true
       }
     } 
   ];
@@ -176,20 +168,21 @@ export class ModalIntroductionComponent implements OnInit {
   constructor(
     public modal: NgbActiveModal,
     private dataService: DataService,
-    private uniqueApiService: UniqueApiService
-  ) { }
+    private apiService: UniqueApiService,
+    private alertService: AlertService,
+    public fileService: FileService
+  ) {}
 
   ngOnInit(): void {
-    refreshJwt(); 
     this.getIntroduction();
   }
 
   getIntroduction() {
-    this.uniqueApiService.get(userID, this.title.toLowerCase())
+    this.apiService.get(userID, this.title.toLowerCase())
       .subscribe((result: Introduction) => {
-        console.log("CV Intro get response: ", JSON.stringify(result))
         if (result) {
           this.model =result;
+          this.fileService.msgToTem(this.model.profilePhoto)
         }
       })
   }
@@ -197,9 +190,9 @@ export class ModalIntroductionComponent implements OnInit {
   onSubmit() {
     console.log("CV Intro submit form:", this.model);
 		if (this.form.valid) {
-      this.uniqueApiService.update(userID, this.model, this.title.toLowerCase())
-        .subscribe((result: Introduction) => {
-          console.log("CV Intro patch response:", JSON.stringify(result))
+      this.apiService.update(userID, this.model, this.title.toLowerCase())
+        .subscribe(() => {
+          this.alertService.success(`Successfully modified the ${this.title} section!`);
         })
     }
   }
