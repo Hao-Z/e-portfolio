@@ -2,7 +2,7 @@
 <nz-layout style="background-color: transparent">
   <div class="row" style="margin-top: 50px">
     <div class="col-md-6 offset-md-3 col-xs-12">
-          <nz-switch [ngModel]="checkbox['isPublic']" nzCheckedChildren="On" nzUnCheckedChildren="Off"
+          <nz-switch [ngModel]="!checkbox['isPublic']" nzCheckedChildren="On" nzUnCheckedChildren="Off"
             (click)="checkbox['isPublic'] =! checkbox['isPublic'];updateSecurity()"></nz-switch>
           <label style="color: transparent">_</label>
           <label>Make the CV private</label>
