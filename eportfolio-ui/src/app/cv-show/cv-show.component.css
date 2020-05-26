@@ -15,6 +15,7 @@
     border-color: #e6e6e6;
     box-shadow: 0px 5px 10px grey;
 }
+
 .cover img {
     float: left;
     margin-left: 20px;
@@ -58,18 +59,17 @@
     margin-top: 50px;
 }
 .cover h5 {
-    /* margin-left: 20px; */
     font-size: 20px;
     font-style: italic;
     word-spacing: 2px;
     font-family: NotoSerif;
 }
 .cover h2 {
-    /* margin-left: 20px; */
+
     font-size: 28px;
     font-family: NotoSerif;
 }
-.cover h2 span {
+.cover span {
     padding: 15px;
     font-size: 16px;
     color: var(--primary-color);
@@ -89,11 +89,10 @@
     left: 0px;
     bottom: 0px;
     z-index: -1;
-    /* transform: -80px 0px; */
+
     transform: scale(1.01);
-    /* bottom: 0px; */
-    /* border-radius:20%; */
+
     position:absolute;
-    /* transition-duration: 0.5s; */
+
     background-color: var(--primary-color);
 }
