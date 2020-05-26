@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-title">Change My Avartar</h4>
+  <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title"
+    (click)="modal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <ng-container>
+    <nz-upload
+        class="avatar-uploader"
+        [nzAction]="actionUrl"
+        [nzHeaders]="fileHeader"
+        nzListType="picture-card"
+        [nzShowUploadList]="false"
+        [nzBeforeUpload]="beforeUpload"
+        (nzChange)="handleChange($event)">
+
+        <ng-container *ngIf="!avatarUrl">
+            <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
+            <div class="ant-upload-text">Upload</div>
+        </ng-container>
+        <img *ngIf="avatarUrl" [src]="avatarUrl" class="avatar" />
+    </nz-upload>
+  </ng-container>
+</div>
+<div class="modal-footer">
+    <button type="button" ngbAutofocus class="btn btn-outline-secondary" (click)="modal.dismiss('ok click')">OK</button>
+</div> 

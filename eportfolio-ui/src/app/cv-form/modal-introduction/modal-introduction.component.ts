@@ -153,16 +153,16 @@ export class ModalIntroductionComponent implements OnInit {
         maxLength: 200
       }
     }, 
-    {
-      key: 'profilePhoto',
-      type: 'file',
-      templateOptions: {
-        label: 'Profile (Maximum size: 1 MB)',
-        fileheader: this.fileService.getUploadHeader(),
-        action: this.fileService.getUploadUrl(userID),
-        showbutton: true
-      }
-    } 
+    // {
+    //   key: 'profilePhoto',
+    //   type: 'file',
+    //   templateOptions: {
+    //     label: 'Profile (Maximum size: 1 MB)',
+    //     fileheader: this.fileService.getUploadHeader(),
+    //     action: this.fileService.getUploadUrl(userID),
+    //     showbutton: true
+    //   }
+    // } 
   ];
 
   constructor(
