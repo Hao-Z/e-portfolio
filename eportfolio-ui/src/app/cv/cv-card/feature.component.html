@@ -4,21 +4,28 @@
     <i class="fa fa-plus" aria-hidden="true"></i></button>
   <h2>{{title}}</h2>
   <hr />
-  <div *ngFor="let item of data">
-    <div class="row">
-      <div class="col-10">
-
-          <a *ngIf="item.link">{{item.link}}</a>
-          <p>{{item.media}}</p>
-
-      </div>
-      <div class="col-2">
-        <button class="btn add-btn a-right" (click)="deleteForm(item.id)" type="button" *ngIf="item.link || item.media">
-          <i class="fa fa-trash-o" aria-hidden="true"></i></button>
-        <button class="btn add-btn a-right" (click)="editForm(item)" type="button" *ngIf="item.link || item.media">
-          <i class="fa fa-pencil" aria-hidden="true"></i></button>
+  <ul>
+    <div *ngFor="let item of data" class="cover">
+      <div class="row">
+        <div class="col-10">
+          <li>
+            <a *ngIf="item.link" href="#" (click)="clickURL(item.link)">{{item.link}}</a>
+            <h6 *ngIf="item.media">
+              <a href="#" (click)="clickURL(item.media)">
+                File
+              </a>
+            </h6>
+          </li>
+        </div>
+        <div class="col-2">
+          <button class="btn add-btn a-right" (click)="deleteForm(item.id)" type="button"
+            *ngIf="item.link || item.media">
+            <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+          <button class="btn add-btn a-right" (click)="editForm(item)" type="button" *ngIf="item.link || item.media">
+            <i class="fa fa-pencil" aria-hidden="true"></i></button>
+        </div>
       </div>
     </div>
-  </div>
+  </ul>
 </div>
 <P></P>

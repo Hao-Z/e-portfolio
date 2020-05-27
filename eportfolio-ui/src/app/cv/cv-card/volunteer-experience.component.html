@@ -11,12 +11,19 @@
         <h5 *ngIf="item.organizationName" style="display: inline-block;font-style: normal;">{{item.organizationName}}
         </h5>
         <span *ngIf="item.role" style="display: inline-block;">{{item.role}}</span>
-        <br>
+        <br *ngIf="item.role || item.organizationName">
         <h6 *ngIf="item.cause">{{item.cause}}</h6>
         <p *ngIf="item.startDate" style="display: inline-block;">{{item.startDate}}&nbsp;</p>
         <p *ngIf="item.endDate" style="display: inline-block;">to {{item.endDate}}</p>
-        <!-- <br> -->
+
         <h6 *ngIf="item.description">{{item.description}}</h6>
+
+        <h6 *ngIf="item.media">
+          <a href="#" (click)="clickURL(item.media)">
+            File
+          </a>
+        </h6>
+
       </div>
       <div class="col-2">
         <button class="btn add-btn a-right" (click)="deleteForm(item.id)" type="button">

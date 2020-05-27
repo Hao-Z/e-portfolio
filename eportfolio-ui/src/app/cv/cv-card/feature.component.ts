@@ -37,4 +37,12 @@ export class FeatureComponent {
             this.alertService.success("Successfully deleted!");
           })
     }
+
+    clickURL(url: string) {
+        if (!url.startsWith("http")) {
+            url = "http://" + url
+        }
+        window.open(url,"_blank")
+    }
+    
 }

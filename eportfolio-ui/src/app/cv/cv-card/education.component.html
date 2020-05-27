@@ -10,16 +10,19 @@
 
         <h5 *ngIf="item.schoolName" style="font-style: normal;display: inline-block;">{{item.schoolName}}</h5>
         <span *ngIf="item.fieldOfStudy" style="display: inline-block;">{{item.fieldOfStudy}}</span>
-        <br>
+        <br *ngIf="item.schoolName || item.fieldOfStudy">
         <h5 *ngIf="item.degree" style="display: inline-block;font-style:inherit;">{{item.degree}}&nbsp;</h5>
         <h6 *ngIf="item.grade" style="display: inline-block;">with a grade of <strong>{{item.grade}}</strong></h6>
-        <br>
+        <br *ngIf="item.degree || item.grade">
         <p *ngIf="item.startYear" style="display: inline-block;">{{item.startYear}}&nbsp;</p>
         <p *ngIf="item.endYear" style="display: inline-block;">to {{item.endYear}}</p>
-        <br>
         <h6 *ngIf="item.activityAndSociety">{{item.activityAndSociety}}</h6>
         <h6 *ngIf="item.description">{{item.description}}</h6>
-
+        <h6 *ngIf="item.media">
+          <a href="#" (click)="clickURL(item.media)">
+            File
+          </a>
+        </h6>
       </div>
       <div class="col-2">
         <button class="btn add-btn a-right" (click)="deleteForm(item.id)" type="button">

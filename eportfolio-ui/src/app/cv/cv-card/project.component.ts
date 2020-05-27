@@ -4,7 +4,7 @@ import { ApiService } from 'src/app/core/services/api.service';
 import { userID } from 'src/global';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { Project } from 'src/app/core/models/project.model';
-
+import {CvComponent} from 'src/app/cv/cv.component'
 @Component({
     selector: 'card-project',
     templateUrl: './project.component.html',
@@ -36,5 +36,11 @@ export class ProjectComponent {
           .subscribe(() => {
             this.alertService.success("Successfully deleted!");
           })
+    }
+    clickURL(url: string) {
+        if (!url.startsWith("http")) {
+            url = "http://" + url
+        }
+        window.open(url,"_blank")
     }
 }
