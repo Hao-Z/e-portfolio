@@ -67,8 +67,8 @@
         </table>
       </div>
     </nz-content>
-    <nz-content style="min-height: 100%;">
-      <div *ngFor="let userData of userDatas">
+
+      <div *ngFor="let userData of userDatas" class="inner-content">
         <div class="card-body">
           <a class="nav-link" href="javascript:void(0);" onclick="getLink($userData.userID)">
             <div *ngIf="!isCollapsed">
@@ -105,7 +105,6 @@
             </div>
           </a>
         </div>
-        <br />
       </div>
       <br />
       <div align="center">
@@ -113,9 +112,9 @@
           nzShowQuickJumper></nz-pagination>
       </div>
       <br />
-      <nz-footer>
-        <app-footer></app-footer>
-      </nz-footer>
-    </nz-content>
+
+    <nz-footer>
+      <app-footer></app-footer>
+    </nz-footer>
   </nz-layout>
 </nz-layout>
