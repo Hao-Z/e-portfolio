@@ -28,7 +28,8 @@ export class ModalRecommendationComponent implements OnInit {
       type: 'input',
       templateOptions: {
         label: 'Referrer Name',
-        required: true
+        required: true,
+        maxLength: 255
       }
     },
     {
@@ -36,6 +37,7 @@ export class ModalRecommendationComponent implements OnInit {
       type: 'input',
       templateOptions: {
         label: 'Referrer Title',
+        maxLength: 255
       }
     },
     {
@@ -43,6 +45,7 @@ export class ModalRecommendationComponent implements OnInit {
       type: 'textarea',
       templateOptions: {
         label: 'Description',
+        maxLength: 2048
       },
       hooks: {
         onInit: (field: FormlyFieldConfig) => {

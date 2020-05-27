@@ -29,28 +29,33 @@ export class ModalWorkExperienceComponent implements OnInit {
       type: 'input',
       templateOptions: {
         label: 'Title',
-        require: true
+        required: true,
+        maxLength: 255
       }
     },
     {
       key: 'employmentType',
-      type: 'input',
+      type: 'select',
       templateOptions: {
-        label: 'Employment Type'
+        label: 'Employment Type',
+        placeholder: "-",
+        options: this.dataService.getEmplogymentType()
       }
     },
     {
       key: 'companyName',
       type: 'input',
       templateOptions: {
-        label: 'Company Name'
+        label: 'Company Name',
+        maxLength: 255
       }
     },
     {
       key: 'location',
       type: 'input',
       templateOptions: {
-        label: 'Location'
+        label: 'Location',
+        maxLength: 255
       }
     },
     {
@@ -66,6 +71,7 @@ export class ModalWorkExperienceComponent implements OnInit {
     {
       key: 'isCurrentWork',
       type: 'checkbox',
+      defaultValue: false,
       templateOptions: {
         label: 'Is Current Work',
       }
@@ -80,6 +86,7 @@ export class ModalWorkExperienceComponent implements OnInit {
           templateOptions: {
             label: 'Start Date',
             placeholder: 'dd-MM-yyyy',
+            pattern: "(((0[1-9]|[12][0-9]|3[01])-((0[13578]|1[02]))|((0[1-9]|[12][0-9]|30)-(0[469]|11))|(0[1-9]|[1][0-9]|2[0-8])-(02))-([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3}))|(29-02-(([0-9]{2})(0[48]|[2468][048]|[13579][26])|((0[48]|[2468][048]|[3579][26])00)))"
           }
         },
         {
@@ -89,6 +96,11 @@ export class ModalWorkExperienceComponent implements OnInit {
           templateOptions: {
             placeholder: 'dd-MM-yyyy',
             label: 'End Date',
+            pattern: "(((0[1-9]|[12][0-9]|3[01])-((0[13578]|1[02]))|((0[1-9]|[12][0-9]|30)-(0[469]|11))|(0[1-9]|[1][0-9]|2[0-8])-(02))-([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3}))|(29-02-(([0-9]{2})(0[48]|[2468][048]|[13579][26])|((0[48]|[2468][048]|[3579][26])00)))"
+          },
+          expressionProperties: {
+            'templateOptions.disabled': '!model.startDate',
+            'model.endDate': '!model.startDate ? null : model.endDate'
           }
         }
       ]
@@ -98,6 +110,7 @@ export class ModalWorkExperienceComponent implements OnInit {
       type: 'textarea',
       templateOptions: {
         label: 'Description',
+        maxLength: 2048
       },
       hooks: {
         onInit: (field: FormlyFieldConfig) => {
@@ -134,7 +147,7 @@ export class ModalWorkExperienceComponent implements OnInit {
         companyName: null,
         location: null,
         industry: null,
-        isCurrentWork: null,
+        isCurrentWork: false,
         startDate: null,
         endDate: null,
         description: null,

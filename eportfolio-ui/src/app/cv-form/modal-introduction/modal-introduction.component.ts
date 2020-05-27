@@ -17,7 +17,7 @@ import { FileService } from 'src/app/core/services/file.service';
 export class ModalIntroductionComponent implements OnInit {
 
   title: string = `Introduction`;
-  classname: string = `introduction`
+  classname: string = `introduction`;
   isNew: boolean = true;
 
   model:Introduction
@@ -34,6 +34,7 @@ export class ModalIntroductionComponent implements OnInit {
           templateOptions: {
             label: 'First Name',
             required: true,
+            maxLength: 255
           }
         },
         {
@@ -42,9 +43,11 @@ export class ModalIntroductionComponent implements OnInit {
           type: 'input',
           templateOptions: {
             label: 'Last Name',
+            maxLength: 255
           },
           expressionProperties: {
-            // 'templateOptions.disabled': '!model.firstName',
+            'templateOptions.disabled': '!model.firstName',
+            'model.lastName': '!model.firstName ? null : model.lastName'
           }
         }
       ]
@@ -56,6 +59,7 @@ export class ModalIntroductionComponent implements OnInit {
       templateOptions: {
         label: 'Headline',
         placeholder: 'Example: Developer at XX company.',
+        maxLength: 2048
       },
       hooks: {
         onInit: (field: FormlyFieldConfig) => {
@@ -92,6 +96,7 @@ export class ModalIntroductionComponent implements OnInit {
           templateOptions: {
             placeholder: 'dd-MM-yyyy',
             label: 'Date of Birth',
+            pattern: "(((0[1-9]|[12][0-9]|3[01])-((0[13578]|1[02]))|((0[1-9]|[12][0-9]|30)-(0[469]|11))|(0[1-9]|[1][0-9]|2[0-8])-(02))-([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3}))|(29-02-(([0-9]{2})(0[48]|[2468][048]|[13579][26])|((0[48]|[2468][048]|[3579][26])00)))"
           }
         }
       ]
@@ -106,7 +111,7 @@ export class ModalIntroductionComponent implements OnInit {
           templateOptions: {
             label: 'Country',
             required: true,
-            maxLength: 20
+            maxLength: 255
           }
         },
         {
@@ -115,7 +120,7 @@ export class ModalIntroductionComponent implements OnInit {
           type: 'input',
           templateOptions: {
             label: 'Postal Code',
-            pattern: "^[0-9]{4}$"
+            maxLength: 10
           }
         }
       ]
@@ -130,7 +135,9 @@ export class ModalIntroductionComponent implements OnInit {
           templateOptions: {
             type: 'email',
             label: 'Email',
+            required: true,
             minLength: 3,
+            maxLength: 255,
             pattern: "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
           }
         },
@@ -140,7 +147,8 @@ export class ModalIntroductionComponent implements OnInit {
           type: 'input',
           templateOptions: {
             label: 'Phone',
-            pattern: "^[0-9]{10,11}$"
+            maxLength: 15,
+            pattern: "^[0-9]{9,15}$"
           }
         }
       ]
@@ -150,7 +158,7 @@ export class ModalIntroductionComponent implements OnInit {
       type: 'input',
       templateOptions: {
         label: 'Address',
-        maxLength: 200
+        maxLength: 255
       }
     }
   ];
