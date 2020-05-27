@@ -55,6 +55,7 @@ import { PublicationComponent } from "./cv/cv-card/publication.component"
 import { RecommendationComponent } from "./cv/cv-card/recommendation.component"
 import { FormlyFileFieldType } from './dynamic-form/file.type';
 import { ShareLinkComponent } from './cv/share-link/share-link.component';
+import { EditAvarterComponent } from './cv/edit-avarter/edit-avarter.component';
 
 
 
@@ -112,7 +113,8 @@ export function patternValidationMessage(err, field: FormlyFieldConfig) {
     PublicationComponent,
     RecommendationComponent,
     FormlyFileFieldType,
-    ShareLinkComponent
+    ShareLinkComponent,
+    EditAvarterComponent
   ],
   imports: [
     BrowserModule,
