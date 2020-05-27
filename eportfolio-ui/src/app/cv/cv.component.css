@@ -1,11 +1,85 @@
+
 .card-body {
-    margin-right: 80px;
+    /* margin-right: 80px; */
+    margin: 0 auto;
     height: auto;
+    max-width: 900px;
     border: 1px;
     border-style: solid;
     border-color: #e6e6e6;
-    box-shadow: 10px 5px 5px grey;
-    border-radius: 5px;
+    box-shadow: 5px 5px 10px grey;
+    background-color: white;
+    /* border-radius: 5px; */
+    position: relative;
+    float: center;
+    margin-top: 25px;
+}
+.card-body h2 {
+  font-size: 24px;
+  font-family: NotoSerif;
+}
+.cover img {
+  float: left;
+  z-index: 1;
+  margin-left: 20px;
+  margin-top: 40px;
+}
+.fa-trash-o {
+  color: red;
+}
+
+.col-16 {
+  max-width: 600px;
+  text-align: left;
+  margin-left: 180px;
+  margin-top: 50px;
+}
+
+.cover h5 {
+  /* margin-left: 20px; */
+  font-size: 20px;
+  font-style: oblique;
+  word-spacing: 2px;
+  font-family: NotoSerif;
+}
+.cover h6 {
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  font-family: Calibri;
+}
+.cover h2 {
+  /* margin-left: 20px; */
+  font-size: 28px;
+  font-family: NotoSerif;
+}
+.cover span {
+  padding: 15px;
+  font-size: 16px;
+  color: var(--primary-color);
+  font-family: NotoSerif;
+}
+.cover p {
+  font-size: 16px;
+  font-weight: 300;
+  color: #5e5e5e;
+  font-family: Calibri;
+  line-height: 12px;
+}
+
+.square{
+  width: 100px;
+  height: 100%;
+  left: 0px;
+  bottom: 0px;
+  z-index: -1;
+  /* transform: -80px 0px; */
+  transform: scale(1.01);
+  /* bottom: 0px; */
+  /* border-radius:20%; */
+  position:absolute;
+  /* transition-duration: 0.5s; */
+  background-color: var(--primary-color);
 }
 
 .add-btn:active {
@@ -20,3 +94,30 @@
   float:right
 }
 
+blockquote {
+  /* margin: 1em 3em; */
+  margin-left: 17%;
+  max-width: 66%;
+  text-align: center;
+	padding: .5em 1em;
+	border-left: 5px solid #fce27c;
+  background-color: #f6ebc1; 
+}
+blockquote p {
+  margin: 0; 
+  font-size: 18px;
+  font-family: NotoSerif;
+  font-style: italic;
+  color: #4e4e4e;
+  font-weight: 300;
+}
+
+.detail {
+  margin-left: 300px;
+  font-family: Avenir;
+}
+.time {
+  font-style: italic;
+  float: left;
+  font-family: NotoSerif;
+}

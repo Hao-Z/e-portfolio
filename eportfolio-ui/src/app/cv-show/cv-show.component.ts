@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {NzFormatEmitEvent, NzTreeNodeOptions} from "ng-zorro-antd";
+import { ActivatedRoute } from '@angular/router';
+import { UniqueApiService } from '../core/services/unique-api.service';
+import { Cv } from '../core/models/cv.model';
+import { ModalService } from '../core/services/modal.service';
 @Component({
   selector: 'app-cv-show',
   templateUrl: './cv-show.component.html',
-  styleUrls: ['./cv-show.component.css']
+  styleUrls: ['../cv/cv.component.css']
 })
 export class CvShowComponent implements OnInit {
   config;
@@ -42,9 +46,63 @@ export class CvShowComponent implements OnInit {
     {'industry': 'Computer Hardware'},
     {'industry': 'Computer Networking'},
   ];
-  constructor() { }
+
+  cvForms: Cv;
+  cvItems: Array<string> = this.modalService.getKeys(); 
+  avartarUrl: string = "assets/untitled.png" 
+
+  constructor(
+    private route: ActivatedRoute,
+    public modalService: ModalService,
+    private apiService: UniqueApiService
+    ) { }
 
   ngOnInit(): void {
+    this.getCv();
+    // this.disableButt()
   }
+
+  // disableButt() {
+  //   var buttons = document.getElementsByClassName('fa');
+  //   console.log(buttons[1] as HTMLElement)
+  //   // for (var x in buttons) {
+  //   //     // var butt = x as HTMLElement;
+  //   //     console.log(x)
+  //   //     x.hidden = true;
+  //   //     // butt.isConnected = false;
+  //   // }
+  // }
+
+  getCv(): void {
+    var link_info: string = this.route.snapshot.queryParamMap.get('link');
+    var target_id;
+    if (!isNaN(Number(link_info))) {
+      target_id = link_info;
+      link_info = null;
+    } else {
+      target_id = JSON.parse(atob(link_info.split('.')[1]))['read_only_id']
+    }
+    this.apiService.getSharedCv(target_id, link_info)
+      .subscribe((result: Cv) => {
+        this.cvForms = result;
+        this.setAvartar();
+        console.log("Cv get response:", JSON.stringify(result))
+    })
+  }
+
+  setAvartar(): void {
+    if (this.cvForms.introduction.profilePhoto) {
+      this.avartarUrl = this.cvForms.introduction.profilePhoto;
+    }
+  }
+
+  // getCvFromID() {
+  //   this.apiService.get(userID, "cv")
+  //     .subscribe((result: Cv) => {
+  //       this.cvForms = result;
+  //       console.log("Cv get response:", JSON.stringify(result))
+  //   })
+  // }
+
 
 }

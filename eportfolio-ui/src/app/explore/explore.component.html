@@ -70,7 +70,7 @@
     <nz-content style="min-height: 100%;">
       <div *ngFor="let userData of userDatas">
         <div class="card-body">
-          <a [routerLink]="['/cv-show']" class="nav-link" href="#">
+          <a class="nav-link" href="javascript:void(0);" onclick="getLink($userData.userID)">
             <div *ngIf="!isCollapsed">
               <div class="row">
                 <div class="col-4"><img src="assets/untitled.png" class="rounded-circle" alt="anonymous-user"
@@ -113,9 +113,9 @@
           nzShowQuickJumper></nz-pagination>
       </div>
       <br />
+      <nz-footer>
+        <app-footer></app-footer>
+      </nz-footer>
     </nz-content>
-    <nz-footer>
-      <app-footer></app-footer>
-    </nz-footer>
   </nz-layout>
 </nz-layout>

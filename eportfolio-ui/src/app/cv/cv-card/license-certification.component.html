@@ -2,14 +2,24 @@
 <div class="card-body" style="background-color: white">
   <button class="btn add-btn a-right" (click)="addForm()" type="button">
     <i class="fa fa-plus" aria-hidden="true"></i></button>
-  <h4 class="card-title">{{title}}</h4>
+  <h2>{{title}}</h2>
   <hr />
-  <div *ngFor="let item of data">
+  <div *ngFor="let item of data" class="cover">
     <div class="row">
       <div class="col-10">
-        <ng-container *ngFor="let property of item | appProperties">
-            <ng-container *ngIf="item[property]">{{property}} : {{item[property]}} <br></ng-container>
-        </ng-container>
+        <!-- name : Certification 1
+issuingOrganization : hahahahah
+
+credentialID : 12435235
+credentialURL : www.haha.com -->
+          <h5 *ngIf="item.name" style="display: inline-block;font-style: normal;">{{item.name}}</h5>
+          <span *ngIf="item.issuingOrganization" style="display: inline-block;">{{item.issuingOrganization}}</span>
+          <br>
+          <h6 *ngIf="item.credentialID" style="display: inline-block;">ID: {{item.credentialID}}&nbsp;&nbsp;</h6>
+          <h6 *ngIf="item.credentialURL" style="display: inline-block;"><a href="">{{item.credentialURL}}</a></h6>
+          <br>
+          <p *ngIf="item.issueDate" style="display: inline-block;">Issued on {{item.issueDate}}&nbsp;</p>
+          <p *ngIf="item.expirationDate" style="display: inline-block;">and expires at {{item.expirationDate}}</p>
       </div>
       <div class="col-2">
         <button class="btn add-btn a-right" (click)="deleteForm(item.id)" type="button">

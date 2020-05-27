@@ -47,7 +47,8 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
         }
 
         Long targetUserId = getTargetUserId(targetDomainObject);
-        return authentication.getPrincipal().equals(targetUserId);
+
+        return targetUserId.equals(authentication.getPrincipal());
     }
 
     private boolean readPermission(Authentication authentication, Object targetDomainObject) {
@@ -58,7 +59,8 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
         Long targetUserId = getTargetUserId(targetDomainObject);
         Long readOnlyId = getReadOnlyId(authentication);
         boolean isPublic = getUserPrivacy(targetDomainObject);
-        return isPublic || authentication.getPrincipal().equals(targetUserId) || targetUserId.equals(readOnlyId);
+
+        return isPublic || targetUserId.equals(authentication.getPrincipal()) || targetUserId.equals(readOnlyId);
     }
 
     @SneakyThrows

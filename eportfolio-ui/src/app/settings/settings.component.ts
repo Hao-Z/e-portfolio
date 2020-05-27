@@ -19,17 +19,14 @@ import {NzMessageDataOptions, NzMessageService} from "ng-zorro-antd";
 @Injectable()
 export class SettingsComponent implements OnInit {
 
-  checkbox : any;
+  checkbox;
   updatePassword: FormGroup;
   update = false;
   constructor(private pop: NzMessageService, private http: HttpClient, private router: Router,private formBuilder: FormBuilder) { }
+
   ngOnInit(): void {
     refreshJwt();
     this.getSecurity();
-    this.checkbox = {
-      'privacy' : false
-    };
-
     this.updatePassword = this.formBuilder.group({
       "Current password" : ['',Validators.required],
       "New password" : ['',[Validators.required, Validators.minLength(6)]],
@@ -43,8 +40,9 @@ export class SettingsComponent implements OnInit {
       headers : new HttpHeaders({'content-Type': 'application/json',
         'Authorization': jwt})
     };
+    this.checkbox = {'isPublic':true};
     this.http.get<any>(globals.backend_path + "users/" + userID + "/security",HttpOptions).subscribe((result:any)=>{
-      this.checkbox['privacy'] = result.body['privacy'];
+      this.checkbox['isPublic'] = result['isPublic'];
     });
   }
 
@@ -54,14 +52,14 @@ export class SettingsComponent implements OnInit {
       headers : new HttpHeaders({'content-Type': 'application/json',
         'Authorization': jwt})
     };
-    this.http.post<any>(globals.backend_path + "users/" + userID + "/security?_method=patch", this.checkbox, HttpOptions).subscribe((result) => {
+    this.http.post<any>(globals.backend_path + "users/" + userID + "/security?_method=patch", this.checkbox, HttpOptions).subscribe((result:any) => {
       // This code will be executed when the HTTP call returns successfully
     });
     // alert('Changes succeed: ' + JSON.stringify(this.checkbox));
-    if(this.checkbox['privacy']){
-      this.pop.success('Your CV is INVISIBLE from public now!', {nzDuration: 2000});
-    } else {
+    if(this.checkbox['isPublic']){
       this.pop.success('Your CV is VISIBLE from public now!', {nzDuration: 2000});
+    } else {
+      this.pop.success('Your CV is INVISIBLE from public now!', {nzDuration: 2000});
     }
   }
 
@@ -80,7 +78,6 @@ export class SettingsComponent implements OnInit {
   }
 
   message : any;
-  errorBG: any = "background-color: rgba(255,255,255,0.4)";
   updatePW(data) {
     refreshJwt();
     const HttpOptions = {

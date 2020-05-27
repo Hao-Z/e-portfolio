@@ -3,6 +3,8 @@ import {NzFormatEmitEvent, NzTreeNodeOptions} from "ng-zorro-antd";
 import {refreshJwt} from "../../global";
 import * as globals from "../../global";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import { RouterLink } from '@angular/router';
+import { UniqueApiService } from 'src/app/core/services/unique-api.service';
 
 @Component({
   selector: 'app-cvs',
@@ -10,6 +12,8 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
   styleUrls: ['./explore.component.css']
 })
 export class ExploreComponent implements OnInit {
+
+  sharelink: string
 
   nodes: NzTreeNodeOptions[];
   nodes_str: string[];
@@ -19,14 +23,17 @@ export class ExploreComponent implements OnInit {
   isCollapsed = window.innerWidth < Number(770);
   userDatas;
   pageNum: number = 0;
-  pageSize: number = 3;
+  pageSize: number = 10;
   totalPage: number = 1;
   CheckedIndustry: any = null;
   CheckedGender: any = null;
   order: string = null;
   Ascending : boolean;
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private apiService: UniqueApiService
+  ) { }
   sortValues: any;
   gender_nodes: NzTreeNodeOptions[] = [
     {title: 'Male', key: '1', isLeaf: true, checked: false},
@@ -35,9 +42,9 @@ export class ExploreComponent implements OnInit {
 
   ngOnInit(): void {
     if(window.innerWidth < Number(770)){
-      this.width = "background-color: #F4F3F2;padding-left:0;";
+      this.width = "padding-left:0;";
     }else{
-      this.width = "background-color: #F4F3F2; padding-left:256px;";
+      this.width = " padding-left:256px;";
     }
     this.CheckedIndustry = null;
     this.sortValues = ['Age','Experience','Education'];
@@ -45,7 +52,7 @@ export class ExploreComponent implements OnInit {
 
     // <
     // this.getNodes();
-    this.nodes_str = ['Computer Games','Computer dsf','Computer cvcv','Computer aas'];
+    this.nodes_str = ['Computer Games','Computer Hardware','Computer Networking','Computer Software','Information Technology'];
     this.nodes = [];
     for(let n of this.nodes_str){
       this.nodes.push({title: n, key: n, isLeaf: true, checked: false})
@@ -53,7 +60,11 @@ export class ExploreComponent implements OnInit {
     // > Delete
 
     this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
+    
+
   }
+
+  
 
   getOrder(event){
     if(event==null){
@@ -104,13 +115,13 @@ export class ExploreComponent implements OnInit {
 
   changeWidth() {
     if(window.innerWidth < Number(770)){
-      this.width = "background-color: #F4F3F2;padding-left:0";
+      this.width = "padding-left:0";
     }else{
-      this.width = "background-color: #F4F3F2;padding-left:256px";
+      this.width = "padding-left:256px";
     }
   }
 
-  getCVsData(pageNum='0', pageSize='10', industry:string[]=null, gender:string[]=null, orders:string=null, ascending:boolean=null) {
+  getCVsData(pageNum='0', pageSize='10', industry:string[]=null, gender:string=null, orders:string=null, ascending:boolean=null) {
     refreshJwt();
     const HttpOptions = {
       headers : new HttpHeaders({'content-Type': 'application/json',
@@ -127,8 +138,8 @@ export class ExploreComponent implements OnInit {
       }
     }
     if(gender!=null){
-      for(let i of gender) {
-        para = para + '&gender%5B%5D=' + i
+      if(gender=='0' || gender=='1'){
+        para = para + '&gender=' + gender
       }
     }
     if(orders!=null){
@@ -139,10 +150,12 @@ export class ExploreComponent implements OnInit {
       this.userDatas = [];
       for(let cv of result['content']){
         this.userDatas.push(cv);
+        console.log(cv)
       }
       this.pageNum = result['number'];
       this.pageSize = result['size'];
       this.totalPage = result['totalPages'];
+      // console.log(this.userDatas)
     });
   }
 
@@ -151,18 +164,27 @@ export class ExploreComponent implements OnInit {
     this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
   }
 
-  getNodes() {
-    refreshJwt();
-    const HttpOptions = {
-      headers : new HttpHeaders({'content-Type': 'application/json',
-        'Authorization': localStorage.getItem("jwt_token")}
-      )
-    };
-    this.http.get<any>(globals.backend_path + "explore/industries", HttpOptions).subscribe((result) => {
-      this.nodes_str = [];
-      for(let n of result['content']){
-        this.nodes_str.push(n);
-      }
-    });
+
+  getLink(userID) {
+    this.apiService.getSharedLink(userID)
+      .subscribe((result: string) => {
+        this.sharelink = `${globals.front_path}cv-show?sl=${result}`;
+    })
+    window.open(this.sharelink)
   }
+  // getNodes() {
+  //   refreshJwt();
+  //   const HttpOptions = {
+  //     headers : new HttpHeaders({'content-Type': 'application/json',
+  //       'Authorization': localStorage.getItem("jwt_token")}
+  //     )
+  //   };
+  //   this.http.get<any>(globals.backend_path + "explore/industries", HttpOptions).subscribe((result) => {
+  //     this.nodes_str = [];
+  //     for(let n of result['content']){
+  //       this.nodes_str.push(n);
+  //     }
+  //   });
+  // }
 }
+

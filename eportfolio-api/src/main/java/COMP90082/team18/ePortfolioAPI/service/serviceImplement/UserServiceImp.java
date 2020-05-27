@@ -103,7 +103,7 @@ public class UserServiceImp implements UserService {
     public User patchUser(Long id, Map<String, Object> updateFields) {
         User originalUser = getUser(id);
         if (updateFields.containsKey("password") || updateFields.containsKey("admin")
-                || (updateFields.containsKey("id") && updateFields.get("id") != id)) {
+                || (updateFields.containsKey("id") && id.equals(updateFields.get("id")))) {
             throw new IllegalArgumentException("Forbidden argument.");
         }
         return userRepository.save(objectMethod.update(originalUser, updateFields));

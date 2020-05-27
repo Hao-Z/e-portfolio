@@ -15,6 +15,8 @@ import { ModalLanguageComponent } from 'src/app/cv-form/modal-language/modal-lan
 import { ModalRecommendationComponent } from 'src/app/cv-form/modal-recommendation/modal-recommendation.component';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AlertService } from './alert.service';
+import { ShareLinkComponent } from 'src/app/cv/share-link/share-link.component';
+import { EditAvarterComponent } from 'src/app/cv/edit-avarter/edit-avarter.component';
 
 @Injectable({
   providedIn: 'root'
@@ -55,7 +57,9 @@ export class ModalService {
     "honouraward": ModalHonourAwardComponent,
     "publication": ModalPublicationComponent,
     "language": ModalLanguageComponent,
-    "recommendation": ModalRecommendationComponent
+    "recommendation": ModalRecommendationComponent,
+    "share": ShareLinkComponent,
+    "avartar": EditAvarterComponent
   };
 
   getModal(key: string) {
@@ -76,18 +80,23 @@ export class ModalService {
 
   closeResult = '';
 
-  openModal<T>(classname: string, isNew: boolean, item?: T) {
+  openModal<T>(classname: string, isNew?: boolean, item?: T) {
     var modalComp: Component;
     this.getModal(classname).subscribe(res => {
       modalComp = res;
     })
     this.ngbModalService.dismissAll;
-    var modalRef = this.ngbModalService.open(modalComp, {backdrop: 'static', size: 'lg'})
-    modalRef.componentInstance.classname = classname
-    modalRef.componentInstance.title = this.getTitle(classname)
-    modalRef.componentInstance.isNew = isNew
-    if (!isNew) {
-        modalRef.componentInstance.model = item as T
+    var modalRef: any 
+    if (classname in this.lists) {
+      modalRef = this.ngbModalService.open(modalComp, {backdrop: 'static', size: 'lg'})
+      modalRef.componentInstance.classname = classname
+      modalRef.componentInstance.title = this.getTitle(classname)
+      modalRef.componentInstance.isNew = isNew
+      if (!isNew) {
+          modalRef.componentInstance.model = item as T
+      }
+    } else {
+      modalRef = this.ngbModalService.open(modalComp, {backdrop: 'static'})
     }
     modalRef.result.then(
       (result) => {

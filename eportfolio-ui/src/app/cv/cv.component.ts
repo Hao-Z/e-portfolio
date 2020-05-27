@@ -12,54 +12,61 @@ import { NzMessageService } from 'ng-zorro-antd';
   styleUrls: ['./cv.component.css']
 })
 export class CvComponent implements OnInit{
+    
+  cvForms: Cv;
+  cvItems: Array<string> = this.modalService.getKeys();  
+  avartarUrl: string = "assets/untitled.png"
+
+  parentMessage: string;
 
   constructor(
     public modalService: ModalService,
-    private uniqueApiService: UniqueApiService,
+    private apiService: UniqueApiService,
     private alertService: AlertService,
     private pop: NzMessageService
   ) {
       this.alertService.messageSuObserve.subscribe((res: string) => {
-        this.refresh(true, res)
-    })
+        this.refresh(true, res);
+      })
       this.alertService.messageErObserve.subscribe((res: string) => {
-        this.refresh(false, res)
-    })
+        this.refresh(false, res);
+      })
       this.alertService.messageObserve.subscribe((res: string) => {
-        this.ngOnInit()
-  })
+        this.ngOnInit();
+      })
    };
-  
-  cvForms: Cv;
-  cvItems: Array<string> = this.modalService.getKeys();  
-  parentMessage: string;
 
   ngOnInit(): void {
     refreshJwt();
-    this.getCv()
+    this.getCv();
   }
 
-  refresh(isSuccess: boolean, msg: string) {
-    if (isSuccess) {
-      if (!msg) {
-        this.pop.success(msg)  
-      }          
+  refresh(isSuccess: boolean, msg: string): void {
+    if (isSuccess && msg) {
+      this.pop.success(msg, {nzDuration: 2000});  
     } else {
-      this.pop.error(msg)     
+      this.pop.error(msg, {nzDuration: 2000});     
     }
-    this.ngOnInit()
+    this.ngOnInit();
   }
 
-  getCv() {
-    this.uniqueApiService.get(userID, "cv")
+  getCv(): void {
+    this.apiService.get(userID, "cv")
       .subscribe((result: Cv) => {
         this.cvForms = result;
-        console.log("Cv get response:", JSON.stringify(result))
+        this.setAvartar();
+        console.log("Cv get response:", JSON.stringify(result));
     })
   }
 
-  editForm(className: string) {
-    this.modalService.openModal(className, true)
+  editForm(className: string): void {
+    this.modalService.openModal(className, true);
   }
-  
+
+  setAvartar(): void {
+    if (this.cvForms.introduction.profilePhoto) {
+      this.avartarUrl = this.cvForms.introduction.profilePhoto;
+    }
+  }
+
 }
