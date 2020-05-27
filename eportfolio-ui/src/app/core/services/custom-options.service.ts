@@ -30,13 +30,42 @@ export class CustomOptionsService {
   }
 
   public getShareHttpOptions(shared_link: string): {} {
-    return {
-      headers: new HttpHeaders({ 
-        'Content-Type': 'application/json',
-        'shared-link': shared_link,
-      }),
-      observe: 'response' 
+    if (shared_link) {
+      if (localStorage.getItem('jwt_token')) {
+        return {
+          headers: new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'shared-link': shared_link,
+            'Authorization': localStorage.getItem('jwt_token'),
+          }),
+          observe: 'response' 
+        }
+      } else {
+        return {
+          headers: new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'shared-link': shared_link,
+          }),
+          observe: 'response' 
+        }
+      }
+    } else {
+      if (localStorage.getItem('jwt_token')) {
+        return {
+          headers: new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('jwt_token'),
+          }),
+          observe: 'response' 
+        }
+      } else {
+        return {
+          headers: new HttpHeaders({ 
+            'Content-Type': 'application/json',
+          }),
+          observe: 'response' 
+        }
+      }
     }
   }
-  
 }

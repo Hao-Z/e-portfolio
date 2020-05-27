@@ -6,10 +6,10 @@
         <button class="btn add-btn a-right" (click)="editForm('introduction')" type="button"
           style="margin-left:15px;"><i class="fa fa-pencil" aria-hidden="true"></i></button>
         <button class="btn btn-primary a-right" type="button" id="MoreButton" style="margin-left:15px;"
-          (click)="openShareModal()">Share CV</button>
+          (click)="modalService.openModal('share')">Share CV</button>
         <div class="dropdown a-right">
           <button class="btn btn-primary dropdown-toggle" type="button" id="AddSectionButton" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
+            aria-haspopup="true" aria-expanded="false" style="outline:none;">
             Add section
           </button>
           <div class="dropdown-menu" aria-labelledby="AddSectionButton">
@@ -22,7 +22,10 @@
           </div>
         </div>
 
-        <img src="assets/untitled.png" class="rounded-circle" alt="anonymous-user" width="120px" height="120px">
+        <!-- <img src="assets/untitled.png" class="rounded-circle" alt="anonymous-user" width="120px" height="120px"> -->
+        <button (click)="modalService.openModal('avartar')" style=" FILTER: alpha(opacity=0); background-color: transparent; border: 0; outline:none;">
+          <nz-avatar nzIcon="user" [nzSrc]="avartarUrl" [nzShape]="'circle'" style="width:120px; height:120px"></nz-avatar></button>
+        <hr />
         <!-- profilePhoto -->
         <div class="square"></div>
         <div class="col-16">

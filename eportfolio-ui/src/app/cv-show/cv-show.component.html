@@ -10,7 +10,8 @@
         <ng-template [ngIf]="item=='introduction'" [ngIfElse]="about">
           <div class="card-body cover" style="min-height: 240px;z-index: 2;">
 
-            <img src="assets/untitled.png" class="rounded-circle" alt="anonymous-user" width="120px" height="120px">
+            <!-- <img src="assets/untitled.png" class="rounded-circle" alt="anonymous-user" width="120px" height="120px"> -->
+            <nz-avatar nzIcon="user" [nzSrc]="avartarUrl" [nzShape]="'circle'" style="width:120px; height:120px"></nz-avatar>
             <!-- profilePhoto -->
             <div class="square"></div>
             <div class="col-16">
