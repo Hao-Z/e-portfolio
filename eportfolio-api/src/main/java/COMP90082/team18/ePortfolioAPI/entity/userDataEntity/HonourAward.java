@@ -15,6 +15,8 @@ public class HonourAward extends GenericUserData {
     private String associatedWith;
     private String issuer;
     private LocalDate issueDate;
+    @Column(length = 2048)
     private String description;
+    @Column(length = 2048)
     private String media;
 }

@@ -35,6 +35,7 @@ public class User {
 
     private String firstName;
     private String lastName;
+    @Column(length = 2048)
     private String headline;
     private String industry;
     private Gender gender;
@@ -45,6 +46,7 @@ public class User {
     @Column(length = 2048)
     private String profilePhoto;
     private String phoneNumber;
+    @Column(length = 2048)
     private String summary;
 
     @OneToOne

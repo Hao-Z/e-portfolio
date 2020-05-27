@@ -7,6 +7,7 @@ import { userID } from 'src/global';
 import { ApiService } from "../../core/services/api.service";
 import { AlertService } from 'src/app/core/services/alert.service';
 import { FileService } from 'src/app/core/services/file.service';
+import { DataService } from 'src/app/core/services/data.service';
 
 @Component({
   selector: 'app-modal-education',
@@ -28,14 +29,17 @@ export class ModalEducationComponent implements OnInit {
       type: 'input',
       templateOptions: {
         label: 'School Name',
-        required: true
+        required: true,
+        maxLength: 255
       }
     },
     {
       key: 'degree',
-      type: 'input',
+      type: 'select',
       templateOptions: {
         label: 'Degree',
+        placeholder: "Choose an degree...",
+        options: this.dataService.getDegree()
       }
     },
     {
@@ -43,6 +47,7 @@ export class ModalEducationComponent implements OnInit {
       type: 'input',
       templateOptions: {
         label: 'Study Field',
+        maxLength: 255
       }
     },
     {
@@ -50,13 +55,15 @@ export class ModalEducationComponent implements OnInit {
       type: 'input',
       templateOptions: {
         label: 'Grade',
+        pattern: '^[0-9]{1,4}(.[0-9]{1,4}){0,1}$'
       }
     },
     {
       key: 'isDefault',
       type: 'checkbox',
+      defaultValue: false,
       templateOptions: {
-        label: 'Is Default',
+        label: 'Is Default Education',
       }
     },
     {
@@ -69,6 +76,7 @@ export class ModalEducationComponent implements OnInit {
           templateOptions: {
             label: 'Start Date',
             placeholder: 'dd-MM-yyyy',
+            pattern: "(((0[1-9]|[12][0-9]|3[01])-((0[13578]|1[02]))|((0[1-9]|[12][0-9]|30)-(0[469]|11))|(0[1-9]|[1][0-9]|2[0-8])-(02))-([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3}))|(29-02-(([0-9]{2})(0[48]|[2468][048]|[13579][26])|((0[48]|[2468][048]|[3579][26])00)))"
           }
         },
         {
@@ -78,6 +86,11 @@ export class ModalEducationComponent implements OnInit {
           templateOptions: {
             placeholder: 'dd-MM-yyyy',
             label: 'End Date',
+            pattern: "(((0[1-9]|[12][0-9]|3[01])-((0[13578]|1[02]))|((0[1-9]|[12][0-9]|30)-(0[469]|11))|(0[1-9]|[1][0-9]|2[0-8])-(02))-([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3}))|(29-02-(([0-9]{2})(0[48]|[2468][048]|[13579][26])|((0[48]|[2468][048]|[3579][26])00)))"
+          },
+          expressionProperties: {
+            'templateOptions.disabled': '!model.startYear',
+            'model.endYear': '!model.startYear ? null : model.endYear'
           }
         }
       ]
@@ -87,6 +100,7 @@ export class ModalEducationComponent implements OnInit {
       type: 'textarea',
       templateOptions: {
         label: 'Activities And Societies',
+        maxLength: 2048
       },
       hooks: {
         onInit: (field: FormlyFieldConfig) => {
@@ -99,6 +113,7 @@ export class ModalEducationComponent implements OnInit {
       type: 'textarea',
       templateOptions: {
         label: 'Description',
+        maxLength: 2048
       },
       hooks: {
         onInit: (field: FormlyFieldConfig) => {
@@ -119,6 +134,7 @@ export class ModalEducationComponent implements OnInit {
   ];
   constructor( 
     public modal: NgbActiveModal,
+    private dataService: DataService,
     private apiService: ApiService,
     private alertService: AlertService,
     public fileService: FileService
@@ -132,7 +148,7 @@ export class ModalEducationComponent implements OnInit {
         degree: null,
         fieldOfStudy: null,
         grade: null,
-        isDefault: null,
+        isDefault: false,
         startYear: null,
         endYear: null,
         activityAndSociety: null,

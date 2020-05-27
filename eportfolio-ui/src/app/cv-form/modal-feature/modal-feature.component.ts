@@ -24,10 +24,20 @@ export class ModalFeatureComponent implements OnInit {
   options: FormlyFormOptions = {};
   fields: FormlyFieldConfig[] = [
     {
+      key: 'title',
+      type: 'input',
+      templateOptions: {
+        label: 'Title',
+        required: true,
+        maxLength: 255
+      }
+    },
+    {
       key: 'link',
       type: 'input',
       templateOptions: {
-        label: 'Link'
+        label: 'Link',
+        maxLength: 255
       }
     },
     {
@@ -54,6 +64,7 @@ export class ModalFeatureComponent implements OnInit {
     if (this.isNew) {
       this.model = {
         id: null,
+        title: null,
         link: null,
         media: null
       }

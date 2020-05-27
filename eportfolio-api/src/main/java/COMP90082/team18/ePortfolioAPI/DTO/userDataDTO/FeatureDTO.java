@@ -10,6 +10,7 @@ import java.io.File;
 @EqualsAndHashCode(callSuper = false)
 public class FeatureDTO extends DTO {
     private Long id;
+    private String title;
     private String link;
     private String media;
 }
