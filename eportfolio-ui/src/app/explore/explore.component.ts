@@ -29,6 +29,7 @@ export class ExploreComponent implements OnInit {
   CheckedGender: any = null;
   order: string = null;
   Ascending : boolean;
+  avartarUrl: string = "assets/untitled.png" 
 
   constructor(
     private http: HttpClient,
@@ -149,6 +150,10 @@ export class ExploreComponent implements OnInit {
     this.http.get<any>(globals.backend_path + "explore/filters?" + para, HttpOptions).subscribe((result) => {
       this.userDatas = [];
       for(let cv of result['content']){
+        if (cv.profilePhoto) {
+          this.avartarUrl = cv.profilePhoto;
+        }
+        cv['photo'] = this.avartarUrl
         this.userDatas.push(cv);
         console.log(cv)
       }
@@ -170,6 +175,8 @@ export class ExploreComponent implements OnInit {
     // window.open(url,"_self");
     window.location.href = url;
   }
+
+
   // getNodes() {
   //   refreshJwt();
   //   const HttpOptions = {

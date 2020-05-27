@@ -18,7 +18,7 @@ nz-header {
   padding: 20px 24px;
   font-size: 20px;
   cursor: pointer;
-  transition: all .3s,padding 0s;
+  transition: all .3s, padding 0s;
 }
 
 .trigger:hover {
@@ -48,7 +48,7 @@ nz-header {
   color: #fff;
   font-weight: 600;
   font-size: 14px;
-  font-family: Avenir,Helvetica Neue,Arial,Helvetica,sans-serif;
+  font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
   vertical-align: middle;
 }
 
@@ -63,7 +63,7 @@ nz-header {
   height: 64px;
   padding: 0;
   background: #fff;
-  box-shadow: 0 1px 4px rgba(0,21,41,.08);
+  box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
 }
 
 nz-content {
@@ -75,6 +75,7 @@ nz-content {
   background: transparent;
   height: 62%;
 }
+
 nz-card {
   margin-right: 80px;
   height: auto;
@@ -106,14 +107,32 @@ nz-card {
 
 }
 
-#div1, #div2 {
+.picture {
+  width: 140px;
+  height: 140px;
+  margin-left: 0px;
+  margin-top: 0px;
+}
+
+.picbutt {
+  FILTER: alpha(opacity=0);
+  background-color: transparent;
+  border: 0;
+  outline: none;
+  float: left;
+}
+
+#div1,
+#div2 {
   display: inline-block;
 }
+
 #div1 {
   height: 300px;
   width: 10px;
   background-color: red;
 }
+
 #div3 {
   background-color: var(--primary-color);
   height: 100%;
@@ -138,7 +157,9 @@ nz-card {
   color: rgba(255, 255, 255, 0.76);
 } */
 .card-body h5 {
+  font-style: oblique;
   font-size: 20px;
+  word-spacing: 2px;
   font-family: NotoSerif;
 }
 
@@ -170,14 +191,14 @@ nz-card {
   visibility: visible;
 }
 
-.square{
+.square {
   width: 15px;
   height: 100%;
   right: 0px;
   bottom: 0px;
   visibility: hidden;
-  border-radius:20%;
-  position:absolute;
+  border-radius: 20%;
+  position: absolute;
   transition-duration: 0.5s;
   /* border: solid 4px var(--primary-color); */
 }
