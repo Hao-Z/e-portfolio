@@ -61,7 +61,7 @@ export class ExploreComponent implements OnInit {
 
     this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
     
-
+    console.log(this.userDatas)
   }
 
   
@@ -166,11 +166,9 @@ export class ExploreComponent implements OnInit {
 
 
   getLink(userID) {
-    this.apiService.getSharedLink(userID)
-      .subscribe((result: string) => {
-        this.sharelink = `${globals.front_path}cv-show?sl=${result}`;
-    })
-    window.open(this.sharelink)
+    var url = "cv-show?link=" + userID;
+    // window.open(url,"_self");
+    window.location.href = url;
   }
   // getNodes() {
   //   refreshJwt();

@@ -1,29 +1,31 @@
-
 .card-body {
-    /* margin-right: 80px; */
-    margin: 0 auto;
-    height: auto;
-    max-width: 900px;
-    border: 1px;
-    border-style: solid;
-    border-color: #e6e6e6;
-    box-shadow: 5px 5px 10px grey;
-    background-color: white;
-    /* border-radius: 5px; */
-    position: relative;
-    float: center;
-    margin-top: 25px;
+  /* margin-right: 80px; */
+  margin: 0 auto;
+  height: auto;
+  max-width: 900px;
+  border: 1px;
+  border-style: solid;
+  border-color: #e6e6e6;
+  box-shadow: 5px 5px 10px grey;
+  background-color: white;
+  /* border-radius: 5px; */
+  position: relative;
+  float: center;
+  margin-top: 25px;
 }
+
 .card-body h2 {
   font-size: 24px;
   font-family: NotoSerif;
 }
+
 .cover img {
   float: left;
   z-index: 1;
   margin-left: 20px;
   margin-top: 40px;
 }
+
 .fa-trash-o {
   color: red;
 }
@@ -35,6 +37,21 @@
   margin-top: 50px;
 }
 
+.picture {
+  width: 120px;
+  height: 120px;
+  margin-left: 13px;
+  margin-top: 40px;
+}
+
+.picbutt {
+  FILTER: alpha(opacity=0);
+  background-color: transparent;
+  border: 0;
+  outline: none;
+  float: left;
+}
+
 .cover h5 {
   /* margin-left: 20px; */
   font-size: 20px;
@@ -42,23 +59,27 @@
   word-spacing: 2px;
   font-family: NotoSerif;
 }
+
 .cover h6 {
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
   font-family: Calibri;
 }
+
 .cover h2 {
   /* margin-left: 20px; */
   font-size: 28px;
   font-family: NotoSerif;
 }
+
 .cover span {
   padding: 15px;
   font-size: 16px;
   color: var(--primary-color);
   font-family: NotoSerif;
 }
+
 .cover p {
   font-size: 16px;
   font-weight: 300;
@@ -67,7 +88,7 @@
   line-height: 12px;
 }
 
-.square{
+.square {
   width: 100px;
   height: 100%;
   left: 0px;
@@ -77,21 +98,21 @@
   transform: scale(1.01);
   /* bottom: 0px; */
   /* border-radius:20%; */
-  position:absolute;
+  position: absolute;
   /* transition-duration: 0.5s; */
   background-color: var(--primary-color);
 }
 
 .add-btn:active {
-  outline: none ;
+  outline: none;
 }
 
 .a-left {
-  float:left
+  float: left
 }
 
 .a-right {
-  float:right
+  float: right
 }
 
 blockquote {
@@ -99,12 +120,13 @@ blockquote {
   margin-left: 17%;
   max-width: 66%;
   text-align: center;
-	padding: .5em 1em;
-	border-left: 5px solid #fce27c;
-  background-color: #f6ebc1; 
+  padding: .5em 1em;
+  border-left: 5px solid #fce27c;
+  background-color: #f6ebc1;
 }
+
 blockquote p {
-  margin: 0; 
+  margin: 0;
   font-size: 18px;
   font-family: NotoSerif;
   font-style: italic;
@@ -112,12 +134,3 @@ blockquote p {
   font-weight: 300;
 }
 
-.detail {
-  margin-left: 300px;
-  font-family: Avenir;
-}
-.time {
-  font-style: italic;
-  float: left;
-  font-family: NotoSerif;
-}

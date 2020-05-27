@@ -23,12 +23,10 @@
         </div>
 
         <!-- <img src="assets/untitled.png" class="rounded-circle" alt="anonymous-user" width="120px" height="120px"> -->
-        <button (click)="modalService.openModal('avartar')"
-          style=" FILTER: alpha(opacity=0); background-color: transparent; border: 0; outline:none;float: left;">
-          <nz-avatar nzIcon="user" [nzSrc]="avartarUrl" [nzShape]="'circle'"
-            style="width:120px; height:120px; margin-left: 13px; margin-top: 40px;"></nz-avatar>
+        <button (click)="modalService.openModal('avartar')" class="picbutt">
+          <nz-avatar nzIcon="user" [nzSrc]="avartarUrl" [nzShape]="'circle'" class="picture"></nz-avatar>
         </button>
-        <!-- <hr /> -->
+
         <div class="square"></div>
         <div class="col-16">
           <h2 *ngIf="cvForms[item].firstName" style="display: inline-block;">{{cvForms[item].firstName}}&nbsp;</h2>

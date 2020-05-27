@@ -126,7 +126,7 @@ nz-card {
   font-family: NotoSerif;
 }
 
-.card-body h2 span {
+.card-body span {
   padding: 10px;
   font-size: 16px;
   color: var(--primary-color);

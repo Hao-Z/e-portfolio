@@ -70,17 +70,18 @@
 
       <div *ngFor="let userData of userDatas" class="inner-content">
         <div class="card-body">
-          <a class="nav-link" href="javascript:void(0);" onclick="getLink($userData.userID)">
+          <a class="nav-link" (click)="getLink(userData.id)">
             <div *ngIf="!isCollapsed">
               <div class="row">
                 <div class="col-4"><img src="assets/untitled.png" class="rounded-circle" alt="anonymous-user"
                     style="width: 140px; height:140px;"></div>
 
                 <div class="col-16">
-                  <h2>{{userData.firstName +" " + userData.lastName}}
-                    <span>{{userData.industry}}</span></h2>
+                  <h2 *ngIf="userData.firstName" style="display: inline-block;">{{userData.firstName}}&nbsp;</h2>
+                  <h2 *ngIf="userData.lastName" style="display: inline-block;">{{userData.lastName}}</h2>
+                  <span>{{userData.industry}}</span>
                   <h5>{{userData.headline}}</h5>
-                  <hr>
+                  <hr *ngIf="userData.firstName || userData.lastName || userData.headline || userData.industry">
                   <p>{{userData.region}}</p>
                   <p>{{userData.email}}</p>
                   <p>{{userData.phone}}</p>
