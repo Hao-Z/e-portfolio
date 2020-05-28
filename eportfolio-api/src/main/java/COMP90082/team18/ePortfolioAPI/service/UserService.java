@@ -15,7 +15,7 @@ public interface UserService {
 
     boolean checkUsername(User user);
 
-    Page<User> filterUsers(Integer page, Integer size, String[] industry, Integer gender, String orders, boolean ascending);
+    Page<User> filterUsers(Integer page, Integer size, String[] industry, Integer[] gender, String orders, boolean ascending);
 
     List<Object> customizedFind(Long id, String name, int page, int size);
 

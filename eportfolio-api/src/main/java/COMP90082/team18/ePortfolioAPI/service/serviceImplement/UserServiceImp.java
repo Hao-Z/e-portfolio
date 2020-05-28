@@ -45,22 +45,22 @@ public class UserServiceImp implements UserService {
         return userRepository.findByUsername(user.getUsername()) == null;
     }
 
-    public Page<User> filterUsers(Integer page, Integer size, @Nullable String[] industry, Integer gender,
+    public Page<User> filterUsers(Integer page, Integer size, @Nullable String[] industry, Integer[] gender,
                                   @Nullable String orders, @Nullable boolean ascending) {
-        Specification<User> spec = null;
+        Specification<User> spec = new CustomizedSpecification<>("isPublic", "=", true);
 
         if (industry != null) {
             for (String item : industry) {
                 Specification<User> s = new CustomizedSpecification<>("industry", "=", item);
-                if (spec == null) spec = s;
-                else spec = spec.or(s);
+                spec = spec.or(s);
             }
         }
 
         if (gender != null) {
-            Specification<User> s = new CustomizedSpecification<>("gender", "=", gender);
-            if (spec == null) spec = s;
-            else spec = spec.and(s);
+            for (Integer item : gender) {
+                Specification<User> s = new CustomizedSpecification<>("gender", "=", item);
+                spec = spec.and(s);
+            }
         }
 
         Sort.Direction direction = ascending ? Sort.Direction.ASC : Sort.Direction.DESC;
