@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {NzFormatEmitEvent, NzTreeNodeOptions} from "ng-zorro-antd";
-import {refreshJwt} from "../../global";
 import * as globals from "../../global";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { RouterLink } from '@angular/router';
@@ -243,8 +242,7 @@ export class ExploreComponent implements OnInit {
     }
   }
 
-  getCVsData(pageNum='0', pageSize='10', industry:string[]=null, gender:string=null, orders:string=null, ascending:boolean=null) {
-    refreshJwt();
+  getCVsData(pageNum='0', pageSize='10', industry:string[]=null, gender:string[]=null, orders:string=null, ascending:boolean=null) {
     const HttpOptions = {
       headers : new HttpHeaders({'content-Type': 'application/json'}
       )
@@ -259,8 +257,8 @@ export class ExploreComponent implements OnInit {
       }
     }
     if(gender!=null){
-      if(gender=='0' || gender=='1'){
-        para = para + '&gender=' + gender
+      for(let g of gender){
+        para = para + '&gender=%5B%5D' + g
       }
     }
     if(orders!=null){
