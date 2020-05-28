@@ -258,7 +258,7 @@ export class ExploreComponent implements OnInit {
     }
     if(gender!=null){
       for(let g of gender){
-        para = para + '&gender=%5B%5D' + g
+        para = para + '&gender%5B%5D=' + g
       }
     }
     if(orders!=null){

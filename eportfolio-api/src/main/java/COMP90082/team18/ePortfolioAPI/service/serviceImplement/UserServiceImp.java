@@ -50,17 +50,22 @@ public class UserServiceImp implements UserService {
         Specification<User> spec = new CustomizedSpecification<>("isPublic", "=", true);
 
         if (industry != null) {
+            Specification<User> s = null;
             for (String item : industry) {
-                Specification<User> s = new CustomizedSpecification<>("industry", "=", item);
-                spec = spec.or(s);
+                Specification<User> ns = new CustomizedSpecification<>("industry", "=", item);
+                s = (s == null) ? ns : s.or(ns);
             }
+            spec = spec.and(s);
         }
 
         if (gender != null) {
+            Specification<User> s = null;
             for (Integer item : gender) {
-                Specification<User> s = new CustomizedSpecification<>("gender", "=", item);
-                spec = spec.and(s);
+                Specification<User> ns = new CustomizedSpecification<>("gender", "=", item);
+                s = (s == null) ? ns : s.or(ns);
             }
+            assert spec != null;
+            spec = spec.and(s);
         }
 
         Sort.Direction direction = ascending ? Sort.Direction.ASC : Sort.Direction.DESC;
