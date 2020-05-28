@@ -9,12 +9,12 @@ import { HomeComponent } from './home/home.component';
 import { ReactiveFormsModule } from "@angular/forms";
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from '@angular/common/http';
-import { NgZorroAntdModule } from "ng-zorro-antd";
+import {en_US, NgZorroAntdModule, NZ_I18N} from "ng-zorro-antd";
 import { ExploreComponent } from './explore/explore.component';
 import { IconsProviderModule } from './icons-provider.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
-import zh from '@angular/common/locales/zh';
+import en from '@angular/common/locales/en';
 import { MyAccountComponent } from "./my-account/my-account.component";
 import { SettingsComponent } from "./settings/settings.component";
 import { CvComponent } from './cv/cv.component';
@@ -40,7 +40,6 @@ import { ModalRecommendationComponent } from './cv-form/modal-recommendation/mod
 import { PropertiesPipe } from "./core/properties-pipe";
 import { FooterComponent } from "./footer/footer.component";
 import { CvShowComponent } from './cv-show/cv-show.component';
-import { FileDownloadExample } from './filedownloadExample/filedownload';
 import { AboutComponent } from "./cv/cv-card/about.component"
 import { WorkExperienceComponent } from "./cv/cv-card/work-experience.component"
 import { VolunteerExperienceComponent } from "./cv/cv-card/volunteer-experience.component"
@@ -59,7 +58,7 @@ import { EditAvarterComponent } from './cv/edit-avarter/edit-avarter.component';
 
 
 
-registerLocaleData(zh);
+registerLocaleData(en);
 
 export function patternValidationMessage(err, field: FormlyFieldConfig) {
   if (field.key === 'phoneNumber') {
@@ -105,7 +104,6 @@ export function maxlengthValidationMessage(err, field: FormlyFieldConfig) {
     ModalRecommendationComponent,
     PropertiesPipe,
     FooterComponent,
-    FileDownloadExample,
     FooterComponent,
     AboutComponent,
     WorkExperienceComponent,
@@ -150,7 +148,8 @@ export function maxlengthValidationMessage(err, field: FormlyFieldConfig) {
     NgbModule
   ],
   providers: [
-    NgbActiveModal
+    NgbActiveModal,
+    { provide: NZ_I18N, useValue: en_US }
   ],
   bootstrap: [AppComponent],
   entryComponents: [
