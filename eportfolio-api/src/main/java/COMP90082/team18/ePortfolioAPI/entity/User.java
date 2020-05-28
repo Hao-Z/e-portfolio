@@ -48,6 +48,8 @@ public class User {
     private String phoneNumber;
     @Column(length = 2048)
     private String summary;
+    private String highestDegree;
+    private String longestWorkExp;
 
     @OneToOne
     private WorkExperience currentPosition;

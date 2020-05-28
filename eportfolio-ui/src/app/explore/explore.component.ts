@@ -246,8 +246,7 @@ export class ExploreComponent implements OnInit {
   getCVsData(pageNum='0', pageSize='10', industry:string[]=null, gender:string=null, orders:string=null, ascending:boolean=null) {
     refreshJwt();
     const HttpOptions = {
-      headers : new HttpHeaders({'content-Type': 'application/json',
-        'Authorization': localStorage.getItem("jwt_token")}
+      headers : new HttpHeaders({'content-Type': 'application/json'}
       )
     };
 
