@@ -16,10 +16,10 @@
             <div class="col-16">
               <h2 *ngIf="cvForms[item].firstName" style="display: inline-block;">{{cvForms[item].firstName}}&nbsp;</h2>
               <h2 *ngIf="cvForms[item].lastName" style="display: inline-block;">{{cvForms[item].lastName}}</h2>
-              <span *ngIf="cvForms[item].industry" style="display: inline-block;"> {{cvForms[item].industry}} </span>
+              <span *ngIf="cvForms[item].industry" style="display: inline-block;"> {{cvForms[item].industry | cvData: 'industry'}} </span>
               <h5 *ngIf="cvForms[item].headline">{{cvForms[item].headline}}</h5>
               <hr>
-              <p *ngIf="cvForms[item].gender && cvForms[item].gender != 'OTHER'" style="display: inline-block;">{{cvForms[item].gender | cvData: 'gender'}}&nbsp;&nbsp;</p>
+              <p *ngIf="cvForms[item].gender && cvForms[item].gender != '2'" style="display: inline-block;">{{cvForms[item].gender | cvData: 'gender'}}&nbsp;&nbsp;</p>
               <p *ngIf="cvForms[item].birthday" style="display: inline-block;">born at {{cvForms[item].birthday}}&nbsp;&nbsp;</p>
               <p *ngIf="cvForms[item].country" style="display: inline-block;font-style: oblique;">living in
                 {{cvForms[item].country}} currently</p>
@@ -95,7 +95,7 @@
                         <div class="col-10">
                           <h5 *ngIf="item.title" style="display: inline-block;">{{item.title}}&nbsp;</h5>
                           <h5 *ngIf="item.companyName" style="display: inline-block;">at<strong>&nbsp;{{item.companyName}}&nbsp;</strong></h5>
-                          <span *ngIf="item.industry">{{item.industry}}</span>
+                          <span *ngIf="item.industry">{{item.industry | cvData: 'industry'}}</span>
                           <br *ngIf="item.title || item.industry || item.companyName">
                           <p *ngIf="item.employmentType" style="display: inline-block;">{{item.employmentType | cvData: 'employmentType'}}&nbsp;&nbsp;</p>
                           <p *ngIf="item.startDate" style="display: inline-block;">{{item.startDate}}&nbsp;</p>
