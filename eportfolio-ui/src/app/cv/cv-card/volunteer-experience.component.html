@@ -6,7 +6,7 @@
   <hr />
   <div *ngFor="let item of data" class="cover">
     <div class="row">
-      <div class="col-10">
+      <div class="col-8">
 
         <h5 *ngIf="item.organizationName" style="display: inline-block;font-style: normal;">{{item.organizationName}}
         </h5>
@@ -19,17 +19,27 @@
         <h6 *ngIf="item.description">{{item.description}}</h6>
 
         <h6 *ngIf="item.media">
-          <a href="#" (click)="clickURL(item.media)">
-            File
-          </a>
+          <div class="collapse" [id]="'collapseFileList1'+item.id">
+            <ng-container *ngFor="let file of fileService.toFileList(item.media)">
+              <a href="#" (click)="clickURL(file.url)">
+                {{file.name}}
+              </a>
+              <br>
+            </ng-container>
+          </div>
         </h6>
 
       </div>
-      <div class="col-2">
+      <div class="col-4">
         <button class="btn add-btn a-right" (click)="deleteForm(item.id)" type="button">
           <i class="fa fa-trash-o" aria-hidden="true"></i></button>
         <button class="btn add-btn a-right" (click)="editForm(item)" type="button">
           <i class="fa fa-pencil" aria-hidden="true"></i></button>
+        <ng-container *ngIf="item.media">
+          <button class="btn add-btn a-right" type="button" data-toggle="collapse" [attr.data-target]="'#collapseFileList1'+item.id" aria-expanded="false" aria-controls="collapseFileList">
+            <i class="fa fa-paperclip" aria-hidden="true"></i>
+          </button>
+        </ng-container>
       </div>
     </div>
     <br>

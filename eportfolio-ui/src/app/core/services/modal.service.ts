@@ -31,7 +31,7 @@ export class ModalService {
   lists: Record<string, string> = {
     "introduction": "Introduction",
     "about": "About",
-    "feature": "Feature",
+    "feature": "Link",
     "workexperience": "Work Experience",
     "education": "Education",
     "licensecertification": "License Certification",

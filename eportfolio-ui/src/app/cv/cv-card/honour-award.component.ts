@@ -4,6 +4,7 @@ import { ApiService } from 'src/app/core/services/api.service';
 import { userID } from 'src/global';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { HonourAward } from 'src/app/core/models/honour-award.model';
+import { FileService } from 'src/app/core/services/file.service';
 
 @Component({
     selector: 'card-ha',
@@ -16,7 +17,8 @@ export class HonourAwardComponent {
     constructor(
         public modalService: ModalService,
         private apiService: ApiService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        public fileService: FileService
     ) { }
 
     @Input() classname: string

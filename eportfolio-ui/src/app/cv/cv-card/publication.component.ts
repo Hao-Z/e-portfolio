@@ -4,6 +4,7 @@ import { ApiService } from 'src/app/core/services/api.service';
 import { userID } from 'src/global';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { Publication } from 'src/app/core/models/publication.model';
+import { FileService } from 'src/app/core/services/file.service';
 
 @Component({
     selector: 'card-publication',
@@ -16,7 +17,8 @@ export class PublicationComponent {
     constructor(
         public modalService: ModalService,
         private apiService: ApiService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        public fileService: FileService
     ) { }
 
     @Input() classname: string
