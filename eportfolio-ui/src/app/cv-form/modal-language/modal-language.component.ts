@@ -6,6 +6,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ApiService } from 'src/app/core/services/api.service';
 import { userID } from 'src/global';
 import { AlertService } from 'src/app/core/services/alert.service';
+import { DataService } from 'src/app/core/services/data.service';
 
 @Component({
   selector: 'app-modal-language',
@@ -32,15 +33,18 @@ export class ModalLanguageComponent implements OnInit {
     },
     {
       key: 'proficiency',
-      type: 'input',
+      type: 'select',
       templateOptions: {
         label: 'Proficiency',
+        placeholder: "-",
+        options: this.dataService.getProficiency()
       }
     }
   ]
 
   constructor(
     public modal: NgbActiveModal,
+    private dataService: DataService,
     private apiService: ApiService,
     private alertService: AlertService
   ) { }

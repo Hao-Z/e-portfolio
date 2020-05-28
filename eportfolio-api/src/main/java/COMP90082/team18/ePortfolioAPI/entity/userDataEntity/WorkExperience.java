@@ -20,6 +20,7 @@ public class WorkExperience extends GenericUserData {
     private String industry;
     private LocalDate startDate;
     private LocalDate endDate;
+    @Column(length = 2048)
     private String description;
     @Column(length = 2048)
     private String media;
