@@ -12,6 +12,12 @@
         <h6 *ngIf="item.issuer">Issuer: {{item.issuer}}</h6>
         <p *ngIf="item.issueDate">Issued on {{item.issueDate}}</p>
         <h6 *ngIf="item.description">{{item.description}}</h6>
+        <h6 *ngIf="item.media">
+          <a href="#" (click)="clickURL(item.media)">
+            File
+          </a>
+        </h6>
+
       </div>
       <div class="col-2">
         <button class="btn add-btn a-right" (click)="deleteForm(item.id)" type="button">

@@ -8,16 +8,17 @@
     <div *ngFor="let item of data" class="cover">
       <div class="row">
         <div class="col-10">
-          <!-- 
-          referrerName : Referr Name
-referrerTitle : Prof.
-description : Description
-
-         -->
+ 
           <li>
             <h5 *ngIf="item.referrerTitle" style="display: inline-block;font-style: normal;">{{item.referrerTitle}}&nbsp;</h5>
             <h5 *ngIf="item.referrerName" style="display: inline-block;font-style: normal;">{{item.referrerName}}</h5>
             <h6 *ngIf="item.description">{{item.description}}</h6>
+            <h6 *ngIf="item.media">
+              <a href="#" (click)="clickURL(item.media)">
+                File
+              </a>
+            </h6>
+
           </li>
         </div>
         <div class="col-2">

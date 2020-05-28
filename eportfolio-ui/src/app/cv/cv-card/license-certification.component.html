@@ -7,19 +7,21 @@
   <div *ngFor="let item of data" class="cover">
     <div class="row">
       <div class="col-10">
-        <!-- name : Certification 1
-issuingOrganization : hahahahah
-
-credentialID : 12435235
-credentialURL : www.haha.com -->
+        
           <h5 *ngIf="item.name" style="display: inline-block;font-style: normal;">{{item.name}}</h5>
           <span *ngIf="item.issuingOrganization" style="display: inline-block;">{{item.issuingOrganization}}</span>
-          <br>
+          <br *ngIf="item.name || item.issuingOrganization">
           <h6 *ngIf="item.credentialID" style="display: inline-block;">ID: {{item.credentialID}}&nbsp;&nbsp;</h6>
-          <h6 *ngIf="item.credentialURL" style="display: inline-block;"><a href="">{{item.credentialURL}}</a></h6>
-          <br>
+          <h6 *ngIf="item.credentialURL" style="display: inline-block;"><a href="#" (click)="clickURL(item.credentialURL)">Credential URL</a></h6>
+          <br *ngIf="item.credentialID || item.credentialURL">
           <p *ngIf="item.issueDate" style="display: inline-block;">Issued on {{item.issueDate}}&nbsp;</p>
           <p *ngIf="item.expirationDate" style="display: inline-block;">and expires at {{item.expirationDate}}</p>
+          <h6 *ngIf="item.media">
+            <a href="#" (click)="clickURL(item.media)">
+              File
+            </a>
+          </h6>
+
       </div>
       <div class="col-2">
         <button class="btn add-btn a-right" (click)="deleteForm(item.id)" type="button">

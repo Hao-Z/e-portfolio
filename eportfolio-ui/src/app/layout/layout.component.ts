@@ -14,6 +14,12 @@ export class LayoutComponent implements OnInit {
     if(localStorage.getItem('jwt_token') == null){
       this.router.navigate(['/login'])
     }
+
+    // var right = document.getElementById("right")
+    // var sider = document.getElementById("sider")
+    // var w = sider.style["width"]
+    // console.log(w.toString())
+    // right.style.marginLeft = "200px"
   }
 
 }

@@ -10,8 +10,14 @@
         <h5 *ngIf="item.title" style="display: inline-block;">{{item.title}}</h5>
         <span *ngIf="item.publicationPublisher" style="display: inline-block;">{{item.publicationPublisher}}</span>
         <p *ngIf="item.publicationDate">Published on {{item.publicationDate}}</p>
-        <h6 *ngIf="item.publicationURL"><a href="">{{item.publicationURL}}</a></h6>
+        <h6 *ngIf="item.publicationURL"><a href="#" (click)="clickURL(item.publicationURL)">Publication URL</a></h6>
         <h6 *ngIf="item.description">{{item.description}}</h6>
+        <h6 *ngIf="item.media">
+          <a href="#" (click)="clickURL(item.media)">
+            File
+          </a>
+        </h6>
+
       </div>
       <div class="col-2">
         <button class="btn add-btn a-right" (click)="deleteForm(item.id)" type="button">

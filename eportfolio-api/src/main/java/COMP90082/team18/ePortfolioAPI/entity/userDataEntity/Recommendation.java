@@ -13,6 +13,7 @@ import java.io.File;
 public class Recommendation extends GenericUserData {
     private String referrerName;
     private String referrerTitle;
+    @Column(length = 2048)
     private String description;
     @Column(length = 2048)
     private String media;

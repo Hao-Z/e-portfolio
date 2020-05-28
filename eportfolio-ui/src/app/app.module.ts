@@ -66,8 +66,15 @@ export function patternValidationMessage(err, field: FormlyFieldConfig) {
     return 'Please provide a phone number with correct format! '
   } else if (field.key === 'email') {
     return 'Please provide a email address with correct format! '
-  } else if (field.type === 'datepicker')
+  } else if (field.type === 'datepicker') {
     return 'Please provide a date with valid format!'
+  } else if (field.key === 'grade') {
+    return 'Please provide a grade with number format! '
+  }
+}
+
+export function maxlengthValidationMessage(err, field: FormlyFieldConfig) {
+  return `This value should be less than ${field.templateOptions.maxLength} characters`;
 }
 
 @NgModule({
@@ -130,10 +137,11 @@ export function patternValidationMessage(err, field: FormlyFieldConfig) {
     FormlyModule.forRoot({
       types: [
         { name: 'datepicker', component: FormlyDatepickerFieldType, wrappers: ['form-field'] },
-        { name: 'file', component: FormlyFileFieldType, wrappers: ['form-field'], defaultOptions: { defaultValue: [] } }
+        { name: 'file', component: FormlyFileFieldType, wrappers: ['form-field'], defaultOptions: { defaultValue: "" } }
       ],
       validationMessages: [
         { name: 'required', message:'This field is required!'},
+        { name: 'maxLength', message: maxlengthValidationMessage},
         { name: 'pattern', message: patternValidationMessage }
       ]
     }),

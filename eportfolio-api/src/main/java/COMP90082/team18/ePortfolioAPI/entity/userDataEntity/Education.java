@@ -20,7 +20,9 @@ public class Education extends GenericUserData {
     private String grade;
     private LocalDate startYear;
     private LocalDate endYear;
+    @Column(length = 2048)
     private String activityAndSociety;
+    @Column(length = 2048)
     private String description;
     @Column(length = 2048)
     private String media;

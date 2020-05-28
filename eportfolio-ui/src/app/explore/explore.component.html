@@ -67,55 +67,59 @@
         </table>
       </div>
     </nz-content>
-    <nz-content style="min-height: 100%;">
-      <div *ngFor="let userData of userDatas">
-        <div class="card-body">
-          <a class="nav-link" href="javascript:void(0);" onclick="getLink($userData.userID)">
-            <div *ngIf="!isCollapsed">
-              <div class="row">
-                <div class="col-4"><img src="assets/untitled.png" class="rounded-circle" alt="anonymous-user"
-                    style="width: 140px; height:140px;"></div>
 
-                <div class="col-16">
-                  <h2>{{userData.firstName +" " + userData.lastName}}
-                    <span>{{userData.industry}}</span></h2>
-                  <h5>{{userData.headline}}</h5>
-                  <hr>
-                  <p>{{userData.region}}</p>
-                  <p>{{userData.email}}</p>
-                  <p>{{userData.phone}}</p>
-                  <div class="square"></div>
+    <div *ngFor="let userData of userDatas" class="inner-content">
+      <div class="card-body">
+        <a class="nav-link" (click)="getLink(userData.id)">
+          <div *ngIf="!isCollapsed">
+            <div class="row">
+              <div class="col-4">
+                <nz-avatar nzIcon="user" [nzSrc]="userData.photo" [nzShape]="'circle'" class="picture picbutt">
+                </nz-avatar>
 
-                </div>
               </div>
 
-            </div>
+              <div class="col-16">
+                <h2 *ngIf="userData.firstName" style="display: inline-block;">{{userData.firstName}}&nbsp;</h2>
+                <h2 *ngIf="userData.lastName" style="display: inline-block;">{{userData.lastName}}</h2>
+                <span>{{userData.industry}}</span>
+                <h5>{{userData.headline}}</h5>
+                <hr *ngIf="userData.firstName || userData.lastName || userData.headline || userData.industry">
+                <p>{{userData.region}}</p>
+                <p>{{userData.email}}</p>
+                <p>{{userData.phone}}</p>
+                <div class="square"></div>
 
-            <div *ngIf="isCollapsed">
-              <div class="row">
-                <div class="col-4">
-                  <img src="assets/untitled.png" class="rounded-circle" alt="anonymous-user"
-                    style="width: 60px; height:60px;"></div>
-                <div>
-                  <h2>{{userData.firstName +" " + userData.lastName}}</h2>
-                  <hr>
-                  <p style="color: #0068A7;">{{userData.industry}}</p>
-                </div>
               </div>
             </div>
-          </a>
-        </div>
-        <br />
+
+          </div>
+
+          <div *ngIf="isCollapsed">
+            <div class="row">
+              <div class="col-4">
+                <nz-avatar nzIcon="user" [nzSrc]="userData.photo" [nzShape]="'circle'" class="picture picbutt" style="height: 80px;width: 80px;">
+                </nz-avatar>
+              </div>
+              <div>
+                <h2>{{userData.firstName +" " + userData.lastName}}</h2>
+                <hr>
+                <p style="color: #0068A7;">{{userData.industry}}</p>
+              </div>
+            </div>
+          </div>
+        </a>
       </div>
-      <br />
-      <div align="center">
-        <nz-pagination *ngIf="totalPage!=1" (nzPageIndexChange)="changePage($event)" [nzPageIndex]=pageNum+1 [nzTotal]=totalPage*10
-          nzShowQuickJumper></nz-pagination>
-      </div>
-      <br />
-      <nz-footer>
-        <app-footer></app-footer>
-      </nz-footer>
-    </nz-content>
+    </div>
+    <br />
+    <div align="center">
+      <nz-pagination *ngIf="totalPage!=1" (nzPageIndexChange)="changePage($event)" [nzPageIndex]=pageNum+1
+        [nzTotal]=totalPage*10 nzShowQuickJumper></nz-pagination>
+    </div>
+    <br />
+
+    <nz-footer>
+      <app-footer></app-footer>
+    </nz-footer>
   </nz-layout>
 </nz-layout>
