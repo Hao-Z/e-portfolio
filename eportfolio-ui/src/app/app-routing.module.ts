@@ -45,11 +45,7 @@ const routes: Routes = [
     path: 'security',
     component: LayoutComponent,
     children: [{ path: '', component: SettingsComponent }]
-  },
-  // {
-  //   path: 'downloadexample',
-  //   component: FileDownloadExample
-  // },
+  }
 
 ];
 
