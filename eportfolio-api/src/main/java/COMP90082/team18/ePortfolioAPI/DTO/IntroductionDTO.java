@@ -2,12 +2,10 @@ package COMP90082.team18.ePortfolioAPI.DTO;
 
 import COMP90082.team18.ePortfolioAPI.DTO.userDataDTO.EducationDTO;
 import COMP90082.team18.ePortfolioAPI.DTO.userDataDTO.WorkExperienceDTO;
-import COMP90082.team18.ePortfolioAPI.entity.Gender;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.io.File;
 import java.time.LocalDate;
 
 @Data
@@ -20,7 +18,7 @@ public class IntroductionDTO extends DTO {
     private String industry;
     private WorkExperienceDTO currentPosition;
     private EducationDTO currentEducation;
-    private Gender gender;
+    private String gender;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate birthday;
     private String country;

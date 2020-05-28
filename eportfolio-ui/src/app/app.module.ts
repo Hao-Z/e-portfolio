@@ -38,6 +38,7 @@ import { ModalPublicationComponent } from './cv-form/modal-publication/modal-pub
 import { ModalLanguageComponent } from './cv-form/modal-language/modal-language.component';
 import { ModalRecommendationComponent } from './cv-form/modal-recommendation/modal-recommendation.component';
 import { PropertiesPipe } from "./core/properties-pipe";
+import { DataPipe } from "./core/data-pipe";
 import { FooterComponent } from "./footer/footer.component";
 import { CvShowComponent } from './cv-show/cv-show.component';
 import { AboutComponent } from "./cv/cv-card/about.component"
@@ -105,6 +106,7 @@ export function maxlengthValidationMessage(err, field: FormlyFieldConfig) {
     ModalLanguageComponent,
     ModalRecommendationComponent,
     PropertiesPipe,
+    DataPipe,
     FooterComponent,
     FooterComponent,
     AboutComponent,

@@ -11,7 +11,7 @@
         <h5 *ngIf="item.companyName" style="display: inline-block;">at<strong>&nbsp;{{item.companyName}}&nbsp;</strong></h5>
         <span *ngIf="item.industry">{{item.industry}}</span>
         <br *ngIf="item.title || item.industry || item.companyName">
-        <p *ngIf="item.employmentType" style="display: inline-block;">{{item.employmentType}}&nbsp;&nbsp;</p>
+        <p *ngIf="item.employmentType" style="display: inline-block;">{{item.employmentType | cvData: 'emplogymentType'}}&nbsp;&nbsp;</p>
         <p *ngIf="item.startDate" style="display: inline-block;">{{item.startDate}}&nbsp;</p>
         <p *ngIf="!item.isCurrentWork && item.endDate" style="display: inline-block;">to {{item.endDate}}</p>
         <p *ngIf="item.isCurrentWork" style="display: inline-block;">until {{"Now"}}</p>

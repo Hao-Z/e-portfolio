@@ -10,7 +10,7 @@
         <div class="col-8">
           <li>
             <h6 *ngIf="item.language">{{item.language}}
-              <span *ngIf="item.proficiency" style="display: inline-block;">{{item.proficiency}}</span>
+              <span *ngIf="item.proficiency" style="display: inline-block;">{{item.proficiency | cvData: 'proficiency'}}</span>
             </h6>
           </li>
         </div>
