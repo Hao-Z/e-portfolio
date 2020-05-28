@@ -2,16 +2,15 @@
 <app-top-bar style="position: fixed; width: 100%; z-index: 10;">
 </app-top-bar>
 
-<nz-layout style="height: 100%;padding-top: 55px;">
+<nz-layout style="min-height: 100%;padding-top: 55px;">
   <nz-content style="margin: 24px;">
 
     <div *ngIf="cvForms">
       <ng-container *ngFor="let item of cvItems">
         <ng-template [ngIf]="item=='introduction'" [ngIfElse]="about">
-          <div class="card-body cover" style="min-height: 240px;z-index: 2;">
+          <div class="card-body cover" style="min-height: 200px;z-index: 2;">
 
-            <!-- <img src="assets/untitled.png" class="rounded-circle" alt="anonymous-user" width="120px" height="120px"> -->
-            <nz-avatar nzIcon="user" [nzSrc]="avartarUrl" [nzShape]="'circle'" style="width:120px; height:120px"></nz-avatar>
+            <nz-avatar nzIcon="user" [nzSrc]="avartarUrl" [nzShape]="'circle'" class="picture picbutt"></nz-avatar>
             <!-- profilePhoto -->
             <div class="square"></div>
             <div class="col-16">
@@ -21,109 +20,382 @@
               <h5 *ngIf="cvForms[item].industry">{{cvForms[item].headline}}</h5>
               <hr>
               <p *ngIf="cvForms[item].gender" style="display: inline-block;">{{cvForms[item].gender}}</p>
-              <p *ngIf="cvForms[item].birthday" style="display: inline-block;">, born at {{cvForms[item].birthday}}</p>
-              <p *ngIf="cvForms[item].country" style="display: inline-block;font-style: oblique;">, Living in
+              <p *ngIf="cvForms[item].birthday" style="display: inline-block;">&nbsp;&nbsp;born at
+                {{cvForms[item].birthday}}</p>
+              <p *ngIf="cvForms[item].country" style="display: inline-block;font-style: oblique;">&nbsp;&nbsp;Living in
                 {{cvForms[item].country}} currently</p>
               <p *ngIf="cvForms[item].currentEducation">
                 {{cvForms[item].currentEducation.degree}} in {{cvForms[item].currentEducation.fieldOfStudy}}</p>
               <p *ngIf="cvForms[item].email">{{cvForms[item].email}}</p>
               <p *ngIf="cvForms[item].phoneNumber">{{cvForms[item].phoneNumber}}</p>
-              <p *ngIf="cvForms[item].address" style="display: inline-block;">{{cvForms[item].address}}</p>
-              <p *ngIf="cvForms[item].postalCode" style="display: inline-block;">, {{cvForms[item].postalCode}}</p>
+              <p *ngIf="cvForms[item].address" style="display: inline-block;">{{cvForms[item].address}}&nbsp;</p>
+              <p *ngIf="cvForms[item].postalCode" style="display: inline-block;">({{cvForms[item].postalCode}})</p>
 
             </div>
           </div>
         </ng-template>
 
-
         <ng-template #about>
           <ng-template [ngIf]="item=='about'" [ngIfElse]="feature">
             <ng-container *ngIf="cvForms[item].summary">
-              <card-about [title]=modalService.getTitle(item) [data]=cvForms[item] [classname]=item></card-about>
+              <div class="card-body">
+                <h2>About</h2>
+                <hr />
+                <div class="about">
+                  <blockquote>
+                    <p>{{cvForms[item].summary}}</p>
+                  </blockquote>
+                </div>
+              </div>
             </ng-container>
           </ng-template>
         </ng-template>
+
         <ng-template #feature>
           <ng-template [ngIf]="item=='feature'" [ngIfElse]="workexperience">
             <ng-container *ngIf="cvForms[item].length">
-              <card-feature [title]=modalService.getTitle(item) [data]=cvForms[item] [classname]=item></card-feature>
+              <div class="card-body">
+                <h2>Feature</h2>
+                <hr />
+                <ul>
+                  <div *ngFor="let item of cvForms[item]" class="cover">
+                    <div class="row">
+                      <div class="col-10">
+                        <li>
+                          <a *ngIf="item.link" href="#" (click)="clickURL(item.link)">{{item.link}}</a>
+                          <h6 *ngIf="item.media">
+                            <a href="#" (click)="clickURL(item.media)">
+                              File
+                            </a>
+                          </h6>
+                        </li>
+                      </div>
+                    </div>
+                  </div>
+                </ul>
+              </div>
             </ng-container>
           </ng-template>
         </ng-template>
+
+
         <ng-template #workexperience>
           <ng-template [ngIf]="item=='workexperience'" [ngIfElse]="education">
             <ng-container *ngIf="cvForms[item].length">
-              <card-we [title]=modalService.getTitle(item) [data]=cvForms[item] [classname]=item></card-we>
+                <div class="card-body">
+                    <h2>Work Experience</h2>
+                    <hr />
+                    <div *ngFor="let item of cvForms[item]" class="cover">
+                      <div class="row">
+                        <div class="col-10">
+                          <h5 *ngIf="item.title" style="display: inline-block;">{{item.title}}&nbsp;</h5>
+                          <h5 *ngIf="item.companyName" style="display: inline-block;">at<strong>&nbsp;{{item.companyName}}&nbsp;</strong></h5>
+                          <span *ngIf="item.industry">{{item.industry}}</span>
+                          <br *ngIf="item.title || item.industry || item.companyName">
+                          <p *ngIf="item.employmentType" style="display: inline-block;">{{item.employmentType}}&nbsp;&nbsp;</p>
+                          <p *ngIf="item.startDate" style="display: inline-block;">{{item.startDate}}&nbsp;</p>
+                          <p *ngIf="!item.isCurrentWork && item.endDate" style="display: inline-block;">to {{item.endDate}}</p>
+                          <p *ngIf="item.isCurrentWork" style="display: inline-block;">until {{"Now"}}</p>
+                          <p *ngIf="item.location">{{item.location}}</p>
+                          
+                          <h6 *ngIf="item.description">{{item.description}}&nbsp;&nbsp;</h6>
+                          <h6 *ngIf="item.media">
+                            <a href="#" (click)="clickURL(item.media)">
+                              File
+                            </a>
+                          </h6>
+                        </div>
+                      </div>
+                      <br>
+                    </div>
+                  </div>
             </ng-container>
           </ng-template>
         </ng-template>
+
+
         <ng-template #education>
           <ng-template [ngIf]="item=='education'" [ngIfElse]="licensecertification">
             <ng-container *ngIf="cvForms[item].length">
-              <card-edu [title]=modalService.getTitle(item) [data]=cvForms[item] [classname]=item></card-edu>
+                <div class="card-body">
+                    <h2>Education</h2>
+                    <hr />
+                    <div *ngFor="let item of cvForms[item]" class="cover">
+                      <div class="row">
+                        <div class="col-10">
+                  
+                          <h5 *ngIf="item.schoolName" style="font-style: normal;display: inline-block;">{{item.schoolName}}</h5>
+                          <span *ngIf="item.fieldOfStudy" style="display: inline-block;">{{item.fieldOfStudy}}</span>
+                          <br *ngIf="item.schoolName || item.fieldOfStudy">
+                          <h5 *ngIf="item.degree" style="display: inline-block;font-style:inherit;">{{item.degree}}&nbsp;</h5>
+                          <h6 *ngIf="item.grade" style="display: inline-block;">with a grade of <strong>{{item.grade}}</strong></h6>
+                          <br *ngIf="item.degree || item.grade">
+                          <p *ngIf="item.startYear" style="display: inline-block;">{{item.startYear}}&nbsp;</p>
+                          <p *ngIf="item.endYear" style="display: inline-block;">to {{item.endYear}}</p>
+                          <h6 *ngIf="item.activityAndSociety">{{item.activityAndSociety}}</h6>
+                          <h6 *ngIf="item.description">{{item.description}}</h6>
+                          <h6 *ngIf="item.media">
+                            <a href="#" (click)="clickURL(item.media)">
+                              File
+                            </a>
+                          </h6>
+                        </div>
+                      </div>
+                      <br>
+                    </div>
+                  </div>
             </ng-container>
           </ng-template>
         </ng-template>
+
+
         <ng-template #licensecertification>
           <ng-template [ngIf]="item=='licensecertification'" [ngIfElse]="volunteerexperience">
             <ng-container *ngIf="cvForms[item].length">
-              <card-lc [title]=modalService.getTitle(item) [data]=cvForms[item] [classname]=item></card-lc>
+                <div class="card-body">
+                    <h2>License Certification</h2>
+                    <hr />
+                    <div *ngFor="let item of cvForms[item]" class="cover">
+                      <div class="row">
+                        <div class="col-10">
+                          
+                            <h5 *ngIf="item.name" style="display: inline-block;font-style: normal;">{{item.name}}</h5>
+                            <span *ngIf="item.issuingOrganization" style="display: inline-block;">{{item.issuingOrganization}}</span>
+                            <br *ngIf="item.name || item.issuingOrganization">
+                            <h6 *ngIf="item.credentialID" style="display: inline-block;">ID: {{item.credentialID}}&nbsp;&nbsp;</h6>
+                            <h6 *ngIf="item.credentialURL" style="display: inline-block;"><a href="#" (click)="clickURL(item.credentialURL)">Credential URL</a></h6>
+                            <br *ngIf="item.credentialID || item.credentialURL">
+                            <p *ngIf="item.issueDate" style="display: inline-block;">Issued on {{item.issueDate}}&nbsp;</p>
+                            <p *ngIf="item.expirationDate" style="display: inline-block;">and expires at {{item.expirationDate}}</p>
+                            <h6 *ngIf="item.media">
+                              <a href="#" (click)="clickURL(item.media)">
+                                File
+                              </a>
+                            </h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
             </ng-container>
           </ng-template>
         </ng-template>
+
+
         <ng-template #volunteerexperience>
           <ng-template [ngIf]="item=='volunteerexperience'" [ngIfElse]="skill">
             <ng-container *ngIf="cvForms[item].length">
-              <card-ve [title]=modalService.getTitle(item) [data]=cvForms[item] [classname]=item></card-ve>
+                <div class="card-body">
+
+                    <h2>Volunteer Experience</h2>
+                    <hr />
+                    <div *ngFor="let item of cvForms[item]" class="cover">
+                      <div class="row">
+                        <div class="col-10">
+                  
+                          <h5 *ngIf="item.organizationName" style="display: inline-block;font-style: normal;">{{item.organizationName}}
+                          </h5>
+                          <span *ngIf="item.role" style="display: inline-block;">{{item.role}}</span>
+                          <br *ngIf="item.role || item.organizationName">
+                          <h6 *ngIf="item.cause">{{item.cause}}</h6>
+                          <p *ngIf="item.startDate" style="display: inline-block;">{{item.startDate}}&nbsp;</p>
+                          <p *ngIf="item.endDate" style="display: inline-block;">to {{item.endDate}}</p>
+                  
+                          <h6 *ngIf="item.description">{{item.description}}</h6>
+                  
+                          <h6 *ngIf="item.media">
+                            <a href="#" (click)="clickURL(item.media)">
+                              File
+                            </a>
+                          </h6>
+                  
+                        </div>
+                        
+                      </div>
+                      <br>
+                    </div>
+                  </div>
             </ng-container>
           </ng-template>
         </ng-template>
+
+
         <ng-template #skill>
           <ng-template [ngIf]="item=='skill'" [ngIfElse]="project">
             <ng-container *ngIf="cvForms[item].length">
-              <card-skill [title]=modalService.getTitle(item) [data]=cvForms[item] [classname]=item></card-skill>
+                <div class="card-body" style="background-color: white">
+                    <h2>Skill</h2>
+                    <hr />
+                    <ul>
+                      <div *ngFor="let item of cvForms[item]" class="cover">
+                        <div class="row">
+                          <div class="col-10">
+                            <h6>
+                  
+                              <li *ngIf="item.skillName">{{item.skillName}}</li>
+                            </h6>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </ul>
+                  </div>
             </ng-container>
           </ng-template>
         </ng-template>
+
+
         <ng-template #project>
           <ng-template [ngIf]="item=='project'" [ngIfElse]="honouraward">
             <ng-container *ngIf="cvForms[item].length">
-              <card-project [title]=modalService.getTitle(item) [data]=cvForms[item] [classname]=item></card-project>
+                <div class="card-body">
+                    <h2>Project</h2>
+                    <hr />
+                    <div *ngFor="let item of cvForms[item]" class="cover">
+                      <div class="row">
+                        <div class="col-10">
+                          <h5 *ngIf="item.projectName" style="font-style: normal;">{{item.projectName}}</h5>
+                          <p *ngIf="item.startDate" style="display: inline-block;">{{item.startDate}}&nbsp;</p>
+                          <p *ngIf="item.endDate" style="display: inline-block;">to {{item.endDate}}</p>
+                          <h6 *ngIf="item.projectURL"><a href="#" (click)="clickURL(item.projectURL)">Project link</a></h6>
+                          <h6 *ngIf="item.description">{{item.description}}</h6>
+                          <h6 *ngIf="item.media">
+                            <a href="#" (click)="clickURL(item.media)">
+                              File
+                            </a>
+                          </h6>
+                  
+                        </div>
+                        
+                      </div>
+                      <br>
+                    </div>
+                  </div>
             </ng-container>
           </ng-template>
         </ng-template>
+
+
         <ng-template #honouraward>
           <ng-template [ngIf]="item=='honouraward'" [ngIfElse]="publication">
             <ng-container *ngIf="cvForms[item].length">
-              <card-ha [title]=modalService.getTitle(item) [data]=cvForms[item] [classname]=item></card-ha>
+                <div class="card-body">
+                    <h2>Honour Award</h2>
+                    <hr />
+                    <div *ngFor="let item of cvForms[item]" class="cover">
+                      <div class="row">
+                        <div class="col-10">
+                          <h5 *ngIf="item.title" style="font-style: normal;display: inline-block;">{{item.title}}</h5>
+                          <span *ngIf="item.associatedWith" style="display: inline-block;">{{item.associatedWith}}</span>
+                          <h6 *ngIf="item.issuer">Issuer: {{item.issuer}}</h6>
+                          <p *ngIf="item.issueDate">Issued on {{item.issueDate}}</p>
+                          <h6 *ngIf="item.description">{{item.description}}</h6>
+                          <h6 *ngIf="item.media">
+                            <a href="#" (click)="clickURL(item.media)">
+                              File
+                            </a>
+                          </h6>
+                  
+                        </div>
+                      </div>
+                      <br>
+                    </div>
+                  </div>
             </ng-container>
           </ng-template>
         </ng-template>
+
+
         <ng-template #publication>
           <ng-template [ngIf]="item=='publication'" [ngIfElse]="language">
             <ng-container *ngIf="cvForms[item].length">
-              <card-publication [title]=modalService.getTitle(item) [data]=cvForms[item] [classname]=item>
-              </card-publication>
+                <div class="card-body">
+                    <h2>Publication</h2>
+                    <hr />
+                    <div *ngFor="let item of cvForms[item]" class="cover">
+                      <div class="row">
+                        <div class="col-10">
+                          <h5 *ngIf="item.title" style="display: inline-block;">{{item.title}}</h5>
+                          <span *ngIf="item.publicationPublisher" style="display: inline-block;">{{item.publicationPublisher}}</span>
+                          <p *ngIf="item.publicationDate">Published on {{item.publicationDate}}</p>
+                          <h6 *ngIf="item.publicationURL"><a href="#" (click)="clickURL(item.publicationURL)">Publication URL</a></h6>
+                          <h6 *ngIf="item.description">{{item.description}}</h6>
+                          <h6 *ngIf="item.media">
+                            <a href="#" (click)="clickURL(item.media)">
+                              File
+                            </a>
+                          </h6>
+                  
+                        </div>
+                       
+                      </div>
+                      <br>
+                    </div>
+                  </div>
             </ng-container>
           </ng-template>
         </ng-template>
+
+
         <ng-template #language>
           <ng-template [ngIf]="item=='language'" [ngIfElse]="recommendation">
             <ng-container *ngIf="cvForms[item].length">
-              <card-language [title]=modalService.getTitle(item) [data]=cvForms[item] [classname]=item></card-language>
+                <div class="card-body">
+                    <h2>Language</h2>
+                    <hr />
+                    <ul>
+                      <div *ngFor="let item of cvForms[item]" class="cover">
+                        <div class="row">
+                          <div class="col-10">
+                            <li>
+                              <h6 *ngIf="item.language">{{item.language}}
+                                <span *ngIf="item.proficiency" style="display: inline-block;">{{item.proficiency}}</span>
+                              </h6>
+                            </li>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </ul>
+                  </div>
             </ng-container>
           </ng-template>
         </ng-template>
+
+
         <ng-template #recommendation>
           <ng-template [ngIf]="item=='recommendation'">
             <ng-container *ngIf="cvForms[item].length">
-              <card-re [title]=modalService.getTitle(item) [data]=cvForms[item] [classname]=item></card-re>
+                <div class="card-body">
+        
+                    <h2>Recommendation</h2>
+                    <hr />
+                    <ul>
+                      <div *ngFor="let item of cvForms[item]" class="cover">
+                        <div class="row">
+                          <div class="col-10">
+                   
+                            <li>
+                              <h5 *ngIf="item.referrerTitle" style="display: inline-block;font-style: normal;">{{item.referrerTitle}}&nbsp;</h5>
+                              <h5 *ngIf="item.referrerName" style="display: inline-block;font-style: normal;">{{item.referrerName}}</h5>
+                              <h6 *ngIf="item.description">{{item.description}}</h6>
+                              <h6 *ngIf="item.media">
+                                <a href="#" (click)="clickURL(item.media)">
+                                  File
+                                </a>
+                              </h6>
+                  
+                            </li>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </ul>
+                  </div>
             </ng-container>
           </ng-template>
         </ng-template>
 
       </ng-container>
-
     </div>
     <nz-footer>
       <app-footer></app-footer>

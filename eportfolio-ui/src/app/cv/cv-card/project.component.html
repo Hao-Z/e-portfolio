@@ -10,8 +10,14 @@
         <h5 *ngIf="item.projectName" style="font-style: normal;">{{item.projectName}}</h5>
         <p *ngIf="item.startDate" style="display: inline-block;">{{item.startDate}}&nbsp;</p>
         <p *ngIf="item.endDate" style="display: inline-block;">to {{item.endDate}}</p>
-        <h6 *ngIf="item.projectURL"><a href="">{{item.projectURL}}</a></h6>
+        <h6 *ngIf="item.projectURL"><a href="#" (click)="clickURL(item.projectURL)">Project link</a></h6>
         <h6 *ngIf="item.description">{{item.description}}</h6>
+        <h6 *ngIf="item.media">
+          <a href="#" (click)="clickURL(item.media)">
+            File
+          </a>
+        </h6>
+
       </div>
       <div class="col-2">
         <button class="btn add-btn a-right" (click)="deleteForm(item.id)" type="button">

@@ -8,17 +8,21 @@
     <div class="row">
       <div class="col-10">
         <h5 *ngIf="item.title" style="display: inline-block;">{{item.title}}&nbsp;</h5>
-        <h5 *ngIf="item.title" style="display: inline-block;">at<strong>&nbsp;{{item.companyName}}&nbsp;</strong></h5>
-        <span>{{item.industry}}</span>
-        <br>
+        <h5 *ngIf="item.companyName" style="display: inline-block;">at<strong>&nbsp;{{item.companyName}}&nbsp;</strong></h5>
+        <span *ngIf="item.industry">{{item.industry}}</span>
+        <br *ngIf="item.title || item.industry || item.companyName">
         <p *ngIf="item.employmentType" style="display: inline-block;">{{item.employmentType}}&nbsp;&nbsp;</p>
-        <p *ngIf="!item.isCurrentWork" style="display: inline-block;">{{item.startDate}} to {{item.endDate}}</p>
-        <p *ngIf="item.isCurrentWork" style="display: inline-block;">{{item.startDate}} to {{"Now"}}</p>
+        <p *ngIf="item.startDate" style="display: inline-block;">{{item.startDate}}&nbsp;</p>
+        <p *ngIf="!item.isCurrentWork && item.endDate" style="display: inline-block;">to {{item.endDate}}</p>
+        <p *ngIf="item.isCurrentWork" style="display: inline-block;">until {{"Now"}}</p>
         <p *ngIf="item.location">{{item.location}}</p>
         
         <h6 *ngIf="item.description">{{item.description}}&nbsp;&nbsp;</h6>
-        <h6 *ngIf="item.media">{{item.media}}&nbsp;&nbsp;</h6>
-
+        <h6 *ngIf="item.media">
+          <a href="#" (click)="clickURL(item.media)">
+            File
+          </a>
+        </h6>
       </div>
       <div class="col-2">
         <button class="btn add-btn a-right" (click)="deleteForm(item.id)" type="button">
