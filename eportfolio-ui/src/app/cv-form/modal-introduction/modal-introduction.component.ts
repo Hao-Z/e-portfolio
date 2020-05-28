@@ -82,6 +82,34 @@ export class ModalIntroductionComponent implements OnInit {
       fieldGroup: [
         {
           className: 'col-6',
+          key: 'workingYear',
+          type: 'input',
+          templateOptions: {
+            label: 'Working Years',
+            options: this.dataService.getGender(),
+            pattern: '^[0-9]{0,3}$',
+            addonRight: {
+              text: 'years',
+            },
+          }
+        },
+        {
+          className: 'col-6',
+          key: 'highestEducation',
+          type: 'select',
+          templateOptions: {
+            placeholder: '-',
+            label: 'The Highest Education',
+            options: this.dataService.getDegree(),
+          }
+        }
+      ]
+    },
+    {
+      fieldGroupClassName: 'row',
+      fieldGroup: [
+        {
+          className: 'col-6',
           key: 'gender',
           type: 'select',
           templateOptions: {

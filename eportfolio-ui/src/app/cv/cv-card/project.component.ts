@@ -4,7 +4,9 @@ import { ApiService } from 'src/app/core/services/api.service';
 import { userID } from 'src/global';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { Project } from 'src/app/core/models/project.model';
-import {CvComponent} from 'src/app/cv/cv.component'
+import { CvComponent } from 'src/app/cv/cv.component';
+import { FileService } from 'src/app/core/services/file.service';
+
 @Component({
     selector: 'card-project',
     templateUrl: './project.component.html',
@@ -16,7 +18,8 @@ export class ProjectComponent {
     constructor(
         public modalService: ModalService,
         private apiService: ApiService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        public fileService: FileService
     ) { }
 
     @Input() classname: string
