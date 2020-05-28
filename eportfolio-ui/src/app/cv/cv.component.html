@@ -2,7 +2,7 @@
 <div *ngIf="cvForms">
   <ng-container *ngFor="let item of cvItems">
     <ng-template [ngIf]="item=='introduction'" [ngIfElse]="about">
-      <div class="card-body cover" style="min-height: 200px;z-index: 2;">
+      <div class="card-body cover" style="min-height: 240px;z-index: 2;">
         <button class="btn add-btn a-right" (click)="editForm('introduction')" type="button"
           style="margin-left:15px;"><i class="fa fa-pencil" aria-hidden="true"></i></button>
         <button class="btn btn-primary a-right" type="button" id="MoreButton" style="margin-left:15px;"
