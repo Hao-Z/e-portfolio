@@ -408,3 +408,7 @@
     <app-footer></app-footer>
   </nz-footer>
 </nz-layout>
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Access denial notice" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" nzClosable="false">
+  <p>{{errorMessage}}</p>
+</nz-modal>
