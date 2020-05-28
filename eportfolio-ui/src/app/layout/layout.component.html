@@ -2,7 +2,7 @@
 <app-top-bar style="position: fixed; width: 100%; z-index: 10;">
 </app-top-bar>
 
-<nz-layout style="padding-top: 55px;">
+<nz-layout style="padding-top: 55px;min-height: 100%;">
   <nz-sider class="menu-sidebar" nzWidth="256px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
     [nzTrigger]="null" nzCollapsible="true" style="min-height: 100%; overflow: auto;" id="sider">
     <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
@@ -27,9 +27,9 @@
   <nz-layout style="min-height: 100%;" id="right">
     <nz-content>
       <router-outlet></router-outlet>
-      <nz-footer>
-        <app-footer></app-footer>
-      </nz-footer>
     </nz-content>
+        <nz-footer>
+          <app-footer></app-footer>
+        </nz-footer>
   </nz-layout>
 </nz-layout>
