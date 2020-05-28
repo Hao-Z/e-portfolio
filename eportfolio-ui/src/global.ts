@@ -7,7 +7,6 @@ export var userID = null;
 export function refreshJwt() {
   let curJwt = localStorage.getItem("jwt_token")
   if (curJwt != jwt){
-    // alert("jwt has been refreshed")
     jwt = curJwt
     let decodeJwt = (jwt != null) ? jwt_decode(jwt) : null
     username = (jwt != null) ? decodeJwt.username : null

@@ -1,8 +1,8 @@
 import {Component, Injectable, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {AbstractControl, FormControl, FormGroup, ValidatorFn, Validators} from "@angular/forms";
-import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
-import {Observable, Subscription} from "rxjs";
+import {HttpClient} from '@angular/common/http';
+import {Subscription} from "rxjs";
 import * as globals from '../../global';
 import {refreshJwt} from "../../global";
 import {NzModalService} from "ng-zorro-antd";
@@ -131,6 +131,5 @@ export class AuthComponent implements OnInit {
         })
       });
     }
-    alert('You ve submitted' + JSON.stringify(data));
   }
 }
