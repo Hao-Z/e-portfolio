@@ -2,9 +2,9 @@
 <app-top-bar style="position: fixed; width: 100%; z-index: 10;">
 </app-top-bar>
 
-<nz-layout style="padding-top: 55px;">
+<nz-layout style="padding-top: 55px;height: 100%;">
   <nz-sider class="menu-sidebar" nzWidth="256px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
-    [nzTrigger]="null" nzCollapsible="true" style="min-height: 100%; overflow: auto;" id="sider">
+    [nzTrigger]="null" nzCollapsible="true">
     <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
       <li nz-menu-item nzMatchRouter>
         <i nz-icon nzType="idcard" nzTheme="outline"></i>
@@ -24,12 +24,12 @@
     </ul>
   </nz-sider>
 
-  <nz-layout style="min-height: 100%;" id="right">
+  <nz-layout>
     <nz-content>
       <router-outlet></router-outlet>
-      <nz-footer>
-        <app-footer></app-footer>
-      </nz-footer>
     </nz-content>
+    <nz-footer>
+      <app-footer></app-footer>
+    </nz-footer>
   </nz-layout>
 </nz-layout>
