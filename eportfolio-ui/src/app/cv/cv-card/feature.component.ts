@@ -4,6 +4,7 @@ import { ApiService } from 'src/app/core/services/api.service';
 import { userID } from 'src/global';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { Feature } from 'src/app/core/models/feature.model';
+import { FileService } from 'src/app/core/services/file.service';
 
 @Component({
     selector: 'card-feature',
@@ -16,7 +17,8 @@ export class FeatureComponent {
     constructor(
         public modalService: ModalService,
         private apiService: ApiService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        public fileService: FileService
     ) { }
 
     @Input() classname: string

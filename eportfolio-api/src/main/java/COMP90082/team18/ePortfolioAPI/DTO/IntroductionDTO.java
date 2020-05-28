@@ -29,4 +29,7 @@ public class IntroductionDTO extends DTO {
     private String profilePhoto;
     private String phoneNumber;
     private String email;
+
+    private String workingYear;
+    private String highestEducation;
 }

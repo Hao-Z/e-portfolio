@@ -6,7 +6,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.io.File;
 import java.time.LocalDate;
 
 @Entity
@@ -48,15 +47,12 @@ public class User {
     private String phoneNumber;
     @Column(length = 2048)
     private String summary;
+    private Integer workingYear;
+    private String highestEducation;
 
     @OneToOne
     private WorkExperience currentPosition;
     @OneToOne
     private Education currentEducation;
 
-//    @OneToMany(mappedBy = "user")
-//    private List<WorkExperience> workExperiences;
-//
-//    @OneToMany(mappedBy = "user")
-//    private List<Feature> features;
 }
