@@ -4,6 +4,7 @@ import { ApiService } from 'src/app/core/services/api.service';
 import { userID } from 'src/global';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { LicenseCertification } from 'src/app/core/models/license-certification.model';
+import { FileService } from 'src/app/core/services/file.service';
 
 @Component({
     selector: 'card-lc',
@@ -16,7 +17,8 @@ export class LicenseCertificationComponent {
     constructor(
         public modalService: ModalService,
         private apiService: ApiService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        public fileService: FileService
     ) { }
 
     @Input() classname: string

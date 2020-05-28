@@ -9,6 +9,8 @@ export interface Introduction {
     industry : string;
     currentPosition?: WorkExperience;
     currentEducation?: Education;
+    workingYear?: string;
+    highestEducation?: string;
     gender: string;
     birthday: string;
     country: string;

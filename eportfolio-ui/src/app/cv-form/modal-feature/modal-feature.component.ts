@@ -37,6 +37,7 @@ export class ModalFeatureComponent implements OnInit {
       type: 'input',
       templateOptions: {
         label: 'Link',
+        required: true,
         maxLength: 255
       }
     },

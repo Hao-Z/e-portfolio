@@ -4,6 +4,7 @@ import { ApiService } from 'src/app/core/services/api.service';
 import { userID } from 'src/global';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { Recommendation } from 'src/app/core/models/recommendation.model';
+import { FileService } from 'src/app/core/services/file.service';
 
 @Component({
     selector: 'card-re',
@@ -16,7 +17,8 @@ export class RecommendationComponent {
     constructor(
         public modalService: ModalService,
         private apiService: ApiService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        public fileService: FileService
     ) { }
 
     @Input() classname: string

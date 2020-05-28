@@ -69,6 +69,8 @@ export function patternValidationMessage(err, field: FormlyFieldConfig) {
     return 'Please provide a date with valid format!'
   } else if (field.key === 'grade') {
     return 'Please provide a grade with number format! '
+  } else if (field.key === 'workingYear') {
+    return 'Please provide a number no longer than 3 digits! '
   }
 }
 
