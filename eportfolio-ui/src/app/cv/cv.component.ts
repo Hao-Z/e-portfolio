@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UniqueApiService } from "../core/services/unique-api.service";
 import { userID, refreshJwt } from "../../global";
 import { ModalService } from '../core/services/modal.service';
@@ -68,6 +68,5 @@ export class CvComponent implements OnInit{
       this.avartarUrl = this.cvForms.introduction.profilePhoto;
     }
   }
-
   
 }

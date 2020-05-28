@@ -131,15 +131,39 @@ export class DataService {
   ]
 
   degreeList = [
-    { value: 'Less than a high school diploma', label: 'Less than a high school diploma' },
-    { value: 'High school graduate', label: 'High school graduate' },
-    { value: 'College with no degree', label: 'College with no degree' },
-    { value: 'Professional certificate (career school)', label: 'Professional certificate (career school)' },
-    { value: 'Associate degree (academic program)', label: 'Associate degree (academic program)' },
-    { value: 'Bachelor\'s degree', label: 'Bachelor\'s degree' },
-    { value: 'Master\'s degree', label: 'Master\'s degree' },
-    { value: 'Doctoral degree (e.g., PH.D.)', label: 'Doctoral degree (e.g., PH.D.)' },
-    { value: 'Professional degree (e.g., M.D.)', label: 'Professional degree (e.g., M.D.)' }
+    { value: '1', label: 'Less than a high school diploma' },
+    { value: '2', label: 'High school graduate' },
+    { value: '3', label: 'College with no degree' },
+    { value: '4', label: 'Professional certificate (career school)' },
+    { value: '5', label: 'Associate degree (academic program)' },
+    { value: '6', label: 'Bachelor\'s degree' },
+    { value: '7', label: 'Master\'s degree' },
+    { value: '8', label: 'Doctoral degree (e.g., PH.D.)' },
+    { value: '9', label: 'Professional degree (e.g., M.D.)' }
+  ]
+
+  genderList = [
+    { value: 'MALE', label: 'Male' },
+    { value: 'FEMALE', label: 'Female' },
+    { value: 'OTHER', label: 'Keep Secret' },
+  ]
+
+  emplogymentTypeList = [
+    { value: '1', label: 'Full-time' },
+    { value: '2', label: 'Part-time' },
+    { value: '3', label: 'Self-employed' },
+    { value: '4', label: 'Freelance' },
+    { value: '5', label: 'Contract' },
+    { value: '6', label: 'Internship' },
+    { value: '7', label: 'Apprenticeship' },      
+  ]
+
+  proficiencyList = [
+    { value: '1', label: 'Elementary proficiency' },
+    { value: '2', label: 'Limited working proficiency' },
+    { value: '3', label: 'Professional working proficiency' },
+    { value: '4', label: 'Full professional proficiency' },      
+    { value: '5', label: 'Native or bilingual proficiency' }
   ]
 
   constructor() { }
@@ -149,11 +173,7 @@ export class DataService {
   }
 
   getGender() {
-    return of([
-      { value: 'MALE', label: 'Male' },
-      { value: 'FEMALE', label: 'Female' },
-      { value: 'Other', label: 'Keep Secret' },
-    ])
+    return of(this.genderList)
   }
 
   getDegree() {
@@ -161,33 +181,34 @@ export class DataService {
   }
 
   getProficiency() {
-    return of([
-      { value: 'Elementary proficiency', label: 'Elementary proficiency' },
-      { value: 'Limited working proficiency', label: 'Limited working proficiency' },
-      { value: 'Professional working proficiency', label: 'Professional working proficiency' },
-      { value: 'Full professional proficiency', label: 'Full professional proficiency' },      
-      { value: 'Native or bilingual proficiency', label: 'Native or bilingual proficiency' }
-    ])
+    return of(this.proficiencyList)
   }
 
   getEmplogymentType() {
-    return of([
-      { value: 'Full-time', label: 'Full-time' },
-      { value: 'Part-time', label: 'Part-time' },
-      { value: 'Self-employed', label: 'Self-employed' },
-      { value: 'Freelance', label: 'Freelance' },
-      { value: 'Contract', label: 'Contract' },
-      { value: 'Internship', label: 'Internship' },
-      { value: 'Apprenticeship', label: 'Apprenticeship' },      
-    ])
+    return of(this.emplogymentTypeList)
   }
 
-  getDegreeDisplay(currValue: string) {
-    this.degreeList.forEach(each => {
-      if (each.value == currValue) {
-        return each.label
-      }
-    })
+  getLabel(currValue: string, dataclass: string): string {
+    if (!currValue) {
+      return "";
+    }
+    var targetList = [];
+    switch (dataclass) {
+      case "degree":
+        targetList = this.degreeList;
+        break;
+      case "gender":
+        targetList = this.genderList;
+        break;
+      case "emplogymentType":
+        targetList = this.emplogymentTypeList;
+        break;
+      case "proficiency":
+        targetList = this.proficiencyList;
+        break;
+    }
+    var currItem = targetList.filter(each => each.value === currValue).pop();
+    return currItem ? currItem.label : null;
   }
 
 }

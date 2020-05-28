@@ -11,7 +11,7 @@
         <h5 *ngIf="item.schoolName" style="font-style: normal;display: inline-block;">{{item.schoolName}}</h5>
         <span *ngIf="item.fieldOfStudy" style="display: inline-block;">{{item.fieldOfStudy}}</span>
         <br *ngIf="item.schoolName || item.fieldOfStudy">
-        <h5 *ngIf="item.degree" style="display: inline-block;font-style:inherit;">{{item.degree}}&nbsp;</h5>
+        <h5 *ngIf="item.degree" style="display: inline-block;font-style:inherit;">{{item.degree | cvData: 'degree'}}&nbsp;</h5>
         <h6 *ngIf="item.grade" style="display: inline-block;">with a grade of <strong>{{item.grade}}</strong></h6>
         <br *ngIf="item.degree || item.grade">
         <p *ngIf="item.startYear" style="display: inline-block;">{{item.startYear}}&nbsp;</p>

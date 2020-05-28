@@ -32,14 +32,20 @@
           <h2 *ngIf="cvForms[item].firstName" style="display: inline-block;">{{cvForms[item].firstName}}&nbsp;</h2>
           <h2 *ngIf="cvForms[item].lastName" style="display: inline-block;">{{cvForms[item].lastName}}</h2>
           <span *ngIf="cvForms[item].industry" style="display: inline-block;"> {{cvForms[item].industry}} </span>
-          <h5 *ngIf="cvForms[item].industry">{{cvForms[item].headline}}</h5>
+          <h5 *ngIf="cvForms[item].headline">{{cvForms[item].headline}}</h5>
           <hr>
-          <p *ngIf="cvForms[item].gender" style="display: inline-block;">{{cvForms[item].gender}}</p>
-          <p *ngIf="cvForms[item].birthday" style="display: inline-block;">&nbsp;&nbsp;born at {{cvForms[item].birthday}}</p>
-          <p *ngIf="cvForms[item].country" style="display: inline-block;font-style: oblique;">&nbsp;&nbsp;Living in
+          <p *ngIf="cvForms[item].gender && cvForms[item].gender != 'OTHER'" style="display: inline-block;">{{cvForms[item].gender | cvData: 'gender'}}&nbsp;&nbsp;</p>
+          <p *ngIf="cvForms[item].birthday" style="display: inline-block;">born at {{cvForms[item].birthday}}&nbsp;&nbsp;</p>
+          <p *ngIf="cvForms[item].country" style="display: inline-block;font-style: oblique;">living in
             {{cvForms[item].country}} currently</p>
           <p *ngIf="cvForms[item].currentEducation">
-            {{cvForms[item].currentEducation.degree}} in {{cvForms[item].currentEducation.fieldOfStudy}}</p>
+            <ng-container *ngIf="cvForms[item].currentEducation.degree">
+              {{cvForms[item].currentEducation.degree | cvData: 'degree'}}
+              <ng-container *ngIf="cvForms[item].currentEducation.fieldOfStudy"> 
+              in {{cvForms[item].currentEducation.fieldOfStudy}}
+              </ng-container>
+            </ng-container>
+          </p>
           <p *ngIf="cvForms[item].email">{{cvForms[item].email}}</p>
           <p *ngIf="cvForms[item].phoneNumber">{{cvForms[item].phoneNumber}}</p>
           <p *ngIf="cvForms[item].address" style="display: inline-block;">{{cvForms[item].address}}&nbsp;</p>

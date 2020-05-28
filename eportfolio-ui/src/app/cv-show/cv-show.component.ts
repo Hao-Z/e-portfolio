@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {NzFormatEmitEvent, NzTreeNodeOptions} from "ng-zorro-antd";
 import { ActivatedRoute } from '@angular/router';
 import { UniqueApiService } from '../core/services/unique-api.service';
 import { Cv } from '../core/models/cv.model';
 import { ModalService } from '../core/services/modal.service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+
 @Component({
   selector: 'app-cv-show',
   templateUrl: './cv-show.component.html',

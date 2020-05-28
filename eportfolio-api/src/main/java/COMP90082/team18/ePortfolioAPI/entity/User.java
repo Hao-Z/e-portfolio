@@ -48,7 +48,7 @@ public class User {
     @Column(length = 2048)
     private String summary;
     private Integer workingYear;
-    private String highestEducation;
+    private Integer highestEducation;
 
     @OneToOne
     private WorkExperience currentPosition;
