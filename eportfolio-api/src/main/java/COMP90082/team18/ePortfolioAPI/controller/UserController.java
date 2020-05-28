@@ -63,7 +63,7 @@ public class UserController {
     @GetMapping(value = "/explore/filters")
     public Page<IntroductionDTO> filterUsers(@RequestParam Integer pageNum, @RequestParam Integer pageSize,
                                              @Nullable @RequestParam("industry[]") String[] industry,
-                                             @Nullable @RequestParam Integer gender,
+                                             @Nullable @RequestParam("gender[]") Integer[] gender,
                                              @Nullable @RequestParam String orders,
                                              @Nullable @RequestParam boolean ascending) {
         Page<User> p = userService.filterUsers(pageNum, pageSize, industry, gender, orders, ascending);

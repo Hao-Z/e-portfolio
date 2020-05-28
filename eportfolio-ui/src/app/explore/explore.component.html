@@ -17,7 +17,7 @@
             <i nz-icon nzType="search"></i>
           </ng-template>
         </nz-content>
-        <nz-content style="overflow-y: auto;max-height: 300px">
+        <nz-content style="overflow-y: auto;max-height: 300px; margin-left: 0; width: 90%">
           <nz-tree [nzHideUnMatched]="true" [nzData]="nodes" [nzSearchValue]="searchValue" nzCheckable nzMultiple
             [(nzCheckedKeys)]="CheckedIndustry" (nzCheckBoxChange)="nzCheckIndustry($event)">
           </nz-tree>

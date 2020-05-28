@@ -40,7 +40,7 @@ export class SettingsComponent implements OnInit {
       headers : new HttpHeaders({'content-Type': 'application/json',
         'Authorization': jwt})
     };
-    this.checkbox = {'isPublic':true};
+    this.checkbox = {'isPublic':false};
     this.http.get<any>(globals.backend_path + "users/" + userID + "/security",HttpOptions).subscribe((result:any)=>{
       this.checkbox['isPublic'] = result['isPublic'];
     });
