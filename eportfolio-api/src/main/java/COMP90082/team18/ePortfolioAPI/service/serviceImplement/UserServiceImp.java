@@ -114,8 +114,9 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public String createSharedLink() {
-        return JWTMethod.createSharedLink((Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    public String createSharedLink(Long time) {
+        return JWTMethod.createSharedLink(
+                (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal(), time);
     }
 
     @Override

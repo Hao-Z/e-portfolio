@@ -81,9 +81,9 @@ public class UserController {
         return new PageImpl<>(nl, p.getPageable(), p.getTotalElements());
     }
 
-    @GetMapping(value = "/users/{id}/shared-link")
-    public String getSharedLink(){
-        return userService.createSharedLink();
+    @GetMapping("/users/{id}/shared-link")
+    public String getSharedLink(@RequestParam Long period, @RequestParam Long unit){
+        return userService.createSharedLink(period * unit);
     }
 
     @GetMapping("/users/{id}/about")
