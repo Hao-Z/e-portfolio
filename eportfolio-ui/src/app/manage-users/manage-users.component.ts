@@ -47,7 +47,8 @@ export class ManageUsersComponent implements OnInit {
 
   getCVsData(pageNum='0', pageSize='10', username : string = '') {
     const HttpOptions = {
-      headers : new HttpHeaders({'content-Type': 'application/json'}
+      headers : new HttpHeaders({'content-Type': 'application/json',
+        'Authorization': localStorage.getItem("jwt_token")}
       )
     };
 
@@ -75,7 +76,8 @@ export class ManageUsersComponent implements OnInit {
 
   deleteUser(id) {
     const HttpOptions = {
-      headers : new HttpHeaders({'content-Type': 'application/json'}
+      headers : new HttpHeaders({'content-Type': 'application/json',
+        'Authorization': localStorage.getItem("jwt_token")}
       )
     };
     this.http.post<any>(globals.backend_path + "admin/user?id="+id+"&_method=delete" , id.toString(), HttpOptions).subscribe((result) => {
