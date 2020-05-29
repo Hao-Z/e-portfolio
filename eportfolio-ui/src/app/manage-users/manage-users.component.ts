@@ -45,7 +45,7 @@ export class ManageUsersComponent implements OnInit {
     // console.log(val)
   }
 
-  getCVsData(pageNum='0', pageSize='10', userName : string = '') {
+  getCVsData(pageNum='0', pageSize='10', username : string = '') {
     const HttpOptions = {
       headers : new HttpHeaders({'content-Type': 'application/json'}
       )
@@ -53,8 +53,8 @@ export class ManageUsersComponent implements OnInit {
 
     //url parameters
     let para = 'pageNum='+pageNum+'&pageSize='+pageSize;
-    if(userName != ''){
-      para = para + '&userName=' + userName;
+    if(username != ''){
+      para = para + '&username=' + username;
     }
     this.http.get<any>(globals.backend_path + "admin/user?" + para, HttpOptions).subscribe((result) => {
       this.userDatas = [];
