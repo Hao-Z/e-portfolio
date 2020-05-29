@@ -162,10 +162,10 @@ export class DataService{
   ]
 
   unitList = [
-    { value: 86400000, label: 'days' },
-    { value: 3600000, label: 'hours' },
-    { value: 60000, label: 'minutes' },
-    { value: 1000, label: 'seconds' },
+    { value: '86400000', label: 'days' },
+    { value: '3600000', label: 'hours' },
+    { value: '60000', label: 'minutes' },
+    { value: '1000', label: 'seconds' },
   ]
 
   constructor() { }

@@ -18,8 +18,8 @@ export class ShareLinkComponent implements OnInit {
   sharelink: string
 
   model: SharePeriod = {
-    period: null,
-    unit: null
+    period: '10',
+    unit: '86400000'
   };
   form = new FormGroup({});
   options: FormlyFormOptions = {};
@@ -51,7 +51,6 @@ export class ShareLinkComponent implements OnInit {
             updateOn: 'submit',
           },
           templateOptions: {
-            placeholder: 'Please choose a unit',
             label: 'Unit',
             maxLength: 255,
             required: true,
@@ -91,16 +90,9 @@ export class ShareLinkComponent implements OnInit {
   }
 
   getLink() {
-    if (this.form.valid) {
-      this.apiService.getSharedLink(userID, this.model)
-        .subscribe((result: string) => {
-          this.sharelink = `${globals.front_path}cv-show?link=${result}`;
-      }) 
-    } else {
-      this.apiService.getSharedLink(userID)
-        .subscribe((result: string) => {
-          this.sharelink = `${globals.front_path}cv-show?link=${result}`;
-      })
-    }
+    this.apiService.getSharedLink(userID, this.model)
+      .subscribe((result: string) => {
+        this.sharelink = `${globals.front_path}cv-show?link=${result}`;
+    }) 
   }
 }

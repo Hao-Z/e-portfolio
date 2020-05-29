@@ -58,14 +58,9 @@ export class UniqueApiService {
       )
   }
 
-  getSharedLink(id: number, model?: SharePeriod) {
+  getSharedLink(id: number, model: SharePeriod) {
     const url = `${this.apiUrl}${id}/shared-link`;
-    var optionForLink: {}
-    if (model) {
-      optionForLink =this.options.getLinkHttpOptions(new HttpParams().set('period', model.period).set('unit', model.unit))
-    } else {
-      optionForLink = this.options.getLinkHttpOptions(null)
-    }
+    var optionForLink = this.options.getLinkHttpOptions(new HttpParams().set('period', model.period).set('unit', model.unit))
     return this.http.get(url, optionForLink)
       .pipe(
         map((res:any) => {
