@@ -33,7 +33,7 @@
           <h2 *ngIf="cvForms[item].lastName" style="display: inline-block;">{{cvForms[item].lastName}}</h2>
           <span *ngIf="cvForms[item].industry" style="display: inline-block;"> {{cvForms[item].industry | cvData: 'industry' }} </span>
           <h5 *ngIf="cvForms[item].headline">{{cvForms[item].headline}}</h5>
-          <hr>
+          <hr *ngIf="cvForms[item].firstName || cvForms[item].lastName || cvForms[item].industry || cvForms[item].headline">
           <p *ngIf="cvForms[item].gender && cvForms[item].gender != '2'" style="display: inline-block;">{{cvForms[item].gender | cvData: 'gender'}}&nbsp;&nbsp;</p>
           <p *ngIf="cvForms[item].birthday" style="display: inline-block;">born at {{cvForms[item].birthday}}&nbsp;&nbsp;</p>
           <p *ngIf="cvForms[item].country" style="display: inline-block;font-style: oblique;">living in

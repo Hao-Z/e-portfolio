@@ -2,3 +2,8 @@
   font-size: small;
   color: red;
 }
+input {
+  border-right-style: solid;
+  border-color: rgb(207, 212, 208);
+  border-width: 1px;
+}
