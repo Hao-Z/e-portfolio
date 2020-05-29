@@ -56,8 +56,7 @@ export class ManageUsersComponent implements OnInit {
     if(userName != ''){
       para = para + '&userName=' + userName;
     }
-    // this.http.get<any>(globals.backend_path + "admin/user?" + para, HttpOptions)
-    this.http.get<any>(globals.backend_path + "explore/filters?" + para, HttpOptions).subscribe((result) => {
+    this.http.get<any>(globals.backend_path + "admin/user?" + para, HttpOptions).subscribe((result) => {
       this.userDatas = [];
       for(let cv of result['content']){
         if (cv.profilePhoto) {
@@ -79,7 +78,7 @@ export class ManageUsersComponent implements OnInit {
       headers : new HttpHeaders({'content-Type': 'application/json'}
       )
     };
-    this.http.post<any>(globals.backend_path + "admin/user?_method=delete" , id.toString(), HttpOptions).subscribe((result) => {
+    this.http.post<any>(globals.backend_path + "admin/user?id="+id+"&_method=delete" , id.toString(), HttpOptions).subscribe((result) => {
     });
     this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.searchValue);
   }
