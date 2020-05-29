@@ -22,7 +22,7 @@ public interface UserService {
 
     void changePassword(Long id, PasswordDTO passwordDTO);
 
-    String createSharedLink();
+    String createSharedLink(Long time);
 
     void deleteUser(Long id);
 
