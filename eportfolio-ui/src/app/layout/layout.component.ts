@@ -13,9 +13,7 @@ export class LayoutComponent implements OnInit {
   admin_account = false;
   constructor( private router: Router) {
     //TODO: check if is admin account
-    if(globals.username == 'admin'){
-      this.admin_account = true;
-    }
+    this.admin_account = globals.username == 'admin';
   }
 
   ngOnInit(): void {
