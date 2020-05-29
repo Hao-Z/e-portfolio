@@ -27,6 +27,7 @@ export class ExploreComponent implements OnInit {
   order: string = null;
   Ascending : boolean;
   avartarUrl: string = "assets/untitled.png"
+  sortValuesMap : any;
 
   constructor(
     private http: HttpClient,
@@ -48,6 +49,7 @@ export class ExploreComponent implements OnInit {
     }
     this.CheckedIndustry = null;
     this.sortValues = ['Age','Experience','Education'];
+    this.sortValuesMap = {'Age':'birthday','Experience':'workingYear','Education':'highestEducation'};
     this.Ascending = null;
 
     // <
@@ -187,11 +189,8 @@ export class ExploreComponent implements OnInit {
     if(event==null){
       this.order = event;
       this.Ascending = null
-    } else if(event=='Age'){
-      this.order = 'birthday';
-      this.Ascending = false
     } else {
-      this.order = event.toLowerCase();
+      this.order = this.sortValuesMap[event];
       this.Ascending = false
     }
     this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
