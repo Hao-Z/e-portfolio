@@ -152,6 +152,8 @@ export class ExploreComponent implements OnInit {
       for(let cv of result['content']){
         if (cv.profilePhoto) {
           this.avartarUrl = cv.profilePhoto;
+        } else {
+          this.avartarUrl = "assets/untitled.png";
         }
         cv['photo'] = this.avartarUrl
         this.userDatas.push(cv);
