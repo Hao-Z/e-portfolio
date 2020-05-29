@@ -1,11 +1,8 @@
 package COMP90082.team18.ePortfolioAPI.service;
 
-import COMP90082.team18.ePortfolioAPI.DTO.IntroductionDTO;
 import COMP90082.team18.ePortfolioAPI.DTO.PasswordDTO;
-import COMP90082.team18.ePortfolioAPI.DTO.UserDTO;
 import COMP90082.team18.ePortfolioAPI.entity.User;
 import org.springframework.data.domain.Page;
-import org.springframework.lang.Nullable;
 
 import java.util.List;
 import java.util.Map;
@@ -26,4 +23,7 @@ public interface UserService {
     void changePassword(Long id, PasswordDTO passwordDTO);
 
     String createSharedLink();
+
+    void deleteUser(Long id);
+
 }

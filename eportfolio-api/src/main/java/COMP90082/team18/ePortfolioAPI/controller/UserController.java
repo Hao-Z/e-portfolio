@@ -140,4 +140,10 @@ public class UserController {
         User result = userService.patchUser(id, updateFields);
         return modelMapper.map(result, Setting.class);
     }
+
+    @DeleteMapping("/admin/user")
+    public void deleteUser(@RequestParam Long id){
+        userService.deleteUser(id);
+    }
+
 }
