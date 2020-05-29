@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import * as globals from "../../global";
-import {fromEvent} from "rxjs";
+import {fromEvent, timer} from "rxjs";
+import {timeout} from "rxjs/operators";
 
 @Component({
   selector: 'app-manage-users',
@@ -22,7 +23,6 @@ export class ManageUsersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.searchValue = '';
     this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.searchValue);
     fromEvent(window,'resize').subscribe((event) => {
       this.isCollapsed = window.innerWidth < Number(770);
@@ -81,7 +81,7 @@ export class ManageUsersComponent implements OnInit {
       )
     };
     this.http.post<any>(globals.backend_path + "admin/user?id="+id+"&_method=delete" , id.toString(), HttpOptions).subscribe((result) => {
+      this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.searchValue);
     });
-    this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.searchValue);
   }
 }
