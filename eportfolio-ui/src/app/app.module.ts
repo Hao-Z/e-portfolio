@@ -56,6 +56,7 @@ import { RecommendationComponent } from "./cv/cv-card/recommendation.component"
 import { FormlyFileFieldType } from './dynamic-form/file.type';
 import { ShareLinkComponent } from './cv/share-link/share-link.component';
 import { EditAvarterComponent } from './cv/edit-avarter/edit-avarter.component';
+import {ManageUsersComponent} from "./manage-users/manage-users.component";
 
 
 
@@ -123,7 +124,8 @@ export function maxlengthValidationMessage(err, field: FormlyFieldConfig) {
     RecommendationComponent,
     FormlyFileFieldType,
     ShareLinkComponent,
-    EditAvarterComponent
+    EditAvarterComponent,
+    ManageUsersComponent
   ],
   imports: [
     BrowserModule,

@@ -21,6 +21,11 @@
         <span>Security</span>
         <a routerLink="/security"></a>
       </li>
+      <li nz-menu-item nzMatchRouter *ngIf="admin_account">
+        <i nz-icon nzType="team" nzTheme="outline"></i>
+        <span>Manage Users</span>
+        <a routerLink="/manage_users"></a>
+      </li>
     </ul>
   </nz-sider>
 

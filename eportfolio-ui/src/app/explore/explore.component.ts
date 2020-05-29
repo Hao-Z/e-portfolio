@@ -178,7 +178,7 @@ export class ExploreComponent implements OnInit {
 
     this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
 
-    console.log(this.userDatas)
+    // console.log(this.userDatas)
   }
 
 
@@ -269,7 +269,7 @@ export class ExploreComponent implements OnInit {
         }
         cv['photo'] = this.avartarUrl
         this.userDatas.push(cv);
-        console.log(cv)
+        // console.log(cv)
       }
       this.pageNum = result['number'];
       this.pageSize = result['size'];

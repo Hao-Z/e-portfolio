@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
+import * as globals from "../../global";
 
 @Component({
   selector: 'app-layout',
@@ -9,7 +10,13 @@ import {Router} from "@angular/router";
 export class LayoutComponent implements OnInit {
   isCollapsed = window.innerWidth < Number(770);
   width;
-  constructor( private router: Router) { }
+  admin_account = false;
+  constructor( private router: Router) {
+    //TODO: check if is admin account
+    if(globals.username == 'admin'){
+      this.admin_account = true;
+    }
+  }
 
   ngOnInit(): void {
     if(localStorage.getItem('jwt_token') == null){
