@@ -24,7 +24,7 @@ public interface UserService {
 
     void changePassword(Long id, PasswordDTO passwordDTO);
 
-    String createSharedLink();
+    String createSharedLink(Long time);
 
     Page<User> searchUser(String name, Integer page, Integer size);
 
