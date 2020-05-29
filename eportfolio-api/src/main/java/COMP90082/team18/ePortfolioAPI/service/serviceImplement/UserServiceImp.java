@@ -117,4 +117,15 @@ public class UserServiceImp implements UserService {
     public String createSharedLink() {
         return JWTMethod.createSharedLink((Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     }
+
+    @Override
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public void deleteUser(Long id){
+        User targetUser = getUser(id);
+        if(targetUser.isAdmin()){
+            throw new IllegalArgumentException("Cannot delete admin.");
+        }
+        userRepository.delete(targetUser);
+    }
+
 }
