@@ -142,7 +142,8 @@ public class UserController {
     }
 
     @GetMapping("/admin/user")
-    public Page<IntroductionDTO> searchUser(@RequestParam String username, @RequestParam Integer pageNum, @RequestParam Integer pageSize){
+    public Page<IntroductionDTO> searchUser(@RequestParam @Nullable String username, @RequestParam Integer pageNum,
+                                            @RequestParam Integer pageSize){
         Page<User> p = userService.searchUser(username, pageNum, pageSize);
         List<User> l = p.getContent();
         List<IntroductionDTO> nl = new ArrayList<>();
