@@ -15,7 +15,7 @@ import { AlertService } from 'src/app/core/services/alert.service';
 export class ModalAboutComponent implements OnInit {
 
   title: string = `About`;
-  classname: string = `about`
+  classname: string = `about`;
   isNew: boolean = true;
   
   model: About;
@@ -27,10 +27,11 @@ export class ModalAboutComponent implements OnInit {
       type: 'textarea',
       templateOptions: {
         label: 'Summary',
+        maxLength: 2048
       },
       hooks: {
         onInit: (field: FormlyFieldConfig) => {
-          field.templateOptions.rows = 5
+          field.templateOptions.rows = 6
         }
       }
     }

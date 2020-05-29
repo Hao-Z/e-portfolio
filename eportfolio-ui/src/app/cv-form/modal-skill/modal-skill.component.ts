@@ -27,6 +27,7 @@ export class ModalSkillComponent implements OnInit {
       type: 'input',
       templateOptions: {
         label: 'Skill Name',
+        maxLength: 255
       }
     }
   ]
