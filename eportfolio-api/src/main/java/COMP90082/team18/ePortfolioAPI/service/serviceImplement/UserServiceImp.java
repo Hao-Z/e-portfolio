@@ -1,8 +1,11 @@
 package COMP90082.team18.ePortfolioAPI.service.serviceImplement;
 
+import COMP90082.team18.ePortfolioAPI.DTO.IntroductionDTO;
+import COMP90082.team18.ePortfolioAPI.entity.GenericUserData;
 import COMP90082.team18.ePortfolioAPI.entity.User;
 import COMP90082.team18.ePortfolioAPI.repository.UserRepository;
 import COMP90082.team18.ePortfolioAPI.security.JWTMethod;
+import COMP90082.team18.ePortfolioAPI.service.GenericUserDataService;
 import COMP90082.team18.ePortfolioAPI.service.UserService;
 import COMP90082.team18.ePortfolioAPI.util.CustomizedSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +32,10 @@ public class UserServiceImp implements UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
+    private GenericUserDataService genericUserDataService;
+    @Autowired
+    private List<Class<? extends GenericUserData>> userDataEntityClasses;
+    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
     private ObjectMethod objectMethod;
@@ -45,19 +52,17 @@ public class UserServiceImp implements UserService {
         return userRepository.findByUsername(user.getUsername()) == null;
     }
 
-    public Page<User> filterUsers(Integer page, Integer size, @Nullable String[] industry, Integer[] gender,
+    public Page<User> filterUsers(Integer page, Integer size, @Nullable Integer[] industry, Integer[] gender,
                                   @Nullable String orders, @Nullable boolean ascending) {
         Specification<User> spec = new CustomizedSpecification<>("isPublic", "=", true);
-
         if (industry != null) {
             Specification<User> s = null;
-            for (String item : industry) {
+            for (Integer item : industry) {
                 Specification<User> ns = new CustomizedSpecification<>("industry", "=", item);
                 s = (s == null) ? ns : s.or(ns);
             }
             spec = spec.and(s);
         }
-
         if (gender != null) {
             Specification<User> s = null;
             for (Integer item : gender) {
@@ -67,12 +72,9 @@ public class UserServiceImp implements UserService {
             assert spec != null;
             spec = spec.and(s);
         }
-
         Sort.Direction direction = ascending ? Sort.Direction.ASC : Sort.Direction.DESC;
-        Page<User> result = (orders == null) ? userRepository.findAll(spec, PageRequest.of(page, size)) :
+        return (orders == null) ? userRepository.findAll(spec, PageRequest.of(page, size)) :
                 userRepository.findAll(spec, PageRequest.of(page, size, Sort.by(direction, orders)));
-
-        return result;
     }
 
     public List<Object> customizedFind(Long id, String name, int page, int size) {
@@ -114,8 +116,17 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public String createSharedLink() {
-        return JWTMethod.createSharedLink((Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    public String createSharedLink(Long time) {
+        return JWTMethod.createSharedLink(
+                (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal(), time);
+    }
+
+    @Override
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public Page<User> searchUser(String name, Integer page, Integer size){
+        Specification<User> spec = (name == null) ? null :
+                new CustomizedSpecification<>("username", "%", name);
+        return userRepository.findAll(spec, PageRequest.of(page, size));
     }
 
     @Override
@@ -124,6 +135,11 @@ public class UserServiceImp implements UserService {
         User targetUser = getUser(id);
         if(targetUser.isAdmin()){
             throw new IllegalArgumentException("Cannot delete admin.");
+        }
+        for (Class<? extends GenericUserData> clazz : userDataEntityClasses) {
+            for (GenericUserData data: genericUserDataService.getAllObjects(id, clazz)) {
+                genericUserDataService.deleteObject(id, data.getId(), clazz);
+            }
         }
         userRepository.delete(targetUser);
     }

@@ -16,7 +16,7 @@ export class ManageUsersComponent implements OnInit {
   pageNum: number = 0;
   pageSize: number = 10;
   totalPage: number = 1;
-  avartarUrl: string = "assets/untitled.png";
+  avartarUrl: string = "../../assets/untitled.png";
 
   constructor(private http: HttpClient,) {
   }

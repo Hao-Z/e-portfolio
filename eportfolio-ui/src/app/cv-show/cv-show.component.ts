@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UniqueApiService } from '../core/services/unique-api.service';
 import { Cv } from '../core/models/cv.model';
 import { ModalService } from '../core/services/modal.service';
+import { FileService } from 'src/app/core/services/file.service';
 
 @Component({
   selector: 'app-cv-show',
@@ -15,14 +16,15 @@ export class CvShowComponent implements OnInit {
 
   cvForms: Cv;
   cvItems: Array<string> = this.modalService.getKeys(); 
-  avartarUrl: string = "assets/untitled.png" 
+  avartarUrl: string = "../../assets/untitled.png" 
   errorMessage: string;
 
   constructor(
     private route: ActivatedRoute,
     public modalService: ModalService,
     private apiService: UniqueApiService,
-    private router: Router
+    private router: Router,
+    public fileService: FileService
     ) { }
 
   ngOnInit(): void {

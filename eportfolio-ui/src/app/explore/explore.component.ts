@@ -27,7 +27,7 @@ export class ExploreComponent implements OnInit {
   CheckedGender: any = null;
   order: string = null;
   Ascending : boolean;
-  avartarUrl: string = "assets/untitled.png"
+  avartarUrl: string = "../../assets/untitled.png"
   sortValuesMap : any;
 
   constructor(
@@ -150,10 +150,11 @@ export class ExploreComponent implements OnInit {
       for(let cv of result['content']){
         if (cv.profilePhoto) {
           this.avartarUrl = cv.profilePhoto;
+        } else {
+          this.avartarUrl = "../../assets/untitled.png";
         }
         cv['photo'] = this.avartarUrl
         this.userDatas.push(cv);
-        // console.log(cv)
       }
       this.pageNum = result['number'];
       this.pageSize = result['size'];
