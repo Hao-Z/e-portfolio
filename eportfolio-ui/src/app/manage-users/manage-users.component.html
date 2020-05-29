@@ -25,13 +25,12 @@
     <div>
       <div *ngIf="!isCollapsed">
         <div nz-row>
-          <div nz-col nzSpan="6">
-            <nz-avatar nzIcon="user" [nzSrc]="userData.photo" [nzShape]="'circle'" class="picture picbutt">
-            </nz-avatar>
-
+          <div nz-col nzSpan="8">
+              <nz-avatar nzIcon="user" [nzSrc]="userData.photo" [nzShape]="'circle'" class="picture picbutt">
+              </nz-avatar>
           </div>
 
-          <div nz-col nzSpan="14">
+          <div nz-col nzSpan="12">
             <a  class="nav-link" (click)="getLink(userData.id)">
             <h2 *ngIf="userData.firstName" style="display: inline-block;">{{userData.firstName}}&nbsp;</h2>
             <h2 *ngIf="userData.lastName" style="display: inline-block;">{{userData.lastName}}</h2>
@@ -50,7 +49,7 @@
               nzPopconfirmTitle="Are you sure to delete this user?"
               nzOkText="ok"
               nzCancelText="cancel"
-              (nzOnConfirm)="deleteUser()"
+              (nzOnConfirm)="deleteUser(userData.id)"
               class="btn btn-danger" type="button" style="color: white;">
               <i class="fa fa-trash-o" aria-hidden="true"></i></button>
           </div>
@@ -58,17 +57,27 @@
       </div>
 
       <div *ngIf="isCollapsed">
-        <div class="row">
-          <div class="col-4">
+        <div nz-row>
+          <div nz-col nzSpan="8">
             <nz-avatar nzIcon="user" [nzSrc]="userData.photo" [nzShape]="'circle'" class="picture picbutt" style="height: 80px;width: 80px;">
             </nz-avatar>
           </div>
-          <div>
+          <div nz-col nzSpan="12">
             <a  class="nav-link" (click)="getLink(userData.id)">
             <h2>{{userData.firstName +" " + userData.lastName}}</h2>
             <hr>
             <p style="color: #0068A7;">{{userData.industry | cvData:"industry"}}</p>
             </a>
+          </div>
+          <div nz-col nzSpan="1" nzOffset="3">
+            <button
+              nz-popconfirm
+              nzPopconfirmTitle="Are you sure to delete this user?"
+              nzOkText="ok"
+              nzCancelText="cancel"
+              (nzOnConfirm)="deleteUser(userData.id)"
+              class="btn btn-danger" type="button" style="color: white;">
+              <i class="fa fa-trash-o" aria-hidden="true"></i></button>
           </div>
         </div>
       </div>

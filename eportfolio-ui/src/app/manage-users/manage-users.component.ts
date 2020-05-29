@@ -74,8 +74,13 @@ export class ManageUsersComponent implements OnInit {
     });
   }
 
-  deleteUser() {
-
+  deleteUser(id) {
+    const HttpOptions = {
+      headers : new HttpHeaders({'content-Type': 'application/json'}
+      )
+    };
+    this.http.post<any>(globals.backend_path + "admin/user?_method=delete" , id.toString(), HttpOptions).subscribe((result) => {
+    });
+    this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.searchValue);
   }
-
 }
