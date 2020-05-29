@@ -16,6 +16,7 @@ export class AlertService {
     messageErObserve = this.messageEr.asObservable();
 
     private setSuMessage(message: string) {
+        console.log(message, "set!!")
         this.messageSu.next(message);
     }
 
@@ -28,6 +29,7 @@ export class AlertService {
     }
 
     public success(message: string, callback?: Function) {
+        console.log(message, "success!!")
         this.setSuMessage(message);
         if (callback) {
             callback();
@@ -46,5 +48,10 @@ export class AlertService {
         if (callback) {
             callback();
         }
+    }
+
+    public initSuMessage() {
+        console.log("int!!")
+        this.messageSu = new Subject<string>();
     }
 }

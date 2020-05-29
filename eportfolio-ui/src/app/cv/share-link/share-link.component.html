@@ -9,9 +9,15 @@
 <div class="modal-body">
   <ng-container *ngIf="sharelink">
     <textarea [value]="sharelink" class="form-control" rows="5" readonly aria-label="With textarea"></textarea>
+    <br>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <formly-form [form]="form" [fields]="fields" [model]="model" [options]="options"></formly-form>
+          <button type="submit" nz-tooltip nzTooltipTitle="prompt text" class="btn btn-primary" style="float:right; width: 100px;">Submit</button>
+        <br><br>
+    </form>
   </ng-container>
 </div>
 <div class="modal-footer">
-  <button ngbAutofocus class="btn btn-outline-primary" [value]="sharelink" (click)="copyText(); modal.dismiss('ok click')" > Copy link</button>
+  <button class="btn btn-outline-primary" [value]="sharelink" (click)="copyText(); modal.dismiss('ok click')" style="width: 100px;"> Copy link</button>
 </div> 
 

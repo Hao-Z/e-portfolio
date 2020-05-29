@@ -3,6 +3,10 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { UniqueApiService } from 'src/app/core/services/unique-api.service';
 import * as globals from "../../../global";
 import { userID } from 'src/global';
+import { FormGroup } from '@angular/forms';
+import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
+import { DataService } from 'src/app/core/services/data.service';
+import { SharePeriod } from 'src/app/core/models/share-period.model';
 
 @Component({
   selector: 'app-share-link',
@@ -13,13 +17,63 @@ export class ShareLinkComponent implements OnInit {
 
   sharelink: string
 
+  model: SharePeriod = {
+    period: null,
+    unit: null
+  };
+  form = new FormGroup({});
+  options: FormlyFormOptions = {};
+
+  fields: FormlyFieldConfig[] = [
+    {
+      fieldGroupClassName: 'row',
+      fieldGroup: [
+        {
+          className: 'col-6',
+          key: 'period',
+          type: 'input',
+          modelOptions: {
+            updateOn: 'submit',
+          },
+          templateOptions: {
+            type: 'number',
+            min: 0,
+            required: true,
+            label: 'Set validity period of the link',
+            maxLength: 255            
+          }
+        },
+        {
+          className: 'col-6',
+          key: 'unit',
+          type: 'select',
+          modelOptions: {
+            updateOn: 'submit',
+          },
+          templateOptions: {
+            placeholder: 'Please choose a unit',
+            label: 'Unit',
+            maxLength: 255,
+            required: true,
+            options: this.dataService.getUnit()
+          }
+        }
+      ]
+    }
+  ]
+
   constructor(
     public modal: NgbActiveModal,
-    private apiService: UniqueApiService
+    private apiService: UniqueApiService,
+    private dataService: DataService
   ) { }
 
   ngOnInit() {
     this.getLink();
+  }
+
+  onSubmit() {
+    this.ngOnInit()
   }
 
   copyText(){
@@ -37,9 +91,16 @@ export class ShareLinkComponent implements OnInit {
   }
 
   getLink() {
-    this.apiService.getSharedLink(userID)
-      .subscribe((result: string) => {
-        this.sharelink = `${globals.front_path}cv-show?link=${result}`;
-    })
+    if (this.form.valid) {
+      this.apiService.getSharedLink(userID, this.model)
+        .subscribe((result: string) => {
+          this.sharelink = `${globals.front_path}cv-show?link=${result}`;
+      }) 
+    } else {
+      this.apiService.getSharedLink(userID)
+        .subscribe((result: string) => {
+          this.sharelink = `${globals.front_path}cv-show?link=${result}`;
+      })
+    }
   }
 }

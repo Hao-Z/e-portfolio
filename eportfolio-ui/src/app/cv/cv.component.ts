@@ -15,7 +15,7 @@ export class CvComponent implements OnInit{
     
   cvForms: Cv;
   cvItems: Array<string> = this.modalService.getKeys();  
-  avartarUrl: string = "assets/untitled.png"
+  avartarUrl: string = "../../assets/untitled.png"
 
   parentMessage: string;
 
@@ -45,7 +45,7 @@ export class CvComponent implements OnInit{
     if (isSuccess && msg) {
       this.pop.success(msg, {nzDuration: 2000});  
     } else {
-      this.pop.error(msg, {nzDuration: 2000});     
+      // this.pop.error(msg, {nzDuration: 2000});     
     }
     this.ngOnInit();
   }

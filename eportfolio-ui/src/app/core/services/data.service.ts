@@ -161,6 +161,13 @@ export class DataService{
     { value: '5', label: 'Native or bilingual proficiency' }
   ]
 
+  unitList = [
+    { value: 86400000, label: 'days' },
+    { value: 3600000, label: 'hours' },
+    { value: 60000, label: 'minutes' },
+    { value: 1000, label: 'seconds' },
+  ]
+
   constructor() { }
 
   getIndustryList() {
@@ -185,6 +192,10 @@ export class DataService{
 
   getEmplogymentType() {
     return of(this.emplogymentTypeList)
+  }
+
+  getUnit() {
+    return of(this.unitList)
   }
 
   getLabel(currValue: string, dataclass: string): string {
