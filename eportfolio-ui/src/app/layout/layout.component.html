@@ -3,7 +3,7 @@
 </app-top-bar>
 
 <nz-layout style="padding-top: 55px;min-height: 100%;">
-  <nz-sider style="position: fixed" class="menu-sidebar" nzWidth="256px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
+  <nz-sider style="position: fixed; height: 100%;" class="menu-sidebar" nzWidth="256px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
     [nzTrigger]="null" nzCollapsible="true" (nzCollapsedChange)="changeWidth()">
     <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
       <li nz-menu-item nzMatchRouter  *ngIf="!admin_account">

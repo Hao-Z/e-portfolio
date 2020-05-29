@@ -8,26 +8,29 @@
     <div *ngIf="cvForms">
       <ng-container *ngFor="let item of cvItems">
         <ng-template [ngIf]="item=='introduction'" [ngIfElse]="about">
-          <div class="card-body cover" style="min-height: 200px;z-index: 2;">
+          <div class="card-body cover" style="min-height: 240px;z-index: 2;">
 
-            <nz-avatar nzIcon="user" [nzSrc]="avartarUrl" [nzShape]="'circle'" class="picture picbutt"></nz-avatar>
+            <nz-avatar nzIcon="user" [nzSrc]="avartarUrl" [nzShape]="'circle'" class="picture picbutt" style="margin-left: 21px;"></nz-avatar>
             <!-- profilePhoto -->
             <div class="square"></div>
             <div class="col-16">
               <h2 *ngIf="cvForms[item].firstName" style="display: inline-block;">{{cvForms[item].firstName}}&nbsp;</h2>
               <h2 *ngIf="cvForms[item].lastName" style="display: inline-block;">{{cvForms[item].lastName}}</h2>
-              <span *ngIf="cvForms[item].industry" style="display: inline-block;"> {{cvForms[item].industry | cvData: 'industry'}} </span>
+              <span *ngIf="cvForms[item].industry" style="display: inline-block;">
+                {{cvForms[item].industry | cvData: 'industry'}} </span>
               <h5 *ngIf="cvForms[item].headline">{{cvForms[item].headline}}</h5>
-              <hr>
-              <p *ngIf="cvForms[item].gender && cvForms[item].gender != '2'" style="display: inline-block;">{{cvForms[item].gender | cvData: 'gender'}}&nbsp;&nbsp;</p>
-              <p *ngIf="cvForms[item].birthday" style="display: inline-block;">born at {{cvForms[item].birthday}}&nbsp;&nbsp;</p>
+              <hr *ngIf="cvForms[item].firstName || cvForms[item].lastName || cvForms[item].industry || cvForms[item].headline">
+              <p *ngIf="cvForms[item].gender && cvForms[item].gender != '2'" style="display: inline-block;">
+                {{cvForms[item].gender | cvData: 'gender'}}&nbsp;&nbsp;</p>
+              <p *ngIf="cvForms[item].birthday" style="display: inline-block;">born at
+                {{cvForms[item].birthday}}&nbsp;&nbsp;</p>
               <p *ngIf="cvForms[item].country" style="display: inline-block;font-style: oblique;">living in
                 {{cvForms[item].country}} currently</p>
               <p *ngIf="cvForms[item].currentEducation">
                 <ng-container *ngIf="cvForms[item].currentEducation.degree">
                   {{cvForms[item].currentEducation.degree | cvData: 'degree'}}
-                  <ng-container *ngIf="cvForms[item].currentEducation.fieldOfStudy"> 
-                  in {{cvForms[item].currentEducation.fieldOfStudy}}
+                  <ng-container *ngIf="cvForms[item].currentEducation.fieldOfStudy">
+                    in {{cvForms[item].currentEducation.fieldOfStudy}}
                   </ng-container>
                 </ng-container>
               </p>
@@ -60,20 +63,35 @@
           <ng-template [ngIf]="item=='feature'" [ngIfElse]="workexperience">
             <ng-container *ngIf="cvForms[item].length">
               <div class="card-body">
-                <h2>Feature</h2>
+                <h2>Link</h2>
                 <hr />
                 <ul>
                   <div *ngFor="let item of cvForms[item]" class="cover">
                     <div class="row">
                       <div class="col-10">
                         <li>
+                          {{item.title + ": "}}
                           <a *ngIf="item.link" href="#" (click)="clickURL(item.link)">{{item.link}}</a>
                           <h6 *ngIf="item.media">
-                            <a href="#" (click)="clickURL(item.media)">
-                              File
-                            </a>
+                            <div class="collapse" [id]="'collapseFileList1'+item.id">
+                              <ng-container *ngFor="let file of fileService.toFileList(item.media)">
+                                <a href="#" (click)="clickURL(file.url)">
+                                  {{file.name}}
+                                </a>
+                                <br>
+                              </ng-container>
+                            </div>
                           </h6>
                         </li>
+                      </div>
+                      <div class="col-2">
+                        <ng-container *ngIf="item.media">
+                          <button class="btn add-btn a-right" type="button" data-toggle="collapse"
+                            [attr.data-target]="'#collapseFileList1'+item.id" aria-expanded="false"
+                            aria-controls="collapseFileList">
+                            <i class="fa fa-paperclip" aria-hidden="true"></i>
+                          </button>
+                        </ng-container>
                       </div>
                     </div>
                   </div>
@@ -87,33 +105,50 @@
         <ng-template #workexperience>
           <ng-template [ngIf]="item=='workexperience'" [ngIfElse]="education">
             <ng-container *ngIf="cvForms[item].length">
-                <div class="card-body">
-                    <h2>Work Experience</h2>
-                    <hr />
-                    <div *ngFor="let item of cvForms[item]" class="cover">
-                      <div class="row">
-                        <div class="col-10">
-                          <h5 *ngIf="item.title" style="display: inline-block;">{{item.title}}&nbsp;</h5>
-                          <h5 *ngIf="item.companyName" style="display: inline-block;">at<strong>&nbsp;{{item.companyName}}&nbsp;</strong></h5>
-                          <span *ngIf="item.industry">{{item.industry | cvData: 'industry'}}</span>
-                          <br *ngIf="item.title || item.industry || item.companyName">
-                          <p *ngIf="item.employmentType" style="display: inline-block;">{{item.employmentType | cvData: 'employmentType'}}&nbsp;&nbsp;</p>
-                          <p *ngIf="item.startDate" style="display: inline-block;">{{item.startDate}}&nbsp;</p>
-                          <p *ngIf="!item.isCurrentWork && item.endDate" style="display: inline-block;">to {{item.endDate}}</p>
-                          <p *ngIf="item.isCurrentWork" style="display: inline-block;">until {{"Now"}}</p>
-                          <p *ngIf="item.location">{{item.location}}</p>
+              <div class="card-body">
+                <h2>Work Experience</h2>
+                <hr />
+                <div *ngFor="let item of cvForms[item]" class="cover">
+                  <div class="row">
+                    <div class="col-10">
+                      <h5 *ngIf="item.title" style="display: inline-block;">{{item.title}}&nbsp;</h5>
+                      <h5 *ngIf="item.companyName" style="display: inline-block;">
+                        at<strong>&nbsp;{{item.companyName}}&nbsp;</strong></h5>
+                      <span *ngIf="item.industry">{{item.industry | cvData: 'industry'}}</span>
+                      <br *ngIf="item.title || item.industry || item.companyName">
+                      <p *ngIf="item.employmentType" style="display: inline-block;">
+                        {{item.employmentType | cvData: 'employmentType'}}&nbsp;&nbsp;</p>
+                      <p *ngIf="item.startDate" style="display: inline-block;">{{item.startDate}}&nbsp;</p>
+                      <p *ngIf="!item.isCurrentWork && item.endDate" style="display: inline-block;">to {{item.endDate}}
+                      </p>
+                      <p *ngIf="item.isCurrentWork" style="display: inline-block;">until {{"Now"}}</p>
+                      <p *ngIf="item.location">{{item.location}}</p>
 
-                          <h6 *ngIf="item.description">{{item.description}}&nbsp;&nbsp;</h6>
-                          <h6 *ngIf="item.media">
-                            <a href="#" (click)="clickURL(item.media)">
-                              File
+                      <h6 *ngIf="item.description">{{item.description}}&nbsp;&nbsp;</h6>
+                      <h6 *ngIf="item.media">
+                        <div class="collapse" [id]="'collapseFileList1'+item.id">
+                          <ng-container *ngFor="let file of fileService.toFileList(item.media)">
+                            <a href="#" (click)="clickURL(file.url)">
+                              {{file.name}}
                             </a>
-                          </h6>
+                            <br>
+                          </ng-container>
                         </div>
-                      </div>
-                      <br>
+                      </h6>
+                    </div>
+                    <div class="col-2">
+                      <ng-container *ngIf="item.media">
+                        <button class="btn add-btn a-right" type="button" data-toggle="collapse"
+                          [attr.data-target]="'#collapseFileList1'+item.id" aria-expanded="false"
+                          aria-controls="collapseFileList">
+                          <i class="fa fa-paperclip" aria-hidden="true"></i>
+                        </button>
+                      </ng-container>
                     </div>
                   </div>
+                  <br>
+                </div>
+              </div>
             </ng-container>
           </ng-template>
         </ng-template>
@@ -122,33 +157,51 @@
         <ng-template #education>
           <ng-template [ngIf]="item=='education'" [ngIfElse]="licensecertification">
             <ng-container *ngIf="cvForms[item].length">
-                <div class="card-body">
-                    <h2>Education</h2>
-                    <hr />
-                    <div *ngFor="let item of cvForms[item]" class="cover">
-                      <div class="row">
-                        <div class="col-10">
+              <div class="card-body">
+                <h2>Education</h2>
+                <hr />
+                <div *ngFor="let item of cvForms[item]" class="cover">
+                  <div class="row">
+                    <div class="col-10">
 
-                          <h5 *ngIf="item.schoolName" style="font-style: normal;display: inline-block;">{{item.schoolName}}</h5>
-                          <span *ngIf="item.fieldOfStudy" style="display: inline-block;">{{item.fieldOfStudy}}</span>
-                          <br *ngIf="item.schoolName || item.fieldOfStudy">
-                          <h5 *ngIf="item.degree" style="display: inline-block;font-style:inherit;">{{item.degree | cvData: 'degree'}}&nbsp;</h5>
-                          <h6 *ngIf="item.grade" style="display: inline-block;">with a grade of <strong>{{item.grade}}</strong></h6>
-                          <br *ngIf="item.degree || item.grade">
-                          <p *ngIf="item.startYear" style="display: inline-block;">{{item.startYear}}&nbsp;</p>
-                          <p *ngIf="item.endYear" style="display: inline-block;">to {{item.endYear}}</p>
-                          <h6 *ngIf="item.activityAndSociety">{{item.activityAndSociety}}</h6>
-                          <h6 *ngIf="item.description">{{item.description}}</h6>
-                          <h6 *ngIf="item.media">
-                            <a href="#" (click)="clickURL(item.media)">
-                              File
+                      <h5 *ngIf="item.schoolName" style="font-style: normal;display: inline-block;">{{item.schoolName}}
+                      </h5>
+                      <span *ngIf="item.fieldOfStudy" style="display: inline-block;">{{item.fieldOfStudy}}</span>
+                      <br *ngIf="item.schoolName || item.fieldOfStudy">
+                      <h5 *ngIf="item.degree" style="display: inline-block;font-style:inherit;">
+                        {{item.degree | cvData: 'degree'}}&nbsp;</h5>
+                      <h6 *ngIf="item.grade" style="display: inline-block;">with a grade of
+                        <strong>{{item.grade}}</strong></h6>
+                      <br *ngIf="item.degree || item.grade">
+                      <p *ngIf="item.startYear" style="display: inline-block;">{{item.startYear}}&nbsp;</p>
+                      <p *ngIf="item.endYear" style="display: inline-block;">to {{item.endYear}}</p>
+                      <h6 *ngIf="item.activityAndSociety">{{item.activityAndSociety}}</h6>
+                      <h6 *ngIf="item.description">{{item.description}}</h6>
+                      <h6 *ngIf="item.media">
+                        <div class="collapse" [id]="'collapseFileList1'+item.id">
+                          <ng-container *ngFor="let file of fileService.toFileList(item.media)">
+                            <a href="#" (click)="clickURL(file.url)">
+                              {{file.name}}
                             </a>
-                          </h6>
+                            <br>
+                          </ng-container>
                         </div>
-                      </div>
-                      <br>
+
+                      </h6>
+                    </div>
+                    <div class="col-2">
+                      <ng-container *ngIf="item.media">
+                        <button class="btn add-btn a-right" type="button" data-toggle="collapse"
+                          [attr.data-target]="'#collapseFileList1'+item.id" aria-expanded="false"
+                          aria-controls="collapseFileList">
+                          <i class="fa fa-paperclip" aria-hidden="true"></i>
+                        </button>
+                      </ng-container>
                     </div>
                   </div>
+                  <br>
+                </div>
+              </div>
             </ng-container>
           </ng-template>
         </ng-template>
@@ -157,30 +210,48 @@
         <ng-template #licensecertification>
           <ng-template [ngIf]="item=='licensecertification'" [ngIfElse]="volunteerexperience">
             <ng-container *ngIf="cvForms[item].length">
-                <div class="card-body">
-                    <h2>License Certification</h2>
-                    <hr />
-                    <div *ngFor="let item of cvForms[item]" class="cover">
-                      <div class="row">
-                        <div class="col-10">
+              <div class="card-body">
+                <h2>License Certification</h2>
+                <hr />
+                <div *ngFor="let item of cvForms[item]" class="cover">
+                  <div class="row">
+                    <div class="col-10">
 
-                            <h5 *ngIf="item.name" style="display: inline-block;font-style: normal;">{{item.name}}</h5>
-                            <span *ngIf="item.issuingOrganization" style="display: inline-block;">{{item.issuingOrganization}}</span>
-                            <br *ngIf="item.name || item.issuingOrganization">
-                            <h6 *ngIf="item.credentialID" style="display: inline-block;">ID: {{item.credentialID}}&nbsp;&nbsp;</h6>
-                            <h6 *ngIf="item.credentialURL" style="display: inline-block;"><a href="#" (click)="clickURL(item.credentialURL)">Credential URL</a></h6>
-                            <br *ngIf="item.credentialID || item.credentialURL">
-                            <p *ngIf="item.issueDate" style="display: inline-block;">Issued on {{item.issueDate}}&nbsp;</p>
-                            <p *ngIf="item.expirationDate" style="display: inline-block;">and expires at {{item.expirationDate}}</p>
-                            <h6 *ngIf="item.media">
-                              <a href="#" (click)="clickURL(item.media)">
-                                File
-                              </a>
-                            </h6>
+                      <h5 *ngIf="item.name" style="display: inline-block;font-style: normal;">{{item.name}}</h5>
+                      <span *ngIf="item.issuingOrganization"
+                        style="display: inline-block;">{{item.issuingOrganization}}</span>
+                      <br *ngIf="item.name || item.issuingOrganization">
+                      <h6 *ngIf="item.credentialID" style="display: inline-block;">ID: {{item.credentialID}}&nbsp;&nbsp;
+                      </h6>
+                      <h6 *ngIf="item.credentialURL" style="display: inline-block;"><a href="#"
+                          (click)="clickURL(item.credentialURL)">Credential URL</a></h6>
+                      <br *ngIf="item.credentialID || item.credentialURL">
+                      <p *ngIf="item.issueDate" style="display: inline-block;">Issued on {{item.issueDate}}&nbsp;</p>
+                      <p *ngIf="item.expirationDate" style="display: inline-block;">and expires at
+                        {{item.expirationDate}}</p>
+                      <h6 *ngIf="item.media">
+                        <div class="collapse" [id]="'collapseFileList1'+item.id">
+                          <ng-container *ngFor="let file of fileService.toFileList(item.media)">
+                            <a href="#" (click)="clickURL(file.url)">
+                              {{file.name}}
+                            </a>
+                            <br>
+                          </ng-container>
                         </div>
-                      </div>
+                      </h6>
+                    </div>
+                    <div class="col-2">
+                      <ng-container *ngIf="item.media">
+                        <button class="btn add-btn a-right" type="button" data-toggle="collapse"
+                          [attr.data-target]="'#collapseFileList1'+item.id" aria-expanded="false"
+                          aria-controls="collapseFileList">
+                          <i class="fa fa-paperclip" aria-hidden="true"></i>
+                        </button>
+                      </ng-container>
                     </div>
                   </div>
+                </div>
+              </div>
             </ng-container>
           </ng-template>
         </ng-template>
@@ -189,36 +260,50 @@
         <ng-template #volunteerexperience>
           <ng-template [ngIf]="item=='volunteerexperience'" [ngIfElse]="skill">
             <ng-container *ngIf="cvForms[item].length">
-                <div class="card-body">
+              <div class="card-body">
 
-                    <h2>Volunteer Experience</h2>
-                    <hr />
-                    <div *ngFor="let item of cvForms[item]" class="cover">
-                      <div class="row">
-                        <div class="col-10">
+                <h2>Volunteer Experience</h2>
+                <hr />
+                <div *ngFor="let item of cvForms[item]" class="cover">
+                  <div class="row">
+                    <div class="col-10">
+                      <h5 *ngIf="item.organizationName" style="display: inline-block;font-style: normal;">
+                        {{item.organizationName}}
+                      </h5>
+                      <span *ngIf="item.role" style="display: inline-block;">{{item.role}}</span>
+                      <br *ngIf="item.role || item.organizationName">
+                      <h6 *ngIf="item.cause">{{item.cause}}</h6>
+                      <p *ngIf="item.startDate" style="display: inline-block;">{{item.startDate}}&nbsp;</p>
+                      <p *ngIf="item.endDate" style="display: inline-block;">to {{item.endDate}}</p>
 
-                          <h5 *ngIf="item.organizationName" style="display: inline-block;font-style: normal;">{{item.organizationName}}
-                          </h5>
-                          <span *ngIf="item.role" style="display: inline-block;">{{item.role}}</span>
-                          <br *ngIf="item.role || item.organizationName">
-                          <h6 *ngIf="item.cause">{{item.cause}}</h6>
-                          <p *ngIf="item.startDate" style="display: inline-block;">{{item.startDate}}&nbsp;</p>
-                          <p *ngIf="item.endDate" style="display: inline-block;">to {{item.endDate}}</p>
+                      <h6 *ngIf="item.description">{{item.description}}</h6>
 
-                          <h6 *ngIf="item.description">{{item.description}}</h6>
-
-                          <h6 *ngIf="item.media">
-                            <a href="#" (click)="clickURL(item.media)">
-                              File
+                      <h6 *ngIf="item.media">
+                        <div class="collapse" [id]="'collapseFileList1'+item.id">
+                          <ng-container *ngFor="let file of fileService.toFileList(item.media)">
+                            <a href="#" (click)="clickURL(file.url)">
+                              {{file.name}}
                             </a>
-                          </h6>
-
+                            <br>
+                          </ng-container>
                         </div>
+                      </h6>
+                    </div>
 
-                      </div>
-                      <br>
+                    <div class="col-2">
+                      <ng-container *ngIf="item.media">
+                        <button class="btn add-btn a-right" type="button" data-toggle="collapse"
+                          [attr.data-target]="'#collapseFileList1'+item.id" aria-expanded="false"
+                          aria-controls="collapseFileList">
+                          <i class="fa fa-paperclip" aria-hidden="true"></i>
+                        </button>
+                      </ng-container>
                     </div>
                   </div>
+
+                  <br>
+                </div>
+              </div>
             </ng-container>
           </ng-template>
         </ng-template>
@@ -227,23 +312,23 @@
         <ng-template #skill>
           <ng-template [ngIf]="item=='skill'" [ngIfElse]="project">
             <ng-container *ngIf="cvForms[item].length">
-                <div class="card-body" style="background-color: white">
-                    <h2>Skill</h2>
-                    <hr />
-                    <ul>
-                      <div *ngFor="let item of cvForms[item]" class="cover">
-                        <div class="row">
-                          <div class="col-10">
-                            <h6>
+              <div class="card-body" style="background-color: white">
+                <h2>Skill</h2>
+                <hr />
+                <ul>
+                  <div *ngFor="let item of cvForms[item]" class="cover">
+                    <div class="row">
+                      <div class="col-10">
+                        <h6>
 
-                              <li *ngIf="item.skillName">{{item.skillName}}</li>
-                            </h6>
-                          </div>
-
-                        </div>
+                          <li *ngIf="item.skillName">{{item.skillName}}</li>
+                        </h6>
                       </div>
-                    </ul>
+
+                    </div>
                   </div>
+                </ul>
+              </div>
             </ng-container>
           </ng-template>
         </ng-template>
@@ -252,29 +337,41 @@
         <ng-template #project>
           <ng-template [ngIf]="item=='project'" [ngIfElse]="honouraward">
             <ng-container *ngIf="cvForms[item].length">
-                <div class="card-body">
-                    <h2>Project</h2>
-                    <hr />
-                    <div *ngFor="let item of cvForms[item]" class="cover">
-                      <div class="row">
-                        <div class="col-10">
-                          <h5 *ngIf="item.projectName" style="font-style: normal;">{{item.projectName}}</h5>
-                          <p *ngIf="item.startDate" style="display: inline-block;">{{item.startDate}}&nbsp;</p>
-                          <p *ngIf="item.endDate" style="display: inline-block;">to {{item.endDate}}</p>
-                          <h6 *ngIf="item.projectURL"><a href="#" (click)="clickURL(item.projectURL)">Project link</a></h6>
-                          <h6 *ngIf="item.description">{{item.description}}</h6>
-                          <h6 *ngIf="item.media">
-                            <a href="#" (click)="clickURL(item.media)">
-                              File
+              <div class="card-body">
+                <h2>Project</h2>
+                <hr />
+                <div *ngFor="let item of cvForms[item]" class="cover">
+                  <div class="row">
+                    <div class="col-10">
+                      <h5 *ngIf="item.projectName" style="font-style: normal;">{{item.projectName}}</h5>
+                      <p *ngIf="item.startDate" style="display: inline-block;">{{item.startDate}}&nbsp;</p>
+                      <p *ngIf="item.endDate" style="display: inline-block;">to {{item.endDate}}</p>
+                      <h6 *ngIf="item.projectURL"><a href="#" (click)="clickURL(item.projectURL)">Project link</a></h6>
+                      <h6 *ngIf="item.description">{{item.description}}</h6>
+                      <h6 *ngIf="item.media">
+                        <div class="collapse" [id]="'collapseFileList1'+item.id">
+                          <ng-container *ngFor="let file of fileService.toFileList(item.media)">
+                            <a href="#" (click)="clickURL(file.url)">
+                              {{file.name}}
                             </a>
-                          </h6>
-
+                            <br>
+                          </ng-container>
                         </div>
-
-                      </div>
-                      <br>
+                      </h6>
+                    </div>
+                    <div class="col-2">
+                      <ng-container *ngIf="item.media">
+                        <button class="btn add-btn a-right" type="button" data-toggle="collapse"
+                          [attr.data-target]="'#collapseFileList1'+item.id" aria-expanded="false"
+                          aria-controls="collapseFileList">
+                          <i class="fa fa-paperclip" aria-hidden="true"></i>
+                        </button>
+                      </ng-container>
                     </div>
                   </div>
+                  <br>
+                </div>
+              </div>
             </ng-container>
           </ng-template>
         </ng-template>
@@ -283,28 +380,42 @@
         <ng-template #honouraward>
           <ng-template [ngIf]="item=='honouraward'" [ngIfElse]="publication">
             <ng-container *ngIf="cvForms[item].length">
-                <div class="card-body">
-                    <h2>Honour Award</h2>
-                    <hr />
-                    <div *ngFor="let item of cvForms[item]" class="cover">
-                      <div class="row">
-                        <div class="col-10">
-                          <h5 *ngIf="item.title" style="font-style: normal;display: inline-block;">{{item.title}}</h5>
-                          <span *ngIf="item.associatedWith" style="display: inline-block;">{{item.associatedWith}}</span>
-                          <h6 *ngIf="item.issuer">Issuer: {{item.issuer}}</h6>
-                          <p *ngIf="item.issueDate">Issued on {{item.issueDate}}</p>
-                          <h6 *ngIf="item.description">{{item.description}}</h6>
-                          <h6 *ngIf="item.media">
-                            <a href="#" (click)="clickURL(item.media)">
-                              File
+              <div class="card-body">
+                <h2>Honour Award</h2>
+                <hr />
+                <div *ngFor="let item of cvForms[item]" class="cover">
+                  <div class="row">
+                    <div class="col-10">
+                      <h5 *ngIf="item.title" style="font-style: normal;display: inline-block;">{{item.title}}</h5>
+                      <span *ngIf="item.associatedWith" style="display: inline-block;">{{item.associatedWith}}</span>
+                      <h6 *ngIf="item.issuer">Issuer: {{item.issuer}}</h6>
+                      <p *ngIf="item.issueDate">Issued on {{item.issueDate}}</p>
+                      <h6 *ngIf="item.description">{{item.description}}</h6>
+                      <h6 *ngIf="item.media">
+                        <div class="collapse" [id]="'collapseFileList1'+item.id">
+                          <ng-container *ngFor="let file of fileService.toFileList(item.media)">
+                            <a href="#" (click)="clickURL(file.url)">
+                              {{file.name}}
                             </a>
-                          </h6>
-
+                            <br>
+                          </ng-container>
                         </div>
-                      </div>
-                      <br>
+                      </h6>
                     </div>
                   </div>
+                  <div class="col-2">
+                    <ng-container *ngIf="item.media">
+                      <button class="btn add-btn a-right" type="button" data-toggle="collapse"
+                        [attr.data-target]="'#collapseFileList1'+item.id" aria-expanded="false"
+                        aria-controls="collapseFileList">
+                        <i class="fa fa-paperclip" aria-hidden="true"></i>
+                      </button>
+                    </ng-container>
+                  </div>
+
+                  <br>
+                </div>
+              </div>
             </ng-container>
           </ng-template>
         </ng-template>
@@ -313,29 +424,45 @@
         <ng-template #publication>
           <ng-template [ngIf]="item=='publication'" [ngIfElse]="language">
             <ng-container *ngIf="cvForms[item].length">
-                <div class="card-body">
-                    <h2>Publication</h2>
-                    <hr />
-                    <div *ngFor="let item of cvForms[item]" class="cover">
-                      <div class="row">
-                        <div class="col-10">
-                          <h5 *ngIf="item.title" style="display: inline-block;">{{item.title}}</h5>
-                          <span *ngIf="item.publicationPublisher" style="display: inline-block;">{{item.publicationPublisher}}</span>
-                          <p *ngIf="item.publicationDate">Published on {{item.publicationDate}}</p>
-                          <h6 *ngIf="item.publicationURL"><a href="#" (click)="clickURL(item.publicationURL)">Publication URL</a></h6>
-                          <h6 *ngIf="item.description">{{item.description}}</h6>
-                          <h6 *ngIf="item.media">
-                            <a href="#" (click)="clickURL(item.media)">
-                              File
+              <div class="card-body">
+                <h2>Publication</h2>
+                <hr />
+                <div *ngFor="let item of cvForms[item]" class="cover">
+                  <div class="row">
+                    <div class="col-10">
+                      <h5 *ngIf="item.title" style="display: inline-block;">{{item.title}}</h5>
+                      <span *ngIf="item.publicationPublisher"
+                        style="display: inline-block;">{{item.publicationPublisher}}</span>
+                      <p *ngIf="item.publicationDate">Published on {{item.publicationDate}}</p>
+                      <h6 *ngIf="item.publicationURL"><a href="#" (click)="clickURL(item.publicationURL)">Publication
+                          URL</a></h6>
+                      <h6 *ngIf="item.description">{{item.description}}</h6>
+                      <h6 *ngIf="item.media">
+                        <div class="collapse" [id]="'collapseFileList1'+item.id">
+                          <ng-container *ngFor="let file of fileService.toFileList(item.media)">
+                            <a href="#" (click)="clickURL(file.url)">
+                              {{file.name}}
                             </a>
-                          </h6>
-
+                            <br>
+                          </ng-container>
                         </div>
+                      </h6>
 
-                      </div>
-                      <br>
                     </div>
+                    <div class="col-2">
+                      <ng-container *ngIf="item.media">
+                        <button class="btn add-btn a-right" type="button" data-toggle="collapse"
+                          [attr.data-target]="'#collapseFileList1'+item.id" aria-expanded="false"
+                          aria-controls="collapseFileList">
+                          <i class="fa fa-paperclip" aria-hidden="true"></i>
+                        </button>
+                      </ng-container>
+                    </div>
+
                   </div>
+                  <br>
+                </div>
+              </div>
             </ng-container>
           </ng-template>
         </ng-template>
@@ -344,24 +471,25 @@
         <ng-template #language>
           <ng-template [ngIf]="item=='language'" [ngIfElse]="recommendation">
             <ng-container *ngIf="cvForms[item].length">
-                <div class="card-body">
-                    <h2>Language</h2>
-                    <hr />
-                    <ul>
-                      <div *ngFor="let item of cvForms[item]" class="cover">
-                        <div class="row">
-                          <div class="col-10">
-                            <li>
-                              <h6 *ngIf="item.language">{{item.language}}
-                                <span *ngIf="item.proficiency" style="display: inline-block;">{{item.proficiency | cvData: 'proficiency'}}</span>
-                              </h6>
-                            </li>
-                          </div>
-
-                        </div>
+              <div class="card-body">
+                <h2>Language</h2>
+                <hr />
+                <ul>
+                  <div *ngFor="let item of cvForms[item]" class="cover">
+                    <div class="row">
+                      <div class="col-10">
+                        <li>
+                          <h6 *ngIf="item.language">{{item.language}}
+                            <span *ngIf="item.proficiency"
+                              style="display: inline-block;">{{item.proficiency | cvData: 'proficiency'}}</span>
+                          </h6>
+                        </li>
                       </div>
-                    </ul>
+
+                    </div>
                   </div>
+                </ul>
+              </div>
             </ng-container>
           </ng-template>
         </ng-template>
@@ -370,32 +498,49 @@
         <ng-template #recommendation>
           <ng-template [ngIf]="item=='recommendation'">
             <ng-container *ngIf="cvForms[item].length">
-                <div class="card-body">
+              <div class="card-body">
 
-                    <h2>Recommendation</h2>
-                    <hr />
-                    <ul>
-                      <div *ngFor="let item of cvForms[item]" class="cover">
-                        <div class="row">
-                          <div class="col-10">
+                <h2>Recommendation</h2>
+                <hr />
+                <ul>
+                  <div *ngFor="let item of cvForms[item]" class="cover">
+                    <div class="row">
+                      <div class="col-10">
 
-                            <li>
-                              <h5 *ngIf="item.referrerTitle" style="display: inline-block;font-style: normal;">{{item.referrerTitle}}&nbsp;</h5>
-                              <h5 *ngIf="item.referrerName" style="display: inline-block;font-style: normal;">{{item.referrerName}}</h5>
-                              <h6 *ngIf="item.description">{{item.description}}</h6>
-                              <h6 *ngIf="item.media">
-                                <a href="#" (click)="clickURL(item.media)">
-                                  File
+                        <li>
+                          <h5 *ngIf="item.referrerTitle" style="display: inline-block;font-style: normal;">
+                            {{item.referrerTitle}}&nbsp;</h5>
+                          <h5 *ngIf="item.referrerName" style="display: inline-block;font-style: normal;">
+                            {{item.referrerName}}</h5>
+                          <h6 *ngIf="item.description">{{item.description}}</h6>
+                          <h6 *ngIf="item.media">
+                            <div class="collapse" [id]="'collapseFileList1'+item.id">
+                              <ng-container *ngFor="let file of fileService.toFileList(item.media)">
+                                <a href="#" (click)="clickURL(file.url)">
+                                  {{file.name}}
                                 </a>
-                              </h6>
+                                <br>
+                              </ng-container>
+                            </div>
 
-                            </li>
-                          </div>
+                          </h6>
 
-                        </div>
+                        </li>
                       </div>
-                    </ul>
+                      <div class="col-2">
+                        <ng-container *ngIf="item.media">
+                          <button class="btn add-btn a-right" type="button" data-toggle="collapse"
+                            [attr.data-target]="'#collapseFileList1'+item.id" aria-expanded="false"
+                            aria-controls="collapseFileList">
+                            <i class="fa fa-paperclip" aria-hidden="true"></i>
+                          </button>
+                        </ng-container>
+                      </div>
+
+                    </div>
                   </div>
+                </ul>
+              </div>
             </ng-container>
           </ng-template>
         </ng-template>
@@ -409,6 +554,7 @@
   </nz-footer>
 </nz-layout>
 
-<nz-modal [(nzVisible)]="isVisible" nzTitle="Access denial notice" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" nzClosable="false">
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Access denial notice" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"
+  nzClosable="false">
   <p>{{errorMessage}}</p>
 </nz-modal>

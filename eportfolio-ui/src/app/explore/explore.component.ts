@@ -155,7 +155,6 @@ export class ExploreComponent implements OnInit {
         }
         cv['photo'] = this.avartarUrl
         this.userDatas.push(cv);
-        // console.log(cv)
       }
       this.pageNum = result['number'];
       this.pageSize = result['size'];
