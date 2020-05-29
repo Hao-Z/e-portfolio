@@ -15,7 +15,7 @@ export class CvShowComponent implements OnInit {
 
   cvForms: Cv;
   cvItems: Array<string> = this.modalService.getKeys(); 
-  avartarUrl: string = "assets/untitled.png" 
+  avartarUrl: string = "../../assets/untitled.png" 
   errorMessage: string;
 
   constructor(
