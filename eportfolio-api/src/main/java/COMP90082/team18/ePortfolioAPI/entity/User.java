@@ -36,7 +36,7 @@ public class User {
     private String lastName;
     @Column(length = 2048)
     private String headline;
-    private String industry;
+    private Integer industry;
     private Integer gender;
     private LocalDate birthday;
     private String country;

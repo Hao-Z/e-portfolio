@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @EqualsAndHashCode(callSuper = false)
 public class IntroductionDTO extends DTO {
     private Long id;
+    private String username;
     private String firstName;
     private String lastName;
     private String headline;

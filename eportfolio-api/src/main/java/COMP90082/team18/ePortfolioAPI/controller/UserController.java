@@ -62,7 +62,7 @@ public class UserController {
 
     @GetMapping(value = "/explore/filters")
     public Page<IntroductionDTO> filterUsers(@RequestParam Integer pageNum, @RequestParam Integer pageSize,
-                                             @Nullable @RequestParam("industry[]") String[] industry,
+                                             @Nullable @RequestParam("industry[]") Integer[] industry,
                                              @Nullable @RequestParam("gender[]") Integer[] gender,
                                              @Nullable @RequestParam String orders,
                                              @Nullable @RequestParam boolean ascending) {
@@ -139,6 +139,18 @@ public class UserController {
     public Setting patchSetting(@PathVariable Long id, @RequestBody Map<String, Object> updateFields){
         User result = userService.patchUser(id, updateFields);
         return modelMapper.map(result, Setting.class);
+    }
+
+    @GetMapping("/admin/user")
+    public Page<IntroductionDTO> searchUser(@RequestParam String username, @RequestParam Integer pageNum, @RequestParam Integer pageSize){
+        Page<User> p = userService.searchUser(username, pageNum, pageSize);
+        List<User> l = p.getContent();
+        List<IntroductionDTO> nl = new ArrayList<>();
+        for(User u : l){
+            IntroductionDTO i = modelMapper.map(u, IntroductionDTO.class);
+            nl.add(i);
+        }
+        return new PageImpl<>(nl, p.getPageable(), p.getTotalElements());
     }
 
     @DeleteMapping("/admin/user")
