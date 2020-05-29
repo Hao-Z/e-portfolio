@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<nz-content>
+<nz-content>
+  <div align="right">
+    <table>
+      <td>
+        <label>
+          Search:
+        </label>
+      </td>
+      <td>
+        <nz-input-group nzSearch [nzAddOnAfter]="search_user">
+          <input type="text" nz-input placeholder="Input username" [(ngModel)]="searchValue"/>
+        </nz-input-group>
+        <ng-template #search_user >
+          <button (click)="search(searchValue)" nz-button nzType="primary" nzSearch><i nz-icon nzType="search"></i></button>
+        </ng-template>
+      </td>
+    </table>
+  </div>
+</nz-content>
+
+<div *ngFor="let userData of userDatas" class="inner-content">
+  <div class="card-body">
+    <div>
+      <div *ngIf="!isCollapsed">
+        <div nz-row>
+          <div nz-col nzSpan="8">
+              <nz-avatar nzIcon="user" [nzSrc]="userData.photo" [nzShape]="'circle'" class="picture picbutt">
+              </nz-avatar>
+          </div>
+
+          <div nz-col nzSpan="12">
+            <a  class="nav-link" (click)="getLink(userData.id)">
+            <h2 *ngIf="userData.firstName" style="display: inline-block;">{{userData.firstName}}&nbsp;</h2>
+            <h2 *ngIf="userData.lastName" style="display: inline-block;">{{userData.lastName}}</h2>
+            <span>{{userData.industry | cvData:"industry"}}</span>
+            <h5>{{userData.username}}</h5>
+            <hr *ngIf="userData.firstName || userData.lastName || userData.headline || userData.industry">
+            <p>{{userData.region}}</p>
+            <p>{{userData.email}}</p>
+            <p>{{userData.phone}}</p>
+            <div class="square"></div>
+            </a>
+          </div>
+          <div nz-col nzSpan="1" nzOffset="3">
+            <button
+              nz-popconfirm
+              nzPopconfirmTitle="Are you sure to delete this user?"
+              nzOkText="ok"
+              nzCancelText="cancel"
+              (nzOnConfirm)="deleteUser(userData.id)"
+              class="btn btn-danger" type="button" style="color: white;">
+              <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="isCollapsed">
+        <div nz-row>
+          <div nz-col nzSpan="8">
+            <nz-avatar nzIcon="user" [nzSrc]="userData.photo" [nzShape]="'circle'" class="picture picbutt" style="height: 80px;width: 80px;">
+            </nz-avatar>
+          </div>
+          <div nz-col nzSpan="12">
+            <a  class="nav-link" (click)="getLink(userData.id)">
+            <h2>{{userData.firstName +" " + userData.lastName}}</h2>
+              <h5>{{userData.username}}</h5>
+            <hr>
+            <p style="color: #0068A7;">{{userData.industry | cvData:"industry"}}</p>
+            </a>
+          </div>
+          <div nz-col nzSpan="1" nzOffset="3">
+            <button
+              nz-popconfirm
+              nzPopconfirmTitle="Are you sure to delete this user?"
+              nzOkText="ok"
+              nzCancelText="cancel"
+              (nzOnConfirm)="deleteUser(userData.id)"
+              class="btn btn-danger" type="button" style="color: white;">
+              <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br />
+<div align="center">
+  <nz-pagination *ngIf="totalPage!=1" (nzPageIndexChange)="changePage($event)" [nzPageIndex]=pageNum+1
+                 [nzTotal]=totalPage*10 nzShowQuickJumper></nz-pagination>
+</div>
+<br />
+</nz-content>
