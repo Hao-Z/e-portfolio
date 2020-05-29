@@ -17,7 +17,7 @@
             <i nz-icon nzType="search"></i>
           </ng-template>
         </nz-content>
-        <nz-content style="overflow-y: auto;max-height: 300px">
+        <nz-content style="overflow-y: auto;max-height: 300px; margin-left: 0; width: 90%">
           <nz-tree [nzHideUnMatched]="true" [nzData]="nodes" [nzSearchValue]="searchValue" nzCheckable nzMultiple
             [(nzCheckedKeys)]="CheckedIndustry" (nzCheckBoxChange)="nzCheckIndustry($event)">
           </nz-tree>
@@ -82,7 +82,7 @@
               <div class="col-16">
                 <h2 *ngIf="userData.firstName" style="display: inline-block;">{{userData.firstName}}&nbsp;</h2>
                 <h2 *ngIf="userData.lastName" style="display: inline-block;">{{userData.lastName}}</h2>
-                <span>{{userData.industry}}</span>
+                <span>{{userData.industry | cvData:"industry"}}</span>
                 <h5>{{userData.headline}}</h5>
                 <hr *ngIf="userData.firstName || userData.lastName || userData.headline || userData.industry">
                 <p>{{userData.region}}</p>
@@ -104,7 +104,7 @@
               <div>
                 <h2>{{userData.firstName +" " + userData.lastName}}</h2>
                 <hr>
-                <p style="color: #0068A7;">{{userData.industry}}</p>
+                <p style="color: #0068A7;">{{userData.industry | cvData:"industry"}}</p>
               </div>
             </div>
           </div>

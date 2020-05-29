@@ -6,12 +6,12 @@
   <hr />
   <div *ngFor="let item of data" class="cover">
     <div class="row">
-      <div class="col-10">
+      <div class="col-8">
         <h5 *ngIf="item.title" style="display: inline-block;">{{item.title}}&nbsp;</h5>
         <h5 *ngIf="item.companyName" style="display: inline-block;">at<strong>&nbsp;{{item.companyName}}&nbsp;</strong></h5>
         <span *ngIf="item.industry">{{item.industry}}</span>
         <br *ngIf="item.title || item.industry || item.companyName">
-        <p *ngIf="item.employmentType" style="display: inline-block;">{{item.employmentType}}&nbsp;&nbsp;</p>
+        <p *ngIf="item.employmentType" style="display: inline-block;">{{item.employmentType | cvData: 'emplogymentType'}}&nbsp;&nbsp;</p>
         <p *ngIf="item.startDate" style="display: inline-block;">{{item.startDate}}&nbsp;</p>
         <p *ngIf="!item.isCurrentWork && item.endDate" style="display: inline-block;">to {{item.endDate}}</p>
         <p *ngIf="item.isCurrentWork" style="display: inline-block;">until {{"Now"}}</p>
@@ -19,16 +19,32 @@
         
         <h6 *ngIf="item.description">{{item.description}}&nbsp;&nbsp;</h6>
         <h6 *ngIf="item.media">
-          <a href="#" (click)="clickURL(item.media)">
-            File
-          </a>
+          <div class="collapse" [id]="'collapseFileList1'+item.id">
+            <ng-container *ngFor="let file of fileService.toFileList(item.media)">
+              <a href="#" (click)="clickURL(file.url)">
+                {{file.name}}
+              </a>
+              <br>
+            </ng-container>
+          </div>
         </h6>
       </div>
-      <div class="col-2">
-        <button class="btn add-btn a-right" (click)="deleteForm(item.id)" type="button">
+      <div class="col-4">
+        <button 
+          nz-popconfirm
+          nzPopconfirmTitle="Are you sure to delete this item?"
+          nzOkText="ok"
+          nzCancelText="cancel"
+          (nzOnConfirm)="deleteForm(item.id)"
+          class="btn add-btn a-right" type="button" style="color: red;">
           <i class="fa fa-trash-o" aria-hidden="true"></i></button>
         <button class="btn add-btn a-right" (click)="editForm(item)" type="button">
           <i class="fa fa-pencil" aria-hidden="true"></i></button>
+        <ng-container *ngIf="item.media">
+          <button class="btn add-btn a-right" type="button" data-toggle="collapse" [attr.data-target]="'#collapseFileList1'+item.id" aria-expanded="false" aria-controls="collapseFileList">
+            <i class="fa fa-paperclip" aria-hidden="true"></i>
+          </button>
+        </ng-container>
       </div>
     </div>
     <br>

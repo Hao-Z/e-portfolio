@@ -1,0 +1,174 @@
+.app-layout {
+  height: 100vh;
+}
+
+nz-header {
+  position: fixed;
+  width: 100%;
+}
+
+.menu-sidebar {
+  position: fixed;
+  min-height: 100vh;
+  background: #ffffff;
+}
+
+.header-trigger {
+  height: 64px;
+  padding: 20px 24px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all .3s, padding 0s;
+}
+
+.trigger:hover {
+  color: #1890ff;
+}
+
+.sidebar-logo {
+  position: relative;
+  height: 64px;
+  padding-left: 24px;
+  overflow: hidden;
+  line-height: 64px;
+  background: #001529;
+  transition: all .3s;
+}
+
+.sidebar-logo img {
+  display: inline-block;
+  height: 32px;
+  width: 32px;
+  vertical-align: middle;
+}
+
+.sidebar-logo h1 {
+  display: inline-block;
+  margin: 0 0 0 20px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
+  vertical-align: middle;
+}
+
+nz-header {
+  padding: 0;
+  width: 100%;
+  z-index: 2;
+}
+
+.app-header {
+  position: relative;
+  height: 64px;
+  padding: 0;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+}
+
+nz-content {
+  margin: 24px;
+}
+
+.inner-content {
+  padding: 8px;
+  background: transparent;
+  height: 62%;
+}
+
+nz-card {
+  margin-right: 80px;
+  height: auto;
+  box-shadow: 10px 5px 5px grey;
+}
+
+.card-body {
+
+  border: 1px;
+  border-style: solid;
+  border-color: #e6e6e6;
+  box-shadow: 10px 5px 5px grey;
+  border-radius: 5px;
+  position: relative;
+
+  width: auto;
+  max-width: 800px;
+  height: auto;
+  padding: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  background-color: white;
+  letter-spacing: 1px;
+  /* color: #666; */
+  transition-duration: 1s;
+  border-radius: 15px;
+  overflow: hidden;
+
+}
+
+.picture {
+  width: 140px;
+  height: 140px;
+  margin-left: 0px;
+  margin-top: 0px;
+}
+
+.picbutt {
+  FILTER: alpha(opacity=0);
+  background-color: transparent;
+  border: 0;
+  outline: none;
+  float: left;
+}
+
+#div1,
+#div2 {
+  display: inline-block;
+}
+
+#div1 {
+  height: 300px;
+  width: 10px;
+  background-color: red;
+}
+
+#div3 {
+  background-color: var(--primary-color);
+  height: 100%;
+  float: right;
+  width: 30px;
+}
+
+.card-body h2 {
+  font-size: 28px;
+  font-family: NotoSerif;
+}
+
+.card-body span {
+  padding: 10px;
+  font-size: 16px;
+  color: var(--primary-color);
+  font-family: NotoSerif;
+}
+
+
+/* .col-md-6{
+  color: rgba(255, 255, 255, 0.76);
+} */
+.card-body h5 {
+  font-style: oblique;
+  font-size: 20px;
+  word-spacing: 2px;
+  font-family: NotoSerif;
+}
+
+.card-body p {
+  font-size: 15px;
+  font-weight: 300;
+  color: grey;
+  font-family: Calibri;
+  line-height: 16px;
+}
+
+

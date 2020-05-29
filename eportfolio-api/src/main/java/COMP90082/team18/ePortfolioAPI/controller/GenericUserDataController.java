@@ -31,9 +31,9 @@ public class GenericUserDataController {
     @Autowired
     private GenericUserDataService genericUserDataService;
     @Autowired
-    private Set<Class<? extends GenericUserData>> userDataEntityClasses;
+    private List<Class<? extends GenericUserData>> userDataEntityClasses;
     @Autowired
-    private Set<Class<? extends DTO>> userDataDTOClasses;
+    private List<Class<? extends DTO>> userDataDTOClasses;
 
     @GetMapping("/cv")
     public Map<String, Object> getCV(@PathVariable Long id) {

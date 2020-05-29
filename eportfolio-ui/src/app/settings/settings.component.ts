@@ -21,11 +21,15 @@ export class SettingsComponent implements OnInit {
 
   checkbox;
   updatePassword: FormGroup;
-  update = false;
+  update;
+  message : any;
+  admin_account: boolean = false;
   constructor(private pop: NzMessageService, private http: HttpClient, private router: Router,private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     refreshJwt();
+    this.admin_account = globals.username == 'admin';
+    this.update = this.admin_account;
     this.getSecurity();
     this.updatePassword = this.formBuilder.group({
       "Current password" : ['',Validators.required],
@@ -40,7 +44,7 @@ export class SettingsComponent implements OnInit {
       headers : new HttpHeaders({'content-Type': 'application/json',
         'Authorization': jwt})
     };
-    this.checkbox = {'isPublic':true};
+    this.checkbox = {'isPublic':false};
     this.http.get<any>(globals.backend_path + "users/" + userID + "/security",HttpOptions).subscribe((result:any)=>{
       this.checkbox['isPublic'] = result['isPublic'];
     });
@@ -77,7 +81,6 @@ export class SettingsComponent implements OnInit {
     };
   }
 
-  message : any;
   updatePW(data) {
     refreshJwt();
     const HttpOptions = {
@@ -97,7 +100,7 @@ export class SettingsComponent implements OnInit {
         "New password" : ['',[Validators.required, Validators.minLength(6)]],
         "Confirm password" : ['',[Validators.required, this.matchPassword('New password')]],
       });
-      this.update = !this.update
+      this.swapUpdate();
     },error => {
       this.updatePassword = this.formBuilder.group({
         "Current password" : ['',Validators.required],
@@ -116,5 +119,11 @@ export class SettingsComponent implements OnInit {
       "New password" : ['',[Validators.required, Validators.minLength(6)]],
       "Confirm password" : ['',[Validators.required, this.matchPassword('New password')]],
     });
+  }
+
+  swapUpdate() {
+    if(!this.admin_account){
+      this.update = !this.update
+    }
   }
 }

@@ -7,17 +7,12 @@
 package COMP90082.team18.ePortfolioAPI.service.serviceImplement;
 
 import COMP90082.team18.ePortfolioAPI.service.FileService;
-import COMP90082.team18.ePortfolioAPI.util.ApplicationContextProvider;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.Null;
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;

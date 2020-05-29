@@ -39,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
                 .antMatchers(HttpMethod.POST, SIGN_UP_URL, SIGN_IN_URL).permitAll().
                 // tbc. whether to allow download without authorization check
-                antMatchers(HttpMethod.GET, "/users/*/cv", "/download/**").permitAll().
+                antMatchers(HttpMethod.GET, "/users/*/cv", "/download/**", "/explore/filters").permitAll().
                 anyRequest().authenticated()
             .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))

@@ -9,12 +9,12 @@ import { HomeComponent } from './home/home.component';
 import { ReactiveFormsModule } from "@angular/forms";
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from '@angular/common/http';
-import { NgZorroAntdModule } from "ng-zorro-antd";
+import {en_US, NgZorroAntdModule, NZ_I18N} from "ng-zorro-antd";
 import { ExploreComponent } from './explore/explore.component';
 import { IconsProviderModule } from './icons-provider.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
-import zh from '@angular/common/locales/zh';
+import en from '@angular/common/locales/en';
 import { MyAccountComponent } from "./my-account/my-account.component";
 import { SettingsComponent } from "./settings/settings.component";
 import { CvComponent } from './cv/cv.component';
@@ -38,9 +38,9 @@ import { ModalPublicationComponent } from './cv-form/modal-publication/modal-pub
 import { ModalLanguageComponent } from './cv-form/modal-language/modal-language.component';
 import { ModalRecommendationComponent } from './cv-form/modal-recommendation/modal-recommendation.component';
 import { PropertiesPipe } from "./core/properties-pipe";
+import { DataPipe } from "./core/data-pipe";
 import { FooterComponent } from "./footer/footer.component";
 import { CvShowComponent } from './cv-show/cv-show.component';
-import { FileDownloadExample } from './filedownloadExample/filedownload';
 import { AboutComponent } from "./cv/cv-card/about.component"
 import { WorkExperienceComponent } from "./cv/cv-card/work-experience.component"
 import { VolunteerExperienceComponent } from "./cv/cv-card/volunteer-experience.component"
@@ -56,10 +56,11 @@ import { RecommendationComponent } from "./cv/cv-card/recommendation.component"
 import { FormlyFileFieldType } from './dynamic-form/file.type';
 import { ShareLinkComponent } from './cv/share-link/share-link.component';
 import { EditAvarterComponent } from './cv/edit-avarter/edit-avarter.component';
+import {ManageUsersComponent} from "./manage-users/manage-users.component";
 
 
 
-registerLocaleData(zh);
+registerLocaleData(en);
 
 export function patternValidationMessage(err, field: FormlyFieldConfig) {
   if (field.key === 'phoneNumber') {
@@ -70,6 +71,8 @@ export function patternValidationMessage(err, field: FormlyFieldConfig) {
     return 'Please provide a date with valid format!'
   } else if (field.key === 'grade') {
     return 'Please provide a grade with number format! '
+  } else if (field.key === 'workingYear') {
+    return 'Please provide a number no longer than 3 digits! '
   }
 }
 
@@ -104,8 +107,8 @@ export function maxlengthValidationMessage(err, field: FormlyFieldConfig) {
     ModalLanguageComponent,
     ModalRecommendationComponent,
     PropertiesPipe,
+    DataPipe,
     FooterComponent,
-    FileDownloadExample,
     FooterComponent,
     AboutComponent,
     WorkExperienceComponent,
@@ -121,7 +124,8 @@ export function maxlengthValidationMessage(err, field: FormlyFieldConfig) {
     RecommendationComponent,
     FormlyFileFieldType,
     ShareLinkComponent,
-    EditAvarterComponent
+    EditAvarterComponent,
+    ManageUsersComponent
   ],
   imports: [
     BrowserModule,
@@ -150,7 +154,8 @@ export function maxlengthValidationMessage(err, field: FormlyFieldConfig) {
     NgbModule
   ],
   providers: [
-    NgbActiveModal
+    NgbActiveModal,
+    { provide: NZ_I18N, useValue: en_US }
   ],
   bootstrap: [AppComponent],
   entryComponents: [

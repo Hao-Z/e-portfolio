@@ -63,10 +63,10 @@ public class UserController {
     @GetMapping(value = "/explore/filters")
     public Page<IntroductionDTO> filterUsers(@RequestParam Integer pageNum, @RequestParam Integer pageSize,
                                              @Nullable @RequestParam("industry[]") String[] industry,
-                                             @Nullable @RequestParam Integer gender,
-                                             @Nullable @RequestParam String order,
+                                             @Nullable @RequestParam("gender[]") Integer[] gender,
+                                             @Nullable @RequestParam String orders,
                                              @Nullable @RequestParam boolean ascending) {
-        Page<User> p = userService.filterUsers(pageNum, pageSize, industry, gender, order, ascending);
+        Page<User> p = userService.filterUsers(pageNum, pageSize, industry, gender, orders, ascending);
         List<User> l = p.getContent();
         List<IntroductionDTO> nl = new ArrayList<>();
         for(User u : l){
@@ -140,4 +140,10 @@ public class UserController {
         User result = userService.patchUser(id, updateFields);
         return modelMapper.map(result, Setting.class);
     }
+
+    @DeleteMapping("/admin/user")
+    public void deleteUser(@RequestParam Long id){
+        userService.deleteUser(id);
+    }
+
 }

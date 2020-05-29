@@ -4,6 +4,7 @@ import { ModalService } from 'src/app/core/services/modal.service';
 import { ApiService } from 'src/app/core/services/api.service';
 import { userID } from 'src/global';
 import { AlertService } from 'src/app/core/services/alert.service';
+import { FileService } from 'src/app/core/services/file.service';
 
 @Component({
     selector: 'card-we',
@@ -16,7 +17,8 @@ export class WorkExperienceComponent {
     constructor(
         public modalService: ModalService,
         private apiService: ApiService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        public fileService: FileService
     ) { }
 
     @Input() classname: string

@@ -4,27 +4,42 @@
     <i class="fa fa-plus" aria-hidden="true"></i></button>
   <h2>{{title}}</h2>
   <hr />
-  <ul>
-    <div *ngFor="let item of data" class="cover">
-      <div class="row">
-        <div class="col-10">
-          <li>
-            <a *ngIf="item.link" href="#" (click)="clickURL(item.link)">{{item.link}}</a>
+  <div *ngFor="let item of data" class="cover">
+    <ul>
+      <li>
+        <div class="row">
+          <div class="col-8">
+            {{item.title + ": "}}<a *ngIf="item.link" href="#" (click)="clickURL(item.link)">{{item.link}}</a>
             <h6 *ngIf="item.media">
-              <a href="#" (click)="clickURL(item.media)">
-                File
-              </a>
+              <div class="collapse" [id]="'collapseFileList1'+item.id">
+                <ng-container *ngFor="let file of fileService.toFileList(item.media)">
+                  <a href="#" (click)="clickURL(file.url)">
+                    {{file.name}}
+                  </a>
+                  <br>
+                </ng-container>
+              </div>
             </h6>
-          </li>
+          </div>
+          <div class="col-4">
+            <button 
+              nz-popconfirm
+              nzPopconfirmTitle="Are you sure to delete this item?"
+              nzOkText="ok"
+              nzCancelText="cancel"
+              (nzOnConfirm)="deleteForm(item.id)"
+              class="btn add-btn a-right" type="button" style="color: red;">
+              <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+            <button class="btn add-btn a-right" (click)="editForm(item)" type="button">
+              <i class="fa fa-pencil" aria-hidden="true"></i></button>
+            <ng-container *ngIf="item.media">
+              <button class="btn add-btn a-right" type="button" data-toggle="collapse" [attr.data-target]="'#collapseFileList1'+item.id" aria-expanded="false" aria-controls="collapseFileList">
+                <i class="fa fa-paperclip" aria-hidden="true"></i>
+              </button>
+            </ng-container>
+          </div>
         </div>
-        <div class="col-2">
-          <button class="btn add-btn a-right" (click)="deleteForm(item.id)" type="button"
-            *ngIf="item.link || item.media">
-            <i class="fa fa-trash-o" aria-hidden="true"></i></button>
-          <button class="btn add-btn a-right" (click)="editForm(item)" type="button" *ngIf="item.link || item.media">
-            <i class="fa fa-pencil" aria-hidden="true"></i></button>
-        </div>
-      </div>
-    </div>
-  </ul>
+      </li>
+    </ul>
+  </div>
 </div>

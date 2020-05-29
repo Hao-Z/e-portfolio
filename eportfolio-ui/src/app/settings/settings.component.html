@@ -2,11 +2,11 @@
 <nz-layout style="background-color: transparent">
   <div class="row" style="margin-top: 50px">
     <div class="col-md-6 offset-md-3 col-xs-12">
-          <nz-switch [ngModel]="!checkbox['isPublic']" nzCheckedChildren="On" nzUnCheckedChildren="Off"
+          <nz-switch  *ngIf="!admin_account" [ngModel]="checkbox['isPublic']" nzCheckedChildren="On" nzUnCheckedChildren="Off"
             (click)="checkbox['isPublic'] =! checkbox['isPublic'];updateSecurity()"></nz-switch>
-          <label style="color: transparent">_</label>
-          <label>Make the CV private</label>
-      <br/><br/>
+          <label *ngIf="!admin_account" style="color: transparent">_</label>
+          <label *ngIf="!admin_account" >Make the CV public</label>
+      <br *ngIf="!admin_account"/><br *ngIf="!admin_account"/>
       <form [formGroup]="updatePassword">
         <div class="form-group" *ngIf="update">
           <nz-form-label>Current password</nz-form-label>
@@ -42,16 +42,16 @@
             </div>
           </div>
         </div>
-        <button type="button" class="btn btn-primary" *ngIf="!update" (click)="update = !update">Change
+        <button type="button" class="btn btn-primary" *ngIf="!update" (click)="swapUpdate()">Change
           password</button>
 
-        <nz-row>
+        <nz-row *ngIf="update">
           <div nz-col nzSpan="8">
-            <button type="button" class="btn btn-primary" *ngIf="update" [disabled]="updatePassword.invalid"
+            <button type="button" class="btn btn-primary"  [disabled]="updatePassword.invalid"
               (click)="updatePW(updatePassword.value)">Save</button>
           </div>
           <div align="right">
-            <a [routerLink] *ngIf="update" (click)="update = !update;cancel()" style="horiz-align:right">Cancel</a>
+            <a [routerLink] (click)="swapUpdate();cancel()" style="horiz-align:right">Cancel</a>
           </div>
         </nz-row>
 

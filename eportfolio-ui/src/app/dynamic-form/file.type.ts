@@ -43,7 +43,7 @@ export class FormlyFileFieldType extends FieldType{
       });
       this.fileList = fileList
       this.setPorperty();
-      alert("Upload Succeed!")
+      // alert("Upload Succeed!")
     }
   }
 

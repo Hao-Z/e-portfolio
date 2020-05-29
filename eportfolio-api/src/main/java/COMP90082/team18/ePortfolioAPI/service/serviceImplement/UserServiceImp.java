@@ -5,12 +5,9 @@ import COMP90082.team18.ePortfolioAPI.repository.UserRepository;
 import COMP90082.team18.ePortfolioAPI.security.JWTMethod;
 import COMP90082.team18.ePortfolioAPI.service.UserService;
 import COMP90082.team18.ePortfolioAPI.util.CustomizedSpecification;
-import org.hibernate.query.internal.NativeQueryImpl;
-import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import COMP90082.team18.ePortfolioAPI.DTO.PasswordDTO;
 import COMP90082.team18.ePortfolioAPI.util.ObjectMethod;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -21,11 +18,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.annotation.Resource;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import java.util.List;
 import java.util.Map;
 
@@ -53,29 +45,32 @@ public class UserServiceImp implements UserService {
         return userRepository.findByUsername(user.getUsername()) == null;
     }
 
-    public Page<User> filterUsers(Integer page, Integer size, @Nullable String[] industry, Integer gender,
-                                  @Nullable String order, @Nullable boolean ascending) {
-        Specification<User> spec = null;
+    public Page<User> filterUsers(Integer page, Integer size, @Nullable String[] industry, Integer[] gender,
+                                  @Nullable String orders, @Nullable boolean ascending) {
+        Specification<User> spec = new CustomizedSpecification<>("isPublic", "=", true);
 
         if (industry != null) {
+            Specification<User> s = null;
             for (String item : industry) {
-                Specification<User> s = new CustomizedSpecification<>("industry", "=", item);
-                if (spec == null) spec = s;
-                else spec = spec.or(s);
+                Specification<User> ns = new CustomizedSpecification<>("industry", "=", item);
+                s = (s == null) ? ns : s.or(ns);
             }
+            spec = spec.and(s);
         }
 
         if (gender != null) {
-            Specification<User> s = new CustomizedSpecification<>("gender", "=", gender);
-            if (spec == null) spec = s;
-            else spec = spec.and(s);
+            Specification<User> s = null;
+            for (Integer item : gender) {
+                Specification<User> ns = new CustomizedSpecification<>("gender", "=", item);
+                s = (s == null) ? ns : s.or(ns);
+            }
+            assert spec != null;
+            spec = spec.and(s);
         }
 
-        System.out.println(ascending);
-
         Sort.Direction direction = ascending ? Sort.Direction.ASC : Sort.Direction.DESC;
-        Page<User> result = (order == null) ? userRepository.findAll(spec, PageRequest.of(page, size)) :
-                userRepository.findAll(spec, PageRequest.of(page, size, Sort.by(direction, order)));
+        Page<User> result = (orders == null) ? userRepository.findAll(spec, PageRequest.of(page, size)) :
+                userRepository.findAll(spec, PageRequest.of(page, size, Sort.by(direction, orders)));
 
         return result;
     }
@@ -122,4 +117,15 @@ public class UserServiceImp implements UserService {
     public String createSharedLink() {
         return JWTMethod.createSharedLink((Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     }
+
+    @Override
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public void deleteUser(Long id){
+        User targetUser = getUser(id);
+        if(targetUser.isAdmin()){
+            throw new IllegalArgumentException("Cannot delete admin.");
+        }
+        userRepository.delete(targetUser);
+    }
+
 }

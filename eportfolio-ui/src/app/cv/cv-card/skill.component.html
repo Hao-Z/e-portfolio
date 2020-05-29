@@ -7,14 +7,20 @@
   <ul>
     <div *ngFor="let item of data" class="cover">
       <div class="row">
-        <div class="col-10">
+        <div class="col-8">
           <h6>
 
             <li *ngIf="item.skillName">{{item.skillName}}</li>
           </h6>
         </div>
-        <div class="col-2">
-          <button class="btn add-btn a-right" (click)="deleteForm(item.id)" type="button">
+        <div class="col-4">
+          <button 
+            nz-popconfirm
+            nzPopconfirmTitle="Are you sure to delete this item?"
+            nzOkText="ok"
+            nzCancelText="cancel"
+            (nzOnConfirm)="deleteForm(item.id)"
+            class="btn add-btn a-right" type="button" style="color: red;">
             <i class="fa fa-trash-o" aria-hidden="true"></i></button>
           <button class="btn add-btn a-right" (click)="editForm(item)" type="button">
             <i class="fa fa-pencil" aria-hidden="true"></i></button>
