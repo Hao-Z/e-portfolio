@@ -8,6 +8,7 @@ import { SettingsComponent } from "./settings/settings.component";
 import { LayoutComponent } from "./layout/layout.component";
 import { CvComponent } from "./cv/cv.component";
 import { CvShowComponent} from "./cv-show/cv-show.component"
+import {ManageUsersComponent} from "./manage-users/manage-users.component";
 
 const routes: Routes = [
   {
@@ -45,6 +46,11 @@ const routes: Routes = [
     path: 'security',
     component: LayoutComponent,
     children: [{ path: '', component: SettingsComponent }]
+  },
+  {
+    path: 'manage_users',
+    component: LayoutComponent,
+    children: [{ path: '', component: ManageUsersComponent }]
   }
 
 ];
