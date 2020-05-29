@@ -56,7 +56,12 @@ export class CvComponent implements OnInit{
         this.cvForms = result;
         this.setAvartar();
         console.log("Cv get response:", JSON.stringify(result));
-    })
+        },
+        (err)=>{
+          if (err.message) {
+            this.alertService.error(err.message)
+          }
+        })
   }
 
   editForm(className: string): void {

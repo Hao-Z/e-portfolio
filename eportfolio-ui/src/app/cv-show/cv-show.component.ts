@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UniqueApiService } from '../core/services/unique-api.service';
 import { Cv } from '../core/models/cv.model';
 import { ModalService } from '../core/services/modal.service';
@@ -16,11 +16,13 @@ export class CvShowComponent implements OnInit {
   cvForms: Cv;
   cvItems: Array<string> = this.modalService.getKeys(); 
   avartarUrl: string = "assets/untitled.png" 
+  errorMessage: string;
 
   constructor(
     private route: ActivatedRoute,
     public modalService: ModalService,
-    private apiService: UniqueApiService
+    private apiService: UniqueApiService,
+    private router: Router
     ) { }
 
   ngOnInit(): void {
@@ -67,7 +69,15 @@ export class CvShowComponent implements OnInit {
         this.cvForms = result;
         this.setAvartar();
         console.log("Cv get response:", JSON.stringify(result))
-    })
+        },
+        (err)=>{
+          if (err.code == 403) {
+            this.errorMessage = "Sorry, you are accessing a private account, please click the confirm button to return to the Explore page!"
+          } else {
+            this.errorMessage = err.message
+          }
+          this.showModal()
+        })
   }
 
   setAvartar(): void {
@@ -76,13 +86,19 @@ export class CvShowComponent implements OnInit {
     }
   }
 
-  // getCvFromID() {
-  //   this.apiService.get(userID, "cv")
-  //     .subscribe((result: Cv) => {
-  //       this.cvForms = result;
-  //       console.log("Cv get response:", JSON.stringify(result))
-  //   })
-  // }
+  isVisible = false;
 
+  showModal(): void {
+    this.isVisible = true;
+  }
+
+  handleOk(): void {
+    this.isVisible = false;
+    this.router.navigateByUrl('/explore');
+  }
+
+  handleCancel(): void {
+    this.isVisible = false;
+  }
 
 }
