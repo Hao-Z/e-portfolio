@@ -172,33 +172,3 @@ nz-card {
 }
 
 
-/* animation */
-
-.card-body:hover {
-  transform: translateY(0px) translateX(-40px);
-  box-shadow: 10px 10px 30px rgba(50, 50, 50, 0.3);
-  background-color: #fff;
-
-}
-
-
-.card-body:hover .square {
-  transform-origin: 30% 30%;
-  transform: scale(1.8);
-  transition-duration: 1s;
-  overflow: hidden;
-  background-color: var(--primary-color);
-  visibility: visible;
-}
-
-.square {
-  width: 15px;
-  height: 100%;
-  right: 0px;
-  bottom: 0px;
-  visibility: hidden;
-  border-radius: 20%;
-  position: absolute;
-  transition-duration: 0.5s;
-  /* border: solid 4px var(--primary-color); */
-}

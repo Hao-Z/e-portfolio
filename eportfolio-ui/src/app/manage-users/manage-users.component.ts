@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {FormGroup} from "@angular/forms";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import * as globals from "../../global";
+import {fromEvent} from "rxjs";
 
 @Component({
   selector: 'app-manage-users',
@@ -16,32 +16,36 @@ export class ManageUsersComponent implements OnInit {
   pageNum: number = 0;
   pageSize: number = 10;
   totalPage: number = 1;
-  CheckedIndustry: any = null;
-  CheckedGender: any = null;
-  order: string = null;
-  Ascending : boolean;
-  avartarUrl: string = "assets/untitled.png"
+  avartarUrl: string = "assets/untitled.png";
 
-  constructor(private http: HttpClient,) { }
+  constructor(private http: HttpClient,) {
+  }
 
   ngOnInit(): void {
     this.searchValue = '';
-    this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
+    this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.searchValue);
+    fromEvent(window,'resize').subscribe((event) => {
+      this.isCollapsed = window.innerWidth < Number(770);
+    })
   }
 
-  getLink(id: any) {
-
+  getLink(userID) {
+    var url = "cv-show?link=" + userID;
+    // window.open(url,"_self");
+    window.location.href = url;
   }
 
   changePage($event) {
-    this.getCVsData(($event-1).toString(),this.pageSize.toString(),this.CheckedIndustry,this.CheckedGender,this.order,this.Ascending);
+    this.getCVsData(($event-1).toString(),this.pageSize.toString(),this.searchValue);
   }
 
   search(val) {
-    console.log(val)
+    this.searchValue = val;
+    this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.searchValue);
+    // console.log(val)
   }
 
-  getCVsData(pageNum='0', pageSize='10', industry:string[]=null, gender:string[]=null, orders:string=null, ascending:boolean=null) {
+  getCVsData(pageNum='0', pageSize='10', userName : string = '') {
     const HttpOptions = {
       headers : new HttpHeaders({'content-Type': 'application/json'}
       )
@@ -49,21 +53,10 @@ export class ManageUsersComponent implements OnInit {
 
     //url parameters
     let para = 'pageNum='+pageNum+'&pageSize='+pageSize;
-    if(industry!=null){
-      for(let i of industry){
-        i = i.replace(' ','%20');
-        para = para+'&industry%5B%5D='+i;
-      }
+    if(userName != ''){
+      para = para + '&userName=' + userName;
     }
-    if(gender!=null){
-      for(let g of gender){
-        para = para + '&gender%5B%5D=' + g
-      }
-    }
-    if(orders!=null){
-      para = para+'&orders='+orders+'&ascending='+ascending.toString()
-    }
-
+    // this.http.get<any>(globals.backend_path + "admin/user?" + para, HttpOptions)
     this.http.get<any>(globals.backend_path + "explore/filters?" + para, HttpOptions).subscribe((result) => {
       this.userDatas = [];
       for(let cv of result['content']){
@@ -80,4 +73,9 @@ export class ManageUsersComponent implements OnInit {
       // console.log(this.userDatas)
     });
   }
+
+  deleteUser() {
+
+  }
+
 }
