@@ -22,9 +22,9 @@ export class LayoutComponent implements OnInit {
     }
 
     if(window.innerWidth < Number(770)){
-      this.width = "padding-left:64px;";
+      this.width = "padding-left:64px; min-height: 100%;";
     }else{
-      this.width = " padding-left:256px;";
+      this.width = " padding-left:256px; min-height: 100%;";
     }
     // var right = document.getElementById("right")
     // var sider = document.getElementById("sider")
@@ -35,9 +35,9 @@ export class LayoutComponent implements OnInit {
 
   changeWidth() {
     if(window.innerWidth < Number(770)){
-      this.width = "padding-left:64px";
+      this.width = "padding-left:64px; min-height: 100%;";
     }else{
-      this.width = "padding-left:256px";
+      this.width = "padding-left:256px; min-height: 100%;";
     }
   }
 
