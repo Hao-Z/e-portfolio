@@ -40,8 +40,8 @@ public class GenericUserDataController {
         Map<String, Object> result = new HashMap<>();
         result.put("introduction", userController.getIntroduction(id));
         result.put("about", userController.getAbout(id));
-        for (Class<? extends GenericUserData> x : userDataEntityClasses) {
-            String className = x.getSimpleName().toLowerCase();
+        for (Class<? extends GenericUserData> clazz : userDataEntityClasses) {
+            String className = clazz.getSimpleName().toLowerCase();
             result.put(className, getAllObjects(id, className));
         }
         return result;

@@ -1,8 +1,10 @@
 package COMP90082.team18.ePortfolioAPI.service.serviceImplement;
 
+import COMP90082.team18.ePortfolioAPI.entity.GenericUserData;
 import COMP90082.team18.ePortfolioAPI.entity.User;
 import COMP90082.team18.ePortfolioAPI.repository.UserRepository;
 import COMP90082.team18.ePortfolioAPI.security.JWTMethod;
+import COMP90082.team18.ePortfolioAPI.service.GenericUserDataService;
 import COMP90082.team18.ePortfolioAPI.service.UserService;
 import COMP90082.team18.ePortfolioAPI.util.CustomizedSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,10 @@ import javax.transaction.Transactional;
 public class UserServiceImp implements UserService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private GenericUserDataService genericUserDataService;
+    @Autowired
+    private List<Class<? extends GenericUserData>> userDataEntityClasses;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
@@ -114,7 +120,24 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public String createSharedLink() {
-        return JWTMethod.createSharedLink((Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    public String createSharedLink(Long time) {
+        return JWTMethod.createSharedLink(
+                (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal(), time);
     }
+
+    @Override
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public void deleteUser(Long id){
+        User targetUser = getUser(id);
+        if(targetUser.isAdmin()){
+            throw new IllegalArgumentException("Cannot delete admin.");
+        }
+        for (Class<? extends GenericUserData> clazz : userDataEntityClasses) {
+            for (GenericUserData data: genericUserDataService.getAllObjects(id, clazz)) {
+                genericUserDataService.deleteObject(id, data.getId(), clazz);
+            }
+        }
+        userRepository.delete(targetUser);
+    }
+
 }

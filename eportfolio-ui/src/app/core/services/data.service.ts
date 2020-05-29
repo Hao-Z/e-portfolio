@@ -8,7 +8,7 @@ export class DataService{
 
   industryList = [
     { label: 'Accounting', value : '0' },
-    { label: 'Airlines/Aviation", value:"1' },
+    { label: 'Airlines/Aviation', value:'1' },
     { label: 'Animation', value : '2' },
     { label: 'Apparel & Fashion', value : '3' },
     { label: 'Architecture & Planning', value : '4' },
@@ -150,14 +150,14 @@ export class DataService{
     { value: '4', label: 'Freelance' },
     { value: '5', label: 'Contract' },
     { value: '6', label: 'Internship' },
-    { value: '7', label: 'Apprenticeship' },      
+    { value: '7', label: 'Apprenticeship' },
   ]
 
   proficiencyList = [
     { value: '1', label: 'Elementary proficiency' },
     { value: '2', label: 'Limited working proficiency' },
     { value: '3', label: 'Professional working proficiency' },
-    { value: '4', label: 'Full professional proficiency' },      
+    { value: '4', label: 'Full professional proficiency' },
     { value: '5', label: 'Native or bilingual proficiency' }
   ]
 
@@ -173,7 +173,7 @@ export class DataService{
   getIndustryList() {
     return this.industryList
   }
-  
+
   getIndustry() {
     return of(this.industryList)
   }
