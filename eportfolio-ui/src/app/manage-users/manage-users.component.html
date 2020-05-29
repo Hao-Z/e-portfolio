@@ -35,7 +35,7 @@
             <h2 *ngIf="userData.firstName" style="display: inline-block;">{{userData.firstName}}&nbsp;</h2>
             <h2 *ngIf="userData.lastName" style="display: inline-block;">{{userData.lastName}}</h2>
             <span>{{userData.industry | cvData:"industry"}}</span>
-            <h5>{{userData.headline}}</h5>
+            <h5>{{userData.username}}</h5>
             <hr *ngIf="userData.firstName || userData.lastName || userData.headline || userData.industry">
             <p>{{userData.region}}</p>
             <p>{{userData.email}}</p>
@@ -65,6 +65,7 @@
           <div nz-col nzSpan="12">
             <a  class="nav-link" (click)="getLink(userData.id)">
             <h2>{{userData.firstName +" " + userData.lastName}}</h2>
+              <h5>{{userData.username}}</h5>
             <hr>
             <p style="color: #0068A7;">{{userData.industry | cvData:"industry"}}</p>
             </a>
