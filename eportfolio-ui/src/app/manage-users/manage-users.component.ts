@@ -18,11 +18,14 @@ export class ManageUsersComponent implements OnInit {
   pageSize: number = 10;
   totalPage: number = 1;
   avartarUrl: string = "../../assets/untitled.png";
+  edit_user_info: boolean;
+  edit_user_id : any = null;
 
   constructor(private http: HttpClient, private pop: NzMessageService) {
   }
 
   ngOnInit(): void {
+    this.edit_user_info = false;
     this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.searchValue);
     fromEvent(window,'resize').subscribe((event) => {
       this.isCollapsed = window.innerWidth < Number(770);
@@ -86,5 +89,10 @@ export class ManageUsersComponent implements OnInit {
     },error => {
       this.pop.error("Deletion failed!");
     });
+  }
+
+  getUserEditPage(id: any) {
+      this.edit_user_id = id;
+      this.edit_user_info = !this.edit_user_info;
   }
 }

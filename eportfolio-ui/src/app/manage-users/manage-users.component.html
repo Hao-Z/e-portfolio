@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<nz-content>
+<nz-content *ngIf="!edit_user_info">
 <nz-content>
   <div align="right">
     <table>
@@ -31,7 +31,8 @@
           </div>
 
           <div nz-col nzSpan="12">
-            <a  class="nav-link" (click)="getLink(userData.id)">
+            <!--            <a  class="nav-link" (click)="getLink(userData.id)">-->
+            <a  class="nav-link" (click)="getUserEditPage(userData.id)">
             <h2 *ngIf="userData.firstName" style="display: inline-block;">{{userData.firstName}}&nbsp;</h2>
             <h2 *ngIf="userData.lastName" style="display: inline-block;">{{userData.lastName}}</h2>
             <span>{{userData.industry | cvData:"industry"}}</span>
@@ -66,7 +67,8 @@
             </nz-avatar>
           </div>
           <div nz-col nzSpan="12">
-            <a  class="nav-link" (click)="getLink(userData.id)">
+<!--            <a  class="nav-link" (click)="getLink(userData.id)">-->
+            <a  class="nav-link" (click)="getUserEditPage(userData.id)">
             <h2>{{userData.firstName +" " + userData.lastName}}</h2>
               <div>
                 <p style="display: inline-block; font-size: 20px">username:</p>
@@ -97,4 +99,9 @@
                  [nzTotal]=totalPage*10 nzShowQuickJumper></nz-pagination>
 </div>
 <br />
+</nz-content>
+
+<nz-content *ngIf="edit_user_info">
+  <button nzSize="small" (click)="edit_user_info=!edit_user_info" nz-button nzType="primary"><i nz-icon nzType="left"></i>Back</button>
+  <app-cv></app-cv>
 </nz-content>
