@@ -22,6 +22,7 @@ export class ManageUsersComponent implements OnInit {
   edit_user_id : any = null;
 
   constructor(private http: HttpClient, private pop: NzMessageService) {
+    window.sessionStorage.setItem('admin_id', '1');
   }
 
   ngOnInit(): void {
@@ -92,7 +93,14 @@ export class ManageUsersComponent implements OnInit {
   }
 
   getUserEditPage(id: any) {
-      this.edit_user_id = id;
-      this.edit_user_info = !this.edit_user_info;
+    window.sessionStorage.setItem('uid',id);
+    globals.changeUID();
+    this.edit_user_info = !this.edit_user_info;
   }
+
+  Back() {
+    globals.recoverAdminID();
+    this.edit_user_info = !this.edit_user_info;
+  }
+
 }
