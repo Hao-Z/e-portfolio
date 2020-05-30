@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import * as globals from "../../global";
-import {fromEvent, timer} from "rxjs";
-import {timeout} from "rxjs/operators";
+import {fromEvent} from "rxjs";
 
 @Component({
   selector: 'app-manage-users',
