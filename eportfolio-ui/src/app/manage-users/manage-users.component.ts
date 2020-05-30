@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import * as globals from "../../global";
-import {fromEvent, timer} from "rxjs";
-import {timeout} from "rxjs/operators";
+import {fromEvent} from "rxjs";
+import {NzMessageService} from "ng-zorro-antd";
 
 @Component({
   selector: 'app-manage-users',
@@ -19,7 +19,7 @@ export class ManageUsersComponent implements OnInit {
   totalPage: number = 1;
   avartarUrl: string = "../../assets/untitled.png";
 
-  constructor(private http: HttpClient,) {
+  constructor(private http: HttpClient, private pop: NzMessageService) {
   }
 
   ngOnInit(): void {
@@ -81,7 +81,10 @@ export class ManageUsersComponent implements OnInit {
       )
     };
     this.http.post<any>(globals.backend_path + "admin/user?id="+id+"&_method=delete" , id.toString(), HttpOptions).subscribe((result) => {
+      this.pop.success("User successfully deleted!");
       this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.searchValue);
+    },error => {
+      this.pop.error("Deletion failed!");
     });
   }
 }
