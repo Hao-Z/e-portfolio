@@ -63,15 +63,11 @@ export class ModalLanguageComponent implements OnInit {
     console.log("CV language submit form:", this.model);
 		if (this.form.valid) {
       if (this.isNew) {
-        this.apiService.create(userID, this.model, this.classname)
-          .subscribe(() => {
-            this.alertService.success(`Successfully added the ${this.title} section!`);
-          })
+        this.apiService.create(userID, this.model, this.classname).subscribe();
+        this.alertService.success(`Successfully added the ${this.title} section!`);
       } else {
-        this.apiService.update(userID, this.model, this.classname, this.model.id)
-          .subscribe(() => {
-            this.alertService.success(`Successfully modified the ${this.title} section!`);
-          })
+        this.apiService.update(userID, this.model, this.classname, this.model.id).subscribe();
+        this.alertService.success(`Successfully modified the ${this.title} section!`);
       }
     }
   }

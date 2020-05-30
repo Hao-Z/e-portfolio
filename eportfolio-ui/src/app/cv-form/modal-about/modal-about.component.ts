@@ -53,10 +53,8 @@ export class ModalAboutComponent implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
-      this.apiService.create(userID, this.model, this.classname)
-        .subscribe(() => {
-          this.alertService.success(`Successfully modified the ${this.title} section!`);
-        })
+      this.apiService.create(userID, this.model, this.classname).subscribe();
+      this.alertService.success(`Successfully modified the ${this.title} section!`);
     }
   }
 

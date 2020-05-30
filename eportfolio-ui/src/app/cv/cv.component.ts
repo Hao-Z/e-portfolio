@@ -51,7 +51,7 @@ export class CvComponent implements OnInit{
     if (isSuccess && msg) {
       this.pop.success(msg, {nzDuration: 2000});
     } else {
-      this.pop.error(msg, {nzDuration: 2000});
+      // this.pop.error(msg, {nzDuration: 2000});     
     }
     this.ngOnInit();
   }

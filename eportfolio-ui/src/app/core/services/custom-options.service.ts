@@ -19,11 +19,12 @@ export class CustomOptionsService {
     }
   }
 
-  public getLinkHttpOptions(): {} {
+  public getLinkHttpOptions(params: HttpParams): {} {
     return {
       headers: new HttpHeaders({ 
         'Authorization': localStorage.getItem('jwt_token'),
       }),
+      params: params,
       responseType: 'text',
       observe: 'response' 
     }

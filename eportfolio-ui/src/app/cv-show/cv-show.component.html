@@ -73,7 +73,7 @@
                           {{item.title + ": "}}
                           <a *ngIf="item.link" href="#" (click)="clickURL(item.link)">{{item.link}}</a>
                           <h6 *ngIf="item.media">
-                            <div class="collapse" [id]="'collapseFileList1'+item.id">
+                            <div class="collapse" [id]="'feature'+item.id">
                               <ng-container *ngFor="let file of fileService.toFileList(item.media)">
                                 <a href="#" (click)="clickURL(file.url)">
                                   {{file.name}}
@@ -87,7 +87,7 @@
                       <div class="col-2">
                         <ng-container *ngIf="item.media">
                           <button class="btn add-btn a-right" type="button" data-toggle="collapse"
-                            [attr.data-target]="'#collapseFileList1'+item.id" aria-expanded="false"
+                            [attr.data-target]="'#feature'+item.id" aria-expanded="false"
                             aria-controls="collapseFileList">
                             <i class="fa fa-paperclip" aria-hidden="true"></i>
                           </button>
@@ -126,7 +126,7 @@
 
                       <h6 *ngIf="item.description">{{item.description}}&nbsp;&nbsp;</h6>
                       <h6 *ngIf="item.media">
-                        <div class="collapse" [id]="'collapseFileList1'+item.id">
+                        <div class="collapse" [id]="'workexperience'+item.id">
                           <ng-container *ngFor="let file of fileService.toFileList(item.media)">
                             <a href="#" (click)="clickURL(file.url)">
                               {{file.name}}
@@ -139,7 +139,7 @@
                     <div class="col-2">
                       <ng-container *ngIf="item.media">
                         <button class="btn add-btn a-right" type="button" data-toggle="collapse"
-                          [attr.data-target]="'#collapseFileList1'+item.id" aria-expanded="false"
+                          [attr.data-target]="'#workexperience'+item.id" aria-expanded="false"
                           aria-controls="collapseFileList">
                           <i class="fa fa-paperclip" aria-hidden="true"></i>
                         </button>
@@ -178,7 +178,7 @@
                       <h6 *ngIf="item.activityAndSociety">{{item.activityAndSociety}}</h6>
                       <h6 *ngIf="item.description">{{item.description}}</h6>
                       <h6 *ngIf="item.media">
-                        <div class="collapse" [id]="'collapseFileList1'+item.id">
+                        <div class="collapse" [id]="'education'+item.id">
                           <ng-container *ngFor="let file of fileService.toFileList(item.media)">
                             <a href="#" (click)="clickURL(file.url)">
                               {{file.name}}
@@ -192,7 +192,7 @@
                     <div class="col-2">
                       <ng-container *ngIf="item.media">
                         <button class="btn add-btn a-right" type="button" data-toggle="collapse"
-                          [attr.data-target]="'#collapseFileList1'+item.id" aria-expanded="false"
+                          [attr.data-target]="'#education'+item.id" aria-expanded="false"
                           aria-controls="collapseFileList">
                           <i class="fa fa-paperclip" aria-hidden="true"></i>
                         </button>
@@ -230,7 +230,7 @@
                       <p *ngIf="item.expirationDate" style="display: inline-block;">and expires at
                         {{item.expirationDate}}</p>
                       <h6 *ngIf="item.media">
-                        <div class="collapse" [id]="'collapseFileList1'+item.id">
+                        <div class="collapse" [id]="'licensecertification'+item.id">
                           <ng-container *ngFor="let file of fileService.toFileList(item.media)">
                             <a href="#" (click)="clickURL(file.url)">
                               {{file.name}}
@@ -243,7 +243,7 @@
                     <div class="col-2">
                       <ng-container *ngIf="item.media">
                         <button class="btn add-btn a-right" type="button" data-toggle="collapse"
-                          [attr.data-target]="'#collapseFileList1'+item.id" aria-expanded="false"
+                          [attr.data-target]="'#licensecertification'+item.id" aria-expanded="false"
                           aria-controls="collapseFileList">
                           <i class="fa fa-paperclip" aria-hidden="true"></i>
                         </button>
@@ -279,7 +279,7 @@
                       <h6 *ngIf="item.description">{{item.description}}</h6>
 
                       <h6 *ngIf="item.media">
-                        <div class="collapse" [id]="'collapseFileList1'+item.id">
+                        <div class="collapse" [id]="'volunteerexperience'+item.id">
                           <ng-container *ngFor="let file of fileService.toFileList(item.media)">
                             <a href="#" (click)="clickURL(file.url)">
                               {{file.name}}
@@ -293,7 +293,7 @@
                     <div class="col-2">
                       <ng-container *ngIf="item.media">
                         <button class="btn add-btn a-right" type="button" data-toggle="collapse"
-                          [attr.data-target]="'#collapseFileList1'+item.id" aria-expanded="false"
+                          [attr.data-target]="'#volunteerexperience'+item.id" aria-expanded="false"
                           aria-controls="collapseFileList">
                           <i class="fa fa-paperclip" aria-hidden="true"></i>
                         </button>
@@ -349,7 +349,7 @@
                       <h6 *ngIf="item.projectURL"><a href="#" (click)="clickURL(item.projectURL)">Project link</a></h6>
                       <h6 *ngIf="item.description">{{item.description}}</h6>
                       <h6 *ngIf="item.media">
-                        <div class="collapse" [id]="'collapseFileList1'+item.id">
+                        <div class="collapse" [id]="'project'+item.id">
                           <ng-container *ngFor="let file of fileService.toFileList(item.media)">
                             <a href="#" (click)="clickURL(file.url)">
                               {{file.name}}
@@ -362,7 +362,7 @@
                     <div class="col-2">
                       <ng-container *ngIf="item.media">
                         <button class="btn add-btn a-right" type="button" data-toggle="collapse"
-                          [attr.data-target]="'#collapseFileList1'+item.id" aria-expanded="false"
+                          [attr.data-target]="'#project'+item.id" aria-expanded="false"
                           aria-controls="collapseFileList">
                           <i class="fa fa-paperclip" aria-hidden="true"></i>
                         </button>
@@ -392,7 +392,7 @@
                       <p *ngIf="item.issueDate">Issued on {{item.issueDate}}</p>
                       <h6 *ngIf="item.description">{{item.description}}</h6>
                       <h6 *ngIf="item.media">
-                        <div class="collapse" [id]="'collapseFileList1'+item.id">
+                        <div class="collapse" [id]="'honouraward'+item.id">
                           <ng-container *ngFor="let file of fileService.toFileList(item.media)">
                             <a href="#" (click)="clickURL(file.url)">
                               {{file.name}}
@@ -406,7 +406,7 @@
                   <div class="col-2">
                     <ng-container *ngIf="item.media">
                       <button class="btn add-btn a-right" type="button" data-toggle="collapse"
-                        [attr.data-target]="'#collapseFileList1'+item.id" aria-expanded="false"
+                        [attr.data-target]="'#honouraward'+item.id" aria-expanded="false"
                         aria-controls="collapseFileList">
                         <i class="fa fa-paperclip" aria-hidden="true"></i>
                       </button>
@@ -438,7 +438,7 @@
                           URL</a></h6>
                       <h6 *ngIf="item.description">{{item.description}}</h6>
                       <h6 *ngIf="item.media">
-                        <div class="collapse" [id]="'collapseFileList1'+item.id">
+                        <div class="collapse" [id]="'publication'+item.id">
                           <ng-container *ngFor="let file of fileService.toFileList(item.media)">
                             <a href="#" (click)="clickURL(file.url)">
                               {{file.name}}
@@ -452,7 +452,7 @@
                     <div class="col-2">
                       <ng-container *ngIf="item.media">
                         <button class="btn add-btn a-right" type="button" data-toggle="collapse"
-                          [attr.data-target]="'#collapseFileList1'+item.id" aria-expanded="false"
+                          [attr.data-target]="'#publication'+item.id" aria-expanded="false"
                           aria-controls="collapseFileList">
                           <i class="fa fa-paperclip" aria-hidden="true"></i>
                         </button>
@@ -514,7 +514,7 @@
                             {{item.referrerName}}</h5>
                           <h6 *ngIf="item.description">{{item.description}}</h6>
                           <h6 *ngIf="item.media">
-                            <div class="collapse" [id]="'collapseFileList1'+item.id">
+                            <div class="collapse" [id]="'recommendation'+item.id">
                               <ng-container *ngFor="let file of fileService.toFileList(item.media)">
                                 <a href="#" (click)="clickURL(file.url)">
                                   {{file.name}}
@@ -530,7 +530,7 @@
                       <div class="col-2">
                         <ng-container *ngIf="item.media">
                           <button class="btn add-btn a-right" type="button" data-toggle="collapse"
-                            [attr.data-target]="'#collapseFileList1'+item.id" aria-expanded="false"
+                            [attr.data-target]="'#recommendation'+item.id" aria-expanded="false"
                             aria-controls="collapseFileList">
                             <i class="fa fa-paperclip" aria-hidden="true"></i>
                           </button>
