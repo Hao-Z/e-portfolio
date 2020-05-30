@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, destroyPlatform, OnDestroy, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import * as globals from "../../global";
-import {fromEvent} from "rxjs";
+import {from, fromEvent} from "rxjs";
 import {NzMessageService} from "ng-zorro-antd";
 
 @Component({
@@ -9,7 +9,7 @@ import {NzMessageService} from "ng-zorro-antd";
   templateUrl: './manage-users.component.html',
   styleUrls: ['./manage-users.component.css']
 })
-export class ManageUsersComponent implements OnInit {
+export class ManageUsersComponent implements OnInit, OnDestroy {
 
   searchValue = '';
   isCollapsed = window.innerWidth < Number(770);
@@ -18,15 +18,23 @@ export class ManageUsersComponent implements OnInit {
   pageSize: number = 10;
   totalPage: number = 1;
   avartarUrl: string = "../../assets/untitled.png";
+  edit_user_info: boolean;
+  edit_user_id : any = null;
 
   constructor(private http: HttpClient, private pop: NzMessageService) {
+    window.sessionStorage.setItem('admin_id', '1');
   }
 
   ngOnInit(): void {
+    this.edit_user_info = false;
     this.getCVsData(this.pageNum.toString(),this.pageSize.toString(),this.searchValue);
     fromEvent(window,'resize').subscribe((event) => {
       this.isCollapsed = window.innerWidth < Number(770);
     })
+  }
+
+  ngOnDestroy(): void {
+    this.Back();
   }
 
   getLink(userID) {
@@ -87,4 +95,16 @@ export class ManageUsersComponent implements OnInit {
       this.pop.error("Deletion failed!");
     });
   }
+
+  getUserEditPage(id: any) {
+    window.sessionStorage.setItem('uid',id);
+    globals.changeUID();
+    this.edit_user_info = !this.edit_user_info;
+  }
+
+  Back() {
+    globals.recoverAdminID();
+    this.edit_user_info = !this.edit_user_info;
+  }
+
 }

@@ -44,7 +44,7 @@ export class CvComponent implements OnInit, OnDestroy{
    };
 
   ngOnInit(): void {
-    if(globals.username == 'admin'){
+    if(globals.username == 'admin' && globals.userID == 1){
       this.router.navigate(['/my_account'])
     }
     refreshJwt();
@@ -61,7 +61,7 @@ export class CvComponent implements OnInit, OnDestroy{
     if (isSuccess && msg) {
       this.pop.success(msg, {nzDuration: 2000});
     } else {
-      // this.pop.error(msg, {nzDuration: 2000});     
+      // this.pop.error(msg, {nzDuration: 2000});
     }
     this.ngOnInit();
   }
