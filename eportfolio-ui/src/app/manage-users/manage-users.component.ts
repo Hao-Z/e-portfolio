@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, destroyPlatform, OnDestroy, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import * as globals from "../../global";
-import {fromEvent} from "rxjs";
+import {from, fromEvent} from "rxjs";
 import {NzMessageService} from "ng-zorro-antd";
 
 @Component({
@@ -9,7 +9,7 @@ import {NzMessageService} from "ng-zorro-antd";
   templateUrl: './manage-users.component.html',
   styleUrls: ['./manage-users.component.css']
 })
-export class ManageUsersComponent implements OnInit {
+export class ManageUsersComponent implements OnInit, OnDestroy {
 
   searchValue = '';
   isCollapsed = window.innerWidth < Number(770);
@@ -31,6 +31,10 @@ export class ManageUsersComponent implements OnInit {
     fromEvent(window,'resize').subscribe((event) => {
       this.isCollapsed = window.innerWidth < Number(770);
     })
+  }
+
+  ngOnDestroy(): void {
+    this.Back();
   }
 
   getLink(userID) {
