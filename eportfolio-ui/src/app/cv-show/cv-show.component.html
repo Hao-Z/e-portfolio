@@ -10,7 +10,8 @@
         <ng-template [ngIf]="item=='introduction'" [ngIfElse]="about">
           <div class="card-body cover" style="min-height: 240px;z-index: 2;">
 
-            <nz-avatar nzIcon="user" [nzSrc]="avartarUrl" [nzShape]="'circle'" class="picture picbutt" style="margin-left: 21px;"></nz-avatar>
+            <nz-avatar nzIcon="user" [nzSrc]="avartarUrl" [nzShape]="'circle'" class="picture picbutt"
+              style="margin-left: 21px;"></nz-avatar>
             <!-- profilePhoto -->
             <div class="square"></div>
             <div class="col-16">
@@ -19,21 +20,24 @@
               <span *ngIf="cvForms[item].industry" style="display: inline-block;">
                 {{cvForms[item].industry | cvData: 'industry'}} </span>
               <h5 *ngIf="cvForms[item].headline">{{cvForms[item].headline}}</h5>
-              <hr *ngIf="cvForms[item].firstName || cvForms[item].lastName || cvForms[item].industry || cvForms[item].headline">
+              <hr
+                *ngIf="cvForms[item].firstName || cvForms[item].lastName || cvForms[item].industry || cvForms[item].headline">
               <p *ngIf="cvForms[item].gender && cvForms[item].gender != '2'" style="display: inline-block;">
                 {{cvForms[item].gender | cvData: 'gender'}}&nbsp;&nbsp;</p>
               <p *ngIf="cvForms[item].birthday" style="display: inline-block;">born at
                 {{cvForms[item].birthday}}&nbsp;&nbsp;</p>
               <p *ngIf="cvForms[item].country" style="display: inline-block;font-style: oblique;">living in
                 {{cvForms[item].country}} currently</p>
-              <p *ngIf="cvForms[item].currentEducation">
+              <p *ngIf="cvForms[item].workingYear">{{cvForms[item].workingYear}} years experience</p>
+              <p *ngIf="cvForms[item].highestEducation">{{cvForms[item].highestEducation | cvData: "degree"}}</p>
+              <!-- <p *ngIf="cvForms[item].currentEducation">
                 <ng-container *ngIf="cvForms[item].currentEducation.degree">
                   {{cvForms[item].currentEducation.degree | cvData: 'degree'}}
                   <ng-container *ngIf="cvForms[item].currentEducation.fieldOfStudy">
                     in {{cvForms[item].currentEducation.fieldOfStudy}}
                   </ng-container>
                 </ng-container>
-              </p>
+              </p> -->
               <p *ngIf="cvForms[item].email">{{cvForms[item].email}}</p>
               <p *ngIf="cvForms[item].phoneNumber">{{cvForms[item].phoneNumber}}</p>
               <p *ngIf="cvForms[item].address" style="display: inline-block;">{{cvForms[item].address}}&nbsp;</p>
@@ -108,46 +112,51 @@
               <div class="card-body">
                 <h2>Work Experience</h2>
                 <hr />
-                <div *ngFor="let item of cvForms[item]" class="cover">
-                  <div class="row">
-                    <div class="col-10">
-                      <h5 *ngIf="item.title" style="display: inline-block;">{{item.title}}&nbsp;</h5>
-                      <h5 *ngIf="item.companyName" style="display: inline-block;">
-                        at<strong>&nbsp;{{item.companyName}}&nbsp;</strong></h5>
-                      <span *ngIf="item.industry">{{item.industry | cvData: 'industry'}}</span>
-                      <br *ngIf="item.title || item.industry || item.companyName">
-                      <p *ngIf="item.employmentType" style="display: inline-block;">
-                        {{item.employmentType | cvData: 'employmentType'}}&nbsp;&nbsp;</p>
-                      <p *ngIf="item.startDate" style="display: inline-block;">{{item.startDate}}&nbsp;</p>
-                      <p *ngIf="!item.isCurrentWork && item.endDate" style="display: inline-block;">to {{item.endDate}}
-                      </p>
-                      <p *ngIf="item.isCurrentWork" style="display: inline-block;">until {{"Now"}}</p>
-                      <p *ngIf="item.location">{{item.location}}</p>
+                <ul>
+                  <div *ngFor="let item of cvForms[item]" class="cover">
+                    <li>
+                      <div class="row">
+                        <div class="col-10">
+                          <h5 *ngIf="item.title" style="display: inline-block;font-style: normal;">{{item.title}}&nbsp;</h5>
+                          <h5 *ngIf="item.companyName" style="display: inline-block;font-style: normal;">
+                            at<strong>&nbsp;{{item.companyName}}&nbsp;</strong></h5>
+                          <span *ngIf="item.industry">{{item.industry | cvData: 'industry'}}</span>
+                          <br *ngIf="item.title || item.industry || item.companyName">
+                          <p *ngIf="item.employmentType" style="display: inline-block;">
+                            {{item.employmentType | cvData: 'emplogymentType'}}&nbsp;&nbsp;</p>
+                          <p *ngIf="item.startDate" style="display: inline-block;">{{item.startDate}}&nbsp;</p>
+                          <p *ngIf="!item.isCurrentWork && item.endDate" style="display: inline-block;">to
+                            {{item.endDate}}
+                          </p>
+                          <p *ngIf="item.isCurrentWork" style="display: inline-block;">until {{"Now"}}</p>
+                          <p *ngIf="item.location">{{item.location}}</p>
 
-                      <h6 *ngIf="item.description">{{item.description}}&nbsp;&nbsp;</h6>
-                      <h6 *ngIf="item.media">
-                        <div class="collapse" [id]="'workexperience'+item.id">
-                          <ng-container *ngFor="let file of fileService.toFileList(item.media)">
-                            <a href="#" (click)="clickURL(file.url)">
-                              {{file.name}}
-                            </a>
-                            <br>
+                          <h6 *ngIf="item.description">{{item.description}}&nbsp;&nbsp;</h6>
+                          <h6 *ngIf="item.media">
+                            <div class="collapse" [id]="'workexperience'+item.id">
+                              <ng-container *ngFor="let file of fileService.toFileList(item.media)">
+                                <a href="#" (click)="clickURL(file.url)">
+                                  {{file.name}}
+                                </a>
+                                <br>
+                              </ng-container>
+                            </div>
+                          </h6>
+                        </div>
+                        <div class="col-2">
+                          <ng-container *ngIf="item.media">
+                            <button class="btn add-btn a-right" type="button" data-toggle="collapse"
+                              [attr.data-target]="'#workexperience'+item.id" aria-expanded="false"
+                              aria-controls="collapseFileList">
+                              <i class="fa fa-paperclip" aria-hidden="true"></i>
+                            </button>
                           </ng-container>
                         </div>
-                      </h6>
-                    </div>
-                    <div class="col-2">
-                      <ng-container *ngIf="item.media">
-                        <button class="btn add-btn a-right" type="button" data-toggle="collapse"
-                          [attr.data-target]="'#workexperience'+item.id" aria-expanded="false"
-                          aria-controls="collapseFileList">
-                          <i class="fa fa-paperclip" aria-hidden="true"></i>
-                        </button>
-                      </ng-container>
-                    </div>
+                      </div>
+                    </li>
+                    <br>
                   </div>
-                  <br>
-                </div>
+                </ul>
               </div>
             </ng-container>
           </ng-template>
@@ -160,7 +169,9 @@
               <div class="card-body">
                 <h2>Education</h2>
                 <hr />
+                <ul>
                 <div *ngFor="let item of cvForms[item]" class="cover">
+                  <li>
                   <div class="row">
                     <div class="col-10">
 
@@ -199,8 +210,10 @@
                       </ng-container>
                     </div>
                   </div>
+                </li>
                   <br>
                 </div>
+              </ul>
               </div>
             </ng-container>
           </ng-template>
@@ -213,7 +226,9 @@
               <div class="card-body">
                 <h2>License Certification</h2>
                 <hr />
+                <ul>
                 <div *ngFor="let item of cvForms[item]" class="cover">
+                  <li>
                   <div class="row">
                     <div class="col-10">
 
@@ -250,7 +265,9 @@
                       </ng-container>
                     </div>
                   </div>
+                </li>
                 </div>
+              </ul>
               </div>
             </ng-container>
           </ng-template>
@@ -264,7 +281,9 @@
 
                 <h2>Volunteer Experience</h2>
                 <hr />
+                <ul>
                 <div *ngFor="let item of cvForms[item]" class="cover">
+                  <li>
                   <div class="row">
                     <div class="col-10">
                       <h5 *ngIf="item.organizationName" style="display: inline-block;font-style: normal;">
@@ -300,9 +319,10 @@
                       </ng-container>
                     </div>
                   </div>
-
+                </li>
                   <br>
                 </div>
+              </ul>
               </div>
             </ng-container>
           </ng-template>
@@ -340,7 +360,9 @@
               <div class="card-body">
                 <h2>Project</h2>
                 <hr />
+                <ul>
                 <div *ngFor="let item of cvForms[item]" class="cover">
+                  <li>
                   <div class="row">
                     <div class="col-10">
                       <h5 *ngIf="item.projectName" style="font-style: normal;">{{item.projectName}}</h5>
@@ -369,8 +391,10 @@
                       </ng-container>
                     </div>
                   </div>
+                </li>
                   <br>
                 </div>
+              </ul>
               </div>
             </ng-container>
           </ng-template>
@@ -383,7 +407,9 @@
               <div class="card-body">
                 <h2>Honour Award</h2>
                 <hr />
+                <ul>
                 <div *ngFor="let item of cvForms[item]" class="cover">
+                  <li>
                   <div class="row">
                     <div class="col-10">
                       <h5 *ngIf="item.title" style="font-style: normal;display: inline-block;">{{item.title}}</h5>
@@ -402,7 +428,7 @@
                         </div>
                       </h6>
                     </div>
-                  </div>
+                  
                   <div class="col-2">
                     <ng-container *ngIf="item.media">
                       <button class="btn add-btn a-right" type="button" data-toggle="collapse"
@@ -412,9 +438,11 @@
                       </button>
                     </ng-container>
                   </div>
-
+                </div>
+                </li>
                   <br>
                 </div>
+              </ul>
               </div>
             </ng-container>
           </ng-template>
@@ -427,7 +455,9 @@
               <div class="card-body">
                 <h2>Publication</h2>
                 <hr />
+                <ul>
                 <div *ngFor="let item of cvForms[item]" class="cover">
+                  <li>
                   <div class="row">
                     <div class="col-10">
                       <h5 *ngIf="item.title" style="display: inline-block;">{{item.title}}</h5>
@@ -460,8 +490,10 @@
                     </div>
 
                   </div>
+                </li>
                   <br>
                 </div>
+              </ul>
               </div>
             </ng-container>
           </ng-template>

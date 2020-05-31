@@ -38,14 +38,16 @@
           <p *ngIf="cvForms[item].birthday" style="display: inline-block;">born at {{cvForms[item].birthday}}&nbsp;&nbsp;</p>
           <p *ngIf="cvForms[item].country" style="display: inline-block;font-style: oblique;">living in
             {{cvForms[item].country}} currently</p>
-          <p *ngIf="cvForms[item].currentEducation">
+          <p *ngIf="cvForms[item].workingYear">{{cvForms[item].workingYear}} years experience</p>
+          <p *ngIf="cvForms[item].highestEducation">{{cvForms[item].highestEducation | cvData:"degree"}}</p>
+          <!-- <p *ngIf="cvForms[item].currentEducation">
             <ng-container *ngIf="cvForms[item].currentEducation.degree">
               {{cvForms[item].currentEducation.degree | cvData: 'degree'}}
               <ng-container *ngIf="cvForms[item].currentEducation.fieldOfStudy"> 
               in {{cvForms[item].currentEducation.fieldOfStudy}}
               </ng-container>
             </ng-container>
-          </p>
+          </p> -->
           <p *ngIf="cvForms[item].email">{{cvForms[item].email}}</p>
           <p *ngIf="cvForms[item].phoneNumber">{{cvForms[item].phoneNumber}}</p>
           <p *ngIf="cvForms[item].address" style="display: inline-block;">{{cvForms[item].address}}&nbsp;</p>

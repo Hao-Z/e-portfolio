@@ -82,12 +82,14 @@
               <div class="col-16">
                 <h2 *ngIf="userData.firstName" style="display: inline-block;">{{userData.firstName}}&nbsp;</h2>
                 <h2 *ngIf="userData.lastName" style="display: inline-block;">{{userData.lastName}}</h2>
-                <span>{{userData.industry | cvData:"industry"}}</span>
-                <h5>{{userData.headline}}</h5>
+                <span *ngIf="userData.industry">{{userData.industry | cvData:"industry"}}</span>
+                <h5 *ngIf="userData.headline">{{userData.headline}}</h5>
                 <hr *ngIf="userData.firstName || userData.lastName || userData.headline || userData.industry">
-                <p>{{userData.region}}</p>
+                <p *ngIf="userData.birthday">Born at {{userData.birthday}}</p>
+                <p *ngIf="userData.workingYear">{{userData.workingYear}} years experience</p>
+                <p *ngIf="userData.highestEducation">{{userData.highestEducation | cvData: "degree"}}</p>
                 <p>{{userData.email}}</p>
-                <p>{{userData.phone}}</p>
+                <p>{{userData.phoneNumber}}</p>
                 <div class="square"></div>
 
               </div>
