@@ -27,6 +27,8 @@ public class CustomizedSpecification<T> implements Specification<T> {
                 return builder.lessThanOrEqualTo(root.<String>get(key), val.toString());
             case "=":
                 return builder.equal(root.get(key), val);
+            case "!=":
+                return builder.notEqual(root.get(key), val);
             case "%":
                 if (root.get(key).getJavaType() == String.class) {
                     return builder.like(root.<String>get(key), "%" + val + "%");
