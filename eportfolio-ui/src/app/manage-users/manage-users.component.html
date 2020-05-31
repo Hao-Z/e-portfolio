@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<nz-content>
+<nz-content *ngIf="!edit_user_info">
 <nz-content>
   <div align="right">
     <table>
@@ -31,11 +31,15 @@
           </div>
 
           <div nz-col nzSpan="12">
-            <a  class="nav-link" (click)="getLink(userData.id)">
+            <!--            <a  class="nav-link" (click)="getLink(userData.id)">-->
+            <a  class="nav-link" (click)="getUserEditPage(userData.id)">
             <h2 *ngIf="userData.firstName" style="display: inline-block;">{{userData.firstName}}&nbsp;</h2>
             <h2 *ngIf="userData.lastName" style="display: inline-block;">{{userData.lastName}}</h2>
             <span>{{userData.industry | cvData:"industry"}}</span>
-            <h5>{{userData.username}}</h5>
+              <div>
+            <p style="display: inline-block; font-size: 20px">username:</p>
+            <h5 style="display: inline-block;">{{userData.username}}</h5>
+              </div>
             <hr *ngIf="userData.firstName || userData.lastName || userData.headline || userData.industry">
             <p>{{userData.region}}</p>
             <p>{{userData.email}}</p>
@@ -43,15 +47,15 @@
             <div class="square"></div>
             </a>
           </div>
-          <div nz-col nzSpan="1" nzOffset="3">
+          <div nz-col nzSpan="2" nzOffset="2">
             <button
               nz-popconfirm
-              nzPopconfirmTitle="Are you sure to delete this user?"
+              nzPopconfirmTitle="Are you sure to delete this item?"
               nzOkText="ok"
               nzCancelText="cancel"
               (nzOnConfirm)="deleteUser(userData.id)"
               class="btn btn-danger" type="button" style="color: white;">
-              <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+              <i class="fa fa-trash-alt" aria-hidden="true"></i></button>
           </div>
         </div>
       </div>
@@ -63,22 +67,26 @@
             </nz-avatar>
           </div>
           <div nz-col nzSpan="12">
-            <a  class="nav-link" (click)="getLink(userData.id)">
+<!--            <a  class="nav-link" (click)="getLink(userData.id)">-->
+            <a  class="nav-link" (click)="getUserEditPage(userData.id)">
             <h2>{{userData.firstName +" " + userData.lastName}}</h2>
-              <h5>{{userData.username}}</h5>
+              <div>
+                <p style="display: inline-block; font-size: 20px">username:</p>
+                <h5 style="display: inline-block;">{{userData.username}}</h5>
+              </div>
             <hr>
             <p style="color: #0068A7;">{{userData.industry | cvData:"industry"}}</p>
             </a>
           </div>
-          <div nz-col nzSpan="1" nzOffset="3">
+          <div nz-col nzSpan="2" nzOffset="2">
             <button
               nz-popconfirm
-              nzPopconfirmTitle="Are you sure to delete this user?"
+              nzPopconfirmTitle="Are you sure to delete this item?"
               nzOkText="ok"
               nzCancelText="cancel"
               (nzOnConfirm)="deleteUser(userData.id)"
               class="btn btn-danger" type="button" style="color: white;">
-              <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+              <i class="fa fa-trash-alt" aria-hidden="true"></i></button>
           </div>
         </div>
       </div>
@@ -91,4 +99,9 @@
                  [nzTotal]=totalPage*10 nzShowQuickJumper></nz-pagination>
 </div>
 <br />
+</nz-content>
+
+<nz-content *ngIf="edit_user_info">
+  <button nzSize="small" (click)="Back()" nz-button nzType="primary"><i nz-icon nzType="left"></i>Back</button>
+  <app-cv></app-cv>
 </nz-content>

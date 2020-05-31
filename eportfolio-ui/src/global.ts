@@ -13,4 +13,12 @@ export function refreshJwt() {
     userID = (jwt != null) ? decodeJwt.id : null
   }
 }
+
+export function changeUID(){
+  userID = sessionStorage.getItem('uid')
+}
+export function recoverAdminID(){
+  userID = sessionStorage.getItem('admin_id')
+}
+
 refreshJwt()

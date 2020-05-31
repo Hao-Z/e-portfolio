@@ -216,10 +216,8 @@ export class ModalIntroductionComponent implements OnInit {
   onSubmit() {
     console.log("CV Intro submit form:", this.model);
 		if (this.form.valid) {
-      this.apiService.update(userID, this.model, this.title.toLowerCase())
-        .subscribe(() => {
-          this.alertService.success(`Successfully modified the ${this.title} section!`);
-        })
+      this.apiService.update(userID, this.model, this.classname).subscribe();
+      this.alertService.success(`Successfully modified the ${this.title} section!`);
     }
   }
 

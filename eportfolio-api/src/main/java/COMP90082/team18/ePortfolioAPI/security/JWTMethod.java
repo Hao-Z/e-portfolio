@@ -43,10 +43,10 @@ public class JWTMethod {
                 .sign(RSA256(publicKey(), privateKey()));
     }
 
-    public static String createSharedLink(Long id) {
+    public static String createSharedLink(Long id, Long time) {
         return JWT.create()
                 .withClaim("read_only_id", id)
-                .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .withExpiresAt(new Date(System.currentTimeMillis() + time))
                 .sign(RSA256(publicKey(), privateKey()));
     }
 

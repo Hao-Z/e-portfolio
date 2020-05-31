@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError, map, retry } from 'rxjs/operators';
 import * as globals from "../../../global";
 import { PATCH } from './api.const';
 import { CustomOptionsService } from "./custom-options.service";
 import { HttpErrorHandler } from "./http-error-handler.service";
+import { SharePeriod } from '../models/share-period.model';
 
 @Injectable({
   providedIn: 'root'
@@ -57,9 +58,10 @@ export class UniqueApiService {
       )
   }
 
-  getSharedLink(id: number) {
+  getSharedLink(id: number, model: SharePeriod) {
     const url = `${this.apiUrl}${id}/shared-link`;
-    return this.http.get(url, this.options.getLinkHttpOptions())
+    var optionForLink = this.options.getLinkHttpOptions(new HttpParams().set('period', model.period).set('unit', model.unit))
+    return this.http.get(url, optionForLink)
       .pipe(
         map((res:any) => {
           return res.body

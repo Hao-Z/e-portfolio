@@ -38,7 +38,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             }
             chain.doFilter(req, res);
         } catch (JWTVerificationException e) {
-            res.setStatus(HttpStatus.FORBIDDEN.value());
+            res.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
             res.getWriter().println(e.getMessage());
         }
     }
