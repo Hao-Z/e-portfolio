@@ -22,7 +22,7 @@ export class ExploreComponent implements OnInit {
   isCollapsed = window.innerWidth < Number(770);
   userDatas;
   pageNum: number = 0;
-  pageSize: number = 10;
+  pageSize: number = 5;
   totalPage: number = 1;
   CheckedIndustry: any = null;
   CheckedGender: any = null;
