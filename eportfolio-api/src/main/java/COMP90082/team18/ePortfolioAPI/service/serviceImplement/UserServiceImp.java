@@ -124,8 +124,8 @@ public class UserServiceImp implements UserService {
     @Override
     @PreAuthorize("hasAuthority('ADMIN')")
     public Page<User> searchUser(String name, Integer page, Integer size){
-        Specification<User> spec = (name == null) ? null :
-                new CustomizedSpecification<>("username", "%", name);
+        Specification<User> spec = new CustomizedSpecification<>("username", "!=", "admin");
+        if(name != null) spec = spec.and(new CustomizedSpecification<>("username", "%", name));
         return userRepository.findAll(spec, PageRequest.of(page, size));
     }
 
