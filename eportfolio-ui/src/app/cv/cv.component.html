@@ -5,7 +5,7 @@
       <div class="card-body cover" style="min-height: 240px;z-index: 2;">
         <button class="btn add-btn a-right" (click)="editForm('introduction')" type="button"
           style="margin-left:15px;"><i class="fa fa-pencil-alt" aria-hidden="true"></i></button>
-        <button class="btn btn-primary a-right" type="button" id="MoreButton" style="margin-left:15px;"
+        <button *ngIf="!admin_account" class="btn btn-primary a-right" type="button" id="MoreButton" style="margin-left:15px;"
           (click)="modalService.openModal('share')">Share CV</button>
         <div class="dropdown a-right">
           <button class="btn btn-primary dropdown-toggle" type="button" id="AddSectionButton" data-toggle="dropdown"
@@ -43,7 +43,7 @@
           <!-- <p *ngIf="cvForms[item].currentEducation">
             <ng-container *ngIf="cvForms[item].currentEducation.degree">
               {{cvForms[item].currentEducation.degree | cvData: 'degree'}}
-              <ng-container *ngIf="cvForms[item].currentEducation.fieldOfStudy"> 
+              <ng-container *ngIf="cvForms[item].currentEducation.fieldOfStudy">
               in {{cvForms[item].currentEducation.fieldOfStudy}}
               </ng-container>
             </ng-container>

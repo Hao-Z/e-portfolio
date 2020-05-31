@@ -50,7 +50,7 @@
           <div nz-col nzSpan="2" nzOffset="2">
             <button
               nz-popconfirm
-              nzPopconfirmTitle="Are you sure to delete this item?"
+              nzPopconfirmTitle="Are you sure to delete this user?"
               nzOkText="ok"
               nzCancelText="cancel"
               (nzOnConfirm)="deleteUser(userData.id)"
@@ -81,7 +81,7 @@
           <div nz-col nzSpan="2" nzOffset="2">
             <button
               nz-popconfirm
-              nzPopconfirmTitle="Are you sure to delete this item?"
+              nzPopconfirmTitle="Are you sure to delete this user?"
               nzOkText="ok"
               nzCancelText="cancel"
               (nzOnConfirm)="deleteUser(userData.id)"
@@ -102,6 +102,6 @@
 </nz-content>
 
 <nz-content *ngIf="edit_user_info">
-  <button nzSize="small" (click)="Back()" nz-button nzType="primary"><i nz-icon nzType="left"></i>Back</button>
+  <button (click)="Back()" nz-button style="background-color: #0068A7;color: white">< Back</button>
   <app-cv></app-cv>
 </nz-content>

@@ -19,7 +19,7 @@ main {
     box-shadow: 0 0 0 1px hsla(0,0%,100%,.3) inset,
                 0 .5em 1em rgba(0, 0, 0, 0.6);
     text-shadow: 0 1px 1px hsla(0,0%,100%,.3);
-    background: hsla(0,0%,100%,.3);
+    background: hsla(0,0%,100%,.5);
     overflow: hidden;
     background-position: center top;
     background-size: cover;
@@ -40,10 +40,10 @@ main::after {
     filter: blur(20px);
     margin: -30px;
 }
-.left{ 
+.left{
     float: left;
     width: 50%;
-} 
+}
 .right{
     float: right;
     width: 50%;

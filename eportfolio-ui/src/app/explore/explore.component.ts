@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {NzFormatEmitEvent, NzTreeNodeOptions} from "ng-zorro-antd";
+import {NzFormatEmitEvent, NzTreeNodeOptions, NzTreeNode} from "ng-zorro-antd";
 import * as globals from "../../global";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { RouterLink } from '@angular/router';
@@ -14,6 +14,7 @@ import {DataService} from "../core/services/data.service";
 export class ExploreComponent implements OnInit {
 
   nodes: NzTreeNodeOptions[];
+  nodes_back : NzTreeNode[];
   nodes_str: any;
 
   width;
@@ -21,7 +22,7 @@ export class ExploreComponent implements OnInit {
   isCollapsed = window.innerWidth < Number(770);
   userDatas;
   pageNum: number = 0;
-  pageSize: number = 10;
+  pageSize: number = 5;
   totalPage: number = 1;
   CheckedIndustry: any = null;
   CheckedGender: any = null;
@@ -58,8 +59,13 @@ export class ExploreComponent implements OnInit {
     // this.getNodes();
     this.nodes_str = this.dataService.getIndustryList();
     this.nodes = [];
-    for(let n of this.nodes_str){
-      this.nodes.push({title: n['label'], key: n['value'], isLeaf: true, checked: false})
+    this.nodes_back = [];
+    // for(let n of this.nodes_str){
+    //   this.nodes.push({title: n['label'], key: n['value'], isLeaf: true, checked: false})
+    // }
+
+    for(let n of this.nodes_str) {
+      this.nodes_back.push(new NzTreeNode({title: n['label'], key: n['value'], isLeaf: true, checked: false}));
     }
     // > Delete
 
@@ -190,5 +196,14 @@ export class ExploreComponent implements OnInit {
   //     }
   //   });
   // }
+  match() {
+    for(let i of this.nodes_back){
+      if(i.title.toLowerCase().indexOf(this.searchValue.toLowerCase())!=-1){
+        i.isMatched = true
+      } else {
+        i.isMatched = false
+      }
+    }
+  }
 }
 

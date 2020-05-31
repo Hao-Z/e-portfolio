@@ -2,13 +2,14 @@ import { Component } from '@angular/core';
 import { FieldType } from '@ngx-formly/core';
 import { UploadChangeParam, UploadFile} from 'ng-zorro-antd';
 import { FileService } from '../core/services/file.service';
+import * as globals from "../../global"
 
 @Component({
   selector: 'formly-file',
-  template: 
-  `   
+  template:
+  `
     <div>
-        <nz-upload 
+        <nz-upload
             [nzAction]="to.action"
             [nzFileList]="fileList"
             [nzHeaders]="to.fileheader"
@@ -31,13 +32,13 @@ export class FormlyFileFieldType extends FieldType{
       this.fileList = this.fileService.toFileList(res)
     })
   }
-  
+
   upload(info: UploadChangeParam) {
     if (info.file.status === 'done') {
       let fileList = info.fileList;
       fileList = fileList.map(file => {
         if (file.response) {
-          file.url = 'http://localhost:8080/download/' + file.response.url;
+          file.url = globals.backend_path + file.response.url;
         }
         return file;
       });
@@ -60,5 +61,5 @@ export class FormlyFileFieldType extends FieldType{
       this.model.media = this.fileService.toFileString(this.fileList)
     }
   }
-  
+
 }

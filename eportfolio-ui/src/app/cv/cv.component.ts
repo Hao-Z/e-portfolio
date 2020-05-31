@@ -24,6 +24,7 @@ export class CvComponent implements OnInit, OnDestroy{
   subscriptionSu: Subscription;
   subscriptionEr: Subscription;
   subscriptionMsg: Subscription;
+  admin_account: any = false;
 
   constructor(
     public modalService: ModalService,
@@ -32,6 +33,7 @@ export class CvComponent implements OnInit, OnDestroy{
     private pop: NzMessageService,
     private router: Router
   ) {
+      this.admin_account = globals.username == 'admin';
       this.subscriptionSu = this.alertService.messageSuObserve.subscribe((res: string) => {
         this.refresh(true, res);
       })
@@ -51,7 +53,7 @@ export class CvComponent implements OnInit, OnDestroy{
     this.getCv();
   }
 
-  ngOnDestroy() { 
+  ngOnDestroy() {
     this.subscriptionSu.unsubscribe();
     this.subscriptionEr.unsubscribe();
     this.subscriptionMsg.unsubscribe();
