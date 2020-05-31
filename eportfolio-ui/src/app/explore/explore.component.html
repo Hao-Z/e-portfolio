@@ -18,8 +18,8 @@
           </ng-template>
         </nz-content>
         <nz-content style="overflow-y: auto;max-height: 300px; margin-left: 0; width: 90%">
-          <nz-tree [nzHideUnMatched]="true" [nzData]="nodes" [nzSearchValue]="searchValue" nzCheckable nzMultiple
-            [(nzCheckedKeys)]="CheckedIndustry" (nzCheckBoxChange)="nzCheckIndustry($event)">
+          <nz-tree [nzHideUnMatched]="true" [nzData]="nodes_back" [nzSearchValue]="searchValue" nzCheckable nzMultiple
+            [(nzCheckedKeys)]="CheckedIndustry" (nzCheckBoxChange)="nzCheckIndustry($event)" (nzSearchValueChange)="match()">
           </nz-tree>
         </nz-content>
         <nz-col nzOffset="4">
