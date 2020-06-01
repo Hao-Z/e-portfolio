@@ -27,7 +27,7 @@ export class ModalProjectComponent implements OnInit {
       key: 'projectName',
       type: 'input',
       templateOptions: {
-        label: 'Projec tName',
+        label: 'Project Name',
         required: true,
         maxLength: 255
       }
