@@ -148,7 +148,11 @@ export class ExploreComponent implements OnInit {
       }
     }
     if(orders!=null){
-      para = para+'&orders='+orders+'&ascending='+ascending.toString()
+      if(orders==this.sortValuesMap['Age']){
+        para = para+'&orders='+orders+'&ascending='+(!ascending).toString()
+      } else {
+        para = para+'&orders='+orders+'&ascending='+ascending.toString()
+      }
     }
 
     this.http.get<any>(globals.backend_path + "explore/filters?" + para, HttpOptions).subscribe((result) => {
