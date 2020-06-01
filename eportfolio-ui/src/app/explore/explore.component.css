@@ -201,3 +201,20 @@ nz-card {
   transition-duration: 0.5s;
   /* border: solid 4px var(--primary-color); */
 }
+
+.scroll::-webkit-scrollbar{
+  width: 5px;
+  height: 5px;
+}
+
+.scroll::-webkit-scrollbar-thumb{
+  border-radius: 2px;
+  /*-webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.2);*/
+  background: rgba(0, 104, 167, 0.67);
+}
+.scroll::-webkit-scrollbar-track{
+  /*-webkit-box-shadow: inset 0 0 2px rgb(255, 255, 255);*/
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 2px;
+  width: 2px;
+}
