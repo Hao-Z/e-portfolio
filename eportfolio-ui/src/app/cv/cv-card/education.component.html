@@ -18,7 +18,8 @@
             <h6 *ngIf="item.grade" style="display: inline-block;">with a grade of <strong>{{item.grade}}</strong></h6>
             <br *ngIf="item.degree || item.grade">
             <p *ngIf="item.startYear" style="display: inline-block;">{{item.startYear}}&nbsp;</p>
-            <p *ngIf="item.endYear" style="display: inline-block;">to {{item.endYear}}</p>
+            <p *ngIf="!item.isDefault && item.endYear" style="display: inline-block;">to {{item.endYear}}</p>
+            <p *ngIf="item.isDefault" style="display: inline-block;">until {{"Now"}}</p>
             <h6 *ngIf="item.activityAndSociety">{{item.activityAndSociety}}</h6>
             <h6 *ngIf="item.description">{{item.description}}</h6>
             <h6 *ngIf="item.media">
