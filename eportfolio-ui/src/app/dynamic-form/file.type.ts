@@ -38,7 +38,7 @@ export class FormlyFileFieldType extends FieldType{
       let fileList = info.fileList;
       fileList = fileList.map(file => {
         if (file.response) {
-          file.url = globals.backend_path + file.response.url;
+          file.url = globals.backend_path + 'download/'+ file.response.url;
         }
         return file;
       });
