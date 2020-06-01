@@ -13,3 +13,7 @@ button.calendar, button.calendar:active {
 :root{
     --primary-color: #0068A7;
 }
+
+div {
+    white-space: pre-line;
+}

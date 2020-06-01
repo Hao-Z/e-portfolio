@@ -176,7 +176,7 @@ export class ModalIntroductionComponent implements OnInit {
           templateOptions: {
             label: 'Phone',
             maxLength: 15,
-            pattern: "^[0-9]{9,15}$"
+            pattern: "^[0-9]{3,15}$"
           }
         }
       ]
