@@ -63,7 +63,7 @@ export class ModalEducationComponent implements OnInit {
       type: 'checkbox',
       defaultValue: false,
       templateOptions: {
-        label: 'Is Default Education',
+        label: 'Is Current Education',
       }
     },
     {
